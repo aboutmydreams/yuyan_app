@@ -14,19 +14,6 @@ String getOauthUrl() {
     "timestamp": DateTime.now().millisecondsSinceEpoch.toString()
   };
 
-  String sortMap(Map query) {
-    String signString = [
-      'client_id',
-      'code',
-      'response_type',
-      'scope',
-      'timestamp',
-    ]
-        .map((getKey) => "$getKey=${Uri.encodeComponent(query[getKey])}")
-        .join('&');
-    return signString;
-  }
-
   String theSign = getSha1(sortMap(signData), clientSecret);
 
   String lastUrl = "https://www.yuque.com/oauth2/authorize?" +
