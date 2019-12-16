@@ -46,6 +46,9 @@ dependencies:
   # webView
   webview_flutter: ^0.3.18+1
 
+  # flare
+  flare_flutter: ^1.8.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -63,7 +66,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+    - assets/flares/yuyan_first.flr
+
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 

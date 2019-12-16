@@ -33,7 +33,7 @@ class MyMeterialApp extends StatelessWidget {
       builder: (context, child, model) {
         return MaterialApp(
           title: '语燕',
-          initialRoute: '/',
+          initialRoute: '/first',
           debugShowCheckedModeBanner: false, // 去除debug标志
           routes: routeData,
           theme: ThemeData(

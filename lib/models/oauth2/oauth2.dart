@@ -32,7 +32,7 @@ class Oauth {
     return lastUrl;
   }
 
-  getAccessToken() async {
+  saveAccessToken() async {
     Dio dio = Dio();
     Options options = Options(
       headers: {"Content-Type": "application/json"},
@@ -44,21 +44,38 @@ class Oauth {
       "code": codeString,
       "grant_type": "client_code"
     };
-    Response response = await dio.post("https://www.yuque.com/oauth2/token",
-        options: options, data: codeData);
-    return json.decode(response.data);
+    try {
+      Response response = await dio.post("https://www.yuque.com/oauth2/token",
+          options: options, data: codeData);
+      Map tokenData = json.decode(response.data);
+      if (tokenData.keys.toList().indexOf("access_token") != -1) {
+        return tokenData["access_token"];
+      } else if (tokenData.keys.toList().indexOf("error") != -1) {
+        return tokenData["error_description"];
+      }
+    } catch (e) {
+      return;
+    }
 
-    /// 验证失败
+    /// [验证失败 or 仍未验证]
     // {
     //     "error": "invalid_request",
     //     "error_description": "authorization code is invalid"
     // }
 
-    /// 验证成功
+    /// [授权成功]
     // {
     //     "access_token": "mytoken—long-and-you-should-save",
     //     "token_type": "bearer",
     //     "scope": "group,repo,doc,topic,artboard"
     // }
+
+    /// [验证超时]
   }
 }
+
+/// test
+// main() {
+//   var a = Oauth().getOauthUrl();
+//   print(a);
+// }
