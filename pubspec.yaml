@@ -43,6 +43,9 @@ dependencies:
   # 缓存
   shared_preferences: ^0.5.6
 
+  # webView
+  webview_flutter: ^0.3.18+1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
