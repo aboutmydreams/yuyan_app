@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'random_string/random_string.dart';
 import 'sha1/sha1.dart';
 import 'sort_map/sort_map.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// please look yuque doc
 /// https://www.yuque.com/yuque/developer/authorizing-oauth-apps#evagmg
@@ -75,14 +76,17 @@ class Oauth {
           options: options, data: codeData);
       Map tokenData = json.decode(json.encode(response.data));
       if (tokenData.keys.toList().indexOf("access_token") != -1) {
+        // 将 access_token 存入缓存
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("access_token", tokenData["access_token"].toString());
         return true;
       } else if (tokenData.keys.toList().indexOf("error") != -1) {
         return false;
       }
     } on DioError catch (e) {
       if (e.type == DioErrorType.RESPONSE) {
-        print(e.response.statusCode);
         // e.response.statusCode >= 500 后端炸了
+        print(e.response.statusCode);
       }
     } catch (e) {
       print(e.toString());

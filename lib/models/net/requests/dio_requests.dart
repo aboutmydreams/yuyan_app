@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'dart:async';
-import 'package:yuyan_app/models/get_token.dart';
+import 'package:yuyan_app/state_manage/get_pref.dart';
 
 class Requests {
   static Dio dio = Dio();
@@ -10,34 +10,23 @@ class Requests {
       {Map<String, dynamic> headers, Map<String, dynamic> param}) async {
     var token = await getToken();
     print(token);
-    // headers = headers == null ? {"Content-Type": "application/json"} : headers;
-    print("=-=-==");
-    print(baseUrl + path);
-    print(param);
-    print("=-=-==");
+    headers ??= {};
+    headers["Content-Type"] = "application/json";
+    headers["X-Auth-Token"] = token;
+
     try {
       Options options = Options(
         headers: headers,
         sendTimeout: 10000,
         receiveTimeout: 10000,
       );
-      if (param == null) {
-        param = {"token": token};
-      } else {
-        param["token"] = token;
-      }
-      // print(param);
+
       Response response = await dio.get(
         baseUrl + path,
         queryParameters: param,
         options: options,
       );
 
-      // var res = response.data["code"];
-      // print(response.data);
-      // if (res == 1) {
-      // } else if (res == 0) {}
-      // return res;
       return response.data;
     } on DioError catch (e) {
       print(e);
@@ -57,8 +46,13 @@ class Requests {
   }
 
   static Future post(String path,
-      {Map<String, dynamic> headers, Map<String, dynamic> data}) async {
+      {Map<String, dynamic> headers,
+      Map<String, dynamic> data,
+      Map<String, dynamic> param}) async {
     var token = await getToken();
+    headers ??= {};
+    headers["Content-Type"] = "application/json";
+    headers["X-Auth-Token"] = token;
     try {
       Options options = Options(
         headers: headers,
@@ -68,10 +62,11 @@ class Requests {
 
       Response response = await dio.post(
         baseUrl + path,
-        queryParameters: {"token": token},
+        queryParameters: param,
         data: data,
         options: options,
       );
+
       return response.data;
     } on DioError catch (e) {
       print(e);
@@ -91,13 +86,22 @@ class Requests {
   }
 
   static Future put(String path,
-      {Map<String, dynamic> headers, Map<String, dynamic> data}) async {
+      {Map<String, dynamic> headers,
+      Map<String, dynamic> data,
+      Map<String, dynamic> param}) async {
     var token = await getToken();
+    headers ??= {};
+    headers["Content-Type"] = "application/json";
+    headers["X-Auth-Token"] = token;
     try {
-      Options options = Options(headers: headers);
+      Options options = Options(
+        headers: headers,
+        sendTimeout: 10000,
+        receiveTimeout: 10000,
+      );
       Response response = await dio.put(
         baseUrl + path,
-        queryParameters: {"token": token},
+        queryParameters: param,
         data: data,
         options: options,
       );

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:yuyan_app/models/browser_web/browser_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/oauth2/oauth2.dart';
-import 'package:yuyan_app/models/small_widgets/toast.dart';
+import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/views/home_page.dart';
 
 class LoginPage extends StatefulWidget {

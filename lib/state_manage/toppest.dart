@@ -4,7 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:yuyan_app/models/get_token.dart';
+import 'get_pref.dart';
 
 class TopStateModel extends Model {
   static List<MaterialColor> _colorList = [
