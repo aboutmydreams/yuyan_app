@@ -2,6 +2,8 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:yuyan_app/state_manage/account/if_login.dart';
+
 class FirstPage extends StatefulWidget {
   _FirstPageState createState() => _FirstPageState();
 }
@@ -9,19 +11,25 @@ class FirstPage extends StatefulWidget {
 class _FirstPageState extends State<FirstPage> {
   void initState() {
     super.initState();
-    getAdData();
+
     Timer timer = new Timer(
       const Duration(milliseconds: 3000),
       () {
         try {
-          Navigator.pushNamedAndRemoveUntil(
-              context, "/", (route) => route == null);
+          ifLogin().then((haveUserLogin) {
+            print(haveUserLogin);
+            if (haveUserLogin) {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, "/", (route) => route == null);
+            } else {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, "/login", (route) => route == null);
+            }
+          });
         } catch (e) {}
       },
     );
   }
-
-  getAdData() async {}
 
   @override
   Widget build(BuildContext context) {

@@ -6,3 +6,9 @@ ifLogin() async {
   bool haveLogin = accessToken != null;
   return haveLogin;
 }
+
+ifGuide() async {
+  var guideStatus = await getPrefStringData("if_guide");
+  bool haveGuide = guideStatus != null;
+  return haveGuide;
+}

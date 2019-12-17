@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 getToken() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String getIt(String key) => prefs.getString(key);
-  String token = getIt("token");
+  String token = getIt("access_token");
   return token;
 }
 
