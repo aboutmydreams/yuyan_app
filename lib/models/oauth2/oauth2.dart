@@ -1,13 +1,35 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
-
 import 'random_string/random_string.dart';
 import 'sha1/sha1.dart';
 import 'sort_map/sort_map.dart';
 
 /// please look yuque doc
 /// https://www.yuque.com/yuque/developer/authorizing-oauth-apps#evagmg
+/// if you want to test this code
+/// test
+/// main() {
+///   var a = Oauth().getOauthUrl();
+///   print(a);
+/// }
+
+/// tha api return:
+/// [验证失败 or 仍未验证]
+// {
+//     "error": "invalid_request",
+//     "error_description": "authorization code is invalid"
+// }
+
+/// [授权成功]
+// {
+//     "access_token": "mytoken—long-and-you-should-save",
+//     "token_type": "bearer",
+//     "scope": "group,repo,doc,topic,artboard"
+// }
+
+/// [验证超时]
+/// To do
+
 class Oauth {
   /// 随机 code 之后获取 token 需要用到
   String codeString = randomString(40);
@@ -34,11 +56,15 @@ class Oauth {
 
   saveAccessToken() async {
     Dio dio = Dio();
+
     Options options = Options(
-      headers: {"Content-Type": "application/json"},
+      validateStatus: (status) {
+        return status < 500;
+      },
       sendTimeout: 3000,
-      receiveTimeout: 5000,
+      receiveTimeout: 6000,
     );
+
     Map<String, String> codeData = {
       "client_id": clientId,
       "code": codeString,
@@ -47,35 +73,20 @@ class Oauth {
     try {
       Response response = await dio.post("https://www.yuque.com/oauth2/token",
           options: options, data: codeData);
-      Map tokenData = json.decode(response.data);
+      Map tokenData = json.decode(json.encode(response.data));
       if (tokenData.keys.toList().indexOf("access_token") != -1) {
-        return tokenData["access_token"];
+        return true;
       } else if (tokenData.keys.toList().indexOf("error") != -1) {
-        return tokenData["error_description"];
+        return false;
+      }
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.RESPONSE) {
+        print(e.response.statusCode);
+        // e.response.statusCode >= 500 后端炸了
       }
     } catch (e) {
-      return;
+      print(e.toString());
+      return false;
     }
-
-    /// [验证失败 or 仍未验证]
-    // {
-    //     "error": "invalid_request",
-    //     "error_description": "authorization code is invalid"
-    // }
-
-    /// [授权成功]
-    // {
-    //     "access_token": "mytoken—long-and-you-should-save",
-    //     "token_type": "bearer",
-    //     "scope": "group,repo,doc,topic,artboard"
-    // }
-
-    /// [验证超时]
   }
 }
-
-/// test
-// main() {
-//   var a = Oauth().getOauthUrl();
-//   print(a);
-// }
