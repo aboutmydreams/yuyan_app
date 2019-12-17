@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+
 import 'package:yuyan_app/routes/top_route.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 
@@ -33,7 +34,7 @@ class MyMeterialApp extends StatelessWidget {
       builder: (context, child, model) {
         return MaterialApp(
           title: '语燕',
-          initialRoute: '/first',
+          initialRoute: '/guide',
           debugShowCheckedModeBanner: false, // 去除debug标志
           routes: routeData,
           theme: ThemeData(
