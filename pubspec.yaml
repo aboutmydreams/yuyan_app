@@ -74,8 +74,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/flares/yuyan_first.flr
-
-  #  - images/a_dot_burr.jpeg
+    - assets/images/guide1.jpg
+    - assets/images/guide2.jpg
+    - assets/images/guide3.jpg
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

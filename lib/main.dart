@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-
 import 'package:yuyan_app/routes/top_route.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 

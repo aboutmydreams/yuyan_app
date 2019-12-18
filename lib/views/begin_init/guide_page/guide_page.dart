@@ -1,233 +1,47 @@
 import 'package:liquid_swipe/Constants/Helpers.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/views/begin_init/guide_page/guide1.dart';
+import 'package:yuyan_app/views/begin_init/guide_page/guide2.dart';
+import 'package:yuyan_app/views/begin_init/guide_page/guide3.dart';
 
 class GuidePage extends StatelessWidget {
-  // const GuidePage({Key key}) : super(key: key);
+  int n = 0;
 
   final pages = [
-    Container(
-      color: Colors.pink,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Image.asset(
-            'assets/1.png',
-            fit: BoxFit.cover,
-          ),
-          Padding(padding: const EdgeInsets.all(20.0)),
-          Column(
-            children: <Widget>[
-              new Text(
-                "Hi",
-                style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: "Billy",
-                    fontWeight: FontWeight.w600),
-              ),
-              new Text(
-                "It's Me",
-                style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: "Billy",
-                    fontWeight: FontWeight.w600),
-              ),
-              new Text(
-                "Sahdeep",
-                style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: "Billy",
-                    fontWeight: FontWeight.w600),
-              ),
-            ],
-          )
-        ],
-      ),
-    ),
-    Container(
-      color: Colors.deepPurpleAccent,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Image.asset(
-            'assets/1.png',
-            fit: BoxFit.cover,
-          ),
-          Padding(padding: const EdgeInsets.all(20.0)),
-          Column(
-            children: <Widget>[
-              new Text(
-                "Take a",
-                style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: "Billy",
-                    fontWeight: FontWeight.w600),
-              ),
-              new Text(
-                "look at",
-                style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: "Billy",
-                    fontWeight: FontWeight.w600),
-              ),
-              new Text(
-                "Liquid Swipe",
-                style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: "Billy",
-                    fontWeight: FontWeight.w600),
-              ),
-            ],
-          )
-        ],
-      ),
-    ),
-    Container(
-      color: Colors.greenAccent,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Image.asset(
-            'assets/1.png',
-            fit: BoxFit.cover,
-          ),
-          Padding(padding: const EdgeInsets.all(20.0)),
-          Column(
-            children: <Widget>[
-              new Text(
-                "Liked?",
-                style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: "Billy",
-                    fontWeight: FontWeight.w600),
-              ),
-              new Text(
-                "Fork!",
-                style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: "Billy",
-                    fontWeight: FontWeight.w600),
-              ),
-              new Text(
-                "Give Star!",
-                style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: "Billy",
-                    fontWeight: FontWeight.w600),
-              ),
-            ],
-          )
-        ],
-      ),
-    ),
-    Container(
-      color: Colors.yellowAccent,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Image.asset(
-            'assets/1.png',
-            fit: BoxFit.cover,
-          ),
-          Padding(padding: const EdgeInsets.all(20.0)),
-          Column(
-            children: <Widget>[
-              new Text(
-                "Can be",
-                style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: "Billy",
-                    fontWeight: FontWeight.w600),
-              ),
-              new Text(
-                "Used for",
-                style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: "Billy",
-                    fontWeight: FontWeight.w600),
-              ),
-              new Text(
-                "Onboarding Design",
-                style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: "Billy",
-                    fontWeight: FontWeight.w600),
-              ),
-            ],
-          )
-        ],
-      ),
-    ),
-    Container(
-      color: Colors.redAccent,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Image.asset(
-            'assets/1.png',
-            fit: BoxFit.cover,
-          ),
-          Padding(padding: const EdgeInsets.all(20.0)),
-          Column(
-            children: <Widget>[
-              new Text(
-                "Do",
-                style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: "Billy",
-                    fontWeight: FontWeight.w600),
-              ),
-              new Text(
-                "Try it",
-                style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: "Billy",
-                    fontWeight: FontWeight.w600),
-              ),
-              new Text(
-                "Thank You",
-                style: TextStyle(
-                    fontSize: 30,
-                    fontFamily: "Billy",
-                    fontWeight: FontWeight.w600),
-              ),
-            ],
-          )
-        ],
-      ),
-    ),
+    Container(child: Guide1()),
+    Container(child: Guide2()),
+    Container(child: Guide3()),
   ];
 
-  pageChangeCallback(int page) {
-    print(page);
+  pageChangeCallback(BuildContext context, int page) {
+    n += 1;
+    if ((n >= 3) & (page == 2)) {
+      print(n);
+      Navigator.pushNamedAndRemoveUntil(context, "/", (route) => route == null);
+    }
   }
 
   updateTypeCallback(UpdateType updateType) {
     print(updateType);
   }
 
+  toLoginPage(context) {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: LiquidSwipe(
-      pages: pages,
-      fullTransitionValue: 200,
-      enableSlideIcon: true,
-      enableLoop: true,
-      positionSlideIcon: 0.5,
-      waveType: WaveType.liquidReveal,
-      onPageChangeCallback: (page) => pageChangeCallback(page),
-      currentUpdateTypeCallback: (updateType) => updateTypeCallback(updateType),
-    ));
+      body: LiquidSwipe(
+        pages: pages,
+        fullTransitionValue: 230,
+        enableSlideIcon: true,
+        enableLoop: false,
+        positionSlideIcon: 0.5,
+        waveType: WaveType.liquidReveal,
+        onPageChangeCallback: (page) => pageChangeCallback(context, page),
+        currentUpdateTypeCallback: (updateType) =>
+            updateTypeCallback(updateType),
+      ),
+    );
   }
 }
