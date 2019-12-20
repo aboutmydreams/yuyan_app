@@ -3,6 +3,8 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
+import 'explore_page/explore_page.dart';
+
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
@@ -17,10 +19,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    // pageList
-    // ..add(HomeScreen())
-    // ..add(AirScreen())
-    // ..add(MyScreen());
+    pageList..add(ExplorePage())..add(ExplorePage())..add(ExplorePage());
     super.initState();
   }
 
@@ -41,34 +40,7 @@ class _HomePageState extends State<HomePage> {
           });
         },
       ),
-      body: Container(
-        color: Colors.blueAccent,
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              // Container(
-              //   width: MediaQuery.of(context).size.width * 0.1,
-              //   child: FlareActor(
-              //     "assets/flares/yuyan_first.flr",
-              //     animation: "peace",
-              //     alignment: Alignment.topCenter,
-              //     fit: BoxFit.contain,
-              //   ),
-              // ),
-              Text(_page.toString(), textScaleFactor: 10.0),
-              RaisedButton(
-                child: Text('Go To Page of indexs 1'),
-                onPressed: () {
-                  //Page change using state does the same as clicking index 1 navigation button
-                  final CurvedNavigationBarState navBarState =
-                      _bottomNavigationKey.currentState;
-                  navBarState.setPage(1);
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
+      body: pageList[_page],
     );
   }
 }

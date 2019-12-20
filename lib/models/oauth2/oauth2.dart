@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// please look yuque doc
 /// https://www.yuque.com/yuque/developer/authorizing-oauth-apps#evagmg
+
 /// if you want to test this code
 /// test
 /// main() {
@@ -30,6 +31,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// [验证超时]
 /// To do
+/// 请求参数错误
 
 class Oauth {
   /// 随机 code 之后获取 token 需要用到
