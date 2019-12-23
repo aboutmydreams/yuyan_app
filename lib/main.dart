@@ -6,7 +6,7 @@ import 'package:yuyan_app/state_manage/toppest.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   TopStateModel topModel = TopStateModel();
-  topModel.getMyColor();
+  topModel.colorManage.getMyColor();
   runApp(MyApp(
     model: topModel,
   ));
@@ -33,12 +33,12 @@ class MyMeterialApp extends StatelessWidget {
       builder: (context, child, model) {
         return MaterialApp(
           title: '语燕',
-          initialRoute: '/guide',
+          initialRoute: '/login',
           debugShowCheckedModeBanner: false, // 去除debug标志
           routes: routeData,
           theme: ThemeData(
             platform: TargetPlatform.iOS, // 右滑返回
-            primarySwatch: model.primarySwatchColor,
+            primarySwatch: model.colorManage.primarySwatchColor,
             highlightColor: Color.fromRGBO(255, 255, 255, 0.2),
             splashColor: Colors.white30,
             // accentColor: Color.fromRGBO(5, 254, 255, 1.0),

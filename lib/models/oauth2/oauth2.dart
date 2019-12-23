@@ -81,6 +81,7 @@ class Oauth {
         // 将 access_token 存入缓存
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString("access_token", tokenData["access_token"].toString());
+        print(tokenData["access_token"].toString());
         return true;
       } else if (tokenData.keys.toList().indexOf("error") != -1) {
         return false;
