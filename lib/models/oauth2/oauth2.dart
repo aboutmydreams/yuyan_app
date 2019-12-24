@@ -9,11 +9,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// https://www.yuque.com/yuque/developer/authorizing-oauth-apps#evagmg
 
 /// if you want to test this code
-/// test
-/// main() {
-///   var a = Oauth().getOauthUrl();
-///   print(a);
-/// }
+/// test, delete shared_preferences and try
+// main() {
+//   var a = Oauth().getOauthUrl();
+//   print(a);
+// }
 
 /// tha api return:
 /// [验证失败 or 仍未验证]

@@ -10,6 +10,7 @@ class BrowserWithBar extends StatelessWidget {
   _onListCookies(WebViewController controller, BuildContext context) async {
     final String cookies =
         await controller.evaluateJavascript('document.cookie');
+    print(cookies);
     return _getCookieList(cookies);
   }
 
