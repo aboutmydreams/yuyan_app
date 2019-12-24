@@ -68,7 +68,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     print(oauthUrl);
     return BrowserWithBar(
-      url: oauthUrl,
+      // url: oauthUrl,
+      url: "https://www.yuque.com/dashboard",
       appbar: AppBar(
         title: Text("登录语雀", style: TextStyle(color: Colors.black)),
         elevation: 0,

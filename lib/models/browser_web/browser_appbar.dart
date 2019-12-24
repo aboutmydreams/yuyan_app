@@ -1,13 +1,39 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class BrowserWithBar extends StatelessWidget {
-  const BrowserWithBar({Key key, this.url, this.appbar}) : super(key: key);
+class BrowserWithBar extends StatefulWidget {
+  BrowserWithBar({Key key, this.url, this.appbar}) : super(key: key);
+  final String url;
+  final AppBar appbar;
+
+  @override
+  _BrowserWithBarState createState() =>
+      _BrowserWithBarState(url: url, appbar: appbar);
+}
+
+class _BrowserWithBarState extends State<BrowserWithBar> {
+  _BrowserWithBarState({this.url, this.appbar});
 
   final String url;
   final AppBar appbar;
 
-  _onListCookies(WebViewController controller, BuildContext context) async {
+  Completer<WebViewController> _controller = Completer<WebViewController>();
+  String co;
+
+  @override
+  void initState() {
+    super.initState();
+    Timer dd = Timer(const Duration(milliseconds: 6000), () {
+      _controller.future.then((data) {
+        _onListCookies(data);
+      });
+    });
+    // print(topic.topicId);
+  }
+
+  _onListCookies(WebViewController controller) async {
     final String cookies =
         await controller.evaluateJavascript('document.cookie');
     print(cookies);
@@ -29,6 +55,9 @@ class BrowserWithBar extends StatelessWidget {
       body: WebView(
         initialUrl: url,
         javascriptMode: JavascriptMode.unrestricted,
+        onWebViewCreated: (WebViewController webViewController) {
+          _controller.complete(webViewController);
+        },
       ),
     );
   }
