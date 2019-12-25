@@ -19,35 +19,6 @@ class _BrowserWithBarState extends State<BrowserWithBar> {
   final String url;
   final AppBar appbar;
 
-  Completer<WebViewController> _controller = Completer<WebViewController>();
-  String co;
-
-  @override
-  void initState() {
-    super.initState();
-    Timer dd = Timer(const Duration(milliseconds: 6000), () {
-      _controller.future.then((data) {
-        _onListCookies(data);
-      });
-    });
-    // print(topic.topicId);
-  }
-
-  _onListCookies(WebViewController controller) async {
-    final String cookies =
-        await controller.evaluateJavascript('document.cookie');
-    print(cookies);
-    return _getCookieList(cookies);
-  }
-
-  _getCookieList(String cookies) {
-    if (cookies == null || cookies == '""') {
-      return null;
-    }
-    final List<String> cookieList = cookies.split(';');
-    return cookieList;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,9 +26,6 @@ class _BrowserWithBarState extends State<BrowserWithBar> {
       body: WebView(
         initialUrl: url,
         javascriptMode: JavascriptMode.unrestricted,
-        onWebViewCreated: (WebViewController webViewController) {
-          _controller.complete(webViewController);
-        },
       ),
     );
   }

@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'dart:async';
 import 'package:yuyan_app/state_manage/get_pref.dart';
 
-class Requests {
+class DioReq {
   static Dio dio = Dio();
 
   static String baseUrl = "https://www.yuque.com/api";

@@ -55,6 +55,12 @@ dependencies:
   # flare
   flare_flutter: ^1.8.2
 
+  # request with cookie
+  requests: ^3.0.3
+
+  flutter_webview_plugin:
+    git: https://github.com/aboutmydreams/flutter_webview_plugin.git
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
