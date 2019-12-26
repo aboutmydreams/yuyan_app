@@ -75,6 +75,7 @@ class _LoginPageState extends State<LoginPage> {
         .getAllCookies("https://www.yuque.com/dashboard");
     Map<String, dynamic> cookieData = {};
     List<String> cookiesList = result.split(";");
+    cookiesList.removeLast();
     for (var cookie in cookiesList) {
       cookieData[cookie.substring(0, cookie.indexOf("="))] = cookie.substring(
         cookie.indexOf("=") + 1,

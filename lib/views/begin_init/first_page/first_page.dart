@@ -23,7 +23,7 @@ class _FirstPageState extends State<FirstPage> {
                   context, "/", (route) => route == null);
             } else {
               Navigator.pushNamedAndRemoveUntil(
-                  context, "/login", (route) => route == null);
+                  context, "/guide", (route) => route == null);
             }
           });
         } catch (e) {}

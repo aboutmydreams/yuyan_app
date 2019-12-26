@@ -18,28 +18,33 @@ DefaultTabController theController = DefaultTabController(
   child: Scaffold(
     backgroundColor: Colors.grey[100],
     appBar: AppBar(
+      backgroundColor: Colors.white,
       toolbarOpacity: 1.0,
       bottomOpacity: 5.0,
       actions: <Widget>[
         IconButton(
-          icon: Icon(Icons.search),
+          icon: Icon(
+            Icons.search,
+            color: Colors.black,
+          ),
           tooltip: 'Search',
           onPressed: () => debugPrint('Search button is pressed.'),
         )
       ],
       elevation: 0.0,
       title: TabBar(
+        labelColor: Colors.black,
         indicatorSize: TabBarIndicatorSize.label,
         indicatorWeight: 3.0,
         tabs: <Widget>[
           Tab(
-            text: "语雀精选",
+            text: "关注",
           ),
           Tab(
-            text: "文章",
+            text: "精选",
           ),
           Tab(
-            text: "知识库",
+            text: "广场",
           ),
         ],
       ),
