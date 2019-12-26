@@ -20,11 +20,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    pageList
-      ..add(ExplorePage())
-      ..add(ExplorePage())
-      ..add(ExplorePage())
-      ..add(MyPage());
+    pageList..add(ExplorePage())..add(MyPage())..add(MyPage())..add(MyPage());
     super.initState();
   }
 
