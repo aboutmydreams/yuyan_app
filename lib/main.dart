@@ -5,7 +5,6 @@ import 'package:yuyan_app/state_manage/toppest.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  TopStateModel topModel = TopStateModel();
   topModel.colorManage.getMyColor();
   runApp(MyApp(
     model: topModel,

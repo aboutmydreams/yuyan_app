@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:yuyan_app/state_manage/account/if_login.dart';
+import 'package:yuyan_app/state_manage/toppest.dart';
 
 class FirstPage extends StatefulWidget {
   _FirstPageState createState() => _FirstPageState();
@@ -11,7 +12,8 @@ class FirstPage extends StatefulWidget {
 class _FirstPageState extends State<FirstPage> {
   void initState() {
     super.initState();
-
+    // 初始化数据
+    topModel.selectManage.update();
     Timer timer = new Timer(
       const Duration(milliseconds: 3000),
       () {
