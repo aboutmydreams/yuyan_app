@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
         color: Colors.yellow,
         animationCurve: Curves.easeInQuad,
         height: 64,
-        backgroundColor: Color.fromRGBO(0, 0, 0, 0.5),
+        backgroundColor: Colors.transparent,
         items: <Widget>[
           Icon(Icons.fastfood, size: 34),
           Icon(Icons.devices_other, size: 34),
