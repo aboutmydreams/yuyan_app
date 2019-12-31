@@ -15,7 +15,7 @@ Widget firstItemUI(Data data) {
             height: 164,
             child: FadeInImage.assetNetwork(
               image: data.cover,
-              placeholder: 'assets/images/guide1.jpg',
+              placeholder: 'assets/images/logo.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -46,7 +46,7 @@ Widget firstItemUI(Data data) {
                     child: ClipOval(
                       child: FadeInImage.assetNetwork(
                         image: data.user.smallAvatarUrl,
-                        placeholder: 'assets/images/guide1.jpg',
+                        placeholder: 'assets/images/logo.png',
                         fit: BoxFit.cover,
                       ),
                     ),

@@ -1,5 +1,6 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/models/component/appUI.dart';
 import 'dart:async';
 
 import 'package:yuyan_app/state_manage/account/if_login.dart';
@@ -40,14 +41,50 @@ class _FirstPageState extends State<FirstPage> {
       body: Stack(
         children: <Widget>[
           Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: MediaQuery.of(context).size.width * 0.3,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.width * 0.7,
+              child: Image.asset(
+                'assets/images/first.jpg',
+                fit: BoxFit.cover,
+              ),
+              color: Colors.green,
+            ),
+          ),
+          Positioned(
             bottom: 0,
             left: 0,
             right: 0,
             child: Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.width * 0.3,
-              child: Text("YuYan"),
-              color: Colors.green,
+              color: Colors.white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    width: 40,
+                    height: 40,
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Container(
+                    child: Center(
+                      child: Text(
+                        "·  语燕",
+                        style: AppStyles.textStyleB,
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
           // Positioned(

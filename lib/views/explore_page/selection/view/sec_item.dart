@@ -20,7 +20,7 @@ Widget secItemUI(Data data) {
               height: 91,
               child: FadeInImage.assetNetwork(
                 image: data.cover,
-                placeholder: 'assets/images/guide1.jpg',
+                placeholder: 'assets/images/logo.png',
                 fit: BoxFit.cover,
               ),
             ),
@@ -67,7 +67,7 @@ Widget secItemUI(Data data) {
                           child: ClipOval(
                             child: FadeInImage.assetNetwork(
                               image: data.user.smallAvatarUrl,
-                              placeholder: 'assets/images/guide1.jpg',
+                              placeholder: 'assets/images/logo.png',
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -76,16 +76,9 @@ Widget secItemUI(Data data) {
                       SizedBox(width: 7),
                       Container(
                         margin: EdgeInsets.only(right: 38),
-                        child: Text(
-                          clearText(data.user.name, 12),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.primaryText,
-                            fontFamily: "PingFang SC",
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12,
-                          ),
-                        ),
+                        child: Text(clearText(data.user.name, 12),
+                            textAlign: TextAlign.center,
+                            style: AppStyles.textStyleC),
                       ),
                       Expanded(child: SizedBox()),
                       Container(
