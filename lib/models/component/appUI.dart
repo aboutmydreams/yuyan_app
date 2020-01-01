@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
+  static Color primaryElement = Colors.black;
   static Color accentText = Colors.black;
   static Color primaryText = Colors.black45;
   static Color background = Colors.white;
+  static Color yellow = Color.fromRGBO(255, 233, 151, 1);
 }
 
 class AppStyles {

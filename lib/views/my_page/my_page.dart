@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/views/my_page/view/info_count.dart';
+import 'package:yuyan_app/views/my_page/view/user_info.dart';
 
 class MyPage extends StatefulWidget {
   MyPage({Key key}) : super(key: key);
@@ -11,8 +13,11 @@ class _MyPageState extends State<MyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("my"),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[userInfo(), infoCount()],
+        ),
       ),
     );
   }
