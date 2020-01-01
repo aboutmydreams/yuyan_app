@@ -33,7 +33,8 @@ Widget secItemUI(Data data) {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  clearText(data.title, 26),
+                  // clearText(data.title, 26),
+                  data.title,
                   maxLines: 2,
                   textAlign: TextAlign.left,
                   style: TextStyle(
@@ -82,7 +83,7 @@ Widget secItemUI(Data data) {
                       ),
                       Expanded(child: SizedBox()),
                       Container(
-                        width: 52,
+                        width: 54,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -96,7 +97,7 @@ Widget secItemUI(Data data) {
                             ),
                             Expanded(child: SizedBox()),
                             Container(
-                              margin: EdgeInsets.only(left: 1),
+                              margin: EdgeInsets.only(left: 0),
                               child: Text(
                                 "${data.likesCount * 7}",
                                 textAlign: TextAlign.center,
