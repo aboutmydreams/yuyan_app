@@ -62,8 +62,8 @@ Widget userInfo() {
                     ),
                     Spacer(),
                     Container(
-                      width: 16,
-                      height: 16,
+                      width: 20,
+                      height: 20,
                       child: Image.asset(
                         "assets/images/my_page/exit.png",
                         fit: BoxFit.cover,
@@ -79,8 +79,8 @@ Widget userInfo() {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      width: 12,
-                      height: 12,
+                      width: 15,
+                      height: 15,
                       margin: EdgeInsets.only(right: 2),
                       child: Image.asset(
                         "assets/images/my_page/location.png",
