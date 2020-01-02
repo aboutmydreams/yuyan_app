@@ -21,8 +21,6 @@ class SelectManage extends Model {
 
   Future<File> writeCounter(Map counter) async {
     final file = await _localFile;
-
-    // Write the file.
     return file.writeAsString(jsonEncode(counter));
   }
 
