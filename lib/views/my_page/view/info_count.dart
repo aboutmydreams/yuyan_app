@@ -238,8 +238,8 @@ Widget infoCount() {
 class Shadows {
   Color primaryElement = Colors.white12;
   static BoxShadow primaryShadow = BoxShadow(
-    color: Color.fromRGBO(255, 233, 151, 1),
+    color: Color.fromRGBO(0, 0, 0, 0.3),
     offset: Offset(0, 0),
-    blurRadius: 1,
+    blurRadius: 2,
   );
 }
