@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
@@ -18,7 +19,13 @@ Widget secItemUI(Data data) {
             child: Container(
               width: 147,
               height: 91,
-              child: FadeInImage.assetNetwork(
+              child:
+                  // CachedNetworkImage(
+                  //   imageUrl: data.cover,
+                  //   placeholder: (context, url) => CircularProgressIndicator(),
+                  //   errorWidget: (context, url, error) => Icon(Icons.error),
+                  // ),
+                  FadeInImage.assetNetwork(
                 image: data.cover,
                 placeholder: 'assets/images/logo.png',
                 fit: BoxFit.cover,

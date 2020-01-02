@@ -14,7 +14,9 @@ class SelectionPage extends StatefulWidget {
   _SelectionPageState createState() => _SelectionPageState();
 }
 
-class _SelectionPageState extends State<SelectionPage> {
+class _SelectionPageState extends State<SelectionPage>
+    with AutomaticKeepAliveClientMixin {
+  bool get wantKeepAlive => true; //非常重要
   List<Data> selecdatas;
 
   @override
