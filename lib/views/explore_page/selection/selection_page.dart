@@ -30,9 +30,9 @@ class _SelectionPageState extends State<SelectionPage>
           itemCount: selecdatas.length,
           itemBuilder: (BuildContext context, int index) {
             if (index == 0) {
-              return firstItemUI(selecdatas[index]);
+              return firstItemUI(context, selecdatas[index]);
             } else {
-              return secItemUI(selecdatas[index]);
+              return secItemUI(context, selecdatas[index]);
             }
           },
         ),

@@ -10,13 +10,13 @@ import '../get_pref.dart';
 
 class ColorManage extends Model {
   static List<MaterialColor> _colorList = [
-    Colors.blue,
-    Colors.red,
-    Colors.pink,
+    Colors.yellow,
     Colors.orange,
     Colors.deepOrange,
     Colors.amber,
-    Colors.yellow,
+    Colors.blue,
+    Colors.red,
+    Colors.pink,
     Colors.lime,
     Colors.lightGreen,
     Colors.green,
