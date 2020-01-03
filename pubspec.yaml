@@ -90,6 +90,10 @@ flutter:
   assets:
     - assets/flares/yuyan_first.flr
     - assets/images/logo.png
+    - assets/images/icon1.png
+    - assets/images/icon2.png
+    - assets/images/icon3.png
+    - assets/images/icon4.png
     - assets/images/paddy.svg
     - assets/images/first.jpg
     - assets/images/guide/guide1.jpg

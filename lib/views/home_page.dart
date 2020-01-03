@@ -34,10 +34,10 @@ class _HomePageState extends State<HomePage> {
         height: 64,
         backgroundColor: Colors.transparent,
         items: <Widget>[
-          Icon(Icons.fastfood, size: 34),
-          Icon(Icons.devices_other, size: 34),
-          Icon(Icons.notifications_paused, size: 34),
-          Icon(Icons.compare_arrows, size: 34),
+          Icon(Icons.insert_emoticon, size: 34),
+          Icon(Icons.wrap_text, size: 34),
+          Icon(Icons.notifications_none, size: 34),
+          Icon(Icons.perm_identity, size: 34),
         ],
         animationDuration: Duration(milliseconds: 300),
         onTap: (index) {
