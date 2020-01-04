@@ -6,7 +6,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../get_pref.dart';
+import 'package:yuyan_app/models/tools/get_pref.dart';
 
 class ColorManage extends Model {
   static List<MaterialColor> _colorList = [

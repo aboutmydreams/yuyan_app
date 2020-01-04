@@ -5,7 +5,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
-import 'package:yuyan_app/state_manage/get_pref.dart';
 import 'package:yuyan_app/views/explore_page/data/selection_data.dart';
 
 class SelectManage extends Model {

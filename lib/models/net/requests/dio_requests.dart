@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'dart:async';
-import 'package:yuyan_app/state_manage/get_pref.dart';
+import 'package:yuyan_app/models/tools/get_pref.dart';
 
 class DioReq {
   static Dio dio = Dio();
