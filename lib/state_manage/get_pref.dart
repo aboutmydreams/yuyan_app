@@ -7,6 +7,20 @@ getToken() async {
   return token;
 }
 
+getSession() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String getIt(String key) => prefs.getString(key);
+  String session = getIt("_yuque_session");
+  return session;
+}
+
+getCtoken() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String getIt(String key) => prefs.getString(key);
+  String ctoken = getIt("ctoken");
+  return ctoken;
+}
+
 getPrefStringData(String keyName) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String getIt(String key) => prefs.getString(key);

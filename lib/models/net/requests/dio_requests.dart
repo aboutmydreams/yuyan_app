@@ -9,9 +9,13 @@ class DioReq {
   static get(String path,
       {Map<String, dynamic> headers, Map<String, dynamic> param}) async {
     var token = await getToken();
+    var ctoken = await getCtoken();
+    var _yuqueSession = await getSession();
     print(token);
     headers ??= {};
     headers["Content-Type"] = "application/json";
+    headers["Cookie"] = "_yuque_session=" + _yuqueSession;
+    headers["ctoken"] = "ctoken=" + ctoken;
     headers["X-Auth-Token"] = token;
 
     try {
@@ -50,9 +54,14 @@ class DioReq {
       Map<String, dynamic> data,
       Map<String, dynamic> param}) async {
     var token = await getToken();
+
+    var ctoken = await getCtoken();
+    var _yuqueSession = await getSession();
     headers ??= {};
     headers["Content-Type"] = "application/json";
     headers["X-Auth-Token"] = token;
+    headers["Cookie"] = "_yuque_session=" + _yuqueSession;
+    headers["ctoken"] = "ctoken=" + ctoken;
     try {
       Options options = Options(
         headers: headers,
@@ -90,9 +99,13 @@ class DioReq {
       Map<String, dynamic> data,
       Map<String, dynamic> param}) async {
     var token = await getToken();
+    var ctoken = await getCtoken();
+    var _yuqueSession = await getSession();
     headers ??= {};
     headers["Content-Type"] = "application/json";
     headers["X-Auth-Token"] = token;
+    headers["Cookie"] = "_yuque_session=" + _yuqueSession;
+    headers["ctoken"] = "ctoken=" + ctoken;
     try {
       Options options = Options(
         headers: headers,
