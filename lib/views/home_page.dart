@@ -5,6 +5,7 @@ import 'package:yuyan_app/views/my_page/my_page.dart';
 import 'dart:ui';
 
 import 'explore_page/explore_page.dart';
+import 'news_page/news_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -20,7 +21,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    pageList..add(ExplorePage())..add(MyPage())..add(MyPage())..add(MyPage());
+    pageList..add(ExplorePage())..add(MyPage())..add(NewsPage())..add(MyPage());
     super.initState();
   }
 
@@ -32,7 +33,7 @@ class _HomePageState extends State<HomePage> {
         color: Colors.yellow,
         animationCurve: Curves.easeInQuad,
         height: 64,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         items: <Widget>[
           Icon(Icons.insert_emoticon, size: 34),
           Icon(Icons.wrap_text, size: 34),

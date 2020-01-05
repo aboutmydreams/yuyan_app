@@ -4,9 +4,8 @@ import 'dart:async';
 import 'dart:ui';
 import 'dart:convert';
 
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yuyan_app/state_manage/account/color_manage.dart';
-import 'package:yuyan_app/state_manage/dataManage/select_data.dart';
+import 'package:yuyan_app/state_manage/dataManage/select_manage.dart';
 
 class TopStateModel extends Model {
   ColorManage colorManage = ColorManage();

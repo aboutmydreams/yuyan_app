@@ -13,3 +13,8 @@ Future<File> writeJson(String fileName, Map jsonMap) async {
   final file = await getLocalFile(fileName);
   return file.writeAsString(jsonEncode(jsonMap));
 }
+
+Future<Map> readJson(String fileName) async {
+  var data = jsonDecode(await (await getLocalFile("select")).readAsString());
+  return data;
+}

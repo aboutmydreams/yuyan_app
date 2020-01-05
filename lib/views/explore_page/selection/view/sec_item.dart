@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:yuyan_app/models/browser_web/browser_appbar.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
-import 'package:yuyan_app/views/explore_page/data/selection_data.dart';
+import 'package:yuyan_app/state_manage/dataManage/data/selection_data.dart';
 
 Widget secItemUI(BuildContext context, Data data) {
   return GestureDetector(

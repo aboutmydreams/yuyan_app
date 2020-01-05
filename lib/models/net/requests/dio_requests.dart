@@ -14,9 +14,9 @@ class DioReq {
     print(token);
     headers ??= {};
     headers["Content-Type"] = "application/json";
-    headers["Cookie"] = "_yuque_session=" + _yuqueSession;
-    headers["ctoken"] = "ctoken=" + ctoken;
-    headers["X-Auth-Token"] = token;
+    headers["Cookie"] = "_yuque_session=" + _yuqueSession.toString();
+    headers["ctoken"] = "ctoken=" + ctoken.toString();
+    headers["X-Auth-Token"] = token.toString();
 
     try {
       Options options = Options(

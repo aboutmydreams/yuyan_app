@@ -1,27 +1,12 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:path_provider/path_provider.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
-import 'package:yuyan_app/views/explore_page/data/selection_data.dart';
+import 'package:yuyan_app/models/tools/write_json.dart';
+import 'package:yuyan_app/state_manage/dataManage/data/selection_data.dart';
 
 class SelectManage extends Model {
   int page = 1;
   SelectionsData _selectData = SelectionsData(data: []);
   SelectionsData get selecData => _selectData;
-
-  Future<File> get _localFile async {
-    final directory = await getApplicationDocumentsDirectory();
-    final path = directory.path;
-    return File('$path/select.json');
-  }
-
-  Future<File> writeCounter(Map counter) async {
-    final file = await _localFile;
-    return file.writeAsString(jsonEncode(counter));
-  }
 
   getSaveData() async {
     // var selectDoc = await getPrefStringData("select_doc");
@@ -33,7 +18,7 @@ class SelectManage extends Model {
     // _selectData = selectionsData;
     // notifyListeners();
     // return selectionsData;
-    var selectDoc = jsonDecode(await (await _localFile).readAsString());
+    var selectDoc = await readJson('select');
     SelectionsData selectionsData = SelectionsData.fromJson(selectDoc);
     _selectData = selectionsData;
     notifyListeners();
@@ -52,7 +37,7 @@ class SelectManage extends Model {
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     // print(dioData.runtimeType);
     // prefs.setString("select_doc", dioData.toString());
-    await writeCounter(dioData);
+    await writeJson('select', dioData);
     return 1;
   }
 
