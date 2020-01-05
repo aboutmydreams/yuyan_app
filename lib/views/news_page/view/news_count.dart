@@ -4,7 +4,7 @@ import 'package:yuyan_app/models/component/appUI.dart';
 Widget newsCount() {
   return Container(
     height: 38,
-    margin: EdgeInsets.only(top: 1, bottom: 1),
+    margin: EdgeInsets.only(bottom: 1),
     decoration: BoxDecoration(
       color: AppColors.background,
       boxShadow: [

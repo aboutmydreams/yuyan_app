@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/views/my_page/my_page.dart';
 import 'dart:ui';
 
+import 'dashboard/dashboard.dart';
 import 'explore_page/explore_page.dart';
 import 'news_page/news_page.dart';
 
@@ -21,7 +22,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    pageList..add(ExplorePage())..add(MyPage())..add(NewsPage())..add(MyPage());
+    pageList
+      ..add(ExplorePage())
+      ..add(Dashboard())
+      ..add(NewsPage())
+      ..add(MyPage());
     super.initState();
   }
 

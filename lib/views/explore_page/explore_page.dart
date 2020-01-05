@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'selection/selection_page.dart';
 
 class ExplorePage extends StatefulWidget {
