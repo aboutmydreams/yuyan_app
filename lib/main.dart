@@ -37,8 +37,7 @@ class MyMeterialApp extends StatelessWidget {
           routes: routeData,
           theme: ThemeData(
             platform: TargetPlatform.iOS, // 右滑返回
-            // primarySwatch: model.colorManage.primarySwatchColor,
-            // primarySwatch: model.colorManage.primarySwatchColor,
+            primarySwatch: model.colorManage.primarySwatchColor,
             highlightColor: Color.fromRGBO(255, 255, 255, 0.2),
             splashColor: Colors.white30,
             accentColor: Color.fromRGBO(25, 25, 25, 1.0),

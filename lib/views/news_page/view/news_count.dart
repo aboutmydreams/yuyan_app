@@ -3,10 +3,17 @@ import 'package:yuyan_app/models/component/appUI.dart';
 
 Widget newsCount() {
   return Container(
-    height: 35,
-    margin: EdgeInsets.only(top: 3),
+    height: 38,
+    margin: EdgeInsets.only(top: 1, bottom: 1),
     decoration: BoxDecoration(
       color: AppColors.background,
+      boxShadow: [
+        BoxShadow(
+          color: Color.fromARGB(128, 101, 101, 101),
+          offset: Offset(0, 0),
+          blurRadius: 1,
+        ),
+      ],
     ),
     child: Row(
       children: [
@@ -28,7 +35,7 @@ Widget newsCount() {
           height: 14,
           margin: EdgeInsets.only(left: 14),
           decoration: BoxDecoration(
-            color: AppColors.primaryElement,
+            color: AppColors.yellow,
             boxShadow: [
               BoxShadow(
                 color: Color.fromARGB(128, 101, 101, 101),
