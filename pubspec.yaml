@@ -51,7 +51,7 @@ dependencies:
   # 状态管理
   provider: ^3.1.0+1
   scoped_model: ^1.0.1
-  
+
   # 缓存
   shared_preferences: ^0.5.6
 
@@ -63,7 +63,7 @@ dependencies:
 
   # request with cookie
   requests: ^3.0.3
-  
+
   # use svg
   flutter_svg: ^0.15.0
 
@@ -74,13 +74,11 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -103,7 +101,7 @@ flutter:
     - assets/images/my_page/collections.png
     - assets/images/my_page/topics.png
     - assets/images/my_page/history.png
-    
+
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -27,7 +27,7 @@ class Data {
   String type;
   String title;
   String titleDraft;
-  Null tag;
+  dynamic tag;
   String slug;
   int userId;
   int bookId;
@@ -51,8 +51,8 @@ class Data {
   String selectedAt;
   Book book;
   User user;
-  Null lastEditor;
-  Null share;
+  dynamic lastEditor;
+  dynamic share;
   String sSerializer;
 
   Data(
@@ -178,7 +178,7 @@ class Book {
   String updatedAt;
   String contentUpdatedAt;
   User user;
-  Null creator;
+  dynamic creator;
   String sSerializer;
 
   Book(
@@ -241,13 +241,13 @@ class User {
   String description;
   String avatarUrl;
   int public;
-  Null scene;
+  String scene;
   String createdAt;
   String updatedAt;
   int organizationId;
   bool isPaid;
-  Null organization;
-  Null owners;
+  dynamic organization;
+  dynamic owners;
   String sSerializer;
   String avatar;
   String largeAvatarUrl;
@@ -256,7 +256,7 @@ class User {
   int followersCount;
   int followingCount;
   int status;
-  Null profile;
+  dynamic profile;
 
   User(
       {this.id,
@@ -291,7 +291,7 @@ class User {
     description = json['description'];
     avatarUrl = json['avatar_url'];
     public = json['public'];
-    scene = json['scene'];
+    scene = json['scene'] != null ? json['scene'] : 'null';
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     organizationId = json['organization_id'];
