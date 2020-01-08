@@ -55,7 +55,7 @@ DefaultTabController theController = DefaultTabController(
           child: SelectionPage(),
         ),
         Container(
-          child: Text("data"),
+          child: SelectionPage(),
         ),
         Container(
           child: Text("data"),
