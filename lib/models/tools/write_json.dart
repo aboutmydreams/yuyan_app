@@ -15,6 +15,6 @@ Future<File> writeJson(String fileName, Map jsonMap) async {
 }
 
 Future<Map> readJson(String fileName) async {
-  var data = jsonDecode(await (await getLocalFile("select")).readAsString());
+  var data = jsonDecode(await (await getLocalFile(fileName)).readAsString());
   return data;
 }
