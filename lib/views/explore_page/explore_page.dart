@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'attention/attention_page.dart';
 import 'selection/selection_page.dart';
 
 class ExplorePage extends StatefulWidget {
@@ -52,7 +53,7 @@ DefaultTabController theController = DefaultTabController(
     body: TabBarView(
       children: <Widget>[
         Container(
-          child: SelectionPage(),
+          child: AttentionPage(),
         ),
         Container(
           child: SelectionPage(),
