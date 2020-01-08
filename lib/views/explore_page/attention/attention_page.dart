@@ -18,6 +18,7 @@ class _AttentionPageState extends State<AttentionPage> {
   }
 
   getAttentData() async {
+    Map<String, dynamic> lastData = {};
     var data = await DioReq.get("/events?offset=0");
     print(data.toString());
     List data_list = [];
@@ -67,9 +68,12 @@ class _AttentionPageState extends State<AttentionPage> {
 
       data_list.add(one_data);
     }
-    print(data_list);
+    lastData["data"] = data_list;
+    lastData["offset"] = data["meta"]["offset"];
+
+    print(lastData);
     setState(() {
-      attentdatas = data["data"];
+      attentdatas = lastData["data"];
     });
   }
 
