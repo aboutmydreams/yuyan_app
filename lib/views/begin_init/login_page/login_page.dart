@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/oauth2/oauth2.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
+import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/home_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -42,12 +43,19 @@ class _LoginPageState extends State<LoginPage> {
           bool isLogin = await oauth2.saveAccessToken();
           if (isLogin) {
             myToast("登录成功");
-            getAllCookies(flutterWebviewPlugin);
-            setState(
+            getAllCookies(flutterWebviewPlugin).then((res) {
+              topModel.update();
+            });
+            Timer(
+              const Duration(microseconds: 1),
               () {
-                logined = true;
-                Navigator.pushNamedAndRemoveUntil(
-                    context, '/', (route) => route == null);
+                setState(
+                  () {
+                    logined = true;
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/', (route) => route == null);
+                  },
+                );
               },
             );
           }

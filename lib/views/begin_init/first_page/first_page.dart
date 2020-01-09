@@ -13,8 +13,13 @@ class FirstPage extends StatefulWidget {
 class _FirstPageState extends State<FirstPage> {
   void initState() {
     super.initState();
-    // 初始化数据
-    topModel.update();
+    ifLogin().then((res) {
+      if (res) {
+        // 初始化数据
+        topModel.update();
+      }
+    });
+
     // 定时器
     Timer timer = new Timer(
       const Duration(milliseconds: 3000),
