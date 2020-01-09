@@ -3,6 +3,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/attent_data.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
+import 'package:yuyan_app/views/explore_page/attention/view/to_doc.dart';
 import 'package:yuyan_app/views/explore_page/attention/view/to_user.dart';
 
 class AttentionPage extends StatefulWidget {
@@ -29,10 +30,10 @@ class _AttentionPageState extends State<AttentionPage>
         body: ListView.builder(
           itemCount: attentDatas.length,
           itemBuilder: (BuildContext context, int index) {
-            if (index > 0) {
-              return toUser(context, attentDatas[index]);
+            if (attentDatas[index].subjectType == "Doc") {
+              return toDoc(context, attentDatas[index]);
             } else {
-              return Text("data");
+              return Text(attentDatas[index].subjectType);
             }
           },
         ),

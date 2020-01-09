@@ -4,7 +4,7 @@ import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_small/user_event.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/attent_data.dart';
 
-Widget toUser(BuildContext context, Data data) {
+Widget toDoc(BuildContext context, Data data) {
   print(data.avatarUrl);
   return Container(
     margin: EdgeInsets.only(top: 7),

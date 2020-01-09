@@ -15,7 +15,7 @@ Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
     one_data["who"] = i["actor"]["name"];
     one_data["user_id"] = i["actor"]["id"];
     one_data["avatar_url"] = i["actor"]["avatar_url"];
-    one_data["do"] = i["event_type"];
+    one_data["did"] = i["event_type"];
     one_data["when"] = i["created_at"];
     one_data["subject_type"] = i["subject_type"];
     one_data["event"] = [];
