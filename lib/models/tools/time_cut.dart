@@ -11,6 +11,6 @@ String timeCut(String time) {
               : (difference.inSeconds > 1)
                   ? difference.inSeconds.toString() + " 秒前"
                   : "一瞬间前";
-
+  print(difference);
   return passTime;
 }

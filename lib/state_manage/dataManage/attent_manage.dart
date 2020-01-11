@@ -13,7 +13,8 @@ Map<String, String> eventType = {
   "publish_doc": "发布了文章",
   "watch_book": "关注了知识库",
   "follow_user": "关注了雀友",
-  "like_artboard": "给画板赞赏了稻谷"
+  "like_artboard": "给画板赞赏了稻谷",
+  "upload_artboards": "更新了画板"
 };
 
 // 由于数据过于复杂，快哭了，难以序列化，在这预先处理数据
@@ -32,7 +33,8 @@ Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
     oneData["event"] = [];
     Map<String, dynamic> subject = i["subject"];
 
-    if (!i.keys.toList().contains("subjects")) {
+    if (!i.containsKey("subjects")) {
+      // 如果
       Map<String, dynamic> event = {};
       event["count"] = subject["likes_count"] ??
           subject["followers_count"] ??
@@ -40,9 +42,10 @@ Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
           0;
       event["title"] = subject["name"] ?? subject["title"] ?? "";
       event["description"] = subject["description"] ?? "";
+      event["avatar_url"] = subject["avatar_url"] ?? "";
 
       event["image"] = subject["image"] ?? "";
-      event["avatar_url"] = subject["avatar_url"] ?? "";
+
       String slug = subject.containsKey("slug") ? ('/' + subject["slug"]) : "";
       Map secondSubject = i["second_subject"] ?? {};
       String bookSlug = secondSubject.containsKey("slug")
@@ -52,6 +55,17 @@ Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
           ? subject["login"]
           : subject["user"]["login"];
       event["url"] = "https://www.yuque.com/" + atwho + bookSlug + slug;
+      if (i["event_type"] == "upload_artboards") {
+        // 如果是更新了知识库，获得image使用;拼接
+        oneData["subject_type"] = "Artboard";
+        List imageList = i["params"]["artboards"] ?? [];
+        event["image"] = imageList.length > 0
+            ? imageList.map((res) => res["image"]).toList().join(";")
+            : "";
+        event["avatar_url"] = imageList.length > 0
+            ? imageList.map((res) => res["id"].toString()).toList().join(";")
+            : "";
+      }
       oneData["event"].add(event);
     } else {
       for (Map sub in i["subjects"]) {
@@ -68,7 +82,7 @@ Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
         String slug = sub["slug"] ?? "";
         event["url"] =
             "https://www.yuque.com/" + sub["user"]["login"] + "/" + slug;
-        oneData["event"].append(event);
+        oneData["event"].add(event);
       }
     }
 

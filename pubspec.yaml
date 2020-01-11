@@ -93,6 +93,7 @@ flutter:
     - assets/images/guide/guide1.jpg
     - assets/images/guide/guide2.jpg
     - assets/images/guide/guide3.jpg
+    - assets/images/explore/book.png
     - assets/images/my_page/position.png
     - assets/images/my_page/location.png
     - assets/images/my_page/member.png

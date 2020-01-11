@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
+import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 Widget userEvent(BuildContext context,
     {String userImg, String login, String title, String event, String time}) {
@@ -12,29 +13,7 @@ Widget userEvent(BuildContext context,
         onTap: () {
           openUrl(context, "https://www.yuque.com/$login");
         },
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(18),
-          child: Container(
-            width: 38,
-            height: 38,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Color.fromARGB(128, 116, 116, 116),
-                  offset: Offset(0, 0),
-                  blurRadius: 1,
-                ),
-              ],
-            ),
-            child: ClipOval(
-              child: FadeInImage.assetNetwork(
-                image: userImg,
-                placeholder: 'assets/images/logo.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ),
+        child: userAvatar(userImg),
       ),
       Expanded(
         flex: 1,

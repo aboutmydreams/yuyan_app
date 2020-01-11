@@ -4,11 +4,9 @@ import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_small/user_event.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/attent_data.dart';
 
-Widget toUser(BuildContext context, Data data) {
-  print(data.avatarUrl);
+Widget toUserOrBook(BuildContext context, Data data) {
   return Container(
-    margin: EdgeInsets.only(top: 7),
-    padding: EdgeInsets.only(top: 7, bottom: 7),
+    padding: EdgeInsets.only(top: 10, bottom: 16),
     decoration: BoxDecoration(
       color: AppColors.background,
       boxShadow: [
@@ -64,7 +62,7 @@ Widget oneEvent(Event event) {
       children: [
         SizedBox(width: 27),
         ClipRRect(
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(19),
           child: Container(
             width: 38,
             height: 38,
@@ -80,24 +78,39 @@ Widget oneEvent(Event event) {
             child: ClipOval(
               child: FadeInImage.assetNetwork(
                 image: event.avatarUrl,
-                placeholder: 'assets/images/logo.png',
+                placeholder: 'assets/images/explore/book.png',
                 fit: BoxFit.cover,
               ),
             ),
           ),
         ),
-        Container(
-          margin: EdgeInsets.only(left: 7),
-          child: Text(
-            "${event.title}",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.primaryElement,
-              fontFamily: "PingFang SC",
-              fontWeight: FontWeight.w500,
-              fontSize: 15,
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(left: 14),
+              child: Text(
+                "${event.title}",
+                textAlign: TextAlign.center,
+                style: AppStyles.textStyleB,
+              ),
             ),
-          ),
+            Container(
+              margin: EdgeInsets.only(left: 14),
+              child: Text(
+                "${event.description}",
+                maxLines: 1,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppColors.accentText,
+                  fontFamily: "PingFang SC",
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
+                ),
+              ),
+            )
+          ],
         ),
         Spacer(),
         Container(

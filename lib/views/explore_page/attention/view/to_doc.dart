@@ -11,8 +11,7 @@ Widget toDoc(BuildContext context, Data data) {
       openUrl(context, data.event[0].url);
     },
     child: Container(
-      margin: EdgeInsets.only(top: 7),
-      padding: EdgeInsets.only(top: 7, bottom: 7),
+      padding: EdgeInsets.only(top: 10, bottom: 16),
       decoration: BoxDecoration(
         color: AppColors.background,
         boxShadow: [
@@ -43,7 +42,7 @@ Widget toDoc(BuildContext context, Data data) {
                       time: timeCut(data.when)),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 13),
+                  margin: EdgeInsets.only(top: 7),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -60,19 +59,21 @@ Widget toDoc(BuildContext context, Data data) {
                           ),
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(top: 7),
-                        child: Text(
-                          data.event[0].description,
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 89, 89, 89),
-                            fontFamily: "PingFang SC",
-                            fontWeight: FontWeight.w400,
-                            fontSize: 13,
-                          ),
-                        ),
-                      ),
+                      data.event[0].description == ""
+                          ? SizedBox(height: 7)
+                          : Container(
+                              margin: EdgeInsets.only(top: 7),
+                              child: Text(
+                                data.event[0].description,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 89, 89, 89),
+                                  fontFamily: "PingFang SC",
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ),
                     ],
                   ),
                 ),
