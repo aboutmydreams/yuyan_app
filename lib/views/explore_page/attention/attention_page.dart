@@ -21,9 +21,6 @@ class _AttentionPageState extends State<AttentionPage>
   Widget build(BuildContext context) {
     return ScopedModelDescendant<TopStateModel>(
         builder: (context, child, model) {
-      print("=============offset=========");
-      print(model.attentManage.attentData.offset);
-      print("=============offset=========");
       List<Data> attentDatas = model.attentManage.attentData.data;
       return Scaffold(
         backgroundColor: AppColors.background,
@@ -32,8 +29,12 @@ class _AttentionPageState extends State<AttentionPage>
           itemBuilder: (BuildContext context, int index) {
             if (attentDatas[index].subjectType == "Doc") {
               return toDoc(context, attentDatas[index]);
-            } else {
-              return Text(attentDatas[index].subjectType);
+            } else if (attentDatas[index].subjectType == "User") {
+              return toUser(context, attentDatas[index]);
+            } else if (attentDatas[index].subjectType == "Book") {
+              return toUser(context, attentDatas[index]);
+            } else if (attentDatas[index].subjectType == "User") {
+              return toUser(context, attentDatas[index]);
             }
           },
         ),

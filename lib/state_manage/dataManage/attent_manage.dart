@@ -23,7 +23,7 @@ Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
 
     if (!i.keys.toList().contains("subjects")) {
       Map<String, dynamic> event = {};
-      if (subject.keys.toList().contains("title")) {
+      if (subject.containsKey("title")) {
         event["title"] = subject["title"];
         event["description"] = subject["description"];
       } else {
@@ -33,11 +33,15 @@ Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
 
       event["image"] = subject["image"] ?? "";
       event["avatar_url"] = subject["avatar_url"] ?? "";
-      String slug = subject["slug"] ?? "";
+      String slug = subject.containsKey("slug") ? ('/' + subject["slug"]) : "";
+      Map secondSubject = i["second_subject"] ?? {};
+      String bookSlug = secondSubject.containsKey("slug")
+          ? ('/' + secondSubject["slug"])
+          : "";
       String atwho = subject.keys.toList().contains("login")
           ? subject["login"]
           : subject["user"]["login"];
-      event["url"] = "https://www.yuque.com/" + atwho + "/" + slug;
+      event["url"] = "https://www.yuque.com/" + atwho + bookSlug + slug;
       one_data["event"].add(event);
     } else {
       for (Map sub in i["subjects"]) {
