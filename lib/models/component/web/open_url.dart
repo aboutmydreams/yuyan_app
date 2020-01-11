@@ -4,6 +4,7 @@ import 'package:yuyan_app/models/browser_web/browser_appbar.dart';
 import '../appUI.dart';
 
 openUrl(BuildContext context, String url) {
+  print(url);
   return Navigator.of(context).push(MaterialPageRoute(builder: (_) {
     return BrowserWithBar(
       url: url,

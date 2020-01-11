@@ -5,6 +5,7 @@ class AppColors {
   static Color accentText = Colors.black;
   static Color primaryText = Colors.black45;
   static Color background = Colors.white;
+  static Color eventBack = Color.fromRGBO(244, 244, 244, 1);
   static Color yellow = Color.fromRGBO(255, 233, 151, 1);
 }
 

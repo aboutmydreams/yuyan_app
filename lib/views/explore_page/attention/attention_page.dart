@@ -27,13 +27,14 @@ class _AttentionPageState extends State<AttentionPage>
         body: ListView.builder(
           itemCount: attentDatas.length,
           itemBuilder: (BuildContext context, int index) {
+            var eventTypeText = attentDatas[index].did;
             if (attentDatas[index].subjectType == "Doc") {
               return toDoc(context, attentDatas[index]);
             } else if (attentDatas[index].subjectType == "User") {
               return toUser(context, attentDatas[index]);
             } else if (attentDatas[index].subjectType == "Book") {
               return toUser(context, attentDatas[index]);
-            } else if (attentDatas[index].subjectType == "User") {
+            } else if (attentDatas[index].subjectType == "Artboard") {
               return toUser(context, attentDatas[index]);
             }
           },

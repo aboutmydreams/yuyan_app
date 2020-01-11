@@ -31,44 +31,82 @@ Widget toUser(BuildContext context, Data data) {
               Container(
                 height: 46,
                 margin: EdgeInsets.only(right: 3),
-                child: userEvent(
+                child: userEvent(context,
+                    login: data.login,
                     userImg: data.avatarUrl,
                     title: data.who,
-                    event: "${data.who}${data.did}",
+                    event: "${data.did}",
                     time: timeCut(data.when)),
               ),
               Container(
                 margin: EdgeInsets.only(top: 13),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        "${data.event[0].title}",
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          color: AppColors.accentText,
-                          fontFamily: "PingFang SC",
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15,
-                        ),
-                      ),
+                  children: data.event.map((f) => oneEvent(f)).toList(),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget oneEvent(Event event) {
+  return Container(
+    height: 66,
+    decoration: BoxDecoration(
+      color: AppColors.eventBack,
+      borderRadius: BorderRadius.circular(8),
+    ),
+    child: Row(
+      children: [
+        Container(
+          margin: EdgeInsets.only(left: 67),
+          child: Text(
+            "${event.title}",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Color.fromARGB(255, 71, 71, 71),
+              fontFamily: "PingFang SC",
+              fontWeight: FontWeight.w500,
+              fontSize: 15,
+            ),
+          ),
+        ),
+        Spacer(),
+        Container(
+          width: 27,
+          height: 17,
+          margin: EdgeInsets.only(right: 22),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Container(
+                  height: 16,
+                  margin: EdgeInsets.only(right: 3),
+                  child: Image.asset(
+                    "assets/images/logo.png",
+                    fit: BoxFit.none,
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  margin: EdgeInsets.only(left: 3),
+                  child: Text(
+                    "${event.count}",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: AppColors.primaryText,
+                      fontFamily: "PingFang SC",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
                     ),
-                    Container(
-                      margin: EdgeInsets.only(top: 7),
-                      child: Text(
-                        data.event[0].description,
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 89, 89, 89),
-                          fontFamily: "PingFang SC",
-                          fontWeight: FontWeight.w400,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ],

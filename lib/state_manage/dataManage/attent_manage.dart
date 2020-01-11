@@ -6,30 +6,40 @@ import 'package:yuyan_app/models/tools/write_json.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/attent_data.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/selection_data.dart';
 
+// 几种动态
+Map<String, String> eventType = {
+  "update_doc": "更新了文档",
+  "like_doc": "打赏了稻谷",
+  "publish_doc": "发布了文章",
+  "watch_book": "关注了知识库",
+  "follow_user": "关注了雀友",
+  "like_artboard": "给画板赞赏了稻谷"
+};
+
 // 由于数据过于复杂，快哭了，难以序列化，在这预先处理数据
 Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
   Map<String, dynamic> lastData = {};
-  List data_list = [];
+  List dataList = [];
   for (Map<String, dynamic> i in data["data"]) {
-    Map<String, dynamic> one_data = {};
-    one_data["who"] = i["actor"]["name"];
-    one_data["user_id"] = i["actor"]["id"];
-    one_data["avatar_url"] = i["actor"]["avatar_url"];
-    one_data["did"] = i["event_type"];
-    one_data["when"] = i["created_at"];
-    one_data["subject_type"] = i["subject_type"];
-    one_data["event"] = [];
+    Map<String, dynamic> oneData = {};
+    oneData["who"] = i["actor"]["name"];
+    oneData["user_id"] = i["actor"]["id"];
+    oneData["login"] = i["actor"]["login"];
+    oneData["avatar_url"] = i["actor"]["avatar_url"];
+    oneData["did"] = eventType[i["event_type"]] ?? i["event_type"];
+    oneData["when"] = i["created_at"];
+    oneData["subject_type"] = i["subject_type"];
+    oneData["event"] = [];
     Map<String, dynamic> subject = i["subject"];
 
     if (!i.keys.toList().contains("subjects")) {
       Map<String, dynamic> event = {};
-      if (subject.containsKey("title")) {
-        event["title"] = subject["title"];
-        event["description"] = subject["description"];
-      } else {
-        event["title"] = "";
-        event["description"] = "";
-      }
+      event["count"] = subject["likes_count"] ??
+          subject["followers_count"] ??
+          subject["watches_count"] ??
+          0;
+      event["title"] = subject["title"] ?? "";
+      event["description"] = subject["description"] ?? "";
 
       event["image"] = subject["image"] ?? "";
       event["avatar_url"] = subject["avatar_url"] ?? "";
@@ -42,10 +52,14 @@ Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
           ? subject["login"]
           : subject["user"]["login"];
       event["url"] = "https://www.yuque.com/" + atwho + bookSlug + slug;
-      one_data["event"].add(event);
+      oneData["event"].add(event);
     } else {
       for (Map sub in i["subjects"]) {
         Map<String, dynamic> event = {};
+        event["count"] = subject["likes_count"] ??
+            subject["followers_count"] ??
+            subject["watches_count"] ??
+            0;
         event["title"] = sub["name"];
         event["description"] = sub["description"];
         event["image"] = "";
@@ -54,13 +68,13 @@ Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
         String slug = sub["slug"] ?? "";
         event["url"] =
             "https://www.yuque.com/" + sub["user"]["login"] + "/" + slug;
-        one_data["event"].append(event);
+        oneData["event"].append(event);
       }
     }
 
-    data_list.add(one_data);
+    dataList.add(oneData);
   }
-  lastData["data"] = data_list;
+  lastData["data"] = dataList;
   lastData["offset"] = data["meta"]["offset"];
 
   return lastData;

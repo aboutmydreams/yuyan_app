@@ -6,7 +6,6 @@ import 'package:yuyan_app/models/widgets_small/user_event.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/attent_data.dart';
 
 Widget toDoc(BuildContext context, Data data) {
-  print(data.event[0].url);
   return GestureDetector(
     onTap: () {
       openUrl(context, data.event[0].url);
@@ -36,10 +35,11 @@ Widget toDoc(BuildContext context, Data data) {
                 Container(
                   height: 46,
                   margin: EdgeInsets.only(right: 3),
-                  child: userEvent(
+                  child: userEvent(context,
+                      login: data.login,
                       userImg: data.avatarUrl,
                       title: data.who,
-                      event: "${data.who}${data.did}",
+                      event: "${data.did}",
                       time: timeCut(data.when)),
                 ),
                 Container(

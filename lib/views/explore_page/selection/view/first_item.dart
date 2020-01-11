@@ -48,8 +48,9 @@ Widget firstItemUI(BuildContext context, Data data) {
           Container(
             height: 46,
             margin: EdgeInsets.only(right: 47),
-            child: userEvent(
+            child: userEvent(context,
                 userImg: data.user.smallAvatarUrl,
+                login: data.user.login,
                 title: data.title,
                 event: data.user.name + " 发布于 " + data.book.name),
           ),

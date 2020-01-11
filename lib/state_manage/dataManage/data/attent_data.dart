@@ -27,6 +27,7 @@ class AttentData {
 class Data {
   String who;
   int userId;
+  String login;
   String avatarUrl;
   String did;
   String when;
@@ -36,6 +37,7 @@ class Data {
   Data(
       {this.who,
       this.userId,
+      this.login,
       this.avatarUrl,
       this.did,
       this.when,
@@ -45,6 +47,7 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     who = json['who'];
     userId = json['user_id'];
+    login = json['login'];
     avatarUrl = json['avatar_url'];
     did = json['did'];
     when = json['when'];
@@ -61,6 +64,7 @@ class Data {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['who'] = this.who;
     data['user_id'] = this.userId;
+    data['login'] = this.login;
     data['avatar_url'] = this.avatarUrl;
     data['did'] = this.did;
     data['when'] = this.when;
@@ -77,6 +81,7 @@ class Event {
   String description;
   String image;
   String avatarUrl;
+  int count;
   String url;
   int bookId;
 
@@ -85,6 +90,7 @@ class Event {
       this.description,
       this.image,
       this.avatarUrl,
+      this.count,
       this.url,
       this.bookId});
 
@@ -93,6 +99,7 @@ class Event {
     description = json['description'];
     image = json['image'];
     avatarUrl = json['avatar_url'];
+    count = json['count'];
     url = json['url'];
     bookId = json['book_id'];
   }
@@ -103,6 +110,7 @@ class Event {
     data['description'] = this.description;
     data['image'] = this.image;
     data['avatar_url'] = this.avatarUrl;
+    data['count'] = this.count;
     data['url'] = this.url;
     data['book_id'] = this.bookId;
     return data;
