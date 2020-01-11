@@ -62,13 +62,37 @@ Widget oneEvent(Event event) {
     ),
     child: Row(
       children: [
+        SizedBox(width: 27),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(18),
+          child: Container(
+            width: 38,
+            height: 38,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromARGB(128, 116, 116, 116),
+                  offset: Offset(0, 0),
+                  blurRadius: 1,
+                ),
+              ],
+            ),
+            child: ClipOval(
+              child: FadeInImage.assetNetwork(
+                image: event.avatarUrl,
+                placeholder: 'assets/images/logo.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
         Container(
-          margin: EdgeInsets.only(left: 67),
+          margin: EdgeInsets.only(left: 7),
           child: Text(
             "${event.title}",
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Color.fromARGB(255, 71, 71, 71),
+              color: AppColors.primaryElement,
               fontFamily: "PingFang SC",
               fontWeight: FontWeight.w500,
               fontSize: 15,

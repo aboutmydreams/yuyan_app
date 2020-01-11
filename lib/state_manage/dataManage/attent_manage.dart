@@ -38,7 +38,7 @@ Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
           subject["followers_count"] ??
           subject["watches_count"] ??
           0;
-      event["title"] = subject["title"] ?? "";
+      event["title"] = subject["name"] ?? subject["title"] ?? "";
       event["description"] = subject["description"] ?? "";
 
       event["image"] = subject["image"] ?? "";
