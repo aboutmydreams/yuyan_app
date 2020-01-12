@@ -3,6 +3,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/attent_data.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
+import 'package:yuyan_app/views/explore_page/attention/view/to_artboard.dart';
 import 'package:yuyan_app/views/explore_page/attention/view/to_doc.dart';
 import 'package:yuyan_app/views/explore_page/attention/view/to_user_or_book.dart';
 
@@ -19,6 +20,7 @@ class _AttentionPageState extends State<AttentionPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return ScopedModelDescendant<TopStateModel>(
       builder: (context, child, model) {
         List<Data> attentDatas = model.attentManage.attentData.data;
@@ -29,12 +31,12 @@ class _AttentionPageState extends State<AttentionPage>
             itemBuilder: (BuildContext context, int index) {
               if (attentDatas[index].subjectType == "Doc") {
                 return toDoc(context, attentDatas[index]);
+              } else if (attentDatas[index].subjectType == "Artboard") {
+                return toArtboard(context, attentDatas[index]);
               } else if (attentDatas[index].subjectType == "User") {
                 return toUserOrBook(context, attentDatas[index]);
               } else if (attentDatas[index].subjectType == "Book") {
                 return toUserOrBook(context, attentDatas[index]);
-              } else if (attentDatas[index].subjectType == "Artboard") {
-                return toDoc(context, attentDatas[index]);
               } else {
                 return Text(attentDatas[index].subjectType);
               }

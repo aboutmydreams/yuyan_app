@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_small/user_event.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/attent_data.dart';
@@ -38,9 +39,14 @@ Widget toUserOrBook(BuildContext context, Data data) {
               ),
               Container(
                 margin: EdgeInsets.only(top: 13),
+                decoration: BoxDecoration(
+                  color: AppColors.eventBack,
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: data.event.map((f) => oneEvent(f)).toList(),
+                  children:
+                      data.event.map((f) => oneEvent(context, f)).toList(),
                 ),
               ),
             ],
@@ -51,105 +57,108 @@ Widget toUserOrBook(BuildContext context, Data data) {
   );
 }
 
-Widget oneEvent(Event event) {
-  return Container(
-    height: 66,
-    decoration: BoxDecoration(
-      color: AppColors.eventBack,
-      borderRadius: BorderRadius.circular(8),
-    ),
-    child: Row(
-      children: [
-        SizedBox(width: 27),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(19),
-          child: Container(
-            width: 38,
-            height: 38,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Color.fromARGB(128, 116, 116, 116),
-                  offset: Offset(0, 0),
-                  blurRadius: 1,
-                ),
-              ],
-            ),
-            child: ClipOval(
-              child: FadeInImage.assetNetwork(
-                image: event.avatarUrl,
-                placeholder: 'assets/images/explore/book.png',
-                fit: BoxFit.cover,
+Widget oneEvent(BuildContext context, Event event) {
+  return GestureDetector(
+    onTap: () {
+      openUrl(context, event.url);
+    },
+    child: Container(
+      height: 66,
+      child: Row(
+        children: [
+          SizedBox(width: 27),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(19),
+            child: Container(
+              width: 38,
+              height: 38,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Color.fromARGB(128, 116, 116, 116),
+                    offset: Offset(0, 0),
+                    blurRadius: 1,
+                  ),
+                ],
+              ),
+              child: ClipOval(
+                child: event.avatarUrl != ""
+                    ? FadeInImage.assetNetwork(
+                        image: event.avatarUrl,
+                        placeholder: 'assets/images/explore/book.png',
+                        fit: BoxFit.cover,
+                      )
+                    : Image.asset('assets/images/explore/book.png'),
               ),
             ),
           ),
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(left: 14),
-              child: Text(
-                "${event.title}",
-                textAlign: TextAlign.center,
-                style: AppStyles.textStyleB,
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 14),
-              child: Text(
-                "${event.description}",
-                maxLines: 1,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: AppColors.accentText,
-                  fontFamily: "PingFang SC",
-                  fontWeight: FontWeight.w400,
-                  fontSize: 12,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(left: 14),
+                child: Text(
+                  "${event.title}",
+                  textAlign: TextAlign.center,
+                  style: AppStyles.textStyleB,
                 ),
               ),
-            )
-          ],
-        ),
-        Spacer(),
-        Container(
-          width: 27,
-          height: 17,
-          margin: EdgeInsets.only(right: 22),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Container(
-                  height: 16,
-                  margin: EdgeInsets.only(right: 3),
-                  child: Image.asset(
-                    "assets/images/logo.png",
-                    fit: BoxFit.none,
+              Container(
+                margin: EdgeInsets.only(left: 14),
+                child: Text(
+                  "${event.description}",
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: AppColors.accentText,
+                    fontFamily: "PingFang SC",
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Container(
-                  margin: EdgeInsets.only(left: 3),
-                  child: Text(
-                    "${event.count}",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: AppColors.primaryText,
-                      fontFamily: "PingFang SC",
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12,
+              )
+            ],
+          ),
+          Spacer(),
+          Container(
+            width: 27,
+            height: 17,
+            margin: EdgeInsets.only(right: 22),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    height: 16,
+                    margin: EdgeInsets.only(right: 3),
+                    child: Image.asset(
+                      "assets/images/explore/fellower.png",
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
-              ),
-            ],
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    margin: EdgeInsets.only(left: 3),
+                    child: Text(
+                      "${event.count}",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppColors.primaryText,
+                        fontFamily: "PingFang SC",
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 }
