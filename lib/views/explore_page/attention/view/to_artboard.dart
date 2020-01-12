@@ -64,43 +64,52 @@ Widget toArtboard(BuildContext context, Data data) {
                 ),
               ),
               // 更新图片预览
-              Container(
-                width: MediaQuery.of(context).size.width - 36,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Stack(
-                  children: <Widget>[
-                    Hero(
-                      tag: "artboard",
-                      child: FadeInImage.assetNetwork(
-                        // height: MediaQuery.of(context).size.width * 0.7,
-                        width: MediaQuery.of(context).size.width - 36,
-                        image: data.event[0].image,
-                        placeholder: 'assets/images/explore/book.png',
-                        fit: BoxFit.fitWidth,
-                      ),
-                    ),
-                    Positioned(
-                      child: Opacity(
-                        opacity: 0.4,
-                        child: Container(
-                          padding: EdgeInsets.only(top: 4, left: 4, right: 4),
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(13),
-                          ),
-                          height: 26,
-                          child: Text(
-                            "共 ${data.event.length} 张",
-                            style: TextStyle(fontSize: 12, color: Colors.white),
-                          ),
+              GestureDetector(
+                onTap: () {
+                  openUrl(
+                      context,
+                      data.event[0].url +
+                          "/" +
+                          data.event[0].bookId.toString());
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width - 36,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Stack(
+                    children: <Widget>[
+                      Hero(
+                        tag: "artboard",
+                        child: FadeInImage.assetNetwork(
+                          width: MediaQuery.of(context).size.width - 36,
+                          image: data.event[0].image,
+                          placeholder: 'assets/images/explore/book.png',
+                          fit: BoxFit.fitWidth,
                         ),
                       ),
-                    )
-                  ],
+                      Positioned(
+                        child: Opacity(
+                          opacity: 0.4,
+                          child: Container(
+                            padding: EdgeInsets.only(top: 4, left: 4, right: 4),
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(13),
+                            ),
+                            height: 26,
+                            child: Text(
+                              "共 ${data.event.length} 张",
+                              style:
+                                  TextStyle(fontSize: 12, color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ),

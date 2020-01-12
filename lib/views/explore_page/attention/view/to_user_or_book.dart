@@ -101,7 +101,7 @@ Widget oneEvent(BuildContext context, Event event) {
                 child: Text(
                   "${event.title}",
                   textAlign: TextAlign.center,
-                  style: AppStyles.textStyleB,
+                  style: AppStyles.textStyleBB,
                 ),
               ),
               Container(
@@ -110,12 +110,7 @@ Widget oneEvent(BuildContext context, Event event) {
                   "${event.description}",
                   maxLines: 1,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.accentText,
-                    fontFamily: "PingFang SC",
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12,
-                  ),
+                  style: AppStyles.textStyleC,
                 ),
               )
             ],
@@ -145,12 +140,7 @@ Widget oneEvent(BuildContext context, Event event) {
                     child: Text(
                       "${event.count}",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AppColors.primaryText,
-                        fontFamily: "PingFang SC",
-                        fontWeight: FontWeight.w400,
-                        fontSize: 12,
-                      ),
+                      style: AppStyles.textStyleC,
                     ),
                   ),
                 ),

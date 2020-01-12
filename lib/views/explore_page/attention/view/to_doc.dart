@@ -51,12 +51,7 @@ Widget toDoc(BuildContext context, Data data) {
                         child: Text(
                           "${data.event[0].title}",
                           textAlign: TextAlign.start,
-                          style: TextStyle(
-                            color: AppColors.accentText,
-                            fontFamily: "PingFang SC",
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15,
-                          ),
+                          style: AppStyles.textStyleBB,
                         ),
                       ),
                       data.event[0].description == ""
