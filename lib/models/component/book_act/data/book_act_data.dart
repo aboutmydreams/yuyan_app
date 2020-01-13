@@ -1,0 +1,171 @@
+class BookArtboard {
+  List<Data> data;
+
+  BookArtboard({this.data});
+
+  BookArtboard.fromJson(Map<String, dynamic> json) {
+    if (json['data'] != null) {
+      data = new List<Data>();
+      json['data'].forEach((v) {
+        data.add(new Data.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.data != null) {
+      data['data'] = this.data.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Data {
+  int id;
+  String name;
+  int sort;
+  String artboardType;
+  Null pinnedAt;
+  String createdAt;
+  String updatedAt;
+  String contentUpdatedAt;
+  List<Artboards> artboards;
+  String sSerializer;
+
+  Data(
+      {this.id,
+      this.name,
+      this.sort,
+      this.artboardType,
+      this.pinnedAt,
+      this.createdAt,
+      this.updatedAt,
+      this.contentUpdatedAt,
+      this.artboards,
+      this.sSerializer});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    sort = json['sort'];
+    artboardType = json['artboard_type'];
+    pinnedAt = json['pinned_at'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    contentUpdatedAt = json['content_updated_at'];
+    if (json['artboards'] != null) {
+      artboards = new List<Artboards>();
+      json['artboards'].forEach((v) {
+        artboards.add(new Artboards.fromJson(v));
+      });
+    }
+    sSerializer = json['_serializer'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['sort'] = this.sort;
+    data['artboard_type'] = this.artboardType;
+    data['pinned_at'] = this.pinnedAt;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['content_updated_at'] = this.contentUpdatedAt;
+    if (this.artboards != null) {
+      data['artboards'] = this.artboards.map((v) => v.toJson()).toList();
+    }
+    data['_serializer'] = this.sSerializer;
+    return data;
+  }
+}
+
+class Artboards {
+  int id;
+  int artboardGroupId;
+  int assetId;
+  int assetVersionId;
+  int sort;
+  String image;
+  Null smallImage;
+  String labelMapUrl;
+  String name;
+  int width;
+  int height;
+  int commentsCount;
+  String createdAt;
+  String updatedAt;
+  Null contentUpdatedAt;
+  Null artboardGroup;
+  Null user;
+  Null book;
+  String sSerializer;
+
+  Artboards(
+      {this.id,
+      this.artboardGroupId,
+      this.assetId,
+      this.assetVersionId,
+      this.sort,
+      this.image,
+      this.smallImage,
+      this.labelMapUrl,
+      this.name,
+      this.width,
+      this.height,
+      this.commentsCount,
+      this.createdAt,
+      this.updatedAt,
+      this.contentUpdatedAt,
+      this.artboardGroup,
+      this.user,
+      this.book,
+      this.sSerializer});
+
+  Artboards.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    artboardGroupId = json['artboard_group_id'];
+    assetId = json['asset_id'];
+    assetVersionId = json['asset_version_id'];
+    sort = json['sort'];
+    image = json['image'];
+    smallImage = json['small_image'];
+    labelMapUrl = json['label_map_url'];
+    name = json['name'];
+    width = json['width'];
+    height = json['height'];
+    commentsCount = json['comments_count'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    contentUpdatedAt = json['content_updated_at'];
+    artboardGroup = json['artboard_group'];
+    user = json['user'];
+    book = json['book'];
+    sSerializer = json['_serializer'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['artboard_group_id'] = this.artboardGroupId;
+    data['asset_id'] = this.assetId;
+    data['asset_version_id'] = this.assetVersionId;
+    data['sort'] = this.sort;
+    data['image'] = this.image;
+    data['small_image'] = this.smallImage;
+    data['label_map_url'] = this.labelMapUrl;
+    data['name'] = this.name;
+    data['width'] = this.width;
+    data['height'] = this.height;
+    data['comments_count'] = this.commentsCount;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['content_updated_at'] = this.contentUpdatedAt;
+    data['artboard_group'] = this.artboardGroup;
+    data['user'] = this.user;
+    data['book'] = this.book;
+    data['_serializer'] = this.sSerializer;
+    return data;
+  }
+}
