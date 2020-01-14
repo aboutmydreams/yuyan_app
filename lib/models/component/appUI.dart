@@ -28,24 +28,32 @@ class AppStyles {
     fontSize: 24,
   );
 
-  // 各种动态用户名文字样式
-  static TextStyle textStyleB = TextStyle(
-    color: AppColors.accentText,
-    fontFamily: "PingFang SC",
-    fontWeight: FontWeight.w600,
-    fontSize: 15,
-  );
-
   // 各种动态标题文字样式
-  static TextStyle textStyleBB = TextStyle(
+  static TextStyle textStyleB = TextStyle(
     color: AppColors.accentText,
     fontFamily: "PingFang SC",
     fontWeight: FontWeight.w600,
     fontSize: 17,
   );
 
+  // 各种动态用户名文字样式
+  static TextStyle textStyleBB = TextStyle(
+    color: AppColors.accentText,
+    fontFamily: "PingFang SC",
+    fontWeight: FontWeight.w600,
+    fontSize: 15,
+  );
+
   // 各种动态内容文字样式
   static TextStyle textStyleC = TextStyle(
+    color: Color.fromARGB(255, 89, 89, 89),
+    fontFamily: "PingFang SC",
+    fontWeight: FontWeight.w400,
+    fontSize: 13,
+  );
+
+  // 各种动态内容文字样式
+  static TextStyle textStyleCC = TextStyle(
     color: AppColors.primaryText,
     fontFamily: "PingFang SC",
     fontWeight: FontWeight.w400,

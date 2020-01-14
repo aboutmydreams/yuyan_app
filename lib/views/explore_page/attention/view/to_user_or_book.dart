@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
+import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_small/user_event.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/attent_data.dart';
@@ -95,25 +96,36 @@ Widget oneEvent(BuildContext context, Event event) {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.only(left: 14),
-                child: Text(
-                  "${event.title}",
-                  textAlign: TextAlign.center,
-                  style: AppStyles.textStyleBB,
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 14),
-                child: Text(
-                  "${event.description}",
-                  maxLines: 1,
-                  textAlign: TextAlign.center,
-                  style: AppStyles.textStyleC,
-                ),
-              )
-            ],
+            children: event.description != null
+                ? [
+                    Container(
+                      margin: EdgeInsets.only(left: 14),
+                      child: Text(
+                        "${event.title}",
+                        textAlign: TextAlign.center,
+                        style: AppStyles.textStyleBB,
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 14),
+                      child: Text(
+                        "${clearText(event.description, 20)}",
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                        style: AppStyles.textStyleCC,
+                      ),
+                    )
+                  ]
+                : [
+                    Container(
+                      margin: EdgeInsets.only(left: 14),
+                      child: Text(
+                        "${event.title}",
+                        textAlign: TextAlign.center,
+                        style: AppStyles.textStyleBB,
+                      ),
+                    ),
+                  ],
           ),
           Spacer(),
           Container(
@@ -140,7 +152,7 @@ Widget oneEvent(BuildContext context, Event event) {
                     child: Text(
                       "${event.count}",
                       textAlign: TextAlign.center,
-                      style: AppStyles.textStyleC,
+                      style: AppStyles.textStyleCC,
                     ),
                   ),
                 ),

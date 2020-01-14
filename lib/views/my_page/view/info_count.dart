@@ -6,7 +6,7 @@ Widget infoCount() {
     alignment: Alignment.topCenter,
     child: Container(
       width: 289,
-      height: 52,
+      height: 70,
       margin: EdgeInsets.only(top: 28),
       child: Row(
         children: [
@@ -52,7 +52,7 @@ Widget infoCount() {
                 Text(
                   "团队语",
                   textAlign: TextAlign.center,
-                  style: AppStyles.textStyleB,
+                  style: AppStyles.textStyleBB,
                 ),
               ],
             ),
@@ -100,7 +100,7 @@ Widget infoCount() {
                 Text(
                   "知识库",
                   textAlign: TextAlign.center,
-                  style: AppStyles.textStyleB,
+                  style: AppStyles.textStyleBB,
                 ),
               ],
             ),
@@ -152,7 +152,7 @@ Widget infoCount() {
                   child: Text(
                     "关注了",
                     textAlign: TextAlign.center,
-                    style: AppStyles.textStyleB,
+                    style: AppStyles.textStyleBB,
                   ),
                 ),
               ],
@@ -203,7 +203,7 @@ Widget infoCount() {
                   child: Text(
                     "关注者",
                     textAlign: TextAlign.center,
-                    style: AppStyles.textStyleB,
+                    style: AppStyles.textStyleBB,
                   ),
                 ),
               ],

@@ -4,7 +4,7 @@ import 'package:yuyan_app/models/component/appUI.dart';
 Widget userInfo() {
   return Container(
     width: 322,
-    height: 89,
+    height: 92,
     margin: EdgeInsets.only(left: 24, top: 66),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -12,7 +12,7 @@ Widget userInfo() {
       children: [
         Container(
           width: 89,
-          height: 89,
+          height: 92,
           child: ClipOval(
             child: Image.asset(
               "assets/images/logo.png",

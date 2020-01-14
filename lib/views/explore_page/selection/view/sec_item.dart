@@ -101,7 +101,7 @@ Widget secItemUI(BuildContext context, Data data) {
                           margin: EdgeInsets.only(right: 38),
                           child: Text(clearText(data.user.name, 12),
                               textAlign: TextAlign.center,
-                              style: AppStyles.textStyleC),
+                              style: AppStyles.textStyleCC),
                         ),
                         Expanded(child: SizedBox()),
                         Container(

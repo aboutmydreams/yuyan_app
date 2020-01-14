@@ -99,8 +99,7 @@ Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
           event["book_id"] = sub["book_id"] ?? 0;
           event["avatar_url"] = sub["avatar_url"] ?? "";
           String slug = sub["slug"] ?? "";
-          event["url"] =
-              "https://www.yuque.com/" + sub["user"]["login"] + "/" + slug;
+          event["url"] = "https://www.yuque.com/" + sub["login"] + "/" + slug;
           oneData["event"].add(event);
         }
       }

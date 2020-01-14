@@ -51,7 +51,7 @@ Widget toDoc(BuildContext context, Data data) {
                         child: Text(
                           "${data.event[0].title}",
                           textAlign: TextAlign.start,
-                          style: AppStyles.textStyleBB,
+                          style: AppStyles.textStyleB,
                         ),
                       ),
                       data.event[0].description == ""

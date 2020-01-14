@@ -58,7 +58,7 @@ Widget toArtboard(BuildContext context, Data data) {
                     label: Text(
                       "${data.event[0].title}",
                       textAlign: TextAlign.center,
-                      style: AppStyles.textStyleB,
+                      style: AppStyles.textStyleBB,
                     ),
                   ),
                 ),

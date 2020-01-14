@@ -41,7 +41,7 @@ Widget oneOwn(String text, String imgName) {
         Text(
           "$text",
           textAlign: TextAlign.center,
-          style: AppStyles.textStyleB,
+          style: AppStyles.textStyleBB,
         ),
       ],
     ),
