@@ -56,6 +56,9 @@ Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
           : "";
       String slug = subject.containsKey("slug") ? ('/' + subject["slug"]) : "";
 
+      if (i["subject_type"] == "Doc") {
+        atwho = i["book"]["user"]["login"];
+      }
       event["url"] = "https://www.yuque.com/" + atwho + bookSlug + slug;
       if (i["event_type"] == "upload_artboards") {
         // 如果是更新了画板，获得 image url
