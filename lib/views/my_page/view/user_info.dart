@@ -35,12 +35,7 @@ Widget userInfo() {
                     Text(
                       "邓文浩",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AppColors.accentText,
-                        fontFamily: "PingFang SC",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 24,
-                      ),
+                      style: AppStyles.textStyleA,
                     ),
                     Container(
                       width: 21,

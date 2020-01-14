@@ -30,6 +30,7 @@ class SelectManage extends Model {
     var dioData = await DioReq.get("/explore/selections?limit=1&page=$page");
     SelectionsData selectionsData = SelectionsData.fromJson(dioData);
     _selectData.data.addAll(selectionsData.data);
+    notifyListeners();
   }
 
   saveSelecData() async {

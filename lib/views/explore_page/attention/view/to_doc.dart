@@ -61,12 +61,7 @@ Widget toDoc(BuildContext context, Data data) {
                               child: Text(
                                 data.event[0].description,
                                 textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 89, 89, 89),
-                                  fontFamily: "PingFang SC",
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 13,
-                                ),
+                                style: AppStyles.textStyleC,
                               ),
                             ),
                     ],

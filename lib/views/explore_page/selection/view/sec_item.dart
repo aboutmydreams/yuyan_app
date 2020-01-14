@@ -59,12 +59,7 @@ Widget secItemUI(BuildContext context, Data data) {
                     data.title,
                     maxLines: 2,
                     textAlign: TextAlign.left,
-                    style: TextStyle(
-                      color: AppColors.accentText,
-                      fontFamily: "PingFang SC",
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15,
-                    ),
+                    style: AppStyles.textStyleBB,
                   ),
                   Expanded(child: SizedBox()),
                   Container(
@@ -124,12 +119,7 @@ Widget secItemUI(BuildContext context, Data data) {
                                 child: Text(
                                   "${data.likesCount * 7}",
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: AppColors.primaryText,
-                                    fontFamily: "PingFang SC",
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12,
-                                  ),
+                                  style: AppStyles.textStyleCC,
                                 ),
                               ),
                             ],

@@ -132,6 +132,7 @@ class AttentManage extends Model {
     AttentData attentionData = AttentData.fromJson(mapData);
     offset = attentionData.offset;
     _attentData.data.addAll(attentionData.data);
+    notifyListeners();
   }
 
   saveEventsData() async {
