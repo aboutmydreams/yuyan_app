@@ -42,12 +42,7 @@ Widget infoCount() {
                         child: Text(
                           "7",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.accentText,
-                            fontFamily: "Silom",
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14,
-                          ),
+                          style: AppStyles.countStyle,
                         ),
                       ),
                     ],
@@ -95,12 +90,7 @@ Widget infoCount() {
                         child: Text(
                           "10",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.accentText,
-                            fontFamily: "Silom",
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14,
-                          ),
+                          style: AppStyles.countStyle,
                         ),
                       ),
                     ],
@@ -150,12 +140,7 @@ Widget infoCount() {
                         child: Text(
                           "26",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.accentText,
-                            fontFamily: "Silom",
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14,
-                          ),
+                          style: AppStyles.countStyle,
                         ),
                       ),
                     ],
@@ -206,12 +191,7 @@ Widget infoCount() {
                         child: Text(
                           "58",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: AppColors.accentText,
-                            fontFamily: "Silom",
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14,
-                          ),
+                          style: AppStyles.countStyle,
                         ),
                       ),
                     ],

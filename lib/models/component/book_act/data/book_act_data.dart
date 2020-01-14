@@ -1,27 +1,27 @@
 class BookArtboard {
-  List<Data> data;
+  List<Actboard> actboard;
 
-  BookArtboard({this.data});
+  BookArtboard({this.actboard});
 
   BookArtboard.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<Data>();
+      actboard = new List<Actboard>();
       json['data'].forEach((v) {
-        data.add(new Data.fromJson(v));
+        actboard.add(new Actboard.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> actboard = new Map<String, dynamic>();
+    if (this.actboard != null) {
+      actboard['actboard'] = this.actboard.map((v) => v.toJson()).toList();
     }
-    return data;
+    return actboard;
   }
 }
 
-class Data {
+class Actboard {
   int id;
   String name;
   int sort;
@@ -33,7 +33,7 @@ class Data {
   List<Artboards> artboards;
   String sSerializer;
 
-  Data(
+  Actboard(
       {this.id,
       this.name,
       this.sort,
@@ -45,7 +45,7 @@ class Data {
       this.artboards,
       this.sSerializer});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  Actboard.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     sort = json['sort'];
@@ -64,20 +64,20 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['sort'] = this.sort;
-    data['artboard_type'] = this.artboardType;
-    data['pinned_at'] = this.pinnedAt;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['content_updated_at'] = this.contentUpdatedAt;
+    final Map<String, dynamic> actboard = new Map<String, dynamic>();
+    actboard['id'] = this.id;
+    actboard['name'] = this.name;
+    actboard['sort'] = this.sort;
+    actboard['artboard_type'] = this.artboardType;
+    actboard['pinned_at'] = this.pinnedAt;
+    actboard['created_at'] = this.createdAt;
+    actboard['updated_at'] = this.updatedAt;
+    actboard['content_updated_at'] = this.contentUpdatedAt;
     if (this.artboards != null) {
-      data['artboards'] = this.artboards.map((v) => v.toJson()).toList();
+      actboard['artboards'] = this.artboards.map((v) => v.toJson()).toList();
     }
-    data['_serializer'] = this.sSerializer;
-    return data;
+    actboard['_serializer'] = this.sSerializer;
+    return actboard;
   }
 }
 
@@ -146,26 +146,26 @@ class Artboards {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['artboard_group_id'] = this.artboardGroupId;
-    data['asset_id'] = this.assetId;
-    data['asset_version_id'] = this.assetVersionId;
-    data['sort'] = this.sort;
-    data['image'] = this.image;
-    data['small_image'] = this.smallImage;
-    data['label_map_url'] = this.labelMapUrl;
-    data['name'] = this.name;
-    data['width'] = this.width;
-    data['height'] = this.height;
-    data['comments_count'] = this.commentsCount;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['content_updated_at'] = this.contentUpdatedAt;
-    data['artboard_group'] = this.artboardGroup;
-    data['user'] = this.user;
-    data['book'] = this.book;
-    data['_serializer'] = this.sSerializer;
-    return data;
+    final Map<String, dynamic> actboard = new Map<String, dynamic>();
+    actboard['id'] = this.id;
+    actboard['artboard_group_id'] = this.artboardGroupId;
+    actboard['asset_id'] = this.assetId;
+    actboard['asset_version_id'] = this.assetVersionId;
+    actboard['sort'] = this.sort;
+    actboard['image'] = this.image;
+    actboard['small_image'] = this.smallImage;
+    actboard['label_map_url'] = this.labelMapUrl;
+    actboard['name'] = this.name;
+    actboard['width'] = this.width;
+    actboard['height'] = this.height;
+    actboard['comments_count'] = this.commentsCount;
+    actboard['created_at'] = this.createdAt;
+    actboard['updated_at'] = this.updatedAt;
+    actboard['content_updated_at'] = this.contentUpdatedAt;
+    actboard['artboard_group'] = this.artboardGroup;
+    actboard['user'] = this.user;
+    actboard['book'] = this.book;
+    actboard['_serializer'] = this.sSerializer;
+    return actboard;
   }
 }
