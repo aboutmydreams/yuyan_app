@@ -21,6 +21,7 @@ class _SelectionPageState extends State<SelectionPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return ScopedModelDescendant<TopStateModel>(
         builder: (context, child, model) {
       List<Data> selecdatas = model.selectManage.selecData.data;

@@ -14,7 +14,7 @@ class _ExplorePageState extends State<ExplorePage> {
 }
 
 DefaultTabController theController = DefaultTabController(
-  length: 3,
+  length: 2,
   child: Scaffold(
     backgroundColor: Colors.grey[100],
     appBar: AppBar(
@@ -43,9 +43,9 @@ DefaultTabController theController = DefaultTabController(
           Tab(
             text: "精选",
           ),
-          Tab(
-            text: "广场",
-          ),
+          // Tab(
+          //   text: "广场",
+          // ),
         ],
       ),
     ),
@@ -58,9 +58,9 @@ DefaultTabController theController = DefaultTabController(
         Container(
           child: SelectionPage(),
         ),
-        Container(
-          child: Text("data"),
-        ),
+        // Container(
+        //   child: Text("data"),
+        // ),
       ],
     ),
 
