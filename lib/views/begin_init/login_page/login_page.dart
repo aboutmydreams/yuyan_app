@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
               topModel.update();
             });
             Timer(
-              const Duration(microseconds: 1),
+              const Duration(microseconds: 3),
               () {
                 setState(
                   () {

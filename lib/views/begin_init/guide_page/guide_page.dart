@@ -18,15 +18,14 @@ class GuidePage extends StatelessWidget {
     n += 1;
     if ((n >= 3) & (page == 2)) {
       print(n);
-      Navigator.pushNamedAndRemoveUntil(context, "/", (route) => route == null);
+      Navigator.pushNamedAndRemoveUntil(
+          context, "/login", (route) => route == null);
     }
   }
 
   updateTypeCallback(UpdateType updateType) {
     print(updateType);
   }
-
-  toLoginPage(context) {}
 
   @override
   Widget build(BuildContext context) {
