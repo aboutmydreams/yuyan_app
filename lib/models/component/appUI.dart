@@ -47,9 +47,11 @@ class AppStyles {
   // 各种动态内容文字样式
   static TextStyle textStyleC = TextStyle(
     color: Color.fromARGB(255, 89, 89, 89),
+    height: 1.5,
+    letterSpacing: 1,
     fontFamily: "PingFang SC",
     fontWeight: FontWeight.w400,
-    fontSize: 13,
+    fontSize: 14,
   );
 
   // 各种动态内容文字样式

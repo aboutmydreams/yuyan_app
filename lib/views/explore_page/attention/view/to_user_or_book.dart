@@ -8,7 +8,7 @@ import 'package:yuyan_app/state_manage/dataManage/data/attent_data.dart';
 
 Widget toUserOrBook(BuildContext context, Data data) {
   return Container(
-    padding: EdgeInsets.only(top: 10, bottom: 16),
+    padding: EdgeInsets.only(top: 16, bottom: 20),
     decoration: BoxDecoration(
       color: AppColors.background,
       boxShadow: [

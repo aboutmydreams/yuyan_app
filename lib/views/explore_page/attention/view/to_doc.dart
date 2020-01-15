@@ -11,7 +11,7 @@ Widget toDoc(BuildContext context, Data data) {
       openUrl(context, data.event[0].url);
     },
     child: Container(
-      padding: EdgeInsets.only(top: 10, bottom: 16),
+      padding: EdgeInsets.only(top: 16, bottom: 20),
       decoration: BoxDecoration(
         color: AppColors.background,
         boxShadow: [
@@ -59,7 +59,7 @@ Widget toDoc(BuildContext context, Data data) {
                           : Container(
                               margin: EdgeInsets.only(top: 7),
                               child: Text(
-                                data.event[0].description,
+                                "${data.event[0].description}",
                                 textAlign: TextAlign.start,
                                 style: AppStyles.textStyleC,
                               ),
