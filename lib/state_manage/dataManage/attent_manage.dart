@@ -36,9 +36,9 @@ Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
       // 如果 没有多个 subjects
 
       Map<String, dynamic> event = {};
-      event["count"] = subject["likes_count"] ??
-          subject["followers_count"] ??
+      event["count"] = subject["followers_count"] ??
           subject["watches_count"] ??
+          subject["likes_count"] ??
           0;
       event["title"] = subject["name"] ?? subject["title"] ?? "";
       event["description"] = subject["description"] ?? "";
@@ -93,9 +93,9 @@ Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
         // 关注了多个用户或多个知识库
         for (Map sub in i["subjects"]) {
           Map<String, dynamic> event = {};
-          event["count"] = subject["likes_count"] ??
-              subject["followers_count"] ??
+          event["count"] = subject["followers_count"] ??
               subject["watches_count"] ??
+              subject["likes_count"] ??
               0;
           event["title"] = sub["name"];
           event["description"] = sub["description"];

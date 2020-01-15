@@ -24,7 +24,7 @@ Widget toUserOrBook(BuildContext context, Data data) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: EdgeInsets.only(left: 18, right: 19),
+          margin: EdgeInsets.only(left: 18, right: 18),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -67,7 +67,7 @@ Widget oneEvent(BuildContext context, Event event) {
       height: 66,
       child: Row(
         children: [
-          SizedBox(width: 27),
+          SizedBox(width: 16),
           ClipRRect(
             borderRadius: BorderRadius.circular(19),
             child: Container(
@@ -131,9 +131,9 @@ Widget oneEvent(BuildContext context, Event event) {
           ),
           Spacer(),
           Container(
-            width: 27,
+            width: 50,
             height: 17,
-            margin: EdgeInsets.only(right: 22),
+            margin: EdgeInsets.only(right: 12),
             child: Row(
               children: [
                 Expanded(
