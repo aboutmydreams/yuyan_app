@@ -46,8 +46,8 @@ class NewsManage extends Model {
   }
 
   void update() {
-    saveSelecData().then((res) {
-      getSaveData();
+    saveSelecData().then((res) async {
+      await getSaveData();
     });
   }
 }
