@@ -96,7 +96,7 @@ Widget oneEvent(BuildContext context, Event event) {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: event.description != null
+            children: (event.description != null) && (event.description != "")
                 ? [
                     Container(
                       margin: EdgeInsets.only(left: 14),

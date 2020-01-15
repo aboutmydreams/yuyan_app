@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
@@ -36,13 +37,20 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: CurvedNavigationBar(
         key: _bottomNavigationKey,
         color: Colors.yellow,
+        backgroundColor: Colors.white,
         animationCurve: Curves.easeInQuad,
         height: 64,
-        backgroundColor: Colors.white,
         items: <Widget>[
           Icon(Icons.insert_emoticon, size: 34),
           Icon(Icons.wrap_text, size: 34),
-          Icon(Icons.notifications_none, size: 34),
+          Container(
+            // padding: EdgeInsets.all(0),
+            child: Badge(
+                padding: EdgeInsets.all(0),
+                badgeColor: Colors.transparent,
+                elevation: 0,
+                badgeContent: Icon(Icons.notifications_none, size: 34)),
+          ),
           Icon(Icons.perm_identity, size: 34),
         ],
         animationDuration: Duration(milliseconds: 300),

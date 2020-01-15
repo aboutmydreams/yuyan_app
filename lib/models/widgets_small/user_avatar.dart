@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-Widget userAvatar(String imgUrl) {
+Widget userAvatar(String imgUrl, {double height}) {
+  height ??= 38;
   return ClipRRect(
-    borderRadius: BorderRadius.circular(19),
+    borderRadius: BorderRadius.circular(height / 2),
     child: Container(
-      width: 38,
-      height: 38,
+      width: height,
+      height: height,
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(

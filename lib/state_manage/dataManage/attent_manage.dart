@@ -57,6 +57,7 @@ Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
       String slug = subject.containsKey("slug") ? ('/' + subject["slug"]) : "";
 
       if (i["subject_type"] == "Doc") {
+        // 有时文章的login是团队
         atwho = i["book"]["user"]["login"];
       }
       event["url"] = "https://www.yuque.com/" + atwho + bookSlug + slug;
@@ -102,7 +103,8 @@ Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
           event["book_id"] = sub["book_id"] ?? 0;
           event["avatar_url"] = sub["avatar_url"] ?? "";
           String slug = sub["slug"] ?? "";
-          event["url"] = "https://www.yuque.com/" + sub["login"] + "/" + slug;
+          String atwho = sub["login"] ?? sub["user"]["login"];
+          event["url"] = "https://www.yuque.com/" + atwho + "/" + slug;
           oneData["event"].add(event);
         }
       }

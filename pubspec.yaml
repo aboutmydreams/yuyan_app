@@ -67,6 +67,9 @@ dependencies:
   # use svg
   flutter_svg: ^0.15.0
 
+  # 消息红点
+  badges: ^1.1.0
+
   flutter_webview_plugin:
     git: https://github.com/aboutmydreams/flutter_webview_plugin.git
 
