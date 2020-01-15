@@ -6,8 +6,13 @@ import 'package:yuyan_app/models/widgets_small/user_event.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/news_data.dart';
 
 Widget oneNews(BuildContext context, Notifications data) {
-  print(data.notifyType);
-  return Container(
+  print(data.secondSubject == null ? 0 : data.secondSubject.name);
+  return GestureDetector(
+    onTap: () {
+      print("objec!t");
+      var url = "https://www.yuque.com/go/notification/${data.id}";
+    },
+    child: Container(
       height: 70,
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.only(left: 16),
@@ -75,17 +80,9 @@ Widget oneNews(BuildContext context, Notifications data) {
             ],
           ),
         ],
-      )
-      // Column(
-      //   children: <Widget>[
-      //     userEvent(context,
-      //         userImg: data.actor.avatarUrl,
-      //         login: data.actor.login,
-      //         event: data.notifyType,
-      //         time: data.createdAt)
-      //   ],
-      // ),
-      );
+      ),
+    ),
+  );
 }
 
 // 几种通知

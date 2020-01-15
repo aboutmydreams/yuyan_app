@@ -43,13 +43,11 @@ class _HomePageState extends State<HomePage> {
         items: <Widget>[
           Icon(Icons.insert_emoticon, size: 34),
           Icon(Icons.wrap_text, size: 34),
-          Container(
-            // padding: EdgeInsets.all(0),
-            child: Badge(
-                padding: EdgeInsets.all(0),
-                badgeColor: Colors.transparent,
-                elevation: 0,
-                badgeContent: Icon(Icons.notifications_none, size: 34)),
+          Badge(
+            padding: EdgeInsets.all(0),
+            badgeColor: Colors.transparent,
+            elevation: 0,
+            badgeContent: Icon(Icons.notifications_none, size: 34),
           ),
           Icon(Icons.perm_identity, size: 34),
         ],

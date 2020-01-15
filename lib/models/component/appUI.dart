@@ -32,7 +32,7 @@ class AppStyles {
   static TextStyle textStyleB = TextStyle(
     color: AppColors.accentText,
     fontFamily: "PingFang SC",
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w500,
     fontSize: 17,
   );
 
@@ -40,7 +40,7 @@ class AppStyles {
   static TextStyle textStyleBB = TextStyle(
     color: AppColors.accentText,
     fontFamily: "PingFang SC",
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w400,
     fontSize: 15,
   );
 
