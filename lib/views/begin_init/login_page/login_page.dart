@@ -94,6 +94,7 @@ class _LoginPageState extends State<LoginPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     if (haveSession(result)) {
+      // print(result);
       prefs.setString("_yuque_session", cookieData["_yuque_session"]);
       prefs.setString("ctoken", cookieData["ctoken"]);
     }

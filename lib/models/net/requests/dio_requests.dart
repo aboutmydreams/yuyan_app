@@ -11,10 +11,12 @@ class DioReq {
     var token = await getToken();
     var ctoken = await getCtoken();
     var _yuqueSession = await getSession();
+    var _allCookie = await getPrefStringData("all_cookies");
     print(token);
     headers ??= {};
     headers["Content-Type"] = "application/json";
-    headers["Cookie"] = "_yuque_session=" + _yuqueSession.toString();
+    // headers["Cookie"] = "_yuque_session=" + _yuqueSession.toString();
+    headers["Cookie"] = _allCookie;
     headers["ctoken"] = "ctoken=" + ctoken.toString();
     headers["X-Auth-Token"] = token.toString();
 

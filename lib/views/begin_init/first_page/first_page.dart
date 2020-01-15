@@ -30,7 +30,9 @@ class _FirstPageState extends State<FirstPage> {
       () {
         try {
           ifLogin().then((haveUserLogin) {
+            print("======haveUserLogin");
             print(haveUserLogin);
+            print("haveUserLogin=====");
             if (haveUserLogin) {
               Navigator.pushNamedAndRemoveUntil(
                   context, "/", (route) => route == null);

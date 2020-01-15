@@ -29,7 +29,7 @@ Widget secItemUI(BuildContext context, Data data) {
     })),
     child: Container(
       height: 102,
-      margin: EdgeInsets.only(left: 18, top: 21, right: 18),
+      margin: EdgeInsets.only(left: 16, top: 21, right: 15),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -55,9 +55,9 @@ Widget secItemUI(BuildContext context, Data data) {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    // clearText(data.title, 26),
                     data.title,
                     maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.left,
                     style: AppStyles.textStyleBB,
                   ),
@@ -93,14 +93,16 @@ Widget secItemUI(BuildContext context, Data data) {
                         ),
                         SizedBox(width: 7),
                         Container(
-                          margin: EdgeInsets.only(right: 38),
-                          child: Text(clearText(data.user.name, 12),
-                              textAlign: TextAlign.center,
-                              style: AppStyles.textStyleCC),
+                          child: Text(
+                            clearText(data.user.name, 12),
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppStyles.textStyleCC,
+                          ),
                         ),
-                        Expanded(child: SizedBox()),
+                        Spacer(),
                         Container(
-                          width: 54,
+                          width: 55,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.center,

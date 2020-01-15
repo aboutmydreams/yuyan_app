@@ -107,10 +107,12 @@ Widget oneEvent(BuildContext context, Event event) {
                       ),
                     ),
                     Container(
+                      width: 180,
                       margin: EdgeInsets.only(left: 14),
                       child: Text(
-                        "${clearText(event.description, 20)}",
+                        "${event.description}",
                         maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
                         style: AppStyles.textStyleCC,
                       ),

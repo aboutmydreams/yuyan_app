@@ -1,14 +1,19 @@
 import 'package:yuyan_app/models/tools/get_pref.dart';
 
 // 判断是否登录
-ifLogin() async {
+Future<bool> ifLogin() async {
   var accessToken = await getToken();
-  var session = await getPrefStringData("_yuque_session");
-  bool haveLogin = (accessToken != null) && (session != null);
+  var allCookie = await getPrefStringData("all_cookies");
+  print("=========accessToken=========");
+  print(accessToken);
+
+  print("========session=====");
+  print(allCookie);
+  bool haveLogin = (accessToken != null) && (allCookie != null);
   return haveLogin;
 }
 
-ifGuide() async {
+Future<bool> ifGuide() async {
   var guideStatus = await getPrefStringData("if_guide");
   bool haveGuide = guideStatus != null;
   return haveGuide;
