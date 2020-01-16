@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: CurvedNavigationBar(
         key: _bottomNavigationKey,
         color: Colors.black12,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.greenAccent,
         animationCurve: Curves.easeInQuad,
         height: 64,
         items: <Widget>[
