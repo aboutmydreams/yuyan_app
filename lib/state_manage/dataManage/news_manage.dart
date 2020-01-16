@@ -23,6 +23,7 @@ class NewsManage extends Model {
     _newsCount = newsCount;
     _unreadNews = unreadNews;
     _readedNews = readedNews;
+    print("_unreadNews==${_unreadNews.notifications.length}");
     notifyListeners();
     return 1;
   }

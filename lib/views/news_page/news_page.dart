@@ -15,29 +15,21 @@ class NewsPage extends StatefulWidget {
 
 class _NewsPageState extends State<NewsPage> {
   ScrollController _controller;
-  List<Notifications> allNewsList = [];
-  // Unread newsCount = topModel.newsManage.newsCount;
+  Unread newsCount = topModel.newsManage.newsCount;
+  int count;
+  List<Notifications> unreadList = topModel.newsManage.unreadNews.notifications;
+  List<Notifications> readedList = topModel.newsManage.readedNews.notifications;
   // List<Notifications> unreadList = topModel.newsManage.unreadNews.notifications;
   // List<Notifications> readedList = topModel.newsManage.readedNews.notifications;
-  Unread newsCount;
-  int count;
-  List<Notifications> unreadList;
-  List<Notifications> readedList;
   @override
   void initState() {
     super.initState();
-    newsCount = topModel.newsManage.newsCount;
-    unreadList = topModel.newsManage.unreadNews.notifications;
-    readedList = topModel.newsManage.readedNews.notifications;
-    count = newsCount.count;
-
-    _controller = ScrollController();
-    allNewsList.addAll(unreadList);
-    allNewsList.addAll(readedList);
+    count = topModel.newsManage.newsCount.count;
   }
 
   @override
   Widget build(BuildContext context) {
+    print("unreadList==${unreadList.length}");
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -56,36 +48,39 @@ class _NewsPageState extends State<NewsPage> {
               height: MediaQuery.of(context).size.height - 100,
               child: RefreshIndicator(
                 onRefresh: () async {
-                  allNewsList.clear();
-                  // allNewsList
                   topModel.newsManage.update();
-                  await Future.delayed(const Duration(seconds: 1)).then((nul) {
-                    setState(() {
-                      newsCount = topModel.newsManage.newsCount;
-                      unreadList = topModel.newsManage.unreadNews.notifications;
-                      readedList = topModel.newsManage.readedNews.notifications;
-                      count = newsCount.count;
-                      print(count);
-                      allNewsList.clear();
-                      allNewsList.addAll(unreadList);
-                      allNewsList.addAll(readedList);
-                    });
-                  });
+
+                  await Future.delayed(
+                    const Duration(milliseconds: 1500),
+                    () {
+                      setState(() {
+                        newsCount = topModel.newsManage.newsCount;
+                        unreadList =
+                            topModel.newsManage.unreadNews.notifications;
+                        readedList =
+                            topModel.newsManage.readedNews.notifications;
+                        count = newsCount.count;
+                      });
+                    },
+                  );
                 },
                 child: ListView.builder(
                   controller: _controller,
-                  itemCount: allNewsList.length + 1,
+                  itemCount: unreadList.length + readedList.length + 1,
                   itemBuilder: (BuildContext context, int index) {
-                    // return Text("data");
                     if (index < unreadList.length) {
                       return OneNewsContainer(
-                          data: allNewsList[index], unread: true);
+                        data: unreadList[index],
+                        unread: true,
+                      );
                     } else {
-                      if (index == allNewsList.length) {
+                      if (index >= unreadList.length + readedList.length) {
                         return SizedBox(height: 100);
                       } else {
                         return OneNewsContainer(
-                            data: allNewsList[index], unread: false);
+                          data: readedList[index - unreadList.length],
+                          unread: false,
+                        );
                       }
                     }
                   },

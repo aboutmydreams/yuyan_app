@@ -6,21 +6,9 @@ import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/models/widgets_small/user_event.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/news_data.dart';
 
-class OneNewsContainer extends StatefulWidget {
+class OneNewsContainer extends StatelessWidget {
   OneNewsContainer({Key key, @required this.data, this.unread: true})
       : super(key: key);
-  final Notifications data;
-  final bool unread;
-
-  static final Widget sizedBox = SizedBox(height: 100);
-
-  @override
-  _OneNewsContainerState createState() =>
-      _OneNewsContainerState(data: data, unread: unread);
-}
-
-class _OneNewsContainerState extends State<OneNewsContainer> {
-  _OneNewsContainerState({Key key, @required this.data, @required this.unread});
 
   final Notifications data;
   final bool unread;

@@ -140,6 +140,17 @@ class AttentManage extends Model {
     notifyListeners();
   }
 
+  readAll() async {
+    var dioData =
+        await DioReq.put("/notifications/unread-count", data: {"ids": "all"});
+    // Map mapData = fixAttentData(dioData);
+    // AttentData attentionData = AttentData.fromJson(mapData);
+    // offset = attentionData.offset;
+    // _attentData.data.addAll(attentionData.data);
+    if (dioData["data"].containsKey("ok")) {}
+    notifyListeners();
+  }
+
   saveEventsData() async {
     var dioData = await DioReq.get("/events?offset=0");
     Map mapData = fixAttentData(dioData);

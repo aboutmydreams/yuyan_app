@@ -8,16 +8,18 @@ class DioReq {
   static String baseUrl = "https://www.yuque.com/api";
   static get(String path,
       {Map<String, dynamic> headers, Map<String, dynamic> param}) async {
+    var diopath = path[0] == "/" ? baseUrl + path : path;
     var token = await getToken();
     var ctoken = await getCtoken();
-    var _yuqueSession = await getSession();
+    // var _yuqueSession = await getSession();
     var _allCookie = await getPrefStringData("all_cookies");
-    print(token);
+    print(path);
     headers ??= {};
     headers["Content-Type"] = "application/json";
     // headers["Cookie"] = "_yuque_session=" + _yuqueSession.toString();
+    // headers["ctoken"] = "ctoken=" + ctoken.toString();
     headers["Cookie"] = _allCookie;
-    headers["ctoken"] = "ctoken=" + ctoken.toString();
+    headers["x-csrf-token"] = ctoken.toString();
     headers["X-Auth-Token"] = token.toString();
 
     try {
@@ -28,10 +30,12 @@ class DioReq {
       );
 
       Response response = await dio.get(
-        baseUrl + path,
+        diopath,
         queryParameters: param,
         options: options,
       );
+
+      print(response.statusCode);
 
       return response.data;
     } on DioError catch (e) {
@@ -55,15 +59,15 @@ class DioReq {
       {Map<String, dynamic> headers,
       Map<String, dynamic> data,
       Map<String, dynamic> param}) async {
+    var diopath = path[0] == "/" ? baseUrl + path : path;
     var token = await getToken();
-
     var ctoken = await getCtoken();
-    var _yuqueSession = await getSession();
+    var _allCookie = await getPrefStringData("all_cookies");
     headers ??= {};
     headers["Content-Type"] = "application/json";
     headers["X-Auth-Token"] = token;
-    headers["Cookie"] = "_yuque_session=" + _yuqueSession;
-    headers["ctoken"] = "ctoken=" + ctoken;
+    headers["Cookie"] = _allCookie;
+    headers["x-csrf-token"] = ctoken.toString();
     try {
       Options options = Options(
         headers: headers,
@@ -72,7 +76,7 @@ class DioReq {
       );
 
       Response response = await dio.post(
-        baseUrl + path,
+        diopath,
         queryParameters: param,
         data: data,
         options: options,
@@ -100,6 +104,7 @@ class DioReq {
       {Map<String, dynamic> headers,
       Map<String, dynamic> data,
       Map<String, dynamic> param}) async {
+    var diopath = path[0] == "/" ? baseUrl + path : path;
     var token = await getToken();
     var ctoken = await getCtoken();
     var _yuqueSession = await getSession();
@@ -107,7 +112,7 @@ class DioReq {
     headers["Content-Type"] = "application/json";
     headers["X-Auth-Token"] = token;
     headers["Cookie"] = "_yuque_session=" + _yuqueSession;
-    headers["ctoken"] = "ctoken=" + ctoken;
+    headers["x-csrf-token"] = ctoken.toString();
     try {
       Options options = Options(
         headers: headers,
@@ -115,7 +120,7 @@ class DioReq {
         receiveTimeout: 10000,
       );
       Response response = await dio.put(
-        baseUrl + path,
+        diopath,
         queryParameters: param,
         data: data,
         options: options,
