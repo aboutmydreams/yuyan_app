@@ -23,7 +23,6 @@ class NewsManage extends Model {
     _newsCount = newsCount;
     _unreadNews = unreadNews;
     _readedNews = readedNews;
-    print("_unreadNews==${_unreadNews.notifications.length}");
     notifyListeners();
     return 1;
   }
@@ -36,7 +35,16 @@ class NewsManage extends Model {
     notifyListeners();
   }
 
-  saveSelecData() async {
+  readAll() async {
+    var dioData =
+        await DioReq.put("/notifications/unread-count", data: {"ids": "all"});
+    // if(newsCount.list!=null){}
+    if (dioData["data"].containsKey("ok")) {
+      notifyListeners();
+    }
+  }
+
+  saveNewsData() async {
     var countData = await DioReq.get("/notifications/unread-count");
     var unreadData = await DioReq.get("/notifications?offset=0&type=unread");
     var readedData = await DioReq.get("/notifications?offset=0&type=readed");
@@ -47,7 +55,7 @@ class NewsManage extends Model {
   }
 
   void update() {
-    saveSelecData().then((res) async {
+    saveNewsData().then((res) async {
       await getSaveData();
     });
   }

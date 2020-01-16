@@ -23,12 +23,7 @@ Widget newsCountView(BuildContext context, int count) {
           child: Text(
             count == 0 ? "暂无未读消息" : "未读消息",
             textAlign: TextAlign.left,
-            style: TextStyle(
-              color: AppColors.accentText,
-              fontFamily: "PingFang SC",
-              fontWeight: FontWeight.w400,
-              fontSize: 12,
-            ),
+            style: AppStyles.textStyleBB,
           ),
         ),
         count == 0

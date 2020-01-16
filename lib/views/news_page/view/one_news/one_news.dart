@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
+import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/models/widgets_small/user_event.dart';
@@ -15,7 +16,7 @@ class OneNewsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var subTitle = data.secondSubject == null ? "" : data.secondSubject.name;
+    String lastSub = clearSub(data);
     return GestureDetector(
       onTap: () {
         var url = "https://www.yuque.com/go/notification/${data.id}";
@@ -75,8 +76,9 @@ class OneNewsContainer extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "${newsType[data.notifyType] ?? data.notifyType}",
+                        "${newsType[data.notifyType] ?? data.notifyType}$lastSub",
                         style: AppStyles.textStyleC,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       Spacer(),
                       Align(
@@ -115,8 +117,34 @@ Map<String, String> newsType = {
   "publish_doc": "发布了文章",
   "watch_book": "关注了知识库",
   "follow_user": "关注了你",
-  "like_artboard": "给你的画板赞赏了稻谷",
+  "like_artboard": "赞赏了画板稻谷",
   "upload_artboards": "更新了画板",
   "apply_join_group": "申请加入团队",
   "join_group_user": "添加了团队成员",
+  "close_topic": "关闭了话题"
 };
+
+// 处理了一堆复杂的数据orz
+String clearSub(Notifications data) {
+  var subTitle = data.secondSubject != null
+      ? data.secondSubject.title != null
+          ? data.secondSubject.title
+          : data.secondSubject.name
+      : data.thirdSubject != null
+          ? data.subject != null
+              ? data.subject.title
+              : data.thirdSubject.name != null ? data.thirdSubject.name : null
+          : null;
+  var thTitle = data.thirdSubject != null
+      ? data.thirdSubject.name != null
+          ? data.thirdSubject.name
+          : data.subject != null ? data.subject.title : null
+      : null;
+
+  var title =
+      data.subject != null ? data.subject.title ?? data.subject.title : null;
+
+  var lastSub = title ?? subTitle ?? thTitle ?? "";
+  lastSub = lastSub != "" ? " [${clearText(lastSub, 10)}]" : "";
+  return lastSub;
+}

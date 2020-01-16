@@ -103,6 +103,7 @@ class Notifications {
   int subjectId;
   String secondSubjectType;
   int secondSubjectId;
+  ThirdSubject thirdSubject;
   dynamic thirdSubjectType;
   dynamic thirdSubjectId;
   dynamic readAt;
@@ -124,6 +125,7 @@ class Notifications {
       this.subjectId,
       this.secondSubjectType,
       this.secondSubjectId,
+      this.thirdSubject,
       this.thirdSubjectType,
       this.thirdSubjectId,
       this.readAt,
@@ -156,6 +158,9 @@ class Notifications {
     secondSubject = json['second_subject'] != null
         ? new SecondSubject.fromJson(json['second_subject'])
         : null;
+    thirdSubject = json['third_subject'] != null
+        ? new ThirdSubject.fromJson(json['third_subject'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -173,6 +178,7 @@ class Notifications {
     data['second_subject_id'] = this.secondSubjectId;
     data['third_subject_type'] = this.thirdSubjectType;
     data['third_subject_id'] = this.thirdSubjectId;
+    data['third_subject'] = this.thirdSubject;
     data['read_at'] = this.readAt;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
@@ -184,6 +190,9 @@ class Notifications {
     }
     if (this.secondSubject != null) {
       data['second_subject'] = this.secondSubject.toJson();
+    }
+    if (this.thirdSubject != null) {
+      data['third_subject'] = this.thirdSubject.toJson();
     }
     return data;
   }
@@ -753,6 +762,7 @@ class SecondSubject {
   String type;
   String slug;
   String name;
+  String title;
   String description;
   String toc;
   String tocYml;
@@ -797,6 +807,7 @@ class SecondSubject {
       this.type,
       this.slug,
       this.name,
+      this.title,
       this.description,
       this.toc,
       this.tocYml,
@@ -841,6 +852,7 @@ class SecondSubject {
     type = json['type'];
     slug = json['slug'];
     name = json['name'];
+    name = json['title'];
     description = json['description'];
     toc = json['toc'];
     tocYml = json['toc_yml'];
@@ -1113,6 +1125,368 @@ class User {
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     data['deleted_at'] = this.deletedAt;
+    return data;
+  }
+}
+
+class ThirdSubject {
+  int id;
+  int spaceId;
+  int artboardGroupId;
+  int bookId;
+  int assetId;
+  int assetVersionId;
+  int userId;
+  String md5;
+  String uuid;
+  int sort;
+  String image;
+  dynamic smallImage;
+  String labelMapUrl;
+  String name;
+  int width;
+  int height;
+  int commentsCount;
+  int likesCount;
+  String createdAt;
+  String updatedAt;
+  String contentUpdatedAt;
+  dynamic deletedAt;
+  User user;
+  String workId;
+  String avatarUrl;
+  String smallAvatarUrl;
+  String mediumAvatarUrl;
+  String largeAvatarUrl;
+  bool isActive;
+  bool isDeactived;
+  bool isBanned;
+  bool isExtcontact;
+  bool isPaid;
+  bool hasPaidBefore;
+  String type;
+  String login;
+  String description;
+  String avatar;
+  int ownerId;
+  int topicsCount;
+  int publicTopicsCount;
+  int membersCount;
+  int booksCount;
+  int publicBooksCount;
+  int followersCount;
+  int followingCount;
+  int accountId;
+  int role;
+  int status;
+  int public;
+  bool wantsEmail;
+  bool wantsMarketingEmail;
+  int topicUpdatedAtMs;
+  dynamic deletedSlug;
+  String language;
+  int organizationId;
+  dynamic empType;
+  dynamic groupDepartmentUpdatedAt;
+  int memberLevel;
+  String expiredAt;
+  dynamic scene;
+  dynamic source;
+  int maxMember;
+  bool enableComment;
+  bool enableExport;
+  bool enableVisitorWatermark;
+  String copyrightWatermark;
+  String imageCopyrightWatermark;
+  bool enableSearchEngine;
+  bool enableWebhook;
+  bool enableTrash;
+  String slug;
+  String toc;
+  String tocYml;
+  String body;
+  int creatorId;
+  int excellent;
+  int menuType;
+  int itemsCount;
+  int watchesCount;
+  int contentUpdatedAtMs;
+  String pinnedAt;
+  dynamic archivedAt;
+  int collaborationCount;
+  int stackId;
+  int rank;
+  int resourceSize;
+
+  ThirdSubject(
+      {this.id,
+      this.spaceId,
+      this.artboardGroupId,
+      this.bookId,
+      this.assetId,
+      this.assetVersionId,
+      this.userId,
+      this.md5,
+      this.uuid,
+      this.sort,
+      this.image,
+      this.smallImage,
+      this.labelMapUrl,
+      this.name,
+      this.width,
+      this.height,
+      this.commentsCount,
+      this.likesCount,
+      this.createdAt,
+      this.updatedAt,
+      this.contentUpdatedAt,
+      this.deletedAt,
+      this.user,
+      this.workId,
+      this.avatarUrl,
+      this.smallAvatarUrl,
+      this.mediumAvatarUrl,
+      this.largeAvatarUrl,
+      this.isActive,
+      this.isDeactived,
+      this.isBanned,
+      this.isExtcontact,
+      this.isPaid,
+      this.hasPaidBefore,
+      this.type,
+      this.login,
+      this.description,
+      this.avatar,
+      this.ownerId,
+      this.topicsCount,
+      this.publicTopicsCount,
+      this.membersCount,
+      this.booksCount,
+      this.publicBooksCount,
+      this.followersCount,
+      this.followingCount,
+      this.accountId,
+      this.role,
+      this.status,
+      this.public,
+      this.wantsEmail,
+      this.wantsMarketingEmail,
+      this.topicUpdatedAtMs,
+      this.deletedSlug,
+      this.language,
+      this.organizationId,
+      this.empType,
+      this.groupDepartmentUpdatedAt,
+      this.memberLevel,
+      this.expiredAt,
+      this.scene,
+      this.source,
+      this.maxMember,
+      this.enableComment,
+      this.enableExport,
+      this.enableVisitorWatermark,
+      this.copyrightWatermark,
+      this.imageCopyrightWatermark,
+      this.enableSearchEngine,
+      this.enableWebhook,
+      this.enableTrash,
+      this.slug,
+      this.toc,
+      this.tocYml,
+      this.body,
+      this.creatorId,
+      this.excellent,
+      this.menuType,
+      this.itemsCount,
+      this.watchesCount,
+      this.contentUpdatedAtMs,
+      this.pinnedAt,
+      this.archivedAt,
+      this.collaborationCount,
+      this.stackId,
+      this.rank,
+      this.resourceSize});
+
+  ThirdSubject.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    spaceId = json['space_id'];
+    artboardGroupId = json['artboard_group_id'];
+    bookId = json['book_id'];
+    assetId = json['asset_id'];
+    assetVersionId = json['asset_version_id'];
+    userId = json['user_id'];
+    md5 = json['md5'];
+    uuid = json['uuid'];
+    sort = json['sort'];
+    image = json['image'];
+    smallImage = json['small_image'];
+    labelMapUrl = json['label_map_url'];
+    name = json['name'];
+    width = json['width'];
+    height = json['height'];
+    commentsCount = json['comments_count'];
+    likesCount = json['likes_count'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    contentUpdatedAt = json['content_updated_at'];
+    deletedAt = json['deleted_at'];
+    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    workId = json['work_id'];
+    avatarUrl = json['avatar_url'];
+    smallAvatarUrl = json['small_avatar_url'];
+    mediumAvatarUrl = json['medium_avatar_url'];
+    largeAvatarUrl = json['large_avatar_url'];
+    isActive = json['isActive'];
+    isDeactived = json['isDeactived'];
+    isBanned = json['isBanned'];
+    isExtcontact = json['isExtcontact'];
+    isPaid = json['isPaid'];
+    hasPaidBefore = json['hasPaidBefore'];
+    type = json['type'];
+    login = json['login'];
+    description = json['description'];
+    avatar = json['avatar'];
+    ownerId = json['owner_id'];
+    topicsCount = json['topics_count'];
+    publicTopicsCount = json['public_topics_count'];
+    membersCount = json['members_count'];
+    booksCount = json['books_count'];
+    publicBooksCount = json['public_books_count'];
+    followersCount = json['followers_count'];
+    followingCount = json['following_count'];
+    accountId = json['account_id'];
+    role = json['role'];
+    status = json['status'];
+    public = json['public'];
+    wantsEmail = json['wants_email'];
+    wantsMarketingEmail = json['wants_marketing_email'];
+    topicUpdatedAtMs = json['topic_updated_at_ms'];
+    deletedSlug = json['deleted_slug'];
+    language = json['language'];
+    organizationId = json['organization_id'];
+    empType = json['emp_type'];
+    groupDepartmentUpdatedAt = json['group_department_updated_at'];
+    memberLevel = json['member_level'];
+    expiredAt = json['expired_at'];
+    scene = json['scene'];
+    source = json['source'];
+    maxMember = json['max_member'];
+    enableComment = json['enable_comment'];
+    enableExport = json['enable_export'];
+    enableVisitorWatermark = json['enable_visitor_watermark'];
+    copyrightWatermark = json['copyright_watermark'];
+    imageCopyrightWatermark = json['image_copyright_watermark'];
+    enableSearchEngine = json['enable_search_engine'];
+    enableWebhook = json['enable_webhook'];
+    enableTrash = json['enable_trash'];
+    slug = json['slug'];
+    toc = json['toc'];
+    tocYml = json['toc_yml'];
+    body = json['body'];
+    creatorId = json['creator_id'];
+    excellent = json['excellent'];
+    menuType = json['menu_type'];
+    itemsCount = json['items_count'];
+    watchesCount = json['watches_count'];
+    contentUpdatedAtMs = json['content_updated_at_ms'];
+    pinnedAt = json['pinned_at'];
+    archivedAt = json['archived_at'];
+    collaborationCount = json['collaboration_count'];
+    stackId = json['stack_id'];
+    rank = json['rank'];
+    resourceSize = json['resource_size'];
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['space_id'] = this.spaceId;
+    data['artboard_group_id'] = this.artboardGroupId;
+    data['book_id'] = this.bookId;
+    data['asset_id'] = this.assetId;
+    data['asset_version_id'] = this.assetVersionId;
+    data['user_id'] = this.userId;
+    data['md5'] = this.md5;
+    data['uuid'] = this.uuid;
+    data['sort'] = this.sort;
+    data['image'] = this.image;
+    data['small_image'] = this.smallImage;
+    data['label_map_url'] = this.labelMapUrl;
+    data['name'] = this.name;
+    data['width'] = this.width;
+    data['height'] = this.height;
+    data['comments_count'] = this.commentsCount;
+    data['likes_count'] = this.likesCount;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['content_updated_at'] = this.contentUpdatedAt;
+    data['deleted_at'] = this.deletedAt;
+    if (this.user != null) {
+      data['user'] = this.user.toJson();
+    }
+    data['work_id'] = this.workId;
+    data['avatar_url'] = this.avatarUrl;
+    data['small_avatar_url'] = this.smallAvatarUrl;
+    data['medium_avatar_url'] = this.mediumAvatarUrl;
+    data['large_avatar_url'] = this.largeAvatarUrl;
+    data['isActive'] = this.isActive;
+    data['isDeactived'] = this.isDeactived;
+    data['isBanned'] = this.isBanned;
+    data['isExtcontact'] = this.isExtcontact;
+    data['isPaid'] = this.isPaid;
+    data['hasPaidBefore'] = this.hasPaidBefore;
+    data['type'] = this.type;
+    data['login'] = this.login;
+    data['description'] = this.description;
+    data['avatar'] = this.avatar;
+    data['owner_id'] = this.ownerId;
+    data['topics_count'] = this.topicsCount;
+    data['public_topics_count'] = this.publicTopicsCount;
+    data['members_count'] = this.membersCount;
+    data['books_count'] = this.booksCount;
+    data['public_books_count'] = this.publicBooksCount;
+    data['followers_count'] = this.followersCount;
+    data['following_count'] = this.followingCount;
+    data['account_id'] = this.accountId;
+    data['role'] = this.role;
+    data['status'] = this.status;
+    data['public'] = this.public;
+    data['wants_email'] = this.wantsEmail;
+    data['wants_marketing_email'] = this.wantsMarketingEmail;
+    data['topic_updated_at_ms'] = this.topicUpdatedAtMs;
+    data['deleted_slug'] = this.deletedSlug;
+    data['language'] = this.language;
+    data['organization_id'] = this.organizationId;
+    data['emp_type'] = this.empType;
+    data['group_department_updated_at'] = this.groupDepartmentUpdatedAt;
+    data['member_level'] = this.memberLevel;
+    data['expired_at'] = this.expiredAt;
+    data['scene'] = this.scene;
+    data['source'] = this.source;
+    data['max_member'] = this.maxMember;
+    data['enable_comment'] = this.enableComment;
+    data['enable_export'] = this.enableExport;
+    data['enable_visitor_watermark'] = this.enableVisitorWatermark;
+    data['copyright_watermark'] = this.copyrightWatermark;
+    data['image_copyright_watermark'] = this.imageCopyrightWatermark;
+    data['enable_search_engine'] = this.enableSearchEngine;
+    data['enable_webhook'] = this.enableWebhook;
+    data['enable_trash'] = this.enableTrash;
+    data['slug'] = this.slug;
+    data['toc'] = this.toc;
+    data['toc_yml'] = this.tocYml;
+    data['body'] = this.body;
+    data['creator_id'] = this.creatorId;
+    data['excellent'] = this.excellent;
+    data['menu_type'] = this.menuType;
+    data['items_count'] = this.itemsCount;
+    data['watches_count'] = this.watchesCount;
+    data['content_updated_at_ms'] = this.contentUpdatedAtMs;
+    data['pinned_at'] = this.pinnedAt;
+    data['archived_at'] = this.archivedAt;
+    data['collaboration_count'] = this.collaborationCount;
+    data['stack_id'] = this.stackId;
+    data['rank'] = this.rank;
+    data['resource_size'] = this.resourceSize;
     return data;
   }
 }

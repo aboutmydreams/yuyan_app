@@ -24,7 +24,13 @@ class _NewsPageState extends State<NewsPage> {
   @override
   void initState() {
     super.initState();
-    count = topModel.newsManage.newsCount.count;
+    if (newsCount.list != null) {
+      for (UnreadNewsList news in newsCount.list) {
+        if (news.isSelf == true) {
+          count = news.count;
+        }
+      }
+    }
   }
 
   @override
@@ -59,7 +65,15 @@ class _NewsPageState extends State<NewsPage> {
                             topModel.newsManage.unreadNews.notifications;
                         readedList =
                             topModel.newsManage.readedNews.notifications;
-                        count = newsCount.count;
+                        if (newsCount.list != null) {
+                          for (UnreadNewsList news in newsCount.list) {
+                            if (news.isSelf == true) {
+                              count = news.count;
+                            }
+                          }
+                        } else {
+                          count = newsCount.count;
+                        }
                       });
                     },
                   );
