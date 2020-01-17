@@ -7,6 +7,8 @@ import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/selection_data.dart';
 
 Widget secItemUI(BuildContext context, Data data) {
+  String imageUrl = data.cover +
+      "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_150%2Ch_90%2Fformat%2Cpng";
   return GestureDetector(
     onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return BrowserWithBar(
@@ -40,9 +42,14 @@ Widget secItemUI(BuildContext context, Data data) {
               child: Container(
                 width: 147,
                 height: 91,
-                child: FadeInImage.assetNetwork(
-                  image: data.cover,
-                  placeholder: 'assets/images/logo.png',
+                child: CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  placeholder: (context, url) => Container(
+                    width: 147,
+                    height: 91,
+                    color: AppColors.background,
+                  ), //Colors.white10,
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                   fit: BoxFit.cover,
                 ),
               ),
