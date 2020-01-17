@@ -46,7 +46,7 @@ Widget firstItemUI(BuildContext context, Data data) {
                   width: 147,
                   height: 91,
                   color: AppColors.background,
-                ), //Colors.white10,
+                ),
                 errorWidget: (context, url, error) => Icon(Icons.error),
                 fit: BoxFit.cover,
               ),

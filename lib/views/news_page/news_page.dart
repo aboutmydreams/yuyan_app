@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/news_data.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
@@ -19,8 +18,6 @@ class _NewsPageState extends State<NewsPage> {
   int count;
   List<Notifications> unreadList = topModel.newsManage.unreadNews.notifications;
   List<Notifications> readedList = topModel.newsManage.readedNews.notifications;
-  // List<Notifications> unreadList = topModel.newsManage.unreadNews.notifications;
-  // List<Notifications> readedList = topModel.newsManage.readedNews.notifications;
   @override
   void initState() {
     super.initState();

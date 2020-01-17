@@ -33,7 +33,7 @@ class SelectManage extends Model {
     notifyListeners();
   }
 
-  saveSelecData() async {
+  saveSelectData() async {
     var dioData = await DioReq.get("/explore/selections?limit=20&page=$page");
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     // print(dioData.runtimeType);
@@ -43,7 +43,7 @@ class SelectManage extends Model {
   }
 
   void update() {
-    saveSelecData().then((res) {
+    saveSelectData().then((res) {
       getSaveData();
     });
   }
