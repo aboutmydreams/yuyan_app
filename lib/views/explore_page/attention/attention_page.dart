@@ -18,6 +18,8 @@ class _AttentionPageState extends State<AttentionPage>
     with AutomaticKeepAliveClientMixin {
   bool get wantKeepAlive => true; //非常重要
 
+  ScrollController _controller;
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -26,21 +28,28 @@ class _AttentionPageState extends State<AttentionPage>
         List<Data> attentDatas = model.attentManage.attentData.data;
         return Scaffold(
           backgroundColor: AppColors.background,
-          body: ListView.builder(
-            itemCount: attentDatas.length,
-            itemBuilder: (BuildContext context, int index) {
-              if (attentDatas[index].subjectType == "Doc") {
-                return toDoc(context, attentDatas[index]);
-              } else if (attentDatas[index].subjectType == "Artboard") {
-                return toArtboard(context, attentDatas[index]);
-              } else if (attentDatas[index].subjectType == "User") {
-                return toUserOrBook(context, attentDatas[index]);
-              } else if (attentDatas[index].subjectType == "Book") {
-                return toUserOrBook(context, attentDatas[index]);
-              } else {
-                return Text(attentDatas[index].subjectType);
-              }
+          body: RefreshIndicator(
+            onRefresh: () async {
+              model.attentManage.update();
+              await Future.delayed(const Duration(milliseconds: 1500), () {});
             },
+            child: ListView.builder(
+              controller: _controller,
+              itemCount: attentDatas.length,
+              itemBuilder: (BuildContext context, int index) {
+                if (attentDatas[index].subjectType == "Doc") {
+                  return toDoc(context, attentDatas[index]);
+                } else if (attentDatas[index].subjectType == "Artboard") {
+                  return toArtboard(context, attentDatas[index]);
+                } else if (attentDatas[index].subjectType == "User") {
+                  return toUserOrBook(context, attentDatas[index]);
+                } else if (attentDatas[index].subjectType == "Book") {
+                  return toUserOrBook(context, attentDatas[index]);
+                } else {
+                  return Text(attentDatas[index].subjectType);
+                }
+              },
+            ),
           ),
         );
       },
