@@ -122,11 +122,14 @@ class AttentManage extends Model {
   int offset = 0;
   AttentData _attentData = AttentData(data: []);
   AttentData get attentData => _attentData;
+  List<Data> _attentDataList = [];
+  List<Data> get attentDataList => _attentData.data;
 
   getSaveData() async {
     var attentEvent = await readJson('events');
     AttentData attentionData = AttentData.fromJson(attentEvent);
     _attentData = attentionData;
+    _attentDataList = attentionData.data;
     notifyListeners();
     return attentionData;
   }
@@ -136,8 +139,9 @@ class AttentManage extends Model {
     Map mapData = fixAttentData(dioData);
     AttentData attentionData = AttentData.fromJson(mapData);
     offset = attentionData.offset;
-    _attentData.data.addAll(attentionData.data);
+    _attentDataList.addAll(attentionData.data);
     notifyListeners();
+    return 1;
   }
 
   saveEventsData() async {

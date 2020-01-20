@@ -8,7 +8,6 @@ Widget userAvatar(String imgUrl, {double height}) {
       ? imgUrl
       : imgUrl +
           "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_120%2Ch_120%2Fformat%2Cpng";
-  print(imgUrl);
   return ClipRRect(
     borderRadius: BorderRadius.circular(height / 2),
     child: Container(
