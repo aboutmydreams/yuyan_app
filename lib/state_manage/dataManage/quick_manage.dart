@@ -8,7 +8,7 @@ import 'package:yuyan_app/state_manage/dataManage/data/quick_data.dart';
 class QuickManage extends Model {
   int page = 1;
   QuickData _quickData = QuickData(data: []);
-  QuickData get selecData => _quickData;
+  QuickData get quickData => _quickData;
 
   getSaveData() async {
     var quickDoc = await readJson('quick');

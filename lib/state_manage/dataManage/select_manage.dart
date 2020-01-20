@@ -6,7 +6,7 @@ import 'package:yuyan_app/state_manage/dataManage/data/selection_data.dart';
 class SelectManage extends Model {
   int page = 1;
   SelectionsData _selectData = SelectionsData(data: []);
-  SelectionsData get selecData => _selectData;
+  SelectionsData get selectData => _selectData;
 
   getSaveData() async {
     // var selectDoc = await getPrefStringData("select_doc");

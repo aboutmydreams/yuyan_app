@@ -24,7 +24,7 @@ class _SelectionPageState extends State<SelectionPage>
     super.build(context);
     return ScopedModelDescendant<TopStateModel>(
         builder: (context, child, model) {
-      List<Data> selecdatas = model.selectManage.selecData.data;
+      List<Data> selecdatas = model.selectManage.selectData.data;
       return Scaffold(
         backgroundColor: AppColors.background,
         body: ListView.builder(
