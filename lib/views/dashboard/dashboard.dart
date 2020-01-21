@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/views/dashboard/quick/quick_page.dart';
 
 class Dashboard extends StatefulWidget {
   Dashboard({Key key}) : super(key: key);
@@ -51,7 +52,7 @@ DefaultTabController theController = DefaultTabController(
     body: TabBarView(
       children: <Widget>[
         Container(
-          child: Text("data"),
+          child: QuickPage(),
         ),
         Container(
           child: Text("data"),

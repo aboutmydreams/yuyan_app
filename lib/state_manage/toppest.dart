@@ -4,11 +4,14 @@ import 'package:yuyan_app/state_manage/dataManage/attent_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/news_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/select_manage.dart';
 
+import 'dataManage/quick_manage.dart';
+
 class TopStateModel extends Model {
   ColorManage colorManage = ColorManage();
   SelectManage selectManage = SelectManage();
   AttentManage attentManage = AttentManage();
   NewsManage newsManage = NewsManage();
+  QuickManage quickManage = QuickManage();
 
   /// 初始化数据
   void update() {
@@ -16,6 +19,8 @@ class TopStateModel extends Model {
     attentManage.update();
     // 精选数据
     selectManage.update();
+    // 快捷入口
+    quickManage.update();
     // 消息数据
     newsManage.update();
   }

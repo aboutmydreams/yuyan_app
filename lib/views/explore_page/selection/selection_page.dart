@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/selection_data.dart';
 import 'package:yuyan_app/views/explore_page/selection/view/first_item.dart';
