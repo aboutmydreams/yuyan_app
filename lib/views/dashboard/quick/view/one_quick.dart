@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
+import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/quick_data.dart';
 
 Widget oneQuick(BuildContext context, Data data) {
-  print(data.type);
-  String imageUrl =
-      data.icon ?? iconType[data.type] ?? "assets/images/explore/book.png";
+  String imageUrl = data.icon.toString().contains("http")
+      ? data.icon
+      : iconType[data.type] ?? "assets/images/explore/book.png";
   return GestureDetector(
     onTap: () {
       var url =
-          data.type != "Normal" ? "https://www.yuque.com" + data.url : data.url;
+          data.url[0] == '/' ? "https://www.yuque.com" + data.url : data.url;
       openUrl(context, url);
     },
     child: Container(
-      height: 70,
-      margin: EdgeInsets.only(top: 2, bottom: 9, left: 10, right: 10),
+      height: 50,
+      margin: EdgeInsets.only(left: 5, top: 10, bottom: 10, right: 5),
       decoration: BoxDecoration(
         color: AppColors.background,
         boxShadow: [
@@ -26,17 +27,20 @@ Widget oneQuick(BuildContext context, Data data) {
             blurRadius: 4,
           ),
         ],
-        borderRadius: BorderRadius.all(Radius.circular(9.5)),
+        borderRadius: BorderRadius.all(Radius.circular(25)),
       ),
       child: Row(
         children: <Widget>[
           Container(
-            margin: EdgeInsets.all(10),
+            margin: EdgeInsets.only(right: 10),
             child: userAvatar(imageUrl, height: 50),
           ),
-          Text(
-            data.title,
-            style: AppStyles.textStyleB,
+          Container(
+            margin: EdgeInsets.only(right: 20),
+            child: Text(
+              clearText(data.title, 6),
+              style: AppStyles.textStyleB,
+            ),
           )
         ],
       ),
