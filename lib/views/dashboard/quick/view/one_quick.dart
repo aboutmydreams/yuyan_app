@@ -15,7 +15,8 @@ Widget oneQuick(BuildContext context, Data data) {
       openUrl(context, url);
     },
     child: Container(
-      margin: EdgeInsets.only(top: 2, bottom: 4, left: 16, right: 16),
+      height: 70,
+      margin: EdgeInsets.only(top: 2, bottom: 9, left: 10, right: 10),
       decoration: BoxDecoration(
         color: AppColors.background,
         boxShadow: [
@@ -25,10 +26,19 @@ Widget oneQuick(BuildContext context, Data data) {
             blurRadius: 4,
           ),
         ],
-        borderRadius: BorderRadius.all(Radius.circular(29.5)),
+        borderRadius: BorderRadius.all(Radius.circular(9.5)),
       ),
       child: Row(
-        children: <Widget>[userAvatar(imageUrl), Text(data.title)],
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.all(10),
+            child: userAvatar(imageUrl, height: 50),
+          ),
+          Text(
+            data.title,
+            style: AppStyles.textStyleB,
+          )
+        ],
       ),
     ),
   );
