@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/state_manage/dataManage/data/my_page/my_data.dart';
+import 'package:yuyan_app/state_manage/toppest.dart';
 
-Widget infoCount() {
+Widget infoCount(BuildContext context) {
+  MyInfoData myInfo = topModel.myInfoManage.myInfoData;
+
   return Align(
     alignment: Alignment.topCenter,
     child: Container(
@@ -40,7 +44,7 @@ Widget infoCount() {
                         left: 17,
                         right: 17,
                         child: Text(
-                          "7",
+                          "${myInfo.data.booksCount}",
                           textAlign: TextAlign.center,
                           style: AppStyles.countStyle,
                         ),
@@ -88,7 +92,7 @@ Widget infoCount() {
                         left: 13,
                         right: 13,
                         child: Text(
-                          "10",
+                          "${myInfo.data.booksCount}",
                           textAlign: TextAlign.center,
                           style: AppStyles.countStyle,
                         ),
@@ -138,7 +142,7 @@ Widget infoCount() {
                         left: 13,
                         right: 13,
                         child: Text(
-                          "26",
+                          "${myInfo.data.followingCount}",
                           textAlign: TextAlign.center,
                           style: AppStyles.countStyle,
                         ),
@@ -189,7 +193,7 @@ Widget infoCount() {
                         left: 13,
                         right: 13,
                         child: Text(
-                          "58",
+                          "${myInfo.data.followersCount}",
                           textAlign: TextAlign.center,
                           style: AppStyles.countStyle,
                         ),

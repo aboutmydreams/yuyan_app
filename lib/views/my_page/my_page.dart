@@ -18,7 +18,12 @@ class _MyPageState extends State<MyPage> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
-          children: <Widget>[userInfo(), infoCount(), infoOwn(), threeWidget()],
+          children: <Widget>[
+            userInfo(context),
+            infoCount(context),
+            infoOwn(context),
+            threeWidget(context),
+          ],
         ),
       ),
     );

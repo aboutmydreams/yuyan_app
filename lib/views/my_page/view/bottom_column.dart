@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 
-Widget threeWidget() {
+Widget threeWidget(BuildContext context) {
   return Container(
     child: Column(
       children: <Widget>[

@@ -33,7 +33,7 @@ Widget quickText(String text) {
     child: Center(
       child: Text(
         "$text",
-        style: AppStyles.textStyleA,
+        style: AppStyles.textStyleB,
       ),
     ),
   );

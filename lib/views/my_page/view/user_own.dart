@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 
-Widget infoOwn() {
+Widget infoOwn(BuildContext context) {
   return Align(
     alignment: Alignment.topCenter,
     child: Container(
