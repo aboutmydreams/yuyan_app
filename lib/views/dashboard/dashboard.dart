@@ -18,7 +18,6 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        backgroundColor: Colors.white,
         toolbarOpacity: 1.0,
         bottomOpacity: 5.0,
         elevation: 1,

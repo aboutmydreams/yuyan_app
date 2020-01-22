@@ -50,7 +50,7 @@ Widget infoCount() {
                 ),
                 Spacer(),
                 Text(
-                  "团队语",
+                  "团队",
                   textAlign: TextAlign.center,
                   style: AppStyles.textStyleBB,
                 ),
