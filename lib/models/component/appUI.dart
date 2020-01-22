@@ -11,6 +11,9 @@ class AppColors {
   // 页面背景
   static Color background = Colors.white;
 
+  // 页面灰色背景
+  static Color backgroundB = Color.fromRGBO(250, 250, 250, 1);
+
   // 首页的关注事件的背景颜色
   static Color eventBack = Color.fromRGBO(244, 244, 244, 1);
 

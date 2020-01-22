@@ -7,20 +7,34 @@ Widget quickView(BuildContext context, List quickDataList) {
   return quickDataList.isNotEmpty
       ? Container(
           height: 70,
-          color: AppColors.background,
+          color: AppColors.eventBack,
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: quickDataList.map((res) {
               return oneQuick(context, res);
             }).toList()
-              ..add(setBottom(context)),
+              ..add(setBottom(context))
+              ..insert(0, quickText("快捷入口")),
           ),
         )
       : Container(
           height: 70,
           color: AppColors.background,
           child: Row(
-            children: <Widget>[Text("设置快捷入口"), setBottom(context)],
+            children: <Widget>[quickText("设置快捷入口"), setBottom(context)],
           ),
         );
+}
+
+Widget quickText(String text) {
+  return Container(
+    height: 70,
+    margin: EdgeInsets.only(left: 20, right: 10),
+    child: Center(
+      child: Text(
+        "$text",
+        style: AppStyles.textStyleA,
+      ),
+    ),
+  );
 }
