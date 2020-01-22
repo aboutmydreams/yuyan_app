@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/views/dashboard/quick/view/one_quick.dart';
 import 'package:yuyan_app/views/dashboard/quick/view/set_buttom.dart';
-
-import 'one_quick.dart';
 
 Widget quickView(BuildContext context, List quickDataList) {
   return quickDataList.isNotEmpty

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/quick_data.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/dashboard/quick/quick_view.dart';
+import 'package:yuyan_app/views/dashboard/recent/recent_page.dart';
 
 class Dashboard extends StatefulWidget {
   Dashboard({Key key}) : super(key: key);
@@ -38,7 +39,10 @@ class _DashboardState extends State<Dashboard> {
         child: Icon(Icons.edit),
       ),
       body: SingleChildScrollView(
-        child: Column(children: [quickView(context, quickDataList)]),
+        child: Column(children: [
+          quickView(context, quickDataList),
+          RecentPage(),
+        ]),
       ),
     );
   }

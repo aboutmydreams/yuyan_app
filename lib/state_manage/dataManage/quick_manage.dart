@@ -20,9 +20,6 @@ class QuickManage extends Model {
 
   saveQuictData() async {
     var dioData = await DioReq.get("/quick_links?");
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // print(dioData.runtimeType);
-    // prefs.setString("quick_doc", dioData.toString());
     await writeJson('quick', dioData);
     return 1;
   }
