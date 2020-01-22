@@ -1,13 +1,13 @@
 class Group {
-  List<Data> data;
+  List<GroupData> data;
 
   Group({this.data});
 
   Group.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<Data>();
+      data = new List<GroupData>();
       json['data'].forEach((v) {
-        data.add(new Data.fromJson(v));
+        data.add(new GroupData.fromJson(v));
       });
     }
   }
@@ -21,7 +21,7 @@ class Group {
   }
 }
 
-class Data {
+class GroupData {
   int id;
   String type;
   String login;
@@ -47,7 +47,7 @@ class Data {
   dynamic owners;
   String sSerializer;
 
-  Data(
+  GroupData(
       {this.id,
       this.type,
       this.login,
@@ -73,7 +73,7 @@ class Data {
       this.owners,
       this.sSerializer});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  GroupData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     type = json['type'];
     login = json['login'];

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/my_data.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 
 Widget infoCount(BuildContext context) {
   MyInfoData myInfo = topModel.myInfoManage.myInfoData;
+
+  List<GroupData> groupList = topModel.myInfoManage.groupData.data;
+  String groupLength = groupList.length.toString();
 
   return Align(
     alignment: Alignment.topCenter,
@@ -44,7 +48,7 @@ Widget infoCount(BuildContext context) {
                         left: 17,
                         right: 17,
                         child: Text(
-                          "${myInfo.data.booksCount}",
+                          "$groupLength",
                           textAlign: TextAlign.center,
                           style: AppStyles.countStyle,
                         ),
