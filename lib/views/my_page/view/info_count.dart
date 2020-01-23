@@ -3,220 +3,32 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/my_data.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
+import 'package:yuyan_app/views/my_page/group/my_group.dart';
 
 Widget infoCount(BuildContext context) {
   MyInfoData myInfo = topModel.myInfoManage.myInfoData;
 
   List<GroupData> groupList = topModel.myInfoManage.groupData.data;
-  String groupLength = groupList.length.toString();
+  int groupLength = groupList.length;
 
   return Align(
     alignment: Alignment.topCenter,
     child: Container(
-      width: 289,
+      width: 288,
       height: 70,
       margin: EdgeInsets.only(top: 28),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            width: 45,
-            height: 52,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
-                  height: 22,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Positioned(
-                        left: 9,
-                        right: 9,
-                        child: Container(
-                          height: 20,
-                          decoration: BoxDecoration(
-                            color: AppColors.yellow,
-                            boxShadow: [
-                              Shadows.primaryShadow,
-                            ],
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Container(),
-                        ),
-                      ),
-                      Positioned(
-                        left: 17,
-                        right: 17,
-                        child: Text(
-                          "$groupLength",
-                          textAlign: TextAlign.center,
-                          style: AppStyles.countStyle,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Spacer(),
-                Text(
-                  "团队",
-                  textAlign: TextAlign.center,
-                  style: AppStyles.textStyleBB,
-                ),
-              ],
-            ),
-          ),
-          Container(
-            width: 45,
-            height: 52,
-            margin: EdgeInsets.only(left: 35),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
-                  height: 21,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Positioned(
-                        left: 7,
-                        right: 8,
-                        child: Container(
-                          height: 20,
-                          decoration: BoxDecoration(
-                            color: AppColors.yellow,
-                            boxShadow: [
-                              Shadows.primaryShadow,
-                            ],
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Container(),
-                        ),
-                      ),
-                      Positioned(
-                        left: 13,
-                        right: 13,
-                        child: Text(
-                          "${myInfo.data.booksCount}",
-                          textAlign: TextAlign.center,
-                          style: AppStyles.countStyle,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Spacer(),
-                Text(
-                  "知识库",
-                  textAlign: TextAlign.center,
-                  style: AppStyles.textStyleBB,
-                ),
-              ],
-            ),
-          ),
-          Spacer(),
-          Container(
-            width: 48,
-            height: 52,
-            margin: EdgeInsets.only(right: 35),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
-                  height: 21,
-                  margin: EdgeInsets.only(left: 2, right: 1),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Positioned(
-                        left: 7,
-                        right: 8,
-                        child: Container(
-                          height: 20,
-                          decoration: BoxDecoration(
-                            color: AppColors.yellow,
-                            boxShadow: [
-                              Shadows.primaryShadow,
-                            ],
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Container(),
-                        ),
-                      ),
-                      Positioned(
-                        left: 13,
-                        right: 13,
-                        child: Text(
-                          "${myInfo.data.followingCount}",
-                          textAlign: TextAlign.center,
-                          style: AppStyles.countStyle,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Spacer(),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 1),
-                  child: Text(
-                    "关注了",
-                    textAlign: TextAlign.center,
-                    style: AppStyles.textStyleBB,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            width: 46,
-            height: 52,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
-                  height: 21,
-                  margin: EdgeInsets.only(left: 1),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Positioned(
-                        left: 7,
-                        right: 8,
-                        child: Container(
-                          height: 20,
-                          decoration: BoxDecoration(
-                            color: AppColors.yellow,
-                            boxShadow: [
-                              Shadows.primaryShadow,
-                            ],
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Container(),
-                        ),
-                      ),
-                      Positioned(
-                        left: 13,
-                        right: 13,
-                        child: Text(
-                          "${myInfo.data.followersCount}",
-                          textAlign: TextAlign.center,
-                          style: AppStyles.countStyle,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Spacer(),
-                Container(
-                  margin: EdgeInsets.only(right: 1),
-                  child: Text(
-                    "关注者",
-                    textAlign: TextAlign.center,
-                    style: AppStyles.textStyleBB,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          oneCount(context, "团队", groupLength, callback: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+              return MyGroup(groupList: groupList);
+            }));
+          }),
+          oneCount(context, "知识库", myInfo.data.booksCount),
+          oneCount(context, "关注了", myInfo.data.followingCount),
+          oneCount(context, "关注者", myInfo.data.followersCount),
         ],
       ),
     ),
@@ -229,5 +41,36 @@ class Shadows {
     color: Color.fromRGBO(0, 0, 0, 0.3),
     offset: Offset(0, 0),
     blurRadius: 2,
+  );
+}
+
+Widget oneCount(BuildContext context, String text, int len,
+    {Function callback}) {
+  return InkWell(
+    onTap: callback ?? () {},
+    child: Container(
+      width: 72,
+      // height: 52,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Chip(
+            label: Text(
+              "$len",
+              textAlign: TextAlign.center,
+              style: AppStyles.countStyle,
+            ),
+            shadowColor: Colors.yellow,
+            backgroundColor: Colors.yellow,
+          ),
+          // Spacer(),
+          Text(
+            "$text",
+            textAlign: TextAlign.center,
+            style: AppStyles.textStyleBB,
+          ),
+        ],
+      ),
+    ),
   );
 }
