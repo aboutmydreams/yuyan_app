@@ -18,6 +18,12 @@ class DioDoc {
     return DocV2.fromJson(ans);
   }
 
+  // 创建文档
+
+  // 更新文档
+
+  // 删除文档
+
   // 获取贡献者列表
   static getContributors(String slug, int bookId) async {
     var ans = await DioReq.get("/docs/$slug/contributors?book_id=$bookId");
