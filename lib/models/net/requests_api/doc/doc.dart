@@ -65,6 +65,8 @@ class DioDoc {
 
   // 收藏与取消收藏操作
 
+  // 邀请协作
+
   // 团队成员：/groups/84140/users?with_invited=false
   // 协作者 用的 doc_id
   // /collaborations?offset=0&target_id=1558918&target_type=Doc
