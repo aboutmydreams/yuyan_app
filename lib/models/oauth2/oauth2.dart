@@ -79,9 +79,10 @@ class Oauth {
       Map tokenData = json.decode(json.encode(response.data));
       if (tokenData.keys.toList().indexOf("access_token") != -1) {
         // 将 access_token 存入缓存
+        String accessToken = tokenData["access_token"];
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString("access_token", tokenData["access_token"].toString());
-        print(tokenData["access_token"].toString());
+        prefs.setString("access_token", accessToken);
+        print(accessToken);
         return true;
       } else if (tokenData.keys.toList().indexOf("error") != -1) {
         return false;

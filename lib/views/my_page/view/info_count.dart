@@ -3,7 +3,7 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/my_data.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
-import 'package:yuyan_app/views/my_page/group/my_group.dart';
+import 'package:yuyan_app/views/my_page/group/my_group_page.dart';
 
 Widget infoCount(BuildContext context) {
   MyInfoData myInfo = topModel.myInfoManage.myInfoData;
