@@ -20,6 +20,10 @@ class DioDoc {
   }
 
   // 创建文档
+  static createDocV2(int bookId) async {
+    var ans = await DioReq.post("/v2/repos/$bookId/docs");
+    return DocV2.fromJson(ans);
+  }
 
   // 更新文档
 
