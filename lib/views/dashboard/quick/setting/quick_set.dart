@@ -43,7 +43,7 @@ class QuickSetPage extends StatelessWidget {
 Widget oneSetQuick(BuildContext context, Data data) {
   String imageUrl = data.icon.toString().contains("http")
       ? data.icon
-      : iconType[data.type] ?? "assets/images/explore/book.png";
+      : iconType[data.type] ?? "assets/images/dashboard/book.png";
   return GestureDetector(
     onTap: () {
       var url =

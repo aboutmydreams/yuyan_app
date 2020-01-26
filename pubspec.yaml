@@ -100,6 +100,9 @@ flutter:
     - assets/images/explore/fellower.png
     - assets/images/dashboard/link.png
     - assets/images/dashboard/design.png
+    - assets/images/dashboard/book.png
+    - assets/images/dashboard/excel.png
+    - assets/images/dashboard/doc.png
     - assets/images/my_page/position.png
     - assets/images/my_page/location.png
     - assets/images/my_page/member.png

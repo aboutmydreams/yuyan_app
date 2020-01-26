@@ -17,10 +17,13 @@ class searchBarDelegate extends SearchDelegate<String> {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-        icon: AnimatedIcon(
-            icon: AnimatedIcons.menu_arrow, progress: transitionAnimation),
-        //关闭上下文，当前页面
-        onPressed: () => close(context, null));
+      icon: AnimatedIcon(
+        icon: AnimatedIcons.menu_arrow,
+        progress: transitionAnimation,
+      ),
+      //关闭上下文，当前页面
+      onPressed: () => close(context, null),
+    );
   }
 
   //重写搜索结果
