@@ -30,6 +30,8 @@ class MyMeterialApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<TopStateModel>(
       builder: (context, child, model) {
+        print("model.colorManage.primarySwatchColor");
+        print(model.colorManage.primarySwatchColor);
         return MaterialApp(
           title: '语燕',
           initialRoute: '/first',

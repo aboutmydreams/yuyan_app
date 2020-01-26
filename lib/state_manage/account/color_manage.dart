@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'dart:async';
-import 'dart:ui';
-import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -74,5 +71,7 @@ class ColorManage extends Model {
       notifyListeners();
       debugPrint("notifyListeners!!!");
     });
+    notifyListeners();
+    debugPrint("notifyListeners2!!!");
   }
 }
