@@ -8,7 +8,7 @@ import 'package:yuyan_app/state_manage/dataManage/data/quick_data.dart';
 Widget oneQuick(BuildContext context, Data data) {
   String imageUrl = data.icon.toString().contains("http")
       ? data.icon
-      : iconType[data.type] ?? "assets/images/explore/book.png";
+      : iconType[data.type] ?? "assets/images/dashboard/book.png";
   return GestureDetector(
     onTap: () {
       var url =
@@ -50,5 +50,6 @@ Widget oneQuick(BuildContext context, Data data) {
 
 Map<String, String> iconType = {
   "Normal": "assets/images/dashboard/link.png",
-  "Design": "assets/images/dashboard/design.png"
+  "Design": "assets/images/dashboard/design.png",
+  "Book": "assets/images/dashboard/book.png"
 };

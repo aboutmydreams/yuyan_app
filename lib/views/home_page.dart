@@ -6,6 +6,7 @@ import 'package:yuyan_app/views/my_page/my_page.dart';
 import 'dart:ui';
 
 import 'dashboard/dashboard.dart';
+import 'dashboard/quick/setting/quick_set.dart';
 import 'explore_page/explore_page.dart';
 import 'news_page/news_page.dart';
 
@@ -34,10 +35,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: QuickSetPage(),
       bottomNavigationBar: CurvedNavigationBar(
         key: _bottomNavigationKey,
-        color: Colors.black12,
-        backgroundColor: Colors.greenAccent,
+        color: Color.fromRGBO(0, 0, 0, 0.06),
+        backgroundColor: Colors.white,
         animationCurve: Curves.easeInQuad,
         height: 64,
         items: <Widget>[

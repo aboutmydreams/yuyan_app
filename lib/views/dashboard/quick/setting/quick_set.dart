@@ -14,7 +14,7 @@ class QuickSetPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("设置快捷"),
+        title: Text("快捷入口"),
       ),
       body: Container(
         child: ListView.builder(
@@ -41,6 +41,7 @@ class QuickSetPage extends StatelessWidget {
 }
 
 Widget oneSetQuick(BuildContext context, Data data) {
+  print(data.type);
   String imageUrl = data.icon.toString().contains("http")
       ? data.icon
       : iconType[data.type] ?? "assets/images/dashboard/book.png";
@@ -82,5 +83,6 @@ Widget oneSetQuick(BuildContext context, Data data) {
 
 Map<String, String> iconType = {
   "Normal": "assets/images/dashboard/link.png",
-  "Design": "assets/images/dashboard/design.png"
+  "Design": "assets/images/dashboard/design.png",
+  "Book": "assets/images/dashboard/book.png"
 };
