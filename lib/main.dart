@@ -3,11 +3,14 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/routes/top_route.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 
+TopStateModel topModel1 = topModel;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await topModel.colorManage.getMyColor();
+  await topModel1.getMyColor();
+  await topModel1.getMyTheme();
   runApp(MyApp(
-    model: topModel,
+    model: topModel1,
   ));
 }
 
@@ -30,21 +33,15 @@ class MyMeterialApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<TopStateModel>(
       builder: (context, child, model) {
-        print("model.colorManage.primarySwatchColor");
-        print(model.colorManage.primarySwatchColor);
+        print("build again!");
+        MaterialColor colorP = model.primarySwatchColor;
+
         return MaterialApp(
           title: '语燕',
           initialRoute: '/first',
           debugShowCheckedModeBanner: false, // 去除debug标志
           routes: routeData,
-
-          theme: ThemeData(
-            platform: TargetPlatform.iOS, // 右滑返回
-            primarySwatch: model.colorManage.primarySwatchColor,
-            highlightColor: Color.fromRGBO(255, 255, 255, 0.9),
-            splashColor: Colors.yellow,
-            accentColor: Color.fromRGBO(25, 25, 25, 1.0),
-          ),
+          theme: model.themeData,
           // home: MyHomePage(),
         );
       },

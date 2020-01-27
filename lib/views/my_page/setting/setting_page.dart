@@ -57,7 +57,7 @@ class ChangeColorTile extends StatelessWidget {
         // color: Colors.black12,
         // size: 22.0,
       ),
-      onTap: topModel.colorManage.changeColor,
+      onTap: topModel.changeColor,
     );
   }
 }

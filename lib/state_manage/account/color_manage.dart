@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:yuyan_app/models/tools/get_pref.dart';
 
 class ColorManage extends Model {
@@ -31,6 +29,9 @@ class ColorManage extends Model {
   MaterialColor _primarySwatchColor;
   MaterialColor get primarySwatchColor => _primarySwatchColor;
 
+  ThemeData _themeData;
+  ThemeData get themeData => _themeData;
+
   static saveColor(int colorNum) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt("primarySwatchColor", colorNum);
@@ -43,6 +44,19 @@ class ColorManage extends Model {
     _primarySwatchColor = _colorList[_myColor];
     notifyListeners();
     return _myColor;
+  }
+
+  getMyTheme() {
+    _themeData = ThemeData(
+      platform: TargetPlatform.iOS, // 右滑返回
+      primarySwatch: _primarySwatchColor,
+      highlightColor: Color.fromRGBO(255, 255, 255, 0.9),
+      splashColor: Colors.yellow,
+      accentColor: Color.fromRGBO(25, 25, 25, 1.0),
+    );
+    print("theme");
+    notifyListeners();
+    return 1;
   }
 
   void changeColor() {
@@ -62,16 +76,20 @@ class ColorManage extends Model {
       print(_primarySwatchColor);
 
       // Sava the color num
-      saveColor(nowColor).then((res) {
+      saveColor(nowColor).then((res) async {
         print("saveNowColor===");
         print(nowColor);
         print("saveNowColor==");
+        getMyTheme();
+        notifyListeners();
+        return 1;
+      }).then((res) {
+        notifyListeners();
+        print("noti again");
       });
       // Then notify all the listeners.
       notifyListeners();
       debugPrint("notifyListeners!!!");
     });
-    notifyListeners();
-    debugPrint("notifyListeners2!!!");
   }
 }
