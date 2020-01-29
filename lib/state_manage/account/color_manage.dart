@@ -54,7 +54,7 @@ class ColorManage extends Model {
       splashColor: Colors.yellow,
       accentColor: Color.fromRGBO(25, 25, 25, 1.0),
     );
-    print("theme");
+
     notifyListeners();
     return 1;
   }

@@ -12,8 +12,8 @@ class RecentPage extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       child: Column(
-        children: recentDataList.map((f) {
-          return oneRecent(context, f);
+        children: recentDataList.map((oneRecentData) {
+          return oneRecent(context, oneRecentData);
         }).toList(),
       ),
     );

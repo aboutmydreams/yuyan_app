@@ -1,16 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/book_doc/doc_page/doc_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/recent_data.dart';
 
 Widget oneRecent(BuildContext context, Recent data) {
+  print(data.subjectType);
+
   String action = "${actionType[data.action]}${subjectType[data.subjectType]}";
   String url =
       data.url[0] == '/' ? "https://www.yuque.com" + data.url : data.url;
   return GestureDetector(
     onTap: () {
-      openUrl(context, url);
+      if (data.subjectType == "Doc") {
+        // print(data.target.slug);
+        print(data.book.id);
+        print(data.id);
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+          return DocPage(
+            bookId: data.book.id,
+            docId: data.targetId,
+          );
+        }));
+      } else {
+        openUrl(context, url);
+      }
     },
     child: Container(
       height: 70,
