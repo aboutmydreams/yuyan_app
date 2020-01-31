@@ -133,6 +133,9 @@ flutter:
     - family: Silom
       fonts:
         - asset: assets/fonts/Silom.ttf
+    - family: sans_bold
+      fonts: 
+        - asset: assets/fonts/sans_bold.ttf
         # - asset: fonts/Schyler-Italic.ttf
         #   style: italic
   #   - family: Trajan Pro

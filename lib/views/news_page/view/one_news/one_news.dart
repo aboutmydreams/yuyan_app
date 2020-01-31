@@ -36,7 +36,11 @@ class OneNewsContainer extends StatelessWidget {
               },
               child: Container(
                 margin: EdgeInsets.only(right: 20),
-                child: userAvatar(data.actor.avatarUrl, height: 45),
+                child: userAvatar(
+                    data.actor != null
+                        ? data.actor.avatarUrl
+                        : "https://cdn.nlark.com/yuque/0/2019/png/84147/1547032500238-d93512f4-db23-442f-b4d8-1d46304f9673.png",
+                    height: 45),
               ),
             ),
             Column(
@@ -51,7 +55,7 @@ class OneNewsContainer extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "${data.actor.name}",
+                        "${data.actor != null ? data.actor.name : '系统消息'}",
                         style: AppStyles.textStyleB,
                       ),
                       Spacer(),

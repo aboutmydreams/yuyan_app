@@ -34,8 +34,8 @@ class AppStyles {
   // 各种动态标题文字样式
   static TextStyle textStyleB = TextStyle(
     color: AppColors.accentText,
-    fontFamily: "PingFang SC",
-    fontWeight: FontWeight.w500,
+    fontFamily: "sans_bold",
+    fontWeight: FontWeight.w700,
     fontSize: 17,
   );
 
