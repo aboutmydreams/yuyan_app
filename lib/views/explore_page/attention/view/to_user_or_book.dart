@@ -112,8 +112,6 @@ Widget oneEvent(BuildContext context, Event event) {
                       child: Text(
                         "${event.description}",
                         maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
                         style: AppStyles.textStyleCC,
                       ),
                     )

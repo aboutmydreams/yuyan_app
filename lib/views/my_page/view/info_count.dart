@@ -16,7 +16,6 @@ Widget infoCount(BuildContext context) {
     child: Container(
       width: 288,
       height: 70,
-      margin: EdgeInsets.only(top: 28),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -35,22 +34,13 @@ Widget infoCount(BuildContext context) {
   );
 }
 
-class Shadows {
-  Color primaryElement = Colors.white12;
-  static BoxShadow primaryShadow = BoxShadow(
-    color: Color.fromRGBO(0, 0, 0, 0.3),
-    offset: Offset(0, 0),
-    blurRadius: 2,
-  );
-}
-
 Widget oneCount(BuildContext context, String text, int len,
     {Function callback}) {
-  return InkWell(
-    onTap: callback ?? () {},
-    child: Container(
-      width: 72,
-      // height: 52,
+  return Container(
+    width: 72,
+    // height: 52,
+    child: InkWell(
+      onTap: callback ?? () {},
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -60,8 +50,6 @@ Widget oneCount(BuildContext context, String text, int len,
               textAlign: TextAlign.center,
               style: AppStyles.countStyle,
             ),
-            shadowColor: Colors.yellow,
-            backgroundColor: Colors.yellow,
           ),
           // Spacer(),
           Text(

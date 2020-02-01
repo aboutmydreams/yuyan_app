@@ -12,7 +12,6 @@ Widget oneRecent(BuildContext context, Recent data) {
   return GestureDetector(
     onTap: () {
       if (data.subjectType == "Doc") {
-        // print(data.target.slug);
         print(data.book.id);
         print(data.id);
         Navigator.of(context).push(MaterialPageRoute(builder: (_) {
