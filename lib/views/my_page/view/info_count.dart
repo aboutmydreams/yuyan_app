@@ -18,14 +18,13 @@ Widget infoCount(BuildContext context) {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          oneCount(context, "团队", groupLength, callback: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-              return MyGroup(groupList: groupList);
-            }));
-          }),
-          oneCount(context, "知识库", myInfo.data.booksCount),
-          oneCount(context, "关注了", myInfo.data.followingCount),
-          oneCount(context, "关注者", myInfo.data.followersCount),
+          oneCount(context, "团队", groupLength, routeName: '/my/group'),
+          oneCount(context, "知识库", myInfo.data.booksCount,
+              routeName: '/my/repos'),
+          oneCount(context, "关注了", myInfo.data.followingCount,
+              routeName: '/my/following'),
+          oneCount(context, "关注者", myInfo.data.followersCount,
+              routeName: '/my/follower'),
         ],
       ),
     ),
@@ -33,11 +32,13 @@ Widget infoCount(BuildContext context) {
 }
 
 Widget oneCount(BuildContext context, String text, int len,
-    {Function callback}) {
+    {String routeName}) {
   return Container(
     width: 74,
     child: InkWell(
-      onTap: callback ?? () {},
+      onTap: () {
+        Navigator.pushNamed(context, routeName);
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

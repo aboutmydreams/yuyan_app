@@ -3,14 +3,15 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
+import 'package:yuyan_app/state_manage/toppest.dart';
 
 class MyGroup extends StatelessWidget {
-  const MyGroup({Key key, this.groupList}) : super(key: key);
-
-  final List<GroupData> groupList;
+  const MyGroup({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List<GroupData> groupList = topModel.myInfoManage.groupData.data;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("我的团队"),
