@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
 
 class BrowserWithBar extends StatefulWidget {
   BrowserWithBar({Key key, this.url, this.appbar}) : super(key: key);

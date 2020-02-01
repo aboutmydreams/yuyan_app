@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/widgets_small/member.dart';
@@ -16,20 +18,36 @@ Widget userInfo(BuildContext context) {
   String location = myProfile.data.location ?? "来自远方";
   String description = myInfo.data.description ?? "笔墨待识君";
 
+  double leftMargin = (MediaQuery.of(context).size.width - 352) / 2;
+
   return Container(
-      width: 352,
-      // height: 240,
-      padding: EdgeInsets.only(left: 28, right: 28, top: 16, bottom: 20),
-      child: Column(children: [
+    width: 352,
+    margin: EdgeInsets.only(
+        top: 60, left: leftMargin, right: leftMargin, bottom: leftMargin),
+    padding: EdgeInsets.only(left: 28, right: 28, top: 16, bottom: 20),
+    decoration: BoxDecoration(
+      color: AppColors.background,
+      boxShadow: [
+        BoxShadow(
+          color: Color.fromARGB(55, 0, 0, 0),
+          offset: Offset(1, 2),
+          blurRadius: 4,
+        ),
+      ],
+      borderRadius: BorderRadius.all(Radius.circular(20)),
+    ),
+    child: Column(
+      children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            SizedBox(width: 16),
             userAvatar(myInfo.data.avatarUrl, height: 60),
-            Spacer(),
+            SizedBox(width: 16),
             Container(
-              width: 215,
               height: 84,
+              width: 200,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -54,12 +72,7 @@ Widget userInfo(BuildContext context) {
                     child: Text(
                       "$description",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AppColors.primaryText,
-                        fontFamily: "PingFang SC",
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
-                      ),
+                      style: AppStyles.countTextStyle,
                     ),
                   ),
                 ],
@@ -67,6 +80,9 @@ Widget userInfo(BuildContext context) {
             ),
           ],
         ),
+        Divider(),
         infoCount(context),
-      ]));
+      ],
+    ),
+  );
 }

@@ -14,8 +14,6 @@ Widget infoCount(BuildContext context) {
   return Align(
     alignment: Alignment.topCenter,
     child: Container(
-      width: 288,
-      height: 70,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -37,25 +35,21 @@ Widget infoCount(BuildContext context) {
 Widget oneCount(BuildContext context, String text, int len,
     {Function callback}) {
   return Container(
-    width: 72,
-    // height: 52,
+    width: 74,
     child: InkWell(
       onTap: callback ?? () {},
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Chip(
-            label: Text(
-              "$len",
-              textAlign: TextAlign.center,
-              style: AppStyles.countStyle,
-            ),
+          Text(
+            "$len",
+            textAlign: TextAlign.center,
+            style: AppStyles.countStyle,
           ),
-          // Spacer(),
           Text(
             "$text",
             textAlign: TextAlign.center,
-            style: AppStyles.textStyleBB,
+            style: AppStyles.countTextStyle,
           ),
         ],
       ),

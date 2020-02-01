@@ -5,6 +5,9 @@ class AppColors {
   // 标题纯黑色
   static Color accentText = Colors.black;
 
+  // 副标题
+  static Color nextText = Colors.black87;
+
   // 主要文字段落灰色 纯黑的45%
   static Color primaryText = Colors.black45;
 
@@ -26,7 +29,7 @@ class AppStyles {
   // 大标题
   static TextStyle textStyleA = TextStyle(
     color: AppColors.accentText,
-    fontFamily: "PingFang SC",
+    fontFamily: "sans_bold",
     fontWeight: FontWeight.w600,
     fontSize: 24,
   );
@@ -41,9 +44,9 @@ class AppStyles {
 
   // 各种动态用户名文字样式
   static TextStyle textStyleBB = TextStyle(
-    color: AppColors.accentText,
-    fontFamily: "PingFang SC",
-    fontWeight: FontWeight.w400,
+    color: AppColors.nextText,
+    fontFamily: "sans_bold",
+    fontWeight: FontWeight.w500,
     fontSize: 15,
   );
 
@@ -52,7 +55,7 @@ class AppStyles {
     color: Color.fromARGB(255, 89, 89, 89),
     height: 1.5,
     letterSpacing: 1,
-    fontFamily: "PingFang SC",
+    fontFamily: "sans_bold",
     fontWeight: FontWeight.w400,
     fontSize: 14,
   );
@@ -60,15 +63,23 @@ class AppStyles {
   // 各种动态内容文字样式
   static TextStyle textStyleCC = TextStyle(
     color: AppColors.primaryText,
-    fontFamily: "PingFang SC",
+    fontFamily: "sans_bold",
     fontWeight: FontWeight.w400,
     fontSize: 12,
   );
 
   // 我的页面数字样式
   static TextStyle countStyle = TextStyle(
-    color: AppColors.accentText,
-    fontFamily: "Silom",
+    color: AppColors.primaryText,
+    fontFamily: "sans_bold",
+    fontWeight: FontWeight.w700,
+    fontSize: 19,
+  );
+
+  // 我的页面数字说明
+  static TextStyle countTextStyle = TextStyle(
+    color: AppColors.primaryText,
+    fontFamily: "sans_bold",
     fontWeight: FontWeight.w700,
     fontSize: 14,
   );

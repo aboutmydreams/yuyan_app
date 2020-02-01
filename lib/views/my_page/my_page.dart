@@ -20,13 +20,14 @@ class _MyPageState extends State<MyPage> {
   @override
   Widget build(BuildContext context) {
     List<Widget> widgetList = [
+      userInfo(context),
       threeWidget(context),
     ];
-    print(widgetList.length);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
         children: <Widget>[
+          // 背景图形
           Positioned(
             top: 0,
             child: ClipPath(
@@ -36,6 +37,13 @@ class _MyPageState extends State<MyPage> {
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   color: topModel.primarySwatchColor,
+                  gradient: LinearGradient(
+                      colors: [
+                        topModel.primarySwatchColor,
+                        topModel.primarySwatchColor.withAlpha(60)
+                      ],
+                      begin: FractionalOffset(0, 0),
+                      end: FractionalOffset(0, 1)),
                   boxShadow: [
                     BoxShadow(
                       color: Color.fromARGB(55, 0, 0, 0),
@@ -47,28 +55,9 @@ class _MyPageState extends State<MyPage> {
               ),
             ),
           ),
+
           Positioned(
-            top: 100,
-            left: 30,
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppColors.background,
-                boxShadow: [
-                  BoxShadow(
-                    color: Color.fromARGB(55, 0, 0, 0),
-                    offset: Offset(1, 2),
-                    blurRadius: 4,
-                  ),
-                ],
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-              ),
-              margin: EdgeInsets.all(0),
-              padding: EdgeInsets.all(0),
-              child: userInfo(context),
-            ),
-          ),
-          Positioned(
-            top: 250,
+            top: 0,
             child: Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height - 100,
