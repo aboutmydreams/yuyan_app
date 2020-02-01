@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/widgets_small/member.dart';
+import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/my_data.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/profile/profile_data.dart';
@@ -38,47 +39,52 @@ Widget userInfo(BuildContext context) {
     ),
     child: Column(
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(width: 16),
-            userAvatar(myInfo.data.avatarUrl, height: 60),
-            SizedBox(width: 16),
-            Container(
-              height: 84,
-              width: 200,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 33,
-                    margin: EdgeInsets.only(left: 2),
-                    child: Row(
-                      children: [
-                        Text(
-                          "${myInfo.data.name}",
-                          textAlign: TextAlign.center,
-                          style: AppStyles.textStyleA,
-                        ),
-                        // 会员
-                        memberIcon(context),
-                      ],
+        GestureDetector(
+          onTap: () {
+            myToast(context, "text");
+          },
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(width: 16),
+              userAvatar(myInfo.data.avatarUrl, height: 60),
+              SizedBox(width: 16),
+              Container(
+                height: 84,
+                width: 200,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 33,
+                      margin: EdgeInsets.only(left: 2),
+                      child: Row(
+                        children: [
+                          Text(
+                            "${myInfo.data.name}",
+                            textAlign: TextAlign.center,
+                            style: AppStyles.textStyleA,
+                          ),
+                          // 会员
+                          memberIcon(context),
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 3),
-                    child: Text(
-                      "$description",
-                      textAlign: TextAlign.center,
-                      style: AppStyles.countTextStyle,
+                    Container(
+                      margin: EdgeInsets.only(left: 3),
+                      child: Text(
+                        "$description",
+                        textAlign: TextAlign.center,
+                        style: AppStyles.countTextStyle,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         Divider(),
         infoCount(context),

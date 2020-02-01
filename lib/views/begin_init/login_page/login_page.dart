@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
         () async {
           bool isLogin = await oauth2.saveAccessToken();
           if (isLogin) {
-            myToast("登录成功");
+            myToast(context, "登录成功");
             getAllCookies(flutterWebviewPlugin).then((res) {
               topModel.update();
             });
@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
           if ((askTimes < timeoutTimes) & (!logined)) {
             askYuque(askTimes);
           } else if (askTimes >= timeoutTimes) {
-            myToast("验证超时，请稍后重试");
+            myToast(context, "验证超时，请稍后重试");
           } else {}
         },
       );

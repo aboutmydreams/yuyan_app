@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
@@ -16,11 +17,20 @@ class MyGroup extends StatelessWidget {
       appBar: AppBar(
         title: Text("我的团队"),
       ),
-      body: Container(
+      body: AnimationLimiter(
         child: ListView.builder(
           itemCount: groupList.length,
           itemBuilder: (BuildContext context, int index) {
-            return oneSetQuick(context, groupList[index]);
+            return AnimationConfiguration.staggeredList(
+              position: index,
+              duration: const Duration(milliseconds: 375),
+              child: SlideAnimation(
+                verticalOffset: 50.0,
+                child: FadeInAnimation(
+                  child: oneSetQuick(context, groupList[index]),
+                ),
+              ),
+            );
           },
         ),
       ),

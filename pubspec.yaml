@@ -73,6 +73,9 @@ dependencies:
   # 裁剪 我的页面顶部背景
   flutter_custom_clippers: ^1.1.0
 
+  # 列表动画
+  flutter_staggered_animations: ^0.1.2
+
   # 消息红点
   badges: ^1.1.0
 
