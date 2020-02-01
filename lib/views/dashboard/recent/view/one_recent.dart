@@ -6,8 +6,6 @@ import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/recent_data.dart';
 
 Widget oneRecent(BuildContext context, Recent data) {
-  print(data.subjectType);
-
   String action = "${actionType[data.action]}${subjectType[data.subjectType]}";
   String url =
       data.url[0] == '/' ? "https://www.yuque.com" + data.url : data.url;
@@ -92,7 +90,8 @@ Map<String, String> actionType = {
   "Update": "更新了",
   "Create": "新建了",
   "Edit": "编辑了",
-  "Join": "加入了"
+  "Join": "加入了",
+  "Collect": "收藏了"
 };
 
 Map<String, String> subjectType = {
