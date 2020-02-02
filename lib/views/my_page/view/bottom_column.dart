@@ -5,7 +5,8 @@ Widget threeWidget(BuildContext context) {
   return Container(
     child: Column(
       children: <Widget>[
-        oneColumn(context, imgName: "collections", text: "我的收藏"),
+        oneColumn(context,
+            imgName: "collections", text: "我的收藏", routeName: "/my/mark"),
         oneColumn(context, imgName: "follow_book", text: "关注知识库"),
         oneColumn(context, imgName: "topics", text: "我的讨论"),
         Container(

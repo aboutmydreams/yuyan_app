@@ -3,6 +3,7 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/net/requests_api/requests_api.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/tools/get_pref.dart';
+import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/views/my_page/data/follow.dart';
 
@@ -40,13 +41,21 @@ class _FollowerPageState extends State<FollowerPage> {
       appBar: AppBar(
         title: Text("关注我的"),
       ),
-      body: ListView.builder(
-        controller: _controller,
-        itemCount: dataList.length,
-        itemBuilder: (context, index) {
-          return oneFollow(context, dataList[index]);
-        },
-      ),
+      body: dataList.isEmpty
+          ? Text("loading")
+          : animationList(
+              context: context,
+              dataList: dataList,
+              childBuilder: oneFollow,
+            ),
+
+      // ListView.builder(
+      //   controller: _controller,
+      //   itemCount: dataList.length,
+      //   itemBuilder: (context, index) {
+      //     return oneFollow(context, dataList[index]);
+      //   },
+      // ),
     );
   }
 }

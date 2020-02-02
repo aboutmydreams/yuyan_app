@@ -122,7 +122,7 @@ class Profile {
   int userId;
   String location;
   String jobTitle;
-  Null department;
+  String department;
   String createdAt;
   String updatedAt;
   String sSerializer;

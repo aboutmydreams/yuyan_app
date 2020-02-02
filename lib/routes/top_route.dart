@@ -8,6 +8,7 @@ import 'package:yuyan_app/views/home_page.dart';
 import 'package:yuyan_app/views/my_page/follower/follower_page.dart';
 import 'package:yuyan_app/views/my_page/following/following_page.dart';
 import 'package:yuyan_app/views/my_page/group/my_group_page.dart';
+import 'package:yuyan_app/views/my_page/mark/mark_page.dart';
 import 'package:yuyan_app/views/my_page/my_page.dart';
 import 'package:yuyan_app/views/my_page/repos/my_repos_page.dart';
 import 'package:yuyan_app/views/my_page/setting/setting_page.dart';
@@ -25,4 +26,5 @@ Map<String, WidgetBuilder> routeData = {
   '/my/follower': (context) => FollowerPage(),
   '/my/following': (context) => FollowingPage(),
   '/my/repos': (context) => AnimatedListSample(),
+  '/my/mark': (context) => MarkPage(),
 };
