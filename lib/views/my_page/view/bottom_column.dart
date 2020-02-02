@@ -8,7 +8,8 @@ Widget threeWidget(BuildContext context) {
         oneColumn(context,
             imgName: "collections", text: "我的收藏", routeName: "/my/mark"),
         oneColumn(context, imgName: "follow_book", text: "关注知识库"),
-        oneColumn(context, imgName: "topics", text: "我的讨论"),
+        oneColumn(context,
+            imgName: "topics", text: "我的讨论", routeName: "/my/topic"),
         Container(
           width: MediaQuery.of(context).size.width,
           height: 20,

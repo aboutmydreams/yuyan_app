@@ -12,6 +12,7 @@ import 'package:yuyan_app/views/my_page/mark/mark_page.dart';
 import 'package:yuyan_app/views/my_page/my_page.dart';
 import 'package:yuyan_app/views/my_page/repos/my_repos_page.dart';
 import 'package:yuyan_app/views/my_page/setting/setting_page.dart';
+import 'package:yuyan_app/views/my_page/topic/topic_page.dart';
 
 Map<String, WidgetBuilder> routeData = {
   '/': (context) => HomePage(),
@@ -27,4 +28,5 @@ Map<String, WidgetBuilder> routeData = {
   '/my/following': (context) => FollowingPage(),
   '/my/repos': (context) => AnimatedListSample(),
   '/my/mark': (context) => MarkPage(),
+  '/my/topic': (context) => TopicPage(),
 };

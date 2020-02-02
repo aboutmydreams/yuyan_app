@@ -40,7 +40,10 @@ class _MarkPageState extends State<MarkPage> {
       body: dataList.isEmpty
           ? Text("loading")
           : animationList(
-              context: context, dataList: dataList, childBuilder: oneFollow),
+              context: context,
+              dataList: dataList,
+              childBuilder: oneFollow,
+            ),
     );
   }
 }
