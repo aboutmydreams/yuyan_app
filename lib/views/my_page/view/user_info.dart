@@ -6,17 +6,12 @@ import 'package:yuyan_app/models/widgets_small/member.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/my_data.dart';
-import 'package:yuyan_app/state_manage/dataManage/data/my_page/profile/profile_data.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 
 import 'info_count.dart';
 
 Widget userInfo(BuildContext context) {
   MyInfoData myInfo = topModel.myInfoManage.myInfoData;
-  ProfileData myProfile = topModel.myInfoManage.profileData;
-
-  String job = myProfile.data.jobTitle ?? "雀友";
-  String location = myProfile.data.location ?? "来自远方";
   String description = myInfo.data.description ?? "笔墨待识君";
 
   double leftMargin = (MediaQuery.of(context).size.width - 352) / 2;
