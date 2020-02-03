@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/net/requests_api/requests_api.dart';
+import 'package:yuyan_app/models/net/requests_api/user/data/topic.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
-import 'package:yuyan_app/views/my_page/data/topic.dart';
 
 class TopicPage extends StatefulWidget {
   TopicPage({Key key}) : super(key: key);
