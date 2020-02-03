@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:yuyan_app/models/net/requests_api/requests_api.dart';
-import 'package:yuyan_app/models/net/requests_api/user/data/mark.dart';
+import 'package:yuyan_app/models/net/requests_api/user/data/user_mark.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 
 class MarkPage extends StatefulWidget {

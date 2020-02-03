@@ -34,3 +34,49 @@ Widget animationChild({int index, Widget child}) {
     ),
   );
 }
+
+Widget aniColumn({
+  List<Widget> children,
+  mainAxisAlignment: MainAxisAlignment.start,
+  crossAxisAlignment: CrossAxisAlignment.center,
+}) {
+  return AnimationLimiter(
+    child: Column(
+      mainAxisAlignment: mainAxisAlignment,
+      crossAxisAlignment: crossAxisAlignment,
+      children: AnimationConfiguration.toStaggeredList(
+        duration: const Duration(milliseconds: 375),
+        childAnimationBuilder: (widget) => SlideAnimation(
+          horizontalOffset: 50.0,
+          child: FadeInAnimation(
+            child: widget,
+          ),
+        ),
+        children: children,
+      ),
+    ),
+  );
+}
+
+Widget aniRow({
+  List<Widget> children,
+  mainAxisAlignment: MainAxisAlignment.start,
+  crossAxisAlignment: CrossAxisAlignment.center,
+}) {
+  return AnimationLimiter(
+    child: Row(
+      mainAxisAlignment: mainAxisAlignment,
+      crossAxisAlignment: crossAxisAlignment,
+      children: AnimationConfiguration.toStaggeredList(
+        duration: const Duration(milliseconds: 375),
+        childAnimationBuilder: (widget) => SlideAnimation(
+          horizontalOffset: 50.0,
+          child: FadeInAnimation(
+            child: widget,
+          ),
+        ),
+        children: children,
+      ),
+    ),
+  );
+}

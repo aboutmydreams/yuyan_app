@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/models/net/requests_api/user/data/profile_data.dart';
+import 'package:yuyan_app/models/net/requests_api/user/data/user_profile_data.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 
 Widget profileWidget() {

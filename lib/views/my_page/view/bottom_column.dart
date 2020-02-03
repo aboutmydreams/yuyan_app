@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 
 Widget threeWidget(BuildContext context) {
   return Container(
-    child: Column(
+    child: aniColumn(
       children: <Widget>[
         oneColumn(context,
             imgName: "collections", text: "我的收藏", routeName: "/my/mark"),

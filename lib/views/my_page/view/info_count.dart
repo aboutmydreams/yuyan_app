@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/my_data.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
@@ -14,7 +15,7 @@ Widget infoCount(BuildContext context) {
   return Align(
     alignment: Alignment.topCenter,
     child: Container(
-      child: Row(
+      child: aniRow(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/net/requests_api/requests_api.dart';
-import 'package:yuyan_app/models/net/requests_api/user/data/topic.dart';
+import 'package:yuyan_app/models/net/requests_api/user/data/user_topic_data.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 
 class TopicPage extends StatefulWidget {

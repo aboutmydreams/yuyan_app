@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
-
 import 'package:yuyan_app/views/my_page/view/bottom_column.dart';
-import 'package:yuyan_app/views/my_page/view/info_count.dart';
 import 'package:yuyan_app/views/my_page/view/user_info.dart';
 
 class MyPage extends StatefulWidget {
