@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/net/requests_api/requests_api.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_follow_data.dart';
+import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/tools/get_pref.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
+import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 class FollowerPage extends StatefulWidget {
@@ -27,12 +29,13 @@ class _FollowerPageState extends State<FollowerPage> {
 
   getFollowerData() async {
     var myId = await getPrefIntData("my_id");
-    var res = await DioReq.get(
-        "/actions/users?action_type=follow&offset=$offset&target_id=$myId&target_type=User");
-    Follows theData = Follows.fromJson(res);
-    setState(() {
-      dataList = theData.data;
-    });
+    Follows theData = await DioUser.getFollowerData(offset, myId);
+    if (mounted) {
+      setState(() {
+        dataList = theData.data;
+        offset += 20;
+      });
+    }
   }
 
   @override
@@ -42,7 +45,7 @@ class _FollowerPageState extends State<FollowerPage> {
         title: Text("关注我的"),
       ),
       body: dataList.isEmpty
-          ? Text("loading")
+          ? loading()
           : animationList(
               context: context,
               dataList: dataList,
