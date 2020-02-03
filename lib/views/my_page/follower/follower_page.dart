@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/net/requests_api/requests_api.dart';
+import 'package:yuyan_app/models/net/requests_api/user/data/user_follow_data.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/tools/get_pref.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
-import 'package:yuyan_app/views/my_page/data/follow.dart';
 
 class FollowerPage extends StatefulWidget {
   FollowerPage({Key key}) : super(key: key);
