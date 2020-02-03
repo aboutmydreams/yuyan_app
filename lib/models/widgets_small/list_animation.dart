@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 Widget animationList(
-    {BuildContext context, List dataList, Function childBuilder}) {
+    {BuildContext context,
+    ScrollController controller,
+    List dataList,
+    Function childBuilder}) {
   return AnimationLimiter(
     child: ListView.builder(
+      controller: controller,
       itemCount: dataList.length,
       itemBuilder: (BuildContext context, int index) {
         return AnimationConfiguration.staggeredList(

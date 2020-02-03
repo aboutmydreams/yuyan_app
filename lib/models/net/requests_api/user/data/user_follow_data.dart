@@ -3,11 +3,11 @@ class Follows {
 
   Follows({this.data});
 
-  Follows.fromJson(Map<String, dynamic> json) {
+  Follows.fromJson(Map<String, dynamic> json, List<int> followedList) {
     if (json['data'] != null) {
       data = new List<FollowsData>();
       json['data'].forEach((v) {
-        data.add(new FollowsData.fromJson(v));
+        data.add(new FollowsData.fromJson(v, followedList));
       });
     }
   }
@@ -23,6 +23,7 @@ class Follows {
 
 class FollowsData {
   int id;
+  bool isfollow;
   String type;
   String login;
   String name;
@@ -37,7 +38,7 @@ class FollowsData {
   int followingCount;
   int status;
   int public;
-  Null scene;
+  dynamic scene;
   String createdAt;
   String updatedAt;
   bool isPaid;
@@ -45,6 +46,7 @@ class FollowsData {
 
   FollowsData(
       {this.id,
+      this.isfollow,
       this.type,
       this.login,
       this.name,
@@ -65,8 +67,9 @@ class FollowsData {
       this.isPaid,
       this.sSerializer});
 
-  FollowsData.fromJson(Map<String, dynamic> json) {
+  FollowsData.fromJson(Map<String, dynamic> json, List<int> followedList) {
     id = json['id'];
+    isfollow = followedList.contains(id);
     type = json['type'];
     login = json['login'];
     name = json['name'];

@@ -112,6 +112,7 @@ Widget oneEvent(BuildContext context, Event event) {
                       child: Text(
                         "${event.description}",
                         maxLines: 1,
+                        overflow: TextOverflow.clip,
                         style: AppStyles.textStyleCC,
                       ),
                     )
@@ -121,7 +122,8 @@ Widget oneEvent(BuildContext context, Event event) {
                       margin: EdgeInsets.only(left: 14),
                       child: Text(
                         "${event.title}",
-                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.clip,
                         style: AppStyles.textStyleBB,
                       ),
                     ),

@@ -8,6 +8,9 @@ import 'package:yuyan_app/models/tools/get_pref.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
+import 'package:yuyan_app/state_manage/toppest.dart';
+
+import 'one_buttom.dart';
 
 class FollowerPage extends StatefulWidget {
   FollowerPage({Key key}) : super(key: key);
@@ -19,6 +22,7 @@ class FollowerPage extends StatefulWidget {
 class _FollowerPageState extends State<FollowerPage> {
   int offset = 0;
   List<FollowsData> dataList = [];
+  List<int> userIdFollowed = [];
   ScrollController _controller;
 
   @override
@@ -30,9 +34,10 @@ class _FollowerPageState extends State<FollowerPage> {
   getFollowerData() async {
     var myId = await getPrefIntData("my_id");
     Follows theData = await DioUser.getFollowerData(offset, myId);
+
     if (mounted) {
       setState(() {
-        dataList = theData.data;
+        dataList.addAll(theData.data);
         offset += 20;
       });
     }
@@ -48,6 +53,7 @@ class _FollowerPageState extends State<FollowerPage> {
           ? loading()
           : animationList(
               context: context,
+              controller: _controller,
               dataList: dataList,
               childBuilder: oneFollow,
             ),
@@ -101,6 +107,8 @@ Widget oneFollow(BuildContext context, FollowsData data) {
                       Container(
                         child: Text(
                           "${clearText(data.description, 15)}",
+                          maxLines: 1,
+                          overflow: TextOverflow.clip,
                           style: AppStyles.textStyleC,
                         ),
                       ),
@@ -108,17 +116,15 @@ Widget oneFollow(BuildContext context, FollowsData data) {
                   )
                 : Container(
                     child: Text(
-                      clearText(data.name, 10),
+                      "${data.name}",
+                      maxLines: 1,
+                      overflow: TextOverflow.clip,
                       style: AppStyles.textStyleB,
                     ),
                   ),
           ),
           Spacer(),
-          FlatButton(
-              onPressed: () {},
-              child: Container(
-                child: Text("关注"),
-              ))
+          FollowButtom(data: data)
         ],
       ),
     ),

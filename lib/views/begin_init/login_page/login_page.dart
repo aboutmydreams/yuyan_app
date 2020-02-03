@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/oauth2/oauth2.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
-import 'package:yuyan_app/views/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);

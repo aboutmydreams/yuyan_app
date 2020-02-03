@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/tools/get_pref.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/member.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
@@ -36,7 +37,9 @@ Widget userInfo(BuildContext context) {
     child: Column(
       children: [
         GestureDetector(
-          onTap: () {
+          onTap: () async {
+            var _allCookie = await getPrefStringData("all_cookies");
+            print(_allCookie);
             myToast(context, "text");
           },
           child: aniRow(

@@ -50,9 +50,9 @@ class ColorManage extends Model {
     _themeData = ThemeData(
       platform: TargetPlatform.iOS, // 右滑返回
       primarySwatch: _primarySwatchColor,
-      highlightColor: Color.fromRGBO(255, 255, 255, 0.9),
-      splashColor: Colors.yellow,
-      accentColor: Color.fromRGBO(25, 25, 25, 1.0),
+      highlightColor: Color.fromRGBO(255, 255, 255, 0.3),
+      splashColor: Colors.white12,
+      accentColor: Color.fromRGBO(25, 25, 25, 0.8),
     );
 
     notifyListeners();
