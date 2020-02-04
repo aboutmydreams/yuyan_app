@@ -1,6 +1,6 @@
+import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/tools/get_pref.dart';
 
-import '../requests_api.dart';
 import 'data/user_follow_data.dart';
 import 'data/user_profile_data.dart';
 import 'data/user_repos_data.dart';
@@ -48,13 +48,14 @@ class DioUser {
   // 关注他人
   static followUser(int userId) async {
     try {
-      Map data = {
+      Map<String, dynamic> data = {
         "action_type": "follow",
         "target_type": "User",
         "target_id": userId
       };
-      Map res = await DioReq.post("/actions", data: data);
-      if (res.containsKey("id")) {
+      Map<String, dynamic> res = await DioReq.post("/actions", data: data);
+      print(res);
+      if (res.containsKey("data")) {
         return 1;
       } else {
         return 0;
@@ -68,12 +69,13 @@ class DioUser {
   // 取消关注他人
   static cancelFollow(int userId) async {
     try {
-      Map data = {
+      Map<String, dynamic> data = {
         "action_type": "follow",
         "target_type": "User",
         "target_id": userId
       };
-      Map res = await DioReq.delete("/actions", data: data);
+      Map<String, dynamic> res = await DioReq.delete("/actions", data: data);
+      print(res);
       if (res == {}) {
         return 1;
       } else {

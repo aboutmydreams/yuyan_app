@@ -1,7 +1,7 @@
+import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/contributors_data.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/prev_next_data.dart';
-import 'package:yuyan_app/models/net/requests_api/requests_api.dart';
 
 import 'data/doc_data.dart';
 import 'data/doc_data_v2.dart';

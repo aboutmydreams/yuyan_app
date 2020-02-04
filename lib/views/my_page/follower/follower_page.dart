@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/models/net/requests_api/requests_api.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_follow_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
@@ -87,7 +86,7 @@ Widget oneFollow(BuildContext context, FollowsData data) {
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           SizedBox(width: 20),
           userAvatar(data.avatarUrl, height: 50),

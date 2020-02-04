@@ -11,13 +11,10 @@ class DioReq {
     var diopath = path[0] == "/" ? baseUrl + path : path;
     var token = await getToken();
     var ctoken = await getCtoken();
-    // var _yuqueSession = await getSession();
     var _allCookie = await getPrefStringData("all_cookies");
     print(path);
     headers ??= {};
     headers["Content-Type"] = "application/json";
-    // headers["Cookie"] = "_yuque_session=" + _yuqueSession.toString();
-    // headers["ctoken"] = "ctoken=" + ctoken.toString();
     headers["Cookie"] = _allCookie;
     headers["x-csrf-token"] = ctoken.toString();
     headers["X-Auth-Token"] = token.toString();
@@ -25,8 +22,8 @@ class DioReq {
     try {
       Options options = Options(
         headers: headers,
-        sendTimeout: 10000,
-        receiveTimeout: 10000,
+        sendTimeout: 15000,
+        receiveTimeout: 15000,
       );
 
       Response response = await dio.get(
@@ -42,13 +39,13 @@ class DioReq {
       print(e);
       if (e.type == DioErrorType.RESPONSE) {
         // print(e.response.statusCode); //403 权限不足（token过期）
-        throw Exception('身份过期，重新登录');
+        return {"data": 403};
       } else if (e.type == DioErrorType.CONNECT_TIMEOUT) {
-        throw Exception('连接超时，请检查网络');
+        return {"data": "连接超时，请检查网络"};
       } else if (e.type == DioErrorType.DEFAULT) {
-        throw Exception('网络错误，很幸运，这次你遇到了～');
+        return {"data": "网络错误"};
       } else {
-        throw Exception('TYPEPROM${e.toString()}');
+        return {"data": "${e.toString()}"};
       }
     } catch (e) {
       throw Exception('UNPROM${e.toString()}');
@@ -63,6 +60,7 @@ class DioReq {
     var token = await getToken();
     var ctoken = await getCtoken();
     var _allCookie = await getPrefStringData("all_cookies");
+    print(path);
     headers ??= {};
     headers["Content-Type"] = "application/json";
     headers["X-Auth-Token"] = token;
@@ -87,13 +85,13 @@ class DioReq {
       print(e);
       if (e.type == DioErrorType.RESPONSE) {
         // print(e.response.statusCode); //403 权限不足（token过期）
-        throw Exception('身份过期，重新登录');
+        return {"data": 403};
       } else if (e.type == DioErrorType.CONNECT_TIMEOUT) {
-        throw Exception('连接超时，请检查网络');
+        return {"data": "连接超时，请检查网络"};
       } else if (e.type == DioErrorType.DEFAULT) {
-        throw Exception('网络错误，很幸运，这次你遇到了～');
+        return {"data": "网络错误"};
       } else {
-        throw Exception('TYPEPROM${e.toString()}');
+        return {"data": "${e.toString()}"};
       }
     } catch (e) {
       throw Exception('UNPROM${e.toString()}');
@@ -104,6 +102,7 @@ class DioReq {
       {Map<String, dynamic> headers,
       Map<String, dynamic> data,
       Map<String, dynamic> param}) async {
+    print(path);
     var diopath = path[0] == "/" ? baseUrl + path : path;
     var token = await getToken();
     var ctoken = await getCtoken();
@@ -130,16 +129,16 @@ class DioReq {
       print(e);
       if (e.type == DioErrorType.RESPONSE) {
         // print(e.response.statusCode); //403 权限不足（token过期）
-        throw Exception('身份过期，重新登录');
+        return {"data": 403};
       } else if (e.type == DioErrorType.CONNECT_TIMEOUT) {
-        throw Exception('连接超时，请检查网络');
+        return {"data": "连接超时，请检查网络"};
       } else if (e.type == DioErrorType.DEFAULT) {
-        throw Exception('网络错误，很幸运，这次你遇到了～');
+        return {"data": "网络错误"};
       } else {
-        throw Exception('TYPEPROM${e.toString()}');
+        return {"data": "${e.toString()}"};
       }
     } catch (e) {
-      throw Exception('UNPROM${e.toString()}');
+      throw Exception('UNPROM${{"data": "${e.toString()}"}}');
     }
   }
 
@@ -147,6 +146,7 @@ class DioReq {
       {Map<String, dynamic> headers,
       Map<String, dynamic> data,
       Map<String, dynamic> param}) async {
+    print(path);
     var diopath = path[0] == "/" ? baseUrl + path : path;
     var token = await getToken();
     var ctoken = await getCtoken();
@@ -164,7 +164,7 @@ class DioReq {
       );
       Response response = await dio.delete(
         diopath,
-        queryParameters: param,
+        // queryParameters: param,
         data: data,
         options: options,
       );
@@ -173,13 +173,13 @@ class DioReq {
       print(e);
       if (e.type == DioErrorType.RESPONSE) {
         // print(e.response.statusCode); //403 权限不足（token过期）
-        throw Exception('身份过期，重新登录');
+        return {"data": 403};
       } else if (e.type == DioErrorType.CONNECT_TIMEOUT) {
-        throw Exception('连接超时，请检查网络');
+        return {"data": "连接超时，请检查网络"};
       } else if (e.type == DioErrorType.DEFAULT) {
-        throw Exception('网络错误，很幸运，这次你遇到了～');
+        return {"data": "网络错误"};
       } else {
-        throw Exception('TYPEPROM${e.toString()}');
+        return {"data": "${e.toString()}"};
       }
     } catch (e) {
       throw Exception('UNPROM${e.toString()}');
