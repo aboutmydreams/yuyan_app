@@ -1,4 +1,4 @@
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fluttertoast/fluttertoast.dart' as fluToast;
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
@@ -110,17 +110,17 @@ myToast(BuildContext context, String text) {
   );
 }
 
-// myToast(String text) {
-//   return Fluttertoast.showToast(
-//     msg: text,
-//     toastLength: Toast.LENGTH_SHORT,
-//     gravity: ToastGravity.CENTER,
-//     timeInSecForIos: 1,
-//     backgroundColor: Colors.yellow,
-//     fontSize: 16.0,
-//     textColor: Colors.black87,
-//   );
-// }
+myOldToast(String text) {
+  return fluToast.Fluttertoast.showToast(
+    msg: text,
+    toastLength: fluToast.Toast.LENGTH_SHORT,
+    gravity: fluToast.ToastGravity.CENTER,
+    timeInSecForIos: 1,
+    backgroundColor: Colors.yellow,
+    fontSize: 16.0,
+    textColor: Colors.black87,
+  );
+}
 
 // myToastTime(String text, int time1) {
 //   return Fluttertoast.showToast(

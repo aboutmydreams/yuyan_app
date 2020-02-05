@@ -16,13 +16,15 @@ Widget userInfo(BuildContext context) {
   MyInfoData myInfo = topModel.myInfoManage.myInfoData;
   String description = myInfo.data.description ?? "笔墨待识君";
 
-  double leftMargin = (MediaQuery.of(context).size.width - 352) / 2;
+  double leftMargin = MediaQuery.of(context).size.width * 0.06;
+  print(leftMargin);
 
   return Container(
-    width: 352,
+    // width: 352,
     margin: EdgeInsets.only(
         top: 60, left: leftMargin, right: leftMargin, bottom: leftMargin),
-    padding: EdgeInsets.only(left: 28, right: 28, top: 16, bottom: 20),
+    padding: EdgeInsets.only(
+        left: leftMargin, right: leftMargin, top: 16, bottom: 20),
     decoration: BoxDecoration(
       color: AppColors.background,
       boxShadow: [
@@ -51,7 +53,6 @@ Widget userInfo(BuildContext context) {
               SizedBox(width: 16),
               Container(
                 height: 84,
-                width: 200,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,

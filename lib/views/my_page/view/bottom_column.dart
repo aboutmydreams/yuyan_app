@@ -29,7 +29,7 @@ Widget oneColumn(BuildContext context,
     {String text, String imgName, String routeName}) {
   return ListTile(
     leading: Container(
-      margin: EdgeInsets.only(left: 24),
+      margin: EdgeInsets.only(left: 16),
       child: Image.asset(
         'assets/images/my_page/$imgName.png',
         width: 40,

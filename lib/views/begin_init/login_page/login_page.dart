@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
         () async {
           bool isLogin = await oauth2.saveAccessToken();
           if (isLogin) {
-            myToast(context, "登录成功");
+            myOldToast("登录成功");
             getAllCookies(flutterWebviewPlugin).then((res) {
               topModel.update();
             });

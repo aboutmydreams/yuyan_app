@@ -31,7 +31,7 @@ class AppStyles {
     color: AppColors.accentText,
     fontFamily: "sans_bold",
     fontWeight: FontWeight.w600,
-    fontSize: 24,
+    fontSize: 22,
   );
 
   // 各种动态标题文字样式
@@ -39,7 +39,7 @@ class AppStyles {
     color: AppColors.accentText,
     fontFamily: "sans_bold",
     fontWeight: FontWeight.w700,
-    fontSize: 17,
+    fontSize: 15,
   );
 
   // 各种动态用户名文字样式
@@ -47,7 +47,7 @@ class AppStyles {
     color: AppColors.nextText,
     fontFamily: "sans_bold",
     fontWeight: FontWeight.w500,
-    fontSize: 15,
+    fontSize: 13,
   );
 
   // 各种动态内容文字样式
@@ -57,7 +57,7 @@ class AppStyles {
     letterSpacing: 1,
     fontFamily: "sans_bold",
     fontWeight: FontWeight.w400,
-    fontSize: 14,
+    fontSize: 13,
   );
 
   // 各种动态内容文字样式
@@ -65,7 +65,7 @@ class AppStyles {
     color: AppColors.primaryText,
     fontFamily: "sans_bold",
     fontWeight: FontWeight.w400,
-    fontSize: 12,
+    fontSize: 10,
   );
 
   // 我的页面数字样式
@@ -73,7 +73,7 @@ class AppStyles {
     color: AppColors.primaryText,
     fontFamily: "sans_bold",
     fontWeight: FontWeight.w700,
-    fontSize: 19,
+    fontSize: 18,
   );
 
   // 我的页面数字说明
@@ -81,6 +81,6 @@ class AppStyles {
     color: AppColors.primaryText,
     fontFamily: "sans_bold",
     fontWeight: FontWeight.w700,
-    fontSize: 14,
+    fontSize: 12,
   );
 }
