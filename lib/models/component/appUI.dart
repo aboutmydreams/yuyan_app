@@ -65,7 +65,7 @@ class AppStyles {
     color: AppColors.primaryText,
     fontFamily: "sans_bold",
     fontWeight: FontWeight.w400,
-    fontSize: 10,
+    fontSize: 11,
   );
 
   // 我的页面数字样式

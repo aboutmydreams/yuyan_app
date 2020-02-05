@@ -106,11 +106,11 @@ class DioReq {
     var diopath = path[0] == "/" ? baseUrl + path : path;
     var token = await getToken();
     var ctoken = await getCtoken();
-    var _yuqueSession = await getSession();
+    var _allCookie = await getPrefStringData("all_cookies");
     headers ??= {};
     headers["Content-Type"] = "application/json";
     headers["X-Auth-Token"] = token;
-    headers["Cookie"] = "_yuque_session=" + _yuqueSession;
+    headers["Cookie"] = _allCookie;
     headers["x-csrf-token"] = ctoken.toString();
     try {
       Options options = Options(
@@ -150,11 +150,12 @@ class DioReq {
     var diopath = path[0] == "/" ? baseUrl + path : path;
     var token = await getToken();
     var ctoken = await getCtoken();
-    var _yuqueSession = await getSession();
+    var _allCookie = await getPrefStringData("all_cookies");
+
     headers ??= {};
     headers["Content-Type"] = "application/json";
     headers["X-Auth-Token"] = token;
-    headers["Cookie"] = "_yuque_session=" + _yuqueSession;
+    headers["Cookie"] = _allCookie;
     headers["x-csrf-token"] = ctoken.toString();
     try {
       Options options = Options(
@@ -164,7 +165,7 @@ class DioReq {
       );
       Response response = await dio.delete(
         diopath,
-        // queryParameters: param,
+        queryParameters: param,
         data: data,
         options: options,
       );

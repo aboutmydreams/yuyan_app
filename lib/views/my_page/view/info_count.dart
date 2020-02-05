@@ -35,7 +35,7 @@ Widget infoCount(BuildContext context) {
 Widget oneCount(BuildContext context, String text, int len,
     {String routeName}) {
   return Container(
-    width: 66,
+    width: 64,
     child: InkWell(
       onTap: () {
         Navigator.pushNamed(context, routeName);

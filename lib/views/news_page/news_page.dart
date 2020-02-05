@@ -76,7 +76,7 @@ class _NewsPageState extends State<NewsPage> {
             top: 39,
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height - 100,
+              height: MediaQuery.of(context).size.height - 80,
               child: RefreshIndicator(
                 onRefresh: onfresh,
                 child: AnimationLimiter(

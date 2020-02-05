@@ -7,7 +7,7 @@ import 'package:yuyan_app/state_manage/dataManage/data/attent_data.dart';
 
 Widget toArtboard(BuildContext context, Data data) {
   return Container(
-    padding: EdgeInsets.only(top: 16, bottom: 20),
+    padding: EdgeInsets.only(top: 14, bottom: 20),
     decoration: BoxDecoration(
       color: AppColors.background,
       boxShadow: [
@@ -29,14 +29,16 @@ Widget toArtboard(BuildContext context, Data data) {
             children: [
               // 动态的头像
               Container(
-                height: 46,
+                height: 44,
                 margin: EdgeInsets.only(right: 3),
-                child: userEvent(context,
-                    login: data.login,
-                    userImg: data.avatarUrl,
-                    title: data.who,
-                    event: "${data.did}",
-                    time: timeCut(data.when)),
+                child: userEvent(
+                  context,
+                  login: data.login,
+                  userImg: data.avatarUrl,
+                  title: data.who,
+                  event: "${data.did}",
+                  time: timeCut(data.when),
+                ),
               ),
               // 画板知识库
               GestureDetector(

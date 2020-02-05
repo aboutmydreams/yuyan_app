@@ -91,6 +91,7 @@ Widget oneFollow(BuildContext context, FollowsData data) {
           SizedBox(width: 20),
           userAvatar(data.avatarUrl, height: 50),
           Container(
+            width: MediaQuery.of(context).size.width * 0.4,
             margin: EdgeInsets.only(left: 20),
             child: data.description != null
                 ? Column(

@@ -11,7 +11,7 @@ Widget toDoc(BuildContext context, Data data) {
       openUrl(context, data.event[0].url);
     },
     child: Container(
-      padding: EdgeInsets.only(top: 16, bottom: 20),
+      padding: EdgeInsets.only(top: 14, bottom: 20),
       decoration: BoxDecoration(
         color: AppColors.background,
         boxShadow: [
@@ -32,7 +32,7 @@ Widget toDoc(BuildContext context, Data data) {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 46,
+                  height: 44,
                   margin: EdgeInsets.only(right: 3),
                   child: userEvent(context,
                       login: data.login,

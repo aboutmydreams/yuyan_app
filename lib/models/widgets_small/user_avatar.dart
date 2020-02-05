@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 Widget userAvatar(String imgUrl, {double height}) {
-  height ??= 38;
-  if (!imgUrl.contains("assets/")) {
+  height ??= 34;
+  if (!imgUrl.contains("assets/") && !imgUrl.contains("x-oss-process")) {
     // 如果不包含dingtalk则使用压缩模式
     imgUrl = imgUrl.contains("dingtalk")
         ? imgUrl

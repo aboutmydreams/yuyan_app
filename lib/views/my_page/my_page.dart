@@ -57,7 +57,7 @@ class _MyPageState extends State<MyPage> {
             top: 0,
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height - 100,
+              height: MediaQuery.of(context).size.height - 56,
               child: ListView.builder(
                   controller: _controller,
                   itemCount: widgetList.length,

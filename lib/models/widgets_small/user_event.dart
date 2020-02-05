@@ -18,7 +18,7 @@ Widget userEvent(BuildContext context,
       Expanded(
         flex: 1,
         child: Container(
-          height: 46,
+          height: 44,
           margin: EdgeInsets.only(left: 14, bottom: 1),
           child: GestureDetector(
             onTap: () {
@@ -34,6 +34,7 @@ Widget userEvent(BuildContext context,
                   textAlign: TextAlign.center,
                   style: AppStyles.textStyleBB,
                 ),
+                SizedBox(height: 2),
                 Text(
                   "$event",
                   textAlign: TextAlign.center,

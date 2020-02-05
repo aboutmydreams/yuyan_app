@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
         color: Color.fromRGBO(0, 0, 0, 0.06),
         backgroundColor: Colors.white,
         animationCurve: Curves.easeInQuad,
-        height: 64,
+        height: 56,
         items: <Widget>[
           Icon(Icons.insert_emoticon, size: 34),
           Icon(Icons.wrap_text, size: 34),

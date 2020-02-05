@@ -13,7 +13,7 @@ Widget threeWidget(BuildContext context) {
             imgName: "topics", text: "我的讨论", routeName: "/my/topic"),
         Container(
           width: MediaQuery.of(context).size.width,
-          height: 20,
+          height: 12,
           color: AppColors.eventBack,
         ),
         oneColumn(context, imgName: "collections", text: "意见与反馈"),

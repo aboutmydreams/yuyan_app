@@ -8,7 +8,7 @@ import 'package:yuyan_app/state_manage/dataManage/data/attent_data.dart';
 
 Widget toUserOrBook(BuildContext context, Data data) {
   return Container(
-    padding: EdgeInsets.only(top: 16, bottom: 20),
+    padding: EdgeInsets.only(top: 14, bottom: 20),
     decoration: BoxDecoration(
       color: AppColors.background,
       boxShadow: [
@@ -29,7 +29,7 @@ Widget toUserOrBook(BuildContext context, Data data) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                height: 46,
+                height: 44,
                 margin: EdgeInsets.only(right: 3),
                 child: userEvent(context,
                     login: data.login,
@@ -106,6 +106,7 @@ Widget oneEvent(BuildContext context, Event event) {
                         style: AppStyles.textStyleBB,
                       ),
                     ),
+                    SizedBox(height: 2),
                     Container(
                       width: 180,
                       margin: EdgeInsets.only(left: 14),
