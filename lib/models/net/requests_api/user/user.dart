@@ -87,6 +87,37 @@ class DioUser {
     }
   }
 
-  // 关注知识库
+  // 收藏 Doc Book
+  static mark({String targetType: "Doc", int targetId}) async {
+    Map<String, dynamic> data = {
+      "target_type": targetType,
+      "target_id": targetId
+    };
+    Map ans = await DioReq.post("/mine/marks", data: data);
+    if (ans ==
+        {
+          "data": {"ok": 1}
+        }) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
 
+  // 取消收藏 Doc Book
+  static cancelMark({String targetType: "Doc", int targetId}) async {
+    Map<String, dynamic> data = {
+      "target_type": targetType,
+      "target_id": targetId
+    };
+    Map ans = await DioReq.delete("/mine/marks", data: data);
+    if (ans ==
+        {
+          "data": {"ok": 1}
+        }) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
 }

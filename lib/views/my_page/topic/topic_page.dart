@@ -3,6 +3,7 @@ import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 
 import 'package:yuyan_app/models/net/requests_api/user/data/user_topic_data.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
+import 'package:yuyan_app/models/widgets_small/loading.dart';
 
 class TopicPage extends StatefulWidget {
   TopicPage({Key key}) : super(key: key);
@@ -28,7 +29,7 @@ class _TopicPageState extends State<TopicPage> {
     var res = await DioReq.get(
         "/mine/topics?limit=200&offset=$offset&state=open&type=participated");
     var res2 = await DioReq.get(
-        "mine/topics?limit=200&offset=$offset2&state=closed&type=participated");
+        "/mine/topics?limit=200&offset=$offset2&state=closed&type=participated");
     TopicJson theData = TopicJson.fromJson(res);
     TopicJson theData2 = TopicJson.fromJson(res2);
     setState(() {
@@ -61,7 +62,7 @@ class _TopicPageState extends State<TopicPage> {
           children: <Widget>[
             Container(
               child: dataList.isEmpty
-                  ? Text("loading")
+                  ? loading()
                   : animationList(
                       context: context,
                       dataList: dataList,
@@ -69,7 +70,13 @@ class _TopicPageState extends State<TopicPage> {
                     ),
             ),
             Container(
-              child: Text("sss"),
+              child: dataList2.isEmpty
+                  ? loading()
+                  : animationList(
+                      context: context,
+                      dataList: dataList2,
+                      childBuilder: oneFollow,
+                    ),
             ),
           ],
         ),
