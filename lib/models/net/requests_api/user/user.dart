@@ -87,34 +87,28 @@ class DioUser {
     }
   }
 
-  // 收藏 Doc Book
+  // 收藏 Doc Book User(其实是group)
   static mark({String targetType: "Doc", int targetId}) async {
     Map<String, dynamic> data = {
       "target_type": targetType,
       "target_id": targetId
     };
     Map ans = await DioReq.post("/mine/marks", data: data);
-    if (ans ==
-        {
-          "data": {"ok": 1}
-        }) {
+    if (ans["data"] == {"ok": 1}) {
       return 1;
     } else {
       return 0;
     }
   }
 
-  // 取消收藏 Doc Book
+  // 取消收藏 Doc Book User(其实是group)
   static cancelMark({String targetType: "Doc", int targetId}) async {
     Map<String, dynamic> data = {
       "target_type": targetType,
       "target_id": targetId
     };
     Map ans = await DioReq.delete("/mine/marks", data: data);
-    if (ans ==
-        {
-          "data": {"ok": 1}
-        }) {
+    if (ans["data"] == {"ok": 1}) {
       return 1;
     } else {
       return 0;

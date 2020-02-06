@@ -76,6 +76,9 @@ dependencies:
   # 列表动画
   flutter_staggered_animations: ^0.1.2
 
+  # 话题标签颜色
+  smart_color: ^0.2.2
+
   # 消息红点
   badges: ^1.1.0
 

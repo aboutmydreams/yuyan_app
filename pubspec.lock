@@ -312,6 +312,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.4.0"
+  pigment:
+    dependency: transitive
+    description:
+      name: pigment
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.3"
   platform:
     dependency: transitive
     description:
@@ -394,6 +401,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  smart_color:
+    dependency: "direct main"
+    description:
+      name: smart_color
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.2.2"
   source_span:
     dependency: transitive
     description:

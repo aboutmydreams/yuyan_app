@@ -44,13 +44,17 @@ class _MarkPageState extends State<MarkPage> {
           : animationList(
               context: context,
               dataList: dataList,
-              childBuilder: oneFollow,
+              childBuilder: oneMark,
             ),
     );
   }
 }
 
-Widget oneFollow(BuildContext context, MarkData data) {
+Widget oneMark(BuildContext context, MarkData data) {
+  String avatarUrl = data.targetType != "User"
+      ? data.targetGroup.avatarUrl
+      : data.target.user.smallAvatarUrl;
+
   return GestureDetector(
     onTap: () {
       var url = "https://www.yuque.com${data.sUrl}";
@@ -76,11 +80,11 @@ Widget oneFollow(BuildContext context, MarkData data) {
         children: <Widget>[
           Row(
             children: <Widget>[
-              userAvatar(data.targetGroup.avatarUrl, height: 25),
+              userAvatar(avatarUrl, height: 25),
               SizedBox(width: 6),
               Text(
                 data.targetGroup.name,
-                overflow: TextOverflow.clip,
+                overflow: TextOverflow.ellipsis,
                 style: AppStyles.textStyleC,
               )
             ],

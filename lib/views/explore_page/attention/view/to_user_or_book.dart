@@ -113,7 +113,7 @@ Widget oneEvent(BuildContext context, Event event) {
                       child: Text(
                         "${event.description}",
                         maxLines: 1,
-                        overflow: TextOverflow.clip,
+                        overflow: TextOverflow.ellipsis,
                         style: AppStyles.textStyleCC,
                       ),
                     )
@@ -124,7 +124,7 @@ Widget oneEvent(BuildContext context, Event event) {
                       child: Text(
                         "${event.title}",
                         maxLines: 1,
-                        overflow: TextOverflow.clip,
+                        overflow: TextOverflow.ellipsis,
                         style: AppStyles.textStyleBB,
                       ),
                     ),

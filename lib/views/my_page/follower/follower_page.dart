@@ -108,7 +108,7 @@ Widget oneFollow(BuildContext context, FollowsData data) {
                         child: Text(
                           "${clearText(data.description, 15)}",
                           maxLines: 1,
-                          overflow: TextOverflow.clip,
+                          overflow: TextOverflow.ellipsis,
                           style: AppStyles.textStyleC,
                         ),
                       ),
@@ -118,7 +118,7 @@ Widget oneFollow(BuildContext context, FollowsData data) {
                     child: Text(
                       "${data.name}",
                       maxLines: 1,
-                      overflow: TextOverflow.clip,
+                      overflow: TextOverflow.ellipsis,
                       style: AppStyles.textStyleB,
                     ),
                   ),

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 Widget userAvatar(String imgUrl, {double height}) {
   height ??= 34;
+  imgUrl ??=
+      "https://cdn.nlark.com/yuque/0/2019/png/84147/1547032500238-d93512f4-db23-442f-b4d8-1d46304f9673.png";
   if (!imgUrl.contains("assets/") && !imgUrl.contains("x-oss-process")) {
     // 如果不包含dingtalk则使用压缩模式
     imgUrl = imgUrl.contains("dingtalk")
