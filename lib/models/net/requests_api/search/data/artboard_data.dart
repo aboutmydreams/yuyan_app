@@ -53,7 +53,7 @@ class SearchArtboardData {
 class Hits {
   String id;
   String type;
-  String abstract;
+  String abStract;
   String bookName;
   String groupName;
   String name;
@@ -63,7 +63,7 @@ class Hits {
   Hits(
       {this.id,
       this.type,
-      this.abstract,
+      this.abStract,
       this.bookName,
       this.groupName,
       this.name,
@@ -73,7 +73,7 @@ class Hits {
   Hits.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     type = json['type'];
-    abstract = json['abstract'];
+    abStract = json['abstract'];
     bookName = json['book_name'];
     groupName = json['group_name'];
     name = json['name'];
@@ -86,7 +86,7 @@ class Hits {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['type'] = this.type;
-    data['abstract'] = this.abstract;
+    data['abstract'] = this.abStract;
     data['book_name'] = this.bookName;
     data['group_name'] = this.groupName;
     data['name'] = this.name;
