@@ -2,13 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/browser_web/browser_appbar.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/widgets_small/user_event.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/selection_data.dart';
 
 Widget firstItemUI(BuildContext context, Data data) {
   String imageUrl = data.cover +
-      "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_300%2Ch_180%2Fformat%2Cpng";
+      "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_400%2Ch_220%2Fformat%2Cpng";
   return GestureDetector(
     /// 临时解决方案，临时的时间可能会很久
     onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) {
@@ -56,11 +55,13 @@ Widget firstItemUI(BuildContext context, Data data) {
           Container(
             height: 46,
             margin: EdgeInsets.only(right: 47),
-            child: userEvent(context,
-                userImg: data.user.smallAvatarUrl,
-                login: data.user.login,
-                title: data.title,
-                event: data.user.name + " 发布于 " + data.book.name),
+            child: userEvent(
+              context,
+              userImg: data.user.avatarUrl,
+              login: data.user.login,
+              title: data.title,
+              event: data.user.name + " 发布于 " + data.book.name,
+            ),
           ),
         ],
       ),

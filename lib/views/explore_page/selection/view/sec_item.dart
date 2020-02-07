@@ -4,11 +4,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:yuyan_app/models/browser_web/browser_appbar.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
+import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/selection_data.dart';
 
 Widget secItemUI(BuildContext context, Data data) {
   String imageUrl = data.cover +
-      "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_150%2Ch_90%2Fformat%2Cpng";
+      "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_200%2Ch_120%2Fformat%2Cpng";
   return GestureDetector(
     onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return BrowserWithBar(
@@ -89,13 +90,7 @@ Widget secItemUI(BuildContext context, Data data) {
                                 ),
                               ],
                             ),
-                            child: ClipOval(
-                              child: FadeInImage.assetNetwork(
-                                image: data.user.smallAvatarUrl,
-                                placeholder: 'assets/images/logo.png',
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                            child: userAvatar(data.user.avatarUrl, height: 22),
                           ),
                         ),
                         SizedBox(width: 7),

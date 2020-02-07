@@ -25,8 +25,9 @@ class Data {
   int id;
   int spaceId;
   String type;
+  dynamic subType;
   String title;
-  String titleDraft;
+  dynamic titleDraft;
   dynamic tag;
   String slug;
   int userId;
@@ -38,6 +39,7 @@ class Data {
   String format;
   int status;
   int readStatus;
+  int viewStatus;
   int public;
   int draftVersion;
   int commentsCount;
@@ -49,6 +51,7 @@ class Data {
   String firstPublishedAt;
   int wordCount;
   String selectedAt;
+  dynamic pinnedAt;
   Book book;
   User user;
   dynamic lastEditor;
@@ -59,6 +62,7 @@ class Data {
       {this.id,
       this.spaceId,
       this.type,
+      this.subType,
       this.title,
       this.titleDraft,
       this.tag,
@@ -72,6 +76,7 @@ class Data {
       this.format,
       this.status,
       this.readStatus,
+      this.viewStatus,
       this.public,
       this.draftVersion,
       this.commentsCount,
@@ -83,6 +88,7 @@ class Data {
       this.firstPublishedAt,
       this.wordCount,
       this.selectedAt,
+      this.pinnedAt,
       this.book,
       this.user,
       this.lastEditor,
@@ -93,6 +99,7 @@ class Data {
     id = json['id'];
     spaceId = json['space_id'];
     type = json['type'];
+    subType = json['sub_type'];
     title = json['title'];
     titleDraft = json['title_draft'];
     tag = json['tag'];
@@ -106,6 +113,7 @@ class Data {
     format = json['format'];
     status = json['status'];
     readStatus = json['read_status'];
+    viewStatus = json['view_status'];
     public = json['public'];
     draftVersion = json['draft_version'];
     commentsCount = json['comments_count'];
@@ -117,6 +125,7 @@ class Data {
     firstPublishedAt = json['first_published_at'];
     wordCount = json['word_count'];
     selectedAt = json['selected_at'];
+    pinnedAt = json['pinned_at'];
     book = json['book'] != null ? new Book.fromJson(json['book']) : null;
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
     lastEditor = json['last_editor'];
@@ -129,6 +138,7 @@ class Data {
     data['id'] = this.id;
     data['space_id'] = this.spaceId;
     data['type'] = this.type;
+    data['sub_type'] = this.subType;
     data['title'] = this.title;
     data['title_draft'] = this.titleDraft;
     data['tag'] = this.tag;
@@ -142,6 +152,7 @@ class Data {
     data['format'] = this.format;
     data['status'] = this.status;
     data['read_status'] = this.readStatus;
+    data['view_status'] = this.viewStatus;
     data['public'] = this.public;
     data['draft_version'] = this.draftVersion;
     data['comments_count'] = this.commentsCount;
@@ -153,6 +164,8 @@ class Data {
     data['first_published_at'] = this.firstPublishedAt;
     data['word_count'] = this.wordCount;
     data['selected_at'] = this.selectedAt;
+    data['pinned_at'] = this.pinnedAt;
+
     if (this.book != null) {
       data['book'] = this.book.toJson();
     }
@@ -250,9 +263,6 @@ class User {
   dynamic owners;
   String sSerializer;
   String avatar;
-  String largeAvatarUrl;
-  String mediumAvatarUrl;
-  String smallAvatarUrl;
   int followersCount;
   int followingCount;
   int status;
@@ -275,9 +285,6 @@ class User {
       this.owners,
       this.sSerializer,
       this.avatar,
-      this.largeAvatarUrl,
-      this.mediumAvatarUrl,
-      this.smallAvatarUrl,
       this.followersCount,
       this.followingCount,
       this.status,
@@ -291,7 +298,7 @@ class User {
     description = json['description'];
     avatarUrl = json['avatar_url'];
     public = json['public'];
-    scene = json['scene'] != null ? json['scene'] : 'null';
+    scene = json['scene'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     organizationId = json['organization_id'];
@@ -300,9 +307,6 @@ class User {
     owners = json['owners'];
     sSerializer = json['_serializer'];
     avatar = json['avatar'];
-    largeAvatarUrl = json['large_avatar_url'];
-    mediumAvatarUrl = json['medium_avatar_url'];
-    smallAvatarUrl = json['small_avatar_url'];
     followersCount = json['followers_count'];
     followingCount = json['following_count'];
     status = json['status'];
@@ -327,9 +331,6 @@ class User {
     data['owners'] = this.owners;
     data['_serializer'] = this.sSerializer;
     data['avatar'] = this.avatar;
-    data['large_avatar_url'] = this.largeAvatarUrl;
-    data['medium_avatar_url'] = this.mediumAvatarUrl;
-    data['small_avatar_url'] = this.smallAvatarUrl;
     data['followers_count'] = this.followersCount;
     data['following_count'] = this.followingCount;
     data['status'] = this.status;
@@ -337,96 +338,3 @@ class User {
     return data;
   }
 }
-
-// class User {
-//   int id;
-//   String type;
-//   String login;
-//   String name;
-//   String description;
-//   String avatar;
-//   String avatarUrl;
-//   String largeAvatarUrl;
-//   String mediumAvatarUrl;
-//   String smallAvatarUrl;
-//   int followersCount;
-//   int followingCount;
-//   int status;
-//   int public;
-//   Null scene;
-//   String createdAt;
-//   String updatedAt;
-//   bool isPaid;
-//   Null profile;
-//   String sSerializer;
-
-//   User(
-//       {this.id,
-//       this.type,
-//       this.login,
-//       this.name,
-//       this.description,
-//       this.avatar,
-//       this.avatarUrl,
-//       this.largeAvatarUrl,
-//       this.mediumAvatarUrl,
-//       this.smallAvatarUrl,
-//       this.followersCount,
-//       this.followingCount,
-//       this.status,
-//       this.public,
-//       this.scene,
-//       this.createdAt,
-//       this.updatedAt,
-//       this.isPaid,
-//       this.profile,
-//       this.sSerializer});
-
-//   User.fromJson(Map<String, dynamic> json) {
-//     id = json['id'];
-//     type = json['type'];
-//     login = json['login'];
-//     name = json['name'];
-//     description = json['description'];
-//     avatar = json['avatar'];
-//     avatarUrl = json['avatar_url'];
-//     largeAvatarUrl = json['large_avatar_url'];
-//     mediumAvatarUrl = json['medium_avatar_url'];
-//     smallAvatarUrl = json['small_avatar_url'];
-//     followersCount = json['followers_count'];
-//     followingCount = json['following_count'];
-//     status = json['status'];
-//     public = json['public'];
-//     scene = json['scene'];
-//     createdAt = json['created_at'];
-//     updatedAt = json['updated_at'];
-//     isPaid = json['isPaid'];
-//     profile = json['profile'];
-//     sSerializer = json['_serializer'];
-//   }
-
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = new Map<String, dynamic>();
-//     data['id'] = this.id;
-//     data['type'] = this.type;
-//     data['login'] = this.login;
-//     data['name'] = this.name;
-//     data['description'] = this.description;
-//     data['avatar'] = this.avatar;
-//     data['avatar_url'] = this.avatarUrl;
-//     data['large_avatar_url'] = this.largeAvatarUrl;
-//     data['medium_avatar_url'] = this.mediumAvatarUrl;
-//     data['small_avatar_url'] = this.smallAvatarUrl;
-//     data['followers_count'] = this.followersCount;
-//     data['following_count'] = this.followingCount;
-//     data['status'] = this.status;
-//     data['public'] = this.public;
-//     data['scene'] = this.scene;
-//     data['created_at'] = this.createdAt;
-//     data['updated_at'] = this.updatedAt;
-//     data['isPaid'] = this.isPaid;
-//     data['profile'] = this.profile;
-//     data['_serializer'] = this.sSerializer;
-//     return data;
-//   }
-// }

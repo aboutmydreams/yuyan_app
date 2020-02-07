@@ -119,6 +119,7 @@ class Target {
   String bodyAsl;
   String bodyDraft;
   String bodyDraftAsl;
+  String avatarUrl;
   bool isSuspect;
   int id;
   int spaceId;
@@ -185,6 +186,7 @@ class Target {
       this.bodyDraft,
       this.bodyDraftAsl,
       this.isSuspect,
+      this.avatarUrl,
       this.id,
       this.spaceId,
       this.type,
@@ -250,6 +252,7 @@ class Target {
     bodyDraft = json['body_draft'];
     bodyDraftAsl = json['body_draft_asl'];
     isSuspect = json['isSuspect'];
+    avatarUrl = json['avatar_url'];
     id = json['id'];
     spaceId = json['space_id'];
     type = json['type'];
@@ -317,6 +320,7 @@ class Target {
     data['body_draft'] = this.bodyDraft;
     data['body_draft_asl'] = this.bodyDraftAsl;
     data['isSuspect'] = this.isSuspect;
+    data['avatar_url'] = this.avatarUrl;
     data['id'] = this.id;
     data['space_id'] = this.spaceId;
     data['type'] = this.type;
