@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_follow_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
@@ -7,6 +8,7 @@ import 'package:yuyan_app/models/tools/get_pref.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
+import 'package:yuyan_app/views/my_page/follower/one_buttom.dart';
 
 class FollowingPage extends StatefulWidget {
   FollowingPage({Key key}) : super(key: key);
@@ -48,19 +50,16 @@ class _FollowingPageState extends State<FollowingPage> {
               dataList: dataList,
               childBuilder: oneFollow,
             ),
-      // ListView.builder(
-      //   itemCount: dataList.length,
-      //   itemBuilder: (context, index) {
-      //     return oneFollow(context, dataList[index]);
-      //   },
-      // ),
     );
   }
 }
 
 Widget oneFollow(BuildContext context, FollowsData data) {
+  data.isfollow = true;
   return GestureDetector(
-    onTap: () {},
+    onTap: () {
+      openUrl(context, "https://www.yuque.com/${data.login}");
+    },
     child: Container(
       height: 70,
       margin: EdgeInsets.only(left: 5, top: 2, bottom: 8, right: 5),
@@ -93,10 +92,14 @@ Widget oneFollow(BuildContext context, FollowsData data) {
                           style: AppStyles.textStyleB,
                         ),
                       ),
+                      SizedBox(height: 2),
                       Container(
+                        width: 200,
                         child: Text(
-                          "${clearText(data.description, 15)}",
+                          "${data.description}",
                           style: AppStyles.textStyleC,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
                       ),
                     ],
@@ -109,11 +112,7 @@ Widget oneFollow(BuildContext context, FollowsData data) {
                   ),
           ),
           Spacer(),
-          FlatButton(
-              onPressed: () {},
-              child: Container(
-                child: Text("关注"),
-              ))
+          FollowButtom(data: data),
         ],
       ),
     ),

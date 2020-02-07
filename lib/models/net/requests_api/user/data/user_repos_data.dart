@@ -1,13 +1,13 @@
-class UserRepos {
-  List<ReposData> data;
+class UserBookJson {
+  List<UserBookData> data;
 
-  UserRepos({this.data});
+  UserBookJson({this.data});
 
-  UserRepos.fromJson(Map<String, dynamic> json) {
+  UserBookJson.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<ReposData>();
+      data = new List<UserBookData>();
       json['data'].forEach((v) {
-        data.add(new ReposData.fromJson(v));
+        data.add(new UserBookData.fromJson(v));
       });
     }
   }
@@ -21,7 +21,7 @@ class UserRepos {
   }
 }
 
-class ReposData {
+class UserBookData {
   int id;
   String type;
   String slug;
@@ -40,7 +40,7 @@ class ReposData {
   User user;
   String sSerializer;
 
-  ReposData(
+  UserBookData(
       {this.id,
       this.type,
       this.slug,
@@ -59,7 +59,7 @@ class ReposData {
       this.user,
       this.sSerializer});
 
-  ReposData.fromJson(Map<String, dynamic> json) {
+  UserBookData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     type = json['type'];
     slug = json['slug'];
@@ -111,9 +111,6 @@ class User {
   String name;
   String description;
   String avatarUrl;
-  String largeAvatarUrl;
-  String mediumAvatarUrl;
-  String smallAvatarUrl;
   int booksCount;
   int publicBooksCount;
   int followersCount;
@@ -129,9 +126,6 @@ class User {
       this.name,
       this.description,
       this.avatarUrl,
-      this.largeAvatarUrl,
-      this.mediumAvatarUrl,
-      this.smallAvatarUrl,
       this.booksCount,
       this.publicBooksCount,
       this.followersCount,
@@ -147,9 +141,6 @@ class User {
     name = json['name'];
     description = json['description'];
     avatarUrl = json['avatar_url'];
-    largeAvatarUrl = json['large_avatar_url'];
-    mediumAvatarUrl = json['medium_avatar_url'];
-    smallAvatarUrl = json['small_avatar_url'];
     booksCount = json['books_count'];
     publicBooksCount = json['public_books_count'];
     followersCount = json['followers_count'];
@@ -167,9 +158,6 @@ class User {
     data['name'] = this.name;
     data['description'] = this.description;
     data['avatar_url'] = this.avatarUrl;
-    data['large_avatar_url'] = this.largeAvatarUrl;
-    data['medium_avatar_url'] = this.mediumAvatarUrl;
-    data['small_avatar_url'] = this.smallAvatarUrl;
     data['books_count'] = this.booksCount;
     data['public_books_count'] = this.publicBooksCount;
     data['followers_count'] = this.followersCount;

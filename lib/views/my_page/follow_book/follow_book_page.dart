@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
+import 'package:yuyan_app/models/net/requests_api/user/data/my_follow_book_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_follow_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
@@ -8,22 +9,20 @@ import 'package:yuyan_app/models/tools/get_pref.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
-import 'package:yuyan_app/state_manage/toppest.dart';
+import 'package:yuyan_app/views/my_page/follower/one_buttom.dart';
 
-import 'one_buttom.dart';
-
-class FollowerPage extends StatefulWidget {
-  FollowerPage({Key key}) : super(key: key);
+class FollowBookPage extends StatefulWidget {
+  FollowBookPage({Key key}) : super(key: key);
 
   @override
-  _FollowerPageState createState() => _FollowerPageState();
+  _FollowBookPageState createState() => _FollowBookPageState();
 }
 
-class _FollowerPageState extends State<FollowerPage> {
+class _FollowBookPageState extends State<FollowBookPage> {
   int offset = 0;
-  List<FollowsData> dataList = [];
-  List<int> userIdFollowed = [];
-  ScrollController _controller;
+  List<FollowBookData> dataList = [];
+  // 之后收藏数量增加 需要上滑加载更多
+  // ScrollController _controller;
 
   @override
   void initState() {
@@ -32,47 +31,34 @@ class _FollowerPageState extends State<FollowerPage> {
   }
 
   getFollowerData() async {
-    var myId = await getPrefIntData("my_id");
-    Follows theData = await DioUser.getFollowerData(offset, myId);
-
-    if (mounted) {
-      setState(() {
-        dataList.addAll(theData.data);
-        offset += 20;
-      });
-    }
+    FollowBookJson res = await DioUser.getFollowBook(limit: 200, offset: 0);
+    setState(() {
+      dataList = res.data;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("关注我的"),
+        title: Text("我关注的知识库"),
       ),
       body: dataList.isEmpty
           ? loading()
           : animationList(
               context: context,
-              controller: _controller,
               dataList: dataList,
               childBuilder: oneFollow,
             ),
-
-      // ListView.builder(
-      //   controller: _controller,
-      //   itemCount: dataList.length,
-      //   itemBuilder: (context, index) {
-      //     return oneFollow(context, dataList[index]);
-      //   },
-      // ),
     );
   }
 }
 
-Widget oneFollow(BuildContext context, FollowsData data) {
+Widget oneFollow(BuildContext context, FollowBookData data) {
+  data.ifFollow = true;
   return GestureDetector(
     onTap: () {
-      openUrl(context, "https://www.yuque.com/${data.login}");
+      openUrl(context, "https://www.yuque.com${data.sUrl}");
     },
     child: Container(
       height: 70,
@@ -89,46 +75,45 @@ Widget oneFollow(BuildContext context, FollowsData data) {
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           SizedBox(width: 20),
-          userAvatar(data.avatarUrl, height: 50),
+          userAvatar(data.targetGroup.avatarUrl, height: 50),
           Container(
-            width: MediaQuery.of(context).size.width * 0.4,
             margin: EdgeInsets.only(left: 20),
-            child: data.description != null
+            child: (data.target.description != null) &&
+                    (data.target.description != "")
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Container(
                         child: Text(
-                          clearText(data.name, 10),
+                          clearText(data.target.name, 10),
                           style: AppStyles.textStyleB,
                         ),
                       ),
                       SizedBox(height: 2),
                       Container(
+                        width: 200,
                         child: Text(
-                          "${clearText(data.description, 15)}",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                          "${data.target.description}",
                           style: AppStyles.textStyleC,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
                       ),
                     ],
                   )
                 : Container(
                     child: Text(
-                      "${data.name}",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                      clearText(data.target.name, 10),
                       style: AppStyles.textStyleB,
                     ),
                   ),
           ),
           Spacer(),
-          FollowButtom(data: data)
+          // FollowButtom(data: data),
         ],
       ),
     ),

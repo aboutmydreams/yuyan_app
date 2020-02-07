@@ -21,6 +21,13 @@ getCtoken() async {
   return ctoken;
 }
 
+getLogin() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String getIt(String key) => prefs.getString(key);
+  String ctoken = getIt("login");
+  return ctoken;
+}
+
 getPrefStringData(String keyName) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String getIt(String key) => prefs.getString(key);

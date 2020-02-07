@@ -1,4 +1,5 @@
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
+import 'package:yuyan_app/models/net/requests_api/user/data/my_follow_book_data.dart';
 import 'package:yuyan_app/models/tools/get_pref.dart';
 
 import 'data/user_follow_data.dart';
@@ -16,7 +17,7 @@ class DioUser {
   // 获取公开知识库
   static getReposData(String login) async {
     var res = await DioReq.get("/v2/users/$login/repos");
-    UserRepos theData = UserRepos.fromJson(res);
+    UserBookJson theData = UserBookJson.fromJson(res);
     return theData;
   }
 
@@ -85,6 +86,14 @@ class DioUser {
       print(e);
       return 0;
     }
+  }
+
+  // 我关注的知识库
+  static getFollowBook({int offset: 0, int limit: 200}) async {
+    Map ans = await DioReq.get(
+        "/mine/follows?limit=$limit&offset=$offset&q=&type=Book");
+    FollowBookJson theData = FollowBookJson.fromJson(ans);
+    return theData;
   }
 
   // 收藏 Doc Book User(其实是group)
