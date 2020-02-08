@@ -96,6 +96,7 @@ Map<String, String> actionType = {
 Map<String, String> subjectType = {
   "Doc": "文档",
   "Book": "知识库",
+  "Thread": "话题",
   "Sheet": "表格文档",
   "Group": "团队",
   "Design": "画板"
@@ -103,14 +104,18 @@ Map<String, String> subjectType = {
 
 Map<String, Icon> iconType = {
   "Doc": Icon(
-    Icons.book,
+    Icons.description,
     color: Colors.blue,
   ),
   "Book": Icon(
-    Icons.event_note,
+    Icons.book,
     color: Colors.blue,
   ),
   "Sheet": Icon(
+    Icons.event_note,
+    color: Colors.blue,
+  ),
+  "Thread": Icon(
     Icons.speaker_notes,
     color: Colors.blue,
   ),
@@ -119,7 +124,7 @@ Map<String, Icon> iconType = {
     color: Colors.blue,
   ),
   "Design": Icon(
-    Icons.description,
+    Icons.photo_album,
     color: Colors.blue,
   ),
 };
