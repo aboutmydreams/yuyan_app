@@ -3,6 +3,7 @@ import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/tools/write_json.dart';
 
 import 'data/news_data.dart';
+import 'dart:io';
 
 class NewsManage extends Model {
   int offset = 0;
@@ -36,11 +37,23 @@ class NewsManage extends Model {
   }
 
   readAll() async {
-    var dioData =
-        await DioReq.put("/notifications/unread-count", data: {"ids": "all"});
-    // if(newsCount.list!=null){}
-    if (dioData["data"].containsKey("ok")) {
-      notifyListeners();
+    // var dioData =
+    //     await DioReq.put("/notifications/unread-count", data: {"ids": "all"});
+    // // if(newsCount.list!=null){}
+    // if (dioData["data"].containsKey("ok")) {
+    //   notifyListeners();
+    // }
+
+    for (int i = 0; i < _unreadNews.notifications.length; i++) {
+      // _newsCount.count = _newsCount.count - 1;
+      // _unreadNews.notifications.remove(oneData);
+      // _readedNews.notifications.insert(0, oneData);
+      int longTime = 70 * i;
+      Future.delayed(Duration(milliseconds: longTime), () {
+        _newsCount.count -= 1;
+        print(_newsCount.count);
+        notifyListeners();
+      });
     }
   }
 

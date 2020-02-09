@@ -116,6 +116,7 @@ flutter:
     - assets/images/dashboard/book.png
     - assets/images/dashboard/excel.png
     - assets/images/dashboard/doc.png
+    - assets/images/news/read_all.png
     - assets/images/my_page/position.png
     - assets/images/my_page/location.png
     - assets/images/my_page/member.png

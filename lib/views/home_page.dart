@@ -2,6 +2,9 @@ import 'package:badges/badges.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:yuyan_app/state_manage/dataManage/news_manage.dart';
+import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/my_page/my_page.dart';
 import 'dart:ui';
 
@@ -27,7 +30,10 @@ class _HomePageState extends State<HomePage> {
     pageList
       ..add(ExplorePage())
       ..add(Dashboard())
-      ..add(NewsPage())
+      ..add(ScopedModel<NewsManage>(
+        model: topModel.newsManage,
+        child: NewsPage(),
+      ))
       ..add(MyPage());
     super.initState();
   }

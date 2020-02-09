@@ -4,6 +4,7 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/news_data.dart';
+import 'package:yuyan_app/state_manage/dataManage/news_manage.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/news_page/view/news_count.dart';
 import 'package:yuyan_app/views/news_page/view/one_news/one_news.dart';
@@ -70,7 +71,7 @@ class _NewsPageState extends State<NewsPage> {
         children: <Widget>[
           Positioned(
             top: 0,
-            child: newsCountView(context, count),
+            child: newsCountView(context),
           ),
           Positioned(
             top: 39,

@@ -54,7 +54,7 @@ class AppStyles {
   static TextStyle textStyleC = TextStyle(
     color: Color.fromARGB(255, 89, 89, 89),
     height: 1.5,
-    letterSpacing: 1,
+    letterSpacing: 0.7,
     fontFamily: "sans_bold",
     fontWeight: FontWeight.w400,
     fontSize: 13,
