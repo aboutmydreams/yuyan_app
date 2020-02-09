@@ -94,12 +94,11 @@ Widget oneFollow(BuildContext context, FollowsData data) {
                       ),
                       SizedBox(height: 2),
                       Container(
-                        width: 200,
                         child: Text(
-                          "${data.description}",
-                          style: AppStyles.textStyleC,
-                          overflow: TextOverflow.ellipsis,
+                          "${clearText(data.description, 15)}",
                           maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppStyles.textStyleC,
                         ),
                       ),
                     ],

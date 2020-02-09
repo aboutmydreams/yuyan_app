@@ -50,6 +50,7 @@ class _DocPageState extends State<DocPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            // 文档标题
             Container(
               margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
               child: Text(
@@ -57,6 +58,8 @@ class _DocPageState extends State<DocPage> {
                 style: AppStyles.textStyleA,
               ),
             ),
+
+            // 文档内容
             HtmlWidget(
               theDoc.bodyHtml,
               bodyPadding: EdgeInsets.all(16),
