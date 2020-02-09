@@ -92,6 +92,7 @@ class NewsData {
 }
 
 class Notifications {
+  bool unread;
   dynamic params;
   int id;
   int spaceId;
@@ -115,6 +116,7 @@ class Notifications {
 
   Notifications(
       {this.params,
+      this.unread,
       this.id,
       this.spaceId,
       this.organizationId,

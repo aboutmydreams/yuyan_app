@@ -8,9 +8,11 @@ import 'dart:io';
 class NewsManage extends Model {
   int offset = 0;
   Unread _newsCount = Unread(count: 0);
+  NewsData _allNews = NewsData(notifications: []);
   NewsData _unreadNews = NewsData(notifications: []);
   NewsData _readedNews = NewsData(notifications: []);
   Unread get newsCount => _newsCount;
+  NewsData get allNews => _allNews;
   NewsData get unreadNews => _unreadNews;
   NewsData get readedNews => _readedNews;
 
@@ -24,6 +26,17 @@ class NewsManage extends Model {
     _newsCount = newsCount;
     _unreadNews = unreadNews;
     _readedNews = readedNews;
+
+    for (Notifications oneData in unreadNews.notifications) {
+      oneData.unread = true;
+    }
+    for (Notifications oneData in readedNews.notifications) {
+      oneData.unread = false;
+    }
+    _allNews = NewsData(notifications: []);
+    _allNews.notifications.addAll(unreadNews.notifications);
+    _allNews.notifications.addAll(readedNews.notifications);
+
     notifyListeners();
     return 1;
   }
@@ -37,22 +50,18 @@ class NewsManage extends Model {
   }
 
   readAll() async {
-    // var dioData =
-    //     await DioReq.put("/notifications/unread-count", data: {"ids": "all"});
-    // // if(newsCount.list!=null){}
+    var dioData = await DioReq.put("/notifications", data: {"ids": "all"});
+
     // if (dioData["data"].containsKey("ok")) {
     //   notifyListeners();
     // }
 
     for (int i = 0; i < _unreadNews.notifications.length; i++) {
       // _newsCount.count = _newsCount.count - 1;
-
-      int longTime = 70 * i;
+      int longTime = 80 * i;
       Future.delayed(Duration(milliseconds: longTime), () {
         _newsCount.count -= 1;
-        print(_newsCount.count);
-        _readedNews.notifications.insert(0, _unreadNews.notifications[i]);
-        _unreadNews.notifications.removeAt(i);
+        _allNews.notifications[i].unread = false;
         notifyListeners();
       });
     }

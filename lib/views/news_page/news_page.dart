@@ -86,32 +86,20 @@ class _NewsPageState extends State<NewsPage> {
                     child: AnimationLimiter(
                       child: ListView.builder(
                         controller: _controller,
-                        itemCount: model.unreadNews.notifications.length +
-                            model.readedNews.notifications.length +
-                            1,
+                        itemCount: model.allNews.notifications.length + 1,
                         itemBuilder: (BuildContext context, int index) {
                           // 先展示未读消息列表，再显示最近已读消息列表
-                          if (index < unreadList.length) {
+                          if (index < model.allNews.notifications.length) {
                             return animationChild(
                               index: index,
                               child: OneNewsContainer(
-                                data: unreadList[index],
-                                unread: true,
+                                data: model.allNews.notifications[index],
+                                unread:
+                                    model.allNews.notifications[index].unread,
                               ),
                             );
                           } else {
-                            if (index >=
-                                unreadList.length + readedList.length) {
-                              return SizedBox(height: 100);
-                            } else {
-                              return animationChild(
-                                index: index,
-                                child: OneNewsContainer(
-                                  data: readedList[index - unreadList.length],
-                                  unread: false,
-                                ),
-                              );
-                            }
+                            return SizedBox(height: 150);
                           }
                         },
                       ),
