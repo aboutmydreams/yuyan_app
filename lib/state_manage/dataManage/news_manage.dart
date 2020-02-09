@@ -46,12 +46,13 @@ class NewsManage extends Model {
 
     for (int i = 0; i < _unreadNews.notifications.length; i++) {
       // _newsCount.count = _newsCount.count - 1;
-      // _unreadNews.notifications.remove(oneData);
-      // _readedNews.notifications.insert(0, oneData);
+
       int longTime = 70 * i;
       Future.delayed(Duration(milliseconds: longTime), () {
         _newsCount.count -= 1;
         print(_newsCount.count);
+        _readedNews.notifications.insert(0, _unreadNews.notifications[i]);
+        _unreadNews.notifications.removeAt(i);
         notifyListeners();
       });
     }
