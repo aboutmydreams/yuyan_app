@@ -116,7 +116,7 @@ Widget oneTopic(BuildContext context, TopicData data) {
           Row(
             children: <Widget>[
               userAvatar(data.user.avatarUrl, height: 25),
-              SizedBox(width: 6),
+              SizedBox(width: 8),
               Text(
                 data.user.name,
                 overflow: TextOverflow.ellipsis,
@@ -129,7 +129,7 @@ Widget oneTopic(BuildContext context, TopicData data) {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: data.title,
+                  text: data.title + "  ",
                   style: AppStyles.textStyleB,
                 ),
               ]..addAll(data.labels.map(label)),
