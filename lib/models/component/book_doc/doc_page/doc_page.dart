@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/doc_data_v2.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
@@ -19,7 +20,8 @@ class _DocPageState extends State<DocPage> {
   final int bookId;
   final int docId;
 
-  String kHtml = "<p>loading</p>";
+  DocDataV2 theDoc = DocDataV2(title: "", bodyHtml: "<p>loading</p>");
+  Abilities theAbileties = Abilities(destroy: false, update: false);
 
   @override
   void initState() {
@@ -30,9 +32,10 @@ class _DocPageState extends State<DocPage> {
 
   getDocContextData() async {
     DocV2 docData = await DioDoc.getDocV2(bookId, docId);
-    print(docData.data.bodyHtml);
+    print(docData.data.title);
     setState(() {
-      kHtml = docData.data.bodyHtml;
+      theDoc = docData.data;
+      theAbileties = docData.abilities;
     });
   }
 
@@ -40,15 +43,29 @@ class _DocPageState extends State<DocPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('HelloWorldScreen'),
+        title: Text('详情'),
       ),
       body: SingleChildScrollView(
-        child: HtmlWidget(
-          kHtml,
-          webView: true,
-          onTapUrl: (url) {
-            openUrl(context, url);
-          },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
+              child: Text(
+                theDoc.title,
+                style: AppStyles.textStyleA,
+              ),
+            ),
+            HtmlWidget(
+              theDoc.bodyHtml,
+              bodyPadding: EdgeInsets.all(16),
+              webView: true,
+              onTapUrl: (url) {
+                openUrl(context, url);
+              },
+            )
+          ],
         ),
       ),
     );
