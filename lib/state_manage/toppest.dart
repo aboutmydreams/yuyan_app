@@ -6,8 +6,11 @@ import 'package:yuyan_app/state_manage/dataManage/quick_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/recent_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/select_manage.dart';
 
+import 'layout_manage/hide_bottom.dart';
+
 class TopStateModel extends ColorManage {
   // ColorManage colorManage = ColorManage();
+  BottomManage bottomManage = BottomManage();
 
   SelectManage selectManage = SelectManage();
   AttentManage attentManage = AttentManage();

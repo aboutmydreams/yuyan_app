@@ -4,6 +4,7 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/state_manage/dataManage/news_manage.dart';
+import 'package:yuyan_app/state_manage/layout_manage/hide_bottom.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/my_page/my_page.dart';
 import 'dart:ui';
@@ -22,8 +23,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _page = 0;
+  bool hideBottom = false;
   List<Widget> pageList = List();
   GlobalKey _bottomNavigationKey = GlobalKey();
+  double _top = 0.0; //距顶部的偏移
+  double _left = 0.0; //距左边的偏移
 
   @override
   void initState() {
@@ -35,6 +39,9 @@ class _HomePageState extends State<HomePage> {
         child: NewsPage(),
       ))
       ..add(MyPage());
+
+    _top = 0;
+    _left = 0;
     super.initState();
   }
 
@@ -42,30 +49,38 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: QuickSetPage(),
-      bottomNavigationBar: CurvedNavigationBar(
-        key: _bottomNavigationKey,
-        color: Color.fromRGBO(0, 0, 0, 0.06),
-        backgroundColor: Colors.white,
-        animationCurve: Curves.easeInQuad,
-        height: 56,
-        items: <Widget>[
-          Icon(Icons.insert_emoticon, size: 34),
-          Icon(Icons.wrap_text, size: 34),
-          Badge(
-            padding: EdgeInsets.all(0),
-            badgeColor: Colors.transparent,
-            elevation: 0,
-            badgeContent: Icon(Icons.notifications_none, size: 34),
-          ),
-          Icon(Icons.perm_identity, size: 34),
-        ],
-        animationDuration: Duration(milliseconds: 300),
-        onTap: (index) {
-          setState(() {
-            _page = index;
-          });
-        },
-      ),
+      bottomNavigationBar: ScopedModel<BottomManage>(
+          model: topModel.bottomManage,
+          child: ScopedModelDescendant<BottomManage>(
+              builder: (context, child, model) {
+            return Opacity(
+              opacity: 1,
+              child: CurvedNavigationBar(
+                key: _bottomNavigationKey,
+                color: Color.fromRGBO(0, 0, 0, 0.06),
+                backgroundColor: Colors.white,
+                animationCurve: Curves.easeInQuad,
+                height: model.y,
+                items: <Widget>[
+                  Icon(Icons.insert_emoticon, size: 34),
+                  Icon(Icons.wrap_text, size: 34),
+                  Badge(
+                    padding: EdgeInsets.all(0),
+                    badgeColor: Colors.transparent,
+                    elevation: 0,
+                    badgeContent: Icon(Icons.notifications_none, size: 34),
+                  ),
+                  Icon(Icons.perm_identity, size: 34),
+                ],
+                animationDuration: Duration(milliseconds: 300),
+                onTap: (index) {
+                  setState(() {
+                    _page = index;
+                  });
+                },
+              ),
+            );
+          })),
       body: pageList[_page],
     );
   }

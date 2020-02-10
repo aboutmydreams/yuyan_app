@@ -32,6 +32,9 @@ class ColorManage extends Model {
   ThemeData _themeData;
   ThemeData get themeData => _themeData;
 
+  bool _hideBottomBar = true;
+  bool get hideBottomBar => _hideBottomBar;
+
   static saveColor(int colorNum) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt("primarySwatchColor", colorNum);
@@ -81,7 +84,6 @@ class ColorManage extends Model {
         print(nowColor);
         print("saveNowColor==");
         getMyTheme();
-        notifyListeners();
         return 1;
       }).then((res) {
         notifyListeners();

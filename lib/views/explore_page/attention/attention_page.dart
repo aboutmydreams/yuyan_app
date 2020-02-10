@@ -28,12 +28,21 @@ class _AttentionPageState extends State<AttentionPage>
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
         getMoreData();
       }
+      print(_controller.position.pixels);
+      topModel.bottomManage.addPixels(_controller.position.pixels);
     });
   }
 
   getMoreData() async {
     await topModel.attentManage.getMoreData();
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    //为了避免内存泄露，需要调用_controller.dispose
+    _controller.dispose();
+    super.dispose();
   }
 
   @override

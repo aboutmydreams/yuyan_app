@@ -41,7 +41,7 @@ class QuickSetPage extends StatelessWidget {
 }
 
 Widget oneSetQuick(BuildContext context, Data data) {
-  print(data.type);
+  // print(data.type);
   String imageUrl = data.icon.toString().contains("http")
       ? data.icon
       : iconType[data.type] ?? "assets/images/dashboard/book.png";
