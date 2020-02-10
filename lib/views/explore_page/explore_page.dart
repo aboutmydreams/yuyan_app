@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/explore_page/search/search_bar.dart';
 import 'attention/attention_page.dart';
 import 'selection/selection_page.dart';
@@ -57,8 +58,7 @@ class _ExplorePageState extends State<ExplorePage>
           children: <Widget>[
             GestureDetector(
               onPanDown: (DragDownDetails details) {
-                print("onPanDown====");
-                print(details.globalPosition.dy);
+                topModel.bottomManage.initd();
               },
               onPanEnd: (DragEndDetails details) {
                 print("onTapUp====");

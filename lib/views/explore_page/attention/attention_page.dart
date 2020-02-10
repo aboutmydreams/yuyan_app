@@ -28,7 +28,7 @@ class _AttentionPageState extends State<AttentionPage>
       if (_controller.position.pixels == _controller.position.maxScrollExtent) {
         getMoreData();
       }
-      print(_controller.position.pixels);
+      // print(_controller.position.pixels);
       topModel.bottomManage.addPixels(_controller.position.pixels);
     });
   }
