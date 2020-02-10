@@ -19,10 +19,10 @@ Widget threeWidget(BuildContext context) {
           height: 12,
           color: AppColors.eventBack,
         ),
-        oneColumn(context, imgName: "collections", text: "意见与反馈"),
-        oneColumn(context, imgName: "collections", text: "关于语燕"),
+        oneColumn(context, imgName: "suggest", text: "意见与反馈"),
+        oneColumn(context, imgName: "about", text: "关于语燕"),
         oneColumn(context,
-            imgName: "follow_book", text: "设置", routeName: "/my/setting"),
+            imgName: "setting", text: "设置", routeName: "/my/setting"),
       ],
     ),
   );
@@ -32,12 +32,12 @@ Widget oneColumn(BuildContext context,
     {String text, String imgName, String routeName}) {
   return ListTile(
     leading: Container(
-      margin: EdgeInsets.only(left: 16),
+      margin: EdgeInsets.only(left: 24),
       child: Image.asset(
         'assets/images/my_page/$imgName.png',
-        width: 40,
-        height: 40,
-        fit: BoxFit.cover,
+        width: 25,
+        height: 25,
+        fit: BoxFit.contain,
       ),
     ),
     title: Text(
@@ -46,7 +46,7 @@ Widget oneColumn(BuildContext context,
       style: AppStyles.textStyleB,
     ),
     trailing: Container(
-      margin: EdgeInsets.only(right: 24),
+      margin: EdgeInsets.only(right: 20),
       child: Icon(Icons.chevron_right),
     ),
     onTap: () {

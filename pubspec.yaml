@@ -122,6 +122,9 @@ flutter:
     - assets/images/my_page/member.png
     - assets/images/my_page/exit.png
     - assets/images/my_page/follow_book.png
+    - assets/images/my_page/suggest.png
+    - assets/images/my_page/about.png
+    - assets/images/my_page/setting.png
     - assets/images/my_page/collections.png
     - assets/images/my_page/topics.png
     - assets/images/my_page/history.png
