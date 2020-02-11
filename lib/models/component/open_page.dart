@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/models/component/group/group_page.dart';
 
 import 'book_doc/doc_page/doc_page.dart';
 
@@ -24,6 +25,11 @@ class OpenPage {
   }
 
   // 打开团队页面
+  static group(BuildContext context, {int groupId, int pageIndex: 0}) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return GroupPage(groupId: groupId, pageIndex: pageIndex);
+    }));
+  }
 
   // 打开文档知识库
 
