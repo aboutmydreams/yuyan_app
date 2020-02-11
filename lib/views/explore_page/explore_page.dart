@@ -60,10 +60,6 @@ class _ExplorePageState extends State<ExplorePage>
               onPanDown: (DragDownDetails details) {
                 topModel.bottomManage.initd();
               },
-              onPanEnd: (DragEndDetails details) {
-                print("onTapUp====");
-                print(details.velocity);
-              },
               child: Container(
                 child: AttentionPage(),
               ),
