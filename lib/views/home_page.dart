@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
           child: ScopedModelDescendant<BottomManage>(
               builder: (context, child, model) {
             return Opacity(
-              opacity: 1,
+              opacity: model.y < 30 ? model.y < 3 ? 0 : model.y / 30 : 1,
               child: CurvedNavigationBar(
                 key: _bottomNavigationKey,
                 color: Color.fromRGBO(0, 0, 0, 0.06),
