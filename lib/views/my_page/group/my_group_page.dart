@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
@@ -42,10 +43,12 @@ Widget oneSetQuick(BuildContext context, GroupData data) {
   String imageUrl = data.avatarUrl.toString().contains("http")
       ? data.avatarUrl
       : iconType[data.type] ?? "assets/images/explore/book.png";
+  data.avatarUrl = imageUrl;
   return GestureDetector(
     onTap: () {
-      var url = "https://www.yuque.com/" + data.login;
-      openUrl(context, url);
+      // var url = "https://www.yuque.com/" + data.login;
+      // openUrl(context, url);
+      OpenPage.group(context, groupdata: data);
     },
     child: Container(
       height: 70,
@@ -65,7 +68,8 @@ Widget oneSetQuick(BuildContext context, GroupData data) {
         children: <Widget>[
           Container(
             margin: EdgeInsets.all(10),
-            child: userAvatar(imageUrl, height: 50),
+            child: Hero(
+                tag: data.id, child: userAvatar(data.avatarUrl, height: 50)),
           ),
           Text(
             data.name,
