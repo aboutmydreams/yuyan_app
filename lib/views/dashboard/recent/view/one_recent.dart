@@ -122,7 +122,7 @@ Map<String, Icon> iconType = {
     color: Colors.blue,
   ),
   "Design": Icon(
-    Icons.photo_album,
+    Icons.collections,
     color: Colors.blue,
   ),
 };

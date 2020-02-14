@@ -83,4 +83,12 @@ class AppStyles {
     fontWeight: FontWeight.w700,
     fontSize: 12,
   );
+
+  // 我的页面数字说明
+  static TextStyle groupTextStyle = TextStyle(
+    color: Colors.white70,
+    fontFamily: "sans_bold",
+    fontWeight: FontWeight.w600,
+    fontSize: 15,
+  );
 }
