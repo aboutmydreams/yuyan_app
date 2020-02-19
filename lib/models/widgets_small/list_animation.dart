@@ -39,22 +39,35 @@ Widget animationChild({int index, Widget child}) {
   );
 }
 
-Widget aniColumn({
-  List<Widget> children,
-  mainAxisAlignment: MainAxisAlignment.start,
-  crossAxisAlignment: CrossAxisAlignment.center,
-}) {
+Widget aniColumn(
+    {List<Widget> children,
+    MainAxisAlignment mainAxisAlignment: MainAxisAlignment.start,
+    CrossAxisAlignment crossAxisAlignment: CrossAxisAlignment.center,
+    int milliseconds: 375,
+    int aniWhich: 1}) {
   return AnimationLimiter(
     child: Column(
       mainAxisAlignment: mainAxisAlignment,
       crossAxisAlignment: crossAxisAlignment,
       children: AnimationConfiguration.toStaggeredList(
-        duration: const Duration(milliseconds: 375),
+        duration: Duration(milliseconds: milliseconds),
         childAnimationBuilder: (widget) => SlideAnimation(
           horizontalOffset: 50.0,
-          child: FadeInAnimation(
-            child: widget,
-          ),
+          child: aniWhich == 1
+              ? FadeInAnimation(
+                  child: widget,
+                )
+              : aniWhich == 2
+                  ? SlideAnimation(
+                      child: widget,
+                    )
+                  : aniWhich == 3
+                      ? ScaleAnimation(
+                          child: widget,
+                        )
+                      : FlipAnimation(
+                          child: widget,
+                        ),
         ),
         children: children,
       ),

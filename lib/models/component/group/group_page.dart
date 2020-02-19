@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/group/view/member_page.dart';
+import 'package:yuyan_app/models/component/group/view/topic_page.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_member_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_topic_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/group.dart';
+import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 import 'package:yuyan_app/views/explore_page/selection/selection_page.dart';
@@ -18,24 +20,45 @@ class GroupPage extends StatefulWidget {
       _GroupPageState(groupdata: groupdata, pageIndex: pageIndex);
 }
 
-class _GroupPageState extends State<GroupPage> {
+class _GroupPageState extends State<GroupPage>
+    with SingleTickerProviderStateMixin {
   _GroupPageState({Key key, this.groupdata, this.pageIndex});
   final GroupData groupdata;
-  final int pageIndex;
+
+  int pageIndex;
+  TabController _tabController;
+
+  List<String> _tabs = [
+    "首页",
+    "知识库",
+    "讨论区",
+    "成员",
+  ];
 
   MemberJson memberJson;
-  GroupTopicJson tipicJson;
+  GroupTopicJson topicJson;
 
   @override
   void initState() {
     super.initState();
+    getTopic();
     getMember();
+    _tabController = TabController(vsync: this, length: 4)
+      ..addListener(() {
+        changeIndex(_tabController.index);
+      });
+  }
+
+  changeIndex(int index) {
+    setState(() {
+      pageIndex = index;
+    });
   }
 
   getTopic() async {
-    GroupTopicJson tipic = await DioGroup.getTopicData(groupId: groupdata.id);
+    GroupTopicJson topic = await DioGroup.getTopicData(groupId: groupdata.id);
     setState(() {
-      tipicJson = tipic;
+      topicJson = topic;
     });
   }
 
@@ -46,17 +69,27 @@ class _GroupPageState extends State<GroupPage> {
     });
   }
 
+  floatingActionButton(int index) {
+    switch (index) {
+      case 0:
+        break;
+      case 1:
+        break;
+      case 2:
+        return FloatingActionButton(
+          onPressed: () {},
+          child: Icon(Icons.add_comment),
+        );
+      case 3:
+        // print(4);
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    var _tabs = <String>[];
-    _tabs = <String>[
-      "首页",
-      "知识库",
-      "讨论区",
-      "成员",
-    ];
-
     return Scaffold(
+      floatingActionButton: floatingActionButton(pageIndex),
       body: DefaultTabController(
         initialIndex: pageIndex,
         length: _tabs.length, // This is the number of tabs.
@@ -121,7 +154,7 @@ class _GroupPageState extends State<GroupPage> {
                         Positioned(
                           left: 72,
                           top: 125,
-                          right: 30,
+                          right: 38,
                           child: Row(
                             children: [
                               Container(
@@ -147,6 +180,7 @@ class _GroupPageState extends State<GroupPage> {
 
                   bottom: TabBar(
                     indicatorColor: Colors.white54,
+                    controller: _tabController,
                     tabs: _tabs.map((String name) => Tab(text: name)).toList(),
                   ),
                 ),
@@ -154,6 +188,7 @@ class _GroupPageState extends State<GroupPage> {
             ];
           },
           body: TabBarView(
+            controller: _tabController,
             children: [
               Builder(
                 builder: (BuildContext context) {
@@ -213,37 +248,17 @@ class _GroupPageState extends State<GroupPage> {
                   },
                 ),
               ),
-              CustomScrollView(
-                slivers: [
-                  SliverPadding(
-                    padding: const EdgeInsets.all(10.0),
-                    sliver: SliverFixedExtentList(
-                      itemExtent: 50.0, //item高度或宽度，取决于滑动方向
-                      delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          return ListTile(
-                            title: Text('Item $index'),
-                          );
-                        },
-                        childCount: 30,
-                      ),
-                    ),
-                  ),
-                ],
+              Builder(
+                builder: (BuildContext context) {
+                  return TopicPage(
+                    topicJson: topicJson,
+                  );
+                },
               ),
               Builder(
                 builder: (BuildContext context) {
-                  return CustomScrollView(
-                    slivers: <Widget>[
-                      SliverOverlapInjector(
-                        handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                            context),
-                      ),
-                      SliverPadding(
-                        padding: const EdgeInsets.all(10.0),
-                        sliver: MemberPage(memberJson: memberJson),
-                      ),
-                    ],
+                  return MemberPage(
+                    memberJson: memberJson,
                   );
                 },
               ),

@@ -1,44 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
-import 'package:yuyan_app/models/net/requests_api/group/data/group_member_data.dart';
+import 'package:yuyan_app/models/net/requests_api/group/data/group_topic_data.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
+import 'package:yuyan_app/models/widgets_small/list_animation.dart';
+import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 class TopicPage extends StatefulWidget {
-  TopicPage({Key key, this.memberJson}) : super(key: key);
-  final MemberJson memberJson;
+  TopicPage({Key key, this.topicJson}) : super(key: key);
+  final GroupTopicJson topicJson;
 
   @override
-  _TopicPageState createState() => _TopicPageState(memberJson: memberJson);
+  _TopicPageState createState() => _TopicPageState(topicJson: topicJson);
 }
 
 class _TopicPageState extends State<TopicPage> {
-  _TopicPageState({Key key, this.memberJson});
-  final MemberJson memberJson;
+  _TopicPageState({Key key, this.topicJson});
+  GroupTopicJson topicJson;
 
   @override
   Widget build(BuildContext context) {
-    return SliverFixedExtentList(
-      itemExtent: 100.0, //item高度或宽度，取决于滑动方向
-      delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) {
-          return oneFollow(context, memberJson.data[index]);
-        },
-        childCount: memberJson.data.length,
-      ),
-    );
+    return topicJson == null
+        ? loading()
+        : topicJson.data.isEmpty
+            ? loading()
+            : SingleChildScrollView(
+                child: aniColumn(
+                  aniWhich: 4,
+                  children: [SizedBox(height: 155)]
+                    ..addAll(topicJson.data.map((a) {
+                      return oneTopic(context, a);
+                    }).toList()),
+                ),
+              );
   }
 }
 
-Widget oneFollow(BuildContext context, MemberData data) {
+Widget oneTopic(BuildContext context, OneTopicData data) {
   return GestureDetector(
     onTap: () {
       // openUrl(context, "https://www.yuque.com/${data.login}");
     },
     child: Container(
       height: 70,
-      margin: EdgeInsets.only(left: 5, top: 2, bottom: 8, right: 5),
+      margin: EdgeInsets.only(left: 15, top: 2, bottom: 8, right: 15),
       decoration: BoxDecoration(
         color: AppColors.background,
         boxShadow: [

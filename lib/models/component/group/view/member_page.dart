@@ -3,6 +3,8 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_member_data.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
+import 'package:yuyan_app/models/widgets_small/list_animation.dart';
+import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 class MemberPage extends StatefulWidget {
@@ -15,30 +17,32 @@ class MemberPage extends StatefulWidget {
 
 class _MemberPageState extends State<MemberPage> {
   _MemberPageState({Key key, this.memberJson});
-  final MemberJson memberJson;
+  MemberJson memberJson;
 
   @override
   Widget build(BuildContext context) {
-    return SliverFixedExtentList(
-      itemExtent: 100.0, //item高度或宽度，取决于滑动方向
-      delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) {
-          return oneFollow(context, memberJson.data[index]);
-        },
-        childCount: memberJson.data.length,
-      ),
-    );
+    return memberJson == null
+        ? loading()
+        : SingleChildScrollView(
+            child: aniColumn(
+              aniWhich: 4,
+              children: [SizedBox(height: 155)]
+                ..addAll(memberJson.data.map((a) {
+                  return oneMember(context, a);
+                }).toList()),
+            ),
+          );
   }
 }
 
-Widget oneFollow(BuildContext context, MemberData data) {
+Widget oneMember(BuildContext context, MemberData data) {
   return GestureDetector(
     onTap: () {
       // openUrl(context, "https://www.yuque.com/${data.login}");
     },
     child: Container(
       height: 70,
-      margin: EdgeInsets.only(left: 5, top: 2, bottom: 8, right: 5),
+      margin: EdgeInsets.only(left: 15, top: 2, bottom: 8, right: 15),
       decoration: BoxDecoration(
         color: AppColors.background,
         boxShadow: [

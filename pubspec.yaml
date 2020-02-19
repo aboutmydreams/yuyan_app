@@ -128,6 +128,8 @@ flutter:
     - assets/images/my_page/collections.png
     - assets/images/my_page/topics.png
     - assets/images/my_page/history.png
+    - assets/images/nothing/research.svg
+
 
   #  - images/a_dot_ham.jpeg
 
