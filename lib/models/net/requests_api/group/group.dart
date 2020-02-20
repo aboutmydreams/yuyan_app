@@ -15,7 +15,7 @@ class DioGroup {
 
   // 团队知识库数据
   static getBookData({int groupId}) async {
-    var res = await DioReq.get("/groups/$groupId/users?with_count=true");
+    var res = await DioReq.get("/groups/$groupId/books?archived=include&q=");
     GroupBookJson theData = GroupBookJson.fromJson(res);
     return theData;
   }
