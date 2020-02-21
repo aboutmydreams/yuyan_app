@@ -6,6 +6,7 @@ import 'package:yuyan_app/models/net/requests_api/group/data/group_topic_data.da
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
+import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 class BookPage extends StatefulWidget {
@@ -25,7 +26,7 @@ class _BookPageState extends State<BookPage> {
     return bookJson == null
         ? loading()
         : bookJson.data.isEmpty
-            ? loading()
+            ? NothingPage(top: 30)
             : SingleChildScrollView(
                 child: aniColumn(
                   aniWhich: 4,
@@ -106,38 +107,3 @@ Widget oneBook(BuildContext context, BookData data) {
     ),
   );
 }
-
-Map<String, Icon> iconType = {
-  "Doc": Icon(
-    Icons.description,
-    color: Colors.deepPurpleAccent,
-  ),
-  "Book": Icon(
-    Icons.book,
-    color: Colors.blue,
-  ),
-  "Sheet": Icon(
-    Icons.event_note,
-    color: Colors.green,
-  ),
-  "Thread": Icon(
-    Icons.speaker_notes,
-    color: Colors.blue,
-  ),
-  "Group": Icon(
-    Icons.group,
-    color: Colors.grey,
-  ),
-  "Design": Icon(
-    Icons.collections,
-    color: Colors.orangeAccent,
-  ),
-  "Resource": Icon(
-    Icons.create_new_folder,
-    color: Colors.orangeAccent,
-  ),
-  "Column": Icon(
-    Icons.chrome_reader_mode,
-    color: Colors.limeAccent,
-  ),
-};

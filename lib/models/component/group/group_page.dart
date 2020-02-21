@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/group/view/book_page.dart';
+import 'package:yuyan_app/models/component/group/view/home_page.dart';
 import 'package:yuyan_app/models/component/group/view/member_page.dart';
 import 'package:yuyan_app/models/component/group/view/topic_page.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_book_data.dart';
+import 'package:yuyan_app/models/net/requests_api/group/data/group_home_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_member_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_topic_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/group.dart';
@@ -40,10 +42,12 @@ class _GroupPageState extends State<GroupPage>
   MemberJson memberJson;
   GroupTopicJson topicJson;
   GroupBookJson bookJson;
+  GroupHomeJson homeJson;
 
   @override
   void initState() {
     super.initState();
+    getHome();
     getBook();
     getTopic();
     getMember();
@@ -56,6 +60,13 @@ class _GroupPageState extends State<GroupPage>
   changeIndex(int index) {
     setState(() {
       pageIndex = index;
+    });
+  }
+
+  getHome() async {
+    GroupHomeJson home = await DioGroup.getHomeData(groupId: groupdata.id);
+    setState(() {
+      homeJson = home;
     });
   }
 
@@ -203,27 +214,8 @@ class _GroupPageState extends State<GroupPage>
             children: [
               Builder(
                 builder: (BuildContext context) {
-                  return CustomScrollView(
-                    slivers: <Widget>[
-                      SliverOverlapInjector(
-                        handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                            context),
-                      ),
-                      SliverPadding(
-                        padding: const EdgeInsets.all(10.0),
-                        sliver: SliverFixedExtentList(
-                          itemExtent: 50.0, //item高度或宽度，取决于滑动方向
-                          delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                              return ListTile(
-                                title: Text('Item $index'),
-                              );
-                            },
-                            childCount: 30,
-                          ),
-                        ),
-                      ),
-                    ],
+                  return GroupHome(
+                    homeJson: homeJson,
                   );
                 },
               ),

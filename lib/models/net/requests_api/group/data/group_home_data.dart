@@ -48,9 +48,9 @@ class Layout {
   Layout({this.header, this.content, this.aside});
 
   Layout.fromJson(Map<String, dynamic> json) {
-    header = json['header'].cast<String>();
-    content = json['content'].cast<String>();
-    aside = json['aside'].cast<String>();
+    header = json['header'] != null ? json['header'].cast<String>() : [];
+    content = json['content'] != null ? json['content'].cast<String>() : [];
+    aside = json['aside'] != null ? json['aside'].cast<String>() : [];
   }
 
   Map<String, dynamic> toJson() {

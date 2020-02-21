@@ -99,30 +99,3 @@ Map<String, String> subjectType = {
   "Group": "团队",
   "Design": "画板"
 };
-
-Map<String, Icon> iconType = {
-  "Doc": Icon(
-    Icons.description,
-    color: Colors.deepPurpleAccent,
-  ),
-  "Book": Icon(
-    Icons.book,
-    color: Colors.blue,
-  ),
-  "Sheet": Icon(
-    Icons.event_note,
-    color: Colors.green,
-  ),
-  "Thread": Icon(
-    Icons.speaker_notes,
-    color: Colors.blue,
-  ),
-  "Group": Icon(
-    Icons.group,
-    color: Colors.grey,
-  ),
-  "Design": Icon(
-    Icons.collections,
-    color: Colors.orangeAccent,
-  ),
-};

@@ -5,6 +5,7 @@ import 'package:yuyan_app/models/net/requests_api/group/data/group_topic_data.da
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
+import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 class TopicPage extends StatefulWidget {
@@ -24,7 +25,10 @@ class _TopicPageState extends State<TopicPage> {
     return topicJson == null
         ? loading()
         : topicJson.data.isEmpty
-            ? loading()
+            ? NothingPage(
+                top: 190,
+                text: "暂无讨论",
+              )
             : SingleChildScrollView(
                 child: aniColumn(
                   aniWhich: 4,

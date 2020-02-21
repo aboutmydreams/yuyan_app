@@ -114,8 +114,9 @@ Widget secItemUI(BuildContext context, Data data) {
                                 height: 21,
                                 margin: EdgeInsets.only(right: 5),
                                 child: SvgPicture.asset(
-                                    "assets/images/paddy.svg",
-                                    semanticsLabel: 'paddy'),
+                                  "assets/images/paddy.svg",
+                                  semanticsLabel: 'paddy',
+                                ),
                               ),
                               Expanded(child: SizedBox()),
                               Container(
