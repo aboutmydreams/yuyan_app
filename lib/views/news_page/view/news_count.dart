@@ -62,18 +62,13 @@ Widget newsCountView(BuildContext context) {
                   ),
                 ),
           Spacer(),
-          InkWell(
-            onTap: () {
-              topModel.newsManage.readAll();
-            },
-            child: Container(
-              width: 18,
-              height: 18,
-              margin: EdgeInsets.only(right: 16),
-              child: Image.asset(
-                "assets/images/news/read_all.png",
-                fit: BoxFit.cover,
-              ),
+          Container(
+            margin: EdgeInsets.only(right: 6),
+            child: IconButton(
+              icon: Icon(Icons.done_all),
+              onPressed: () {
+                topModel.newsManage.readAll();
+              },
             ),
           ),
         ],

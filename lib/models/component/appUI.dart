@@ -8,9 +8,6 @@ class AppColors {
   // 副标题
   static Color nextText = Colors.black87;
 
-  // 副标题
-  static Color nextText2 = Colors.black54;
-
   // 主要文字段落灰色 纯黑的45%
   static Color primaryText = Colors.black45;
 
