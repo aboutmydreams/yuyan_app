@@ -70,8 +70,10 @@ Widget oneBook(BuildContext context, Books data) {
           SizedBox(width: 20),
           // userAvatar(data.user.avatarUrl, height: 50),
           Container(
+            width: 14,
+            height: 14,
             margin: EdgeInsets.only(left: 6),
-            child: iconType[data.type],
+            child: AppIcon.iconType(data.type, size: 9),
           ),
           Container(
             width: MediaQuery.of(context).size.width * 0.4,

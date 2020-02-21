@@ -93,37 +93,50 @@ class AppStyles {
   );
 }
 
-Map<String, Icon> iconType = {
-  "Doc": Icon(
-    Icons.description,
-    color: Colors.deepPurpleAccent,
-  ),
-  "Book": Icon(
-    Icons.book,
-    color: Colors.blue,
-  ),
-  "Sheet": Icon(
-    Icons.event_note,
-    color: Colors.green,
-  ),
-  "Thread": Icon(
-    Icons.speaker_notes,
-    color: Colors.blue,
-  ),
-  "Group": Icon(
-    Icons.group,
-    color: Colors.grey,
-  ),
-  "Design": Icon(
-    Icons.collections,
-    color: Colors.orangeAccent,
-  ),
-  "Resource": Icon(
-    Icons.create_new_folder,
-    color: Colors.orangeAccent,
-  ),
-  "Column": Icon(
-    Icons.chrome_reader_mode,
-    color: Colors.limeAccent,
-  ),
-};
+class AppIcon {
+  static Icon iconType(String iconName, {double size}) {
+    Map<String, Icon> iconDic = {
+      "Doc": Icon(
+        Icons.description,
+        color: Colors.deepPurpleAccent,
+        size: size,
+      ),
+      "Book": Icon(
+        Icons.book,
+        color: Colors.blue,
+        size: size,
+      ),
+      "Sheet": Icon(
+        Icons.event_note,
+        color: Colors.green,
+        size: size,
+      ),
+      "Thread": Icon(
+        Icons.speaker_notes,
+        color: Colors.blue,
+        size: size,
+      ),
+      "Group": Icon(
+        Icons.group,
+        color: Colors.grey,
+        size: size,
+      ),
+      "Design": Icon(
+        Icons.collections,
+        color: Colors.orangeAccent,
+        size: size,
+      ),
+      "Resource": Icon(
+        Icons.create_new_folder,
+        color: Colors.deepOrange,
+        size: size,
+      ),
+      "Column": Icon(
+        Icons.chrome_reader_mode,
+        color: Colors.deepOrange,
+        size: size,
+      ),
+    };
+    return iconDic[iconName];
+  }
+}

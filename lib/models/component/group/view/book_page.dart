@@ -64,7 +64,7 @@ Widget oneBook(BuildContext context, BookData data) {
           SizedBox(width: 20),
           Container(
             margin: EdgeInsets.only(left: 6),
-            child: iconType[data.type],
+            child: AppIcon.iconType(data.type),
           ),
           Container(
             width: MediaQuery.of(context).size.width * 0.4,

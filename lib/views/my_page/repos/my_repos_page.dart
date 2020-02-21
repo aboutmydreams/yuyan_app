@@ -78,7 +78,7 @@ Widget oneFollow(BuildContext context, UserBookData data) {
           // userAvatar(data.targetGroup.avatarUrl, height: 50),
           Container(
             margin: EdgeInsets.only(left: 10),
-            child: iconType[data.type],
+            child: AppIcon.iconType(data.type),
           ),
           Container(
             margin: EdgeInsets.only(left: 20),

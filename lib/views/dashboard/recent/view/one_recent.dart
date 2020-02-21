@@ -40,7 +40,7 @@ Widget oneRecent(BuildContext context, Recent data) {
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(left: 20),
-            child: iconType[data.subjectType],
+            child: AppIcon.iconType(data.subjectType),
           ),
           Container(
             margin: EdgeInsets.only(left: 20),
