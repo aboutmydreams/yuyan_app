@@ -366,6 +366,9 @@ class Abilities {
 
 class Summary {
   Meta meta;
+  String image;
+  String name;
+  String filename;
   String contentUpdatedAt;
   String body;
   String bodyAsl;
@@ -408,6 +411,9 @@ class Summary {
 
   Summary(
       {this.meta,
+      this.image,
+      this.name,
+      this.filename,
       this.contentUpdatedAt,
       this.body,
       this.bodyAsl,
@@ -452,6 +458,9 @@ class Summary {
     meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
     contentUpdatedAt = json['content_updated_at'];
     body = json['body'];
+    image = json['image'];
+    name = json['name'];
+    filename = json['filename'];
     bodyAsl = json['body_asl'];
     bodyDraft = json['body_draft'];
     bodyDraftAsl = json['body_draft_asl'];
@@ -498,6 +507,9 @@ class Summary {
     }
     data['content_updated_at'] = this.contentUpdatedAt;
     data['body'] = this.body;
+    data['image'] = this.image;
+    data['name'] = this.name;
+    data['filename'] = this.filename;
     data['body_asl'] = this.bodyAsl;
     data['body_draft'] = this.bodyDraft;
     data['body_draft_asl'] = this.bodyDraftAsl;
