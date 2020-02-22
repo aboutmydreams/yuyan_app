@@ -84,10 +84,10 @@ myToast(BuildContext context, String text) {
     child: Container(
       decoration: BoxDecoration(
         color: topModel.primarySwatchColor,
-        gradient: LinearGradient(colors: [
-          topModel.primarySwatchColor,
-          topModel.primarySwatchColor.withAlpha(60)
-        ], begin: FractionalOffset(0, 0), end: FractionalOffset(0, 1)),
+        // gradient: LinearGradient(colors: [
+        //   topModel.primarySwatchColor,
+        //   topModel.primarySwatchColor.withAlpha(60)
+        // ], begin: FractionalOffset(0, 0), end: FractionalOffset(0, 1)),
         boxShadow: [
           BoxShadow(
             color: Color.fromARGB(55, 0, 0, 0),

@@ -9,6 +9,7 @@ import 'package:yuyan_app/models/net/requests_api/group/data/group_home_data.dar
 import 'package:yuyan_app/models/net/requests_api/group/data/group_member_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_topic_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/group.dart';
+import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
@@ -30,6 +31,7 @@ class _GroupPageState extends State<GroupPage>
   final GroupData groupdata;
 
   int pageIndex;
+  bool ifMark = false;
   TabController _tabController;
 
   List<String> _tabs = [
@@ -47,6 +49,7 @@ class _GroupPageState extends State<GroupPage>
   @override
   void initState() {
     super.initState();
+    getIfMark();
     getHome();
     getBook();
     getTopic();
@@ -61,6 +64,28 @@ class _GroupPageState extends State<GroupPage>
     setState(() {
       pageIndex = index;
     });
+  }
+
+  getIfMark() async {
+    bool ifMarkIt =
+        await DioUser.ifMark(targetType: "User", targetId: groupdata.id);
+    setState(() {
+      ifMark = ifMarkIt;
+    });
+  }
+
+  changeMark() async {
+    setState(() {
+      ifMark = !ifMark;
+    });
+    if (ifMark) {
+      var ans =
+          await DioUser.cancelMark(targetType: "User", targetId: groupdata.id);
+      print(ans);
+    } else {
+      var ans = await DioUser.mark(targetType: "User", targetId: groupdata.id);
+      print(ans);
+    }
   }
 
   getHome() async {
@@ -145,9 +170,9 @@ class _GroupPageState extends State<GroupPage>
 
                   actions: <Widget>[
                     new IconButton(
-                      icon: Icon(Icons.star_border), //Icon(Icons.star)
+                      icon: ifMark ? Icon(Icons.star) : Icon(Icons.star_border),
                       onPressed: () {
-                        print("更多");
+                        changeMark();
                       },
                     ),
                     new IconButton(

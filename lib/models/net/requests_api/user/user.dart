@@ -77,7 +77,7 @@ class DioUser {
       };
       Map<String, dynamic> res = await DioReq.delete("/actions", data: data);
       print(res);
-      if (res == {}) {
+      if (res.toString() == "{}") {
         return 1;
       } else {
         return 0;
@@ -110,7 +110,7 @@ class DioUser {
       "target_id": targetId
     };
     Map ans = await DioReq.post("/mine/marks", data: data);
-    if (ans["data"] == {"ok": 1}) {
+    if (ans["data"].toString() == "{ok: 1}") {
       return 1;
     } else {
       return 0;
@@ -124,7 +124,7 @@ class DioUser {
       "target_id": targetId
     };
     Map ans = await DioReq.delete("/mine/marks", data: data);
-    if (ans["data"] == {"ok": 1}) {
+    if (ans["data"].toString() == "{ok: 1}") {
       return 1;
     } else {
       return 0;
