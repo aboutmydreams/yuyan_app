@@ -30,10 +30,9 @@ class _BookPageState extends State<BookPage> {
             : SingleChildScrollView(
                 child: aniColumn(
                   aniWhich: 4,
-                  children: [SizedBox(height: 155)]
-                    ..addAll(bookJson.data.map((a) {
-                      return oneBook(context, a);
-                    }).toList()),
+                  children: bookJson.data.map((a) {
+                    return oneBook(context, a);
+                  }).toList(),
                 ),
               );
   }
@@ -46,7 +45,7 @@ Widget oneBook(BuildContext context, BookData data) {
     },
     child: Container(
       height: 70,
-      margin: EdgeInsets.only(left: 15, top: 2, bottom: 8, right: 15),
+      margin: EdgeInsets.only(left: 15, top: 10, right: 15),
       decoration: BoxDecoration(
         color: AppColors.background,
         boxShadow: [

@@ -26,10 +26,9 @@ class _MemberPageState extends State<MemberPage> {
         : SingleChildScrollView(
             child: aniColumn(
               aniWhich: 4,
-              children: [SizedBox(height: 155)]
-                ..addAll(memberJson.data.map((a) {
-                  return oneMember(context, a);
-                }).toList()),
+              children: memberJson.data.map((a) {
+                return oneMember(context, a);
+              }).toList(),
             ),
           );
   }
@@ -42,7 +41,7 @@ Widget oneMember(BuildContext context, MemberData data) {
     },
     child: Container(
       height: 70,
-      margin: EdgeInsets.only(left: 15, top: 2, bottom: 8, right: 15),
+      margin: EdgeInsets.only(left: 15, top: 10, right: 15),
       decoration: BoxDecoration(
         color: AppColors.background,
         boxShadow: [

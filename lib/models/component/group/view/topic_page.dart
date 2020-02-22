@@ -9,17 +9,9 @@ import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
-class TopicPage extends StatefulWidget {
+class TopicPage extends StatelessWidget {
   TopicPage({Key key, this.topicJson}) : super(key: key);
   final GroupTopicJson topicJson;
-
-  @override
-  _TopicPageState createState() => _TopicPageState(topicJson: topicJson);
-}
-
-class _TopicPageState extends State<TopicPage> {
-  _TopicPageState({Key key, this.topicJson});
-  GroupTopicJson topicJson;
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +19,15 @@ class _TopicPageState extends State<TopicPage> {
         ? loading()
         : topicJson.data.isEmpty
             ? NothingPage(
-                top: 190,
+                top: 40,
                 text: "暂无讨论",
               )
             : SingleChildScrollView(
                 child: aniColumn(
                   aniWhich: 4,
-                  children: [SizedBox(height: 155)]
-                    ..addAll(topicJson.data.map((a) {
-                      return oneTopic(context, a);
-                    }).toList()),
+                  children: topicJson.data.map((a) {
+                    return oneTopic(context, a);
+                  }).toList(),
                 ),
               );
   }
@@ -49,7 +40,7 @@ Widget oneTopic(BuildContext context, OneTopicData data) {
     },
     child: Container(
         height: 70,
-        margin: EdgeInsets.only(left: 15, top: 2, bottom: 8, right: 15),
+        margin: EdgeInsets.only(left: 15, top: 10, right: 15),
         padding: EdgeInsets.only(left: 15, top: 12, bottom: 10, right: 15),
         decoration: BoxDecoration(
           color: AppColors.background,

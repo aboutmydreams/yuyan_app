@@ -21,10 +21,9 @@ class GroupHome extends StatelessWidget {
             ? NothingPage()
             : SingleChildScrollView(
                 child: Column(
-                  children: [SizedBox(height: 155)]
-                    ..addAll(homeJson.data.bookStacks.map((a) {
-                      return oneHome(context, a);
-                    }).toList()),
+                  children: homeJson.data.bookStacks.map((a) {
+                    return oneHome(context, a);
+                  }).toList(),
                 ),
               );
   }

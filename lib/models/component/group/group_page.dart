@@ -18,7 +18,7 @@ import 'package:yuyan_app/views/explore_page/selection/selection_page.dart';
 class GroupPage extends StatefulWidget {
   GroupPage({Key key, this.groupdata, this.pageIndex}) : super(key: key);
   final GroupData groupdata;
-  final pageIndex;
+  final int pageIndex;
 
   @override
   _GroupPageState createState() =>
@@ -54,16 +54,26 @@ class _GroupPageState extends State<GroupPage>
     getBook();
     getTopic();
     getMember();
-    _tabController = TabController(vsync: this, length: 4)
-      ..addListener(() {
-        changeIndex(_tabController.index);
-      });
+    _tabController =
+        TabController(vsync: this, initialIndex: pageIndex, length: 4)
+          ..addListener(() {
+            print(_tabController.index);
+            changeIndex(_tabController.index);
+          });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   changeIndex(int index) {
-    setState(() {
-      pageIndex = index;
-    });
+    if (mounted) {
+      setState(() {
+        pageIndex = index;
+      });
+    }
   }
 
   getIfMark() async {
@@ -133,103 +143,128 @@ class _GroupPageState extends State<GroupPage>
     }
   }
 
+  PopupMenuItem<String> childItem(String id, String title, IconData icon) {
+    return PopupMenuItem(
+      value: id,
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: Colors.black54,
+          ),
+          Text('    $title'),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    // print("======$pageIndex");
     return Scaffold(
       floatingActionButton: floatingActionButton(pageIndex),
       body: DefaultTabController(
         initialIndex: pageIndex,
-        length: _tabs.length, // This is the number of tabs.
+        length: _tabs.length,
         child: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             // These are the slivers that show up in the "outer" scroll view.
             return <Widget>[
-              SliverOverlapAbsorber(
-                handle:
-                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-                child: SliverAppBar(
-                  leading: new IconButton(
-                    icon: Icon(Icons.arrow_back),
+              SliverAppBar(
+                leading: new IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                title: Text('${groupdata.name}'),
+                centerTitle: false,
+                pinned: true,
+                floating: false,
+                snap: false,
+                primary: true,
+                expandedHeight: 230.0,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4.0)),
+                stretchTriggerOffset: 10,
+                elevation: 10,
+                // 是否显示阴影，直接取值innerBoxIsScrolled，展开不显示阴影，合并后会显示
+                forceElevated: innerBoxIsScrolled,
+
+                actions: <Widget>[
+                  IconButton(
+                    icon: ifMark ? Icon(Icons.star) : Icon(Icons.star_border),
                     onPressed: () {
-                      Navigator.pop(context);
+                      changeMark();
                     },
                   ),
-                  title: Text('${groupdata.name}'),
-                  centerTitle: false,
-                  pinned: true,
-                  floating: false,
-                  snap: false,
-                  primary: true,
-                  expandedHeight: 230.0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4.0)),
-                  stretchTriggerOffset: 10,
-                  elevation: 10,
-                  // 是否显示阴影，直接取值innerBoxIsScrolled，展开不显示阴影，合并后会显示
-                  forceElevated: innerBoxIsScrolled,
+                  PopupMenuButton(
+                    itemBuilder: (BuildContext context) =>
+                        <PopupMenuItem<String>>[
+                      childItem("A", "编辑话题", Icons.edit),
+                      childItem("B", "删除话题", Icons.delete),
+                      childItem("C", "分享", Icons.share),
+                    ],
+                    onSelected: (String action) {
+                      // 点击选项的时候
+                      switch (action) {
+                        case 'A':
+                          break;
+                        case 'B':
+                          break;
+                        case 'C':
+                          break;
+                      }
+                    },
+                  ),
+                ],
 
-                  actions: <Widget>[
-                    new IconButton(
-                      icon: ifMark ? Icon(Icons.star) : Icon(Icons.star_border),
-                      onPressed: () {
-                        changeMark();
-                      },
-                    ),
-                    new IconButton(
-                      icon: Icon(Icons.more_horiz),
-                      onPressed: () {
-                        print("更多");
-                      },
-                    ),
-                  ],
-
-                  flexibleSpace: new FlexibleSpaceBar(
-                    background: Stack(
-                      children: <Widget>[
-                        Positioned(
-                          child: Container(
-                            // height: 230,
-                            width: MediaQuery.of(context).size.width,
-                            child: Image.asset(
-                              "assets/images/first.jpg",
-                              color: Colors.black45,
-                              colorBlendMode: BlendMode.darken,
-                              fit: BoxFit.cover,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Stack(
+                    children: <Widget>[
+                      Positioned(
+                        child: Container(
+                          // height: 230,
+                          width: MediaQuery.of(context).size.width,
+                          child: Image.asset(
+                            "assets/images/first.jpg",
+                            color: Colors.black45,
+                            colorBlendMode: BlendMode.darken,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: 72,
+                        top: 125,
+                        right: 38,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 170,
+                              child: Text(
+                                "${groupdata.description ?? '暂无介绍'}",
+                                style: AppStyles.groupTextStyle,
+                                maxLines: 4,
+                              ),
                             ),
-                          ),
+                            Spacer(),
+                            Hero(
+                              tag: groupdata.id,
+                              child:
+                                  userAvatar(groupdata.avatarUrl, height: 60),
+                            ),
+                          ],
                         ),
-                        Positioned(
-                          left: 72,
-                          top: 125,
-                          right: 38,
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 170,
-                                child: Text(
-                                  "${groupdata.description ?? '暂无介绍'}",
-                                  style: AppStyles.groupTextStyle,
-                                  maxLines: 4,
-                                ),
-                              ),
-                              Spacer(),
-                              Hero(
-                                tag: groupdata.id,
-                                child:
-                                    userAvatar(groupdata.avatarUrl, height: 60),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
+                ),
 
-                  bottom: TabBar(
-                    indicatorColor: Colors.white54,
-                    controller: _tabController,
-                    tabs: _tabs.map((String name) => Tab(text: name)).toList(),
-                  ),
+                bottom: TabBar(
+                  indicatorColor: Colors.white54,
+                  controller: _tabController,
+                  tabs: _tabs.map((String name) => Tab(text: name)).toList(),
                 ),
               ),
             ];
@@ -237,26 +272,14 @@ class _GroupPageState extends State<GroupPage>
           body: TabBarView(
             controller: _tabController,
             children: [
-              Builder(
-                builder: (BuildContext context) {
-                  return GroupHome(
-                    homeJson: homeJson,
-                  );
-                },
+              GroupHome(
+                homeJson: homeJson,
               ),
-              Builder(
-                builder: (BuildContext context) {
-                  return BookPage(
-                    bookJson: bookJson,
-                  );
-                },
+              BookPage(
+                bookJson: bookJson,
               ),
-              Builder(
-                builder: (BuildContext context) {
-                  return TopicPage(
-                    topicJson: topicJson,
-                  );
-                },
+              TopicPage(
+                topicJson: topicJson,
               ),
               Builder(
                 builder: (BuildContext context) {

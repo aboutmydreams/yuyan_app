@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/models/component/group/group_page.dart';
+import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 import 'package:yuyan_app/views/begin_init/first_page/first_page.dart';
 import 'package:yuyan_app/views/begin_init/guide_page/guide_page.dart';
 import 'package:yuyan_app/views/begin_init/login_page/login_page.dart';
@@ -31,4 +33,12 @@ Map<String, WidgetBuilder> routeData = {
   '/my/repos': (context) => MyReposPage(),
   '/my/mark': (context) => MarkPage(),
   '/my/topic': (context) => TopicPage(),
+  '/my/suggest': (context) => GroupPage(
+      pageIndex: 2,
+      groupdata: GroupData(
+          id: 671004,
+          name: "语燕",
+          description: "自缘不睹榴皮字，想像祇园蔓草书",
+          avatarUrl:
+              "https://cdn.nlark.com/yuque/0/2020/png/164272/1581178391840-avatar/dfd33ab4-7115-4fce-b504-faeb9d3ca24d.png")),
 };
