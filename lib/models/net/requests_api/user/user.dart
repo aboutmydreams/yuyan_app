@@ -96,6 +96,13 @@ class DioUser {
     return theData;
   }
 
+  // 查看是否收藏(文章或团队)
+  static ifMark({String targetType: "Doc", int targetId}) async {
+    Map ans = await DioReq.get(
+        "/actions?action_type=mark&target_id=$targetId&target_type=$targetType"); // User or Doc
+    return ans["data"]["actioned"] != null;
+  }
+
   // 收藏 Doc Book User(其实是group)
   static mark({String targetType: "Doc", int targetId}) async {
     Map<String, dynamic> data = {
