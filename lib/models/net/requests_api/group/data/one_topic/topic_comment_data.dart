@@ -34,7 +34,7 @@ class OneCommentData {
   String createdAt;
   String updatedAt;
   int status;
-  Null toUserId;
+  dynamic toUserId;
   String sSerializer;
 
   OneCommentData(
@@ -104,11 +104,11 @@ class User {
   int followingCount;
   int status;
   int public;
-  Null scene;
+  dynamic scene;
   String createdAt;
   String updatedAt;
   bool isPaid;
-  Null profile;
+  dynamic profile;
   String sSerializer;
 
   User(

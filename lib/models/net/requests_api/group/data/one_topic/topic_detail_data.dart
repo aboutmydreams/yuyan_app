@@ -76,23 +76,23 @@ class DetailData {
   int userId;
   int assigneeId;
   int groupId;
-  Null milestoneId;
-  Null milestone;
+  dynamic milestoneId;
+  dynamic milestone;
   String format;
-  Null body;
+  dynamic body;
   String bodyAsl;
   String bodyHtml;
   int commentsCount;
   int labelsCount;
   int public;
-  Null pinnedAt;
-  Null deletedAt;
+  dynamic pinnedAt;
+  dynamic deletedAt;
   String closedAt;
   String createdAt;
   String updatedAt;
   User user;
   Assignee assignee;
-  Null group;
+  dynamic group;
   List<Labels> labels;
   String sSerializer;
 
@@ -208,11 +208,11 @@ class User {
   int role;
   int status;
   int public;
-  Null scene;
+  dynamic scene;
   String createdAt;
   String updatedAt;
   bool isPaid;
-  Null profile;
+  dynamic profile;
   String sSerializer;
 
   User(
@@ -285,7 +285,7 @@ class Assignee {
   String type;
   String login;
   String name;
-  Null description;
+  dynamic description;
   String avatar;
   String avatarUrl;
   int followersCount;
@@ -293,11 +293,11 @@ class Assignee {
   int role;
   int status;
   int public;
-  Null scene;
+  dynamic scene;
   String createdAt;
   String updatedAt;
   bool isPaid;
-  Null profile;
+  dynamic profile;
   String sSerializer;
 
   Assignee(

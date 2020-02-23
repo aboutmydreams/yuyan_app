@@ -5,6 +5,7 @@ import 'data/group_book_data.dart';
 import 'data/group_home_data.dart';
 import 'data/group_member_data.dart';
 import 'data/group_topic_data.dart';
+import 'data/one_topic/topic_comment_data.dart';
 import 'data/one_topic/topic_detail_data.dart';
 
 class DioGroup {
@@ -49,6 +50,6 @@ class DioGroup {
   static getComments(int commentId) async {
     var ans = await DioReq.get(
         "/comments?commentable_id=$commentId&commentable_type=Topic");
-    return Comments.fromJson(ans);
+    return TopicCommentJson.fromJson(ans);
   }
 }

@@ -38,8 +38,12 @@ class TopicPage extends StatelessWidget {
 Widget oneTopic(BuildContext context, int groupId, OneTopicData data) {
   return GestureDetector(
     onTap: () {
-      OpenPage.topic(context,
-          id: data.id, groupId: data.groupId, iid: data.iid);
+      OpenPage.topic(
+        context,
+        id: data.id,
+        groupId: data.groupId,
+        iid: data.iid,
+      );
     },
     child: Container(
         height: 70,
