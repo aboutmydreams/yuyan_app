@@ -11,6 +11,7 @@ import 'package:yuyan_app/models/net/requests_api/group/data/group_member_data.d
 import 'package:yuyan_app/models/net/requests_api/group/data/group_topic_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/group.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
+import 'package:yuyan_app/models/widgets_small/menu_item.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 
@@ -142,17 +143,6 @@ class _GroupPageState extends State<GroupPage>
     }
   }
 
-  PopupMenuItem<String> childItem(String id, String title) {
-    return PopupMenuItem(
-      value: id,
-      child: Row(
-        children: [
-          Text('$title'),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -195,8 +185,8 @@ class _GroupPageState extends State<GroupPage>
                   PopupMenuButton(
                     itemBuilder: (BuildContext context) =>
                         <PopupMenuItem<String>>[
-                      childItem("A", "查看所有话题"),
-                      childItem("B", "打开网页版"),
+                      menuItem("A", "查看所有话题"),
+                      menuItem("B", "打开网页版"),
                     ],
                     onSelected: (String action) {
                       // 点击选项的时候

@@ -50,6 +50,6 @@ class DioGroup {
   static getComments(int commentId) async {
     var ans = await DioReq.get(
         "/comments?commentable_id=$commentId&commentable_type=Topic");
-    return TopicCommentJson.fromJson(ans);
+    return Comments.fromJson(ans);
   }
 }
