@@ -11,32 +11,33 @@ class ImagePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Stack(
-          children: <Widget>[
-            PhotoView(
-              onTapUp: (ctx, details, value) {
-                debugPrint("up：${details}");
-                Navigator.of(context).pop();
-              },
-              imageProvider: isNetwork
-                  ? CachedNetworkImageProvider(imageUrl)
-                  : AssetImage(imageUrl),
-            ),
-            Align(
-              alignment: Alignment(0, 0.8),
-              child: IconButton(
-                  icon: Icon(
-                    Icons.cancel,
-                    color: Colors.white70,
-                    size: 35,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  }),
-            )
-          ],
-        ));
+      backgroundColor: Colors.transparent,
+      body: Stack(
+        children: <Widget>[
+          PhotoView(
+            onTapUp: (ctx, details, value) {
+              debugPrint("up：${details}");
+              Navigator.of(context).pop();
+            },
+            imageProvider: isNetwork
+                ? CachedNetworkImageProvider(imageUrl)
+                : AssetImage(imageUrl),
+          ),
+          Align(
+            alignment: Alignment(0, 0.8),
+            child: IconButton(
+                icon: Icon(
+                  Icons.cancel,
+                  color: Colors.white70,
+                  size: 35,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                }),
+          )
+        ],
+      ),
+    );
   }
 }
 

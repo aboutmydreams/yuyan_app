@@ -5,6 +5,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:flutter_html/flutter_html.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/widgets_big/image_page/image_page.dart';
 import 'package:yuyan_app/views/my_page/my_page.dart';
 
@@ -27,25 +28,27 @@ Widget getHtml(context, bodyHtml) {
                 return GestureDetector(
                     onTap: () {
                       showDialog(
-                          context: context,
-                          builder: (context) {
-                            return ImagePage(
-                              node.attributes['src'],
-                            );
-                          });
+                        context: context,
+                        builder: (context) {
+                          return ImagePage(
+                            node.attributes['src'],
+                          );
+                        },
+                      );
                     },
                     child: Center(
                       child: CachedNetworkImage(
-                          imageUrl: node.attributes['src'],
-                          placeholder: (context, url) =>
-                              new CircularProgressIndicator(
-                                valueColor: new AlwaysStoppedAnimation<Color>(
-                                    Theme.of(context).primaryColor),
-                              ),
-                          errorWidget: (context, url, error) => new Icon(
-                                Icons.error,
-                                color: Colors.redAccent,
-                              )),
+                        imageUrl: node.attributes['src'],
+                        placeholder: (context, url) =>
+                            new CircularProgressIndicator(
+                          valueColor: new AlwaysStoppedAnimation<Color>(
+                              Theme.of(context).primaryColor),
+                        ),
+                        errorWidget: (context, url, error) => new Icon(
+                          Icons.error,
+                          color: Colors.redAccent,
+                        ),
+                      ),
                     ));
 
               case 'pre':
@@ -55,6 +58,11 @@ Widget getHtml(context, bodyHtml) {
                   color: Colors.grey[200],
                   child: HtmlWidget(
                     node.outerHtml,
+                    bodyPadding: EdgeInsets.all(16),
+                    webView: true,
+                    onTapUrl: (url) {
+                      openUrl(context, url);
+                    },
                   ),
                 );
               case 'blockquote':
