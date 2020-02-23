@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_topic_data.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
@@ -10,8 +11,9 @@ import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 class TopicPage extends StatelessWidget {
-  TopicPage({Key key, this.topicJson}) : super(key: key);
+  TopicPage({Key key, this.topicJson, this.groupId}) : super(key: key);
   final GroupTopicJson topicJson;
+  final int groupId;
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +28,18 @@ class TopicPage extends StatelessWidget {
                 child: aniColumn(
                   aniWhich: 4,
                   children: topicJson.data.map((a) {
-                    return oneTopic(context, a);
+                    return oneTopic(context, groupId, a);
                   }).toList(),
                 ),
               );
   }
 }
 
-Widget oneTopic(BuildContext context, OneTopicData data) {
+Widget oneTopic(BuildContext context, int groupId, OneTopicData data) {
   return GestureDetector(
     onTap: () {
-      // openUrl(context, "https://www.yuque.com/${data.login}");
+      OpenPage.topic(context,
+          id: data.id, groupId: data.groupId, iid: data.iid);
     },
     child: Container(
         height: 70,

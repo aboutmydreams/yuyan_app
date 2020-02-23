@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/group/group_page.dart';
+import 'package:yuyan_app/models/component/group/topic/topic_detail_page.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 
 import 'book_doc/doc_page/doc_page.dart';
@@ -38,5 +39,10 @@ class OpenPage {
 
   // 打开话题知识库
 
-  //
+  // 打开话题
+  static topic(BuildContext context, {int id, int iid, int groupId}) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return TopicDetail(id: id, iid: iid, groupId: groupId);
+    }));
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/group/all_topic/topic_page.dart';
 import 'package:yuyan_app/models/component/group/view/book_page.dart';
 import 'package:yuyan_app/models/component/group/view/home_page.dart';
 import 'package:yuyan_app/models/component/group/view/member_page.dart';
@@ -10,10 +11,8 @@ import 'package:yuyan_app/models/net/requests_api/group/data/group_member_data.d
 import 'package:yuyan_app/models/net/requests_api/group/data/group_topic_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/group.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
-import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
-import 'package:yuyan_app/views/explore_page/selection/selection_page.dart';
 
 class GroupPage extends StatefulWidget {
   GroupPage({Key key, this.groupdata, this.pageIndex}) : super(key: key);
@@ -143,16 +142,12 @@ class _GroupPageState extends State<GroupPage>
     }
   }
 
-  PopupMenuItem<String> childItem(String id, String title, IconData icon) {
+  PopupMenuItem<String> childItem(String id, String title) {
     return PopupMenuItem(
       value: id,
       child: Row(
         children: [
-          Icon(
-            icon,
-            color: Colors.black54,
-          ),
-          Text('    $title'),
+          Text('$title'),
         ],
       ),
     );
@@ -160,7 +155,6 @@ class _GroupPageState extends State<GroupPage>
 
   @override
   Widget build(BuildContext context) {
-    // print("======$pageIndex");
     return Scaffold(
       floatingActionButton: floatingActionButton(pageIndex),
       body: DefaultTabController(
@@ -201,14 +195,20 @@ class _GroupPageState extends State<GroupPage>
                   PopupMenuButton(
                     itemBuilder: (BuildContext context) =>
                         <PopupMenuItem<String>>[
-                      childItem("A", "编辑话题", Icons.edit),
-                      childItem("B", "删除话题", Icons.delete),
-                      childItem("C", "分享", Icons.share),
+                      childItem("A", "查看所有话题"),
+                      childItem("B", "打开网页版"),
                     ],
                     onSelected: (String action) {
                       // 点击选项的时候
                       switch (action) {
                         case 'A':
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (_) {
+                            return AllTopicPage(
+                              groupId: groupdata.id,
+                              openTopicJson: topicJson,
+                            );
+                          }));
                           break;
                         case 'B':
                           break;
@@ -280,6 +280,7 @@ class _GroupPageState extends State<GroupPage>
               ),
               TopicPage(
                 topicJson: topicJson,
+                groupId: groupdata.id,
               ),
               Builder(
                 builder: (BuildContext context) {
