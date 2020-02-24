@@ -32,6 +32,7 @@ Widget getHtml(BuildContext context, String bodyHtml, {EdgeInsets padding}) {
               }
               return GestureDetector(
                   onTap: () {
+                    print("object");
                     showDialog(
                       context: context,
                       builder: (context) {

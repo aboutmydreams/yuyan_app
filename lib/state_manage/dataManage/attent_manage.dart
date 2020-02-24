@@ -45,6 +45,8 @@ Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
       event["avatar_url"] =
           subject["avatar_url"] ?? subject["user"]["avatar_url"] ?? "";
       event["image"] = subject["image"] ?? "";
+      event["id"] = subject["id"] ?? 0;
+      event["book_id"] = subject["book_id"] ?? 0;
 
       Map secondSubject = i["second_subject"] ?? {};
 
@@ -101,6 +103,7 @@ Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
           event["description"] = sub["description"];
           event["image"] = "";
           event["book_id"] = sub["book_id"] ?? 0;
+          event["id"] = sub["id"] ?? 0;
           event["avatar_url"] = sub["avatar_url"] ?? "";
           String slug = sub["slug"] ?? "";
           String atwho = sub["login"] ?? sub["user"]["login"];

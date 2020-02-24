@@ -3,8 +3,6 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
-import 'package:yuyan_app/models/net/requests_api/group/data/one_topic/topic_comment_data.dart';
-import 'package:yuyan_app/models/net/requests_api/group/data/one_topic/topic_detail_data.dart';
 import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_big/html/body_html.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
@@ -36,6 +34,9 @@ class TheComment extends StatelessWidget {
 }
 
 Widget oneComment(BuildContext context, CommentData data) {
+  print(data.user.avatarUrl);
+  print(data.user.name);
+  print("=================");
   return Container(
     margin: EdgeInsets.only(bottom: 16),
     child: Row(

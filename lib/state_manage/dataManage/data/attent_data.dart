@@ -84,6 +84,7 @@ class Event {
   int count;
   String url;
   int bookId;
+  int id;
 
   Event(
       {this.title,
@@ -92,6 +93,7 @@ class Event {
       this.avatarUrl,
       this.count,
       this.url,
+      this.id,
       this.bookId});
 
   Event.fromJson(Map<String, dynamic> json) {
@@ -102,6 +104,7 @@ class Event {
     count = json['count'];
     url = json['url'];
     bookId = json['book_id'];
+    id = json['id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -113,6 +116,7 @@ class Event {
     data['count'] = this.count;
     data['url'] = this.url;
     data['book_id'] = this.bookId;
+    data['id'] = this.id;
     return data;
   }
 }
