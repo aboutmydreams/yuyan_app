@@ -38,27 +38,42 @@ class TheComment extends StatelessWidget {
 Widget oneComment(BuildContext context, CommentData data) {
   return Container(
     margin: EdgeInsets.only(bottom: 16),
-    child: Column(
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Row(
+        userAvatar(data.user.avatarUrl, height: 28),
+        SizedBox(width: 10),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            userAvatar(data.user.avatarUrl, height: 28),
-            SizedBox(width: 10),
-            Text(
-              data.user.name,
-              style: AppStyles.textStyleB,
+            Container(
+              // padding: EdgeInsets.only(right: 10),
+              width: MediaQuery.of(context).size.width - 70,
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    data.user.name,
+                    style: AppStyles.textStyleB,
+                  ),
+                  Spacer(),
+                  Text(
+                    timeCut(data.updatedAt),
+                    style: AppStyles.textStyleCC,
+                  ),
+                ],
+              ),
             ),
-            Spacer(),
-            Text(
-              timeCut(data.updatedAt),
-              style: AppStyles.textStyleCC,
-            ),
+            Container(
+              width: MediaQuery.of(context).size.width - 80,
+              child: getHtml(
+                context,
+                data.bodyHtml,
+                // padding: EdgeInsets.only(left: 37),
+              ),
+            )
           ],
-        ),
-        getHtml(
-          context,
-          data.bodyHtml,
-          padding: EdgeInsets.only(left: 37),
         ),
       ],
     ),

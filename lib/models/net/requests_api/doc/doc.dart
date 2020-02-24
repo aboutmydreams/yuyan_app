@@ -86,11 +86,13 @@ class DioDoc {
   }
 
   // 评论操作/comments
-  static addComment(String comment, int docId) async {
+  static addComment(
+      {String comment, int docId, int parentId, String type: "Doc"}) async {
+    // type = "Doc" "Topic"
     Map data = {
-      "commentable_type": "Doc",
+      "commentable_type": type,
       "commentable_id": docId,
-      "parent_id": null,
+      "parent_id": parentId,
       "body_asl":
           "<!doctype lake><meta name=\"doc-version\" content=\"1\" /><p>$comment<cursor /></p>",
       "body":

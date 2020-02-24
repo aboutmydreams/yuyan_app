@@ -20,7 +20,7 @@ Widget getHtml(BuildContext context, String bodyHtml, {EdgeInsets padding}) {
     customRender: (node, children) {
       try {
         if (node is dom.Element) {
-          print(node.localName);
+          // print(node.localName);
 
           switch (node.localName) {
             case 'br':
