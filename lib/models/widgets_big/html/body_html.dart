@@ -230,8 +230,10 @@ Widget getHtml(BuildContext context, String bodyHtml, {EdgeInsets padding}) {
               // }
               break;
             case 'p':
-              return HtmlWidget(node.outerHtml,
-                  bodyPadding: EdgeInsets.only(bottom: 3));
+              if (!node.outerHtml.contains("img")) {
+                return HtmlWidget(node.outerHtml,
+                    bodyPadding: EdgeInsets.only(bottom: 3));
+              }
               break;
           }
         }

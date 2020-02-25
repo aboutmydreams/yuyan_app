@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/group/all_topic/topic_page.dart';
+import 'package:yuyan_app/models/component/group/topic/add_topic/add_topic.dart';
 import 'package:yuyan_app/models/component/group/view/book_page.dart';
 import 'package:yuyan_app/models/component/group/view/home_page.dart';
 import 'package:yuyan_app/models/component/group/view/member_page.dart';
@@ -134,7 +135,11 @@ class _GroupPageState extends State<GroupPage>
         break;
       case 2:
         return FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+              return AddTopicPage(groupId: groupdata.id);
+            }));
+          },
           child: Icon(Icons.add_comment),
         );
       case 3:
