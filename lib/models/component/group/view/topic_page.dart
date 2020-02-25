@@ -21,16 +21,17 @@ class TopicPage extends StatelessWidget {
         ? loading()
         : topicJson.data.isEmpty
             ? NothingPage(
-                top: 40,
+                top: 190,
                 text: "暂无讨论",
               )
             : SingleChildScrollView(
                 child: aniColumn(
-                  aniWhich: 4,
-                  children: topicJson.data.map((a) {
-                    return oneTopic(context, groupId, a);
-                  }).toList(),
-                ),
+                    aniWhich: 4,
+                    children: [SizedBox(height: 155)]..addAll(
+                        topicJson.data.map((a) {
+                          return oneTopic(context, groupId, a);
+                        }).toList(),
+                      )),
               );
   }
 }

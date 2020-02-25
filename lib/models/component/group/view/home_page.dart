@@ -18,12 +18,13 @@ class GroupHome extends StatelessWidget {
     return homeJson == null
         ? loading()
         : homeJson.data.bookStacks.isEmpty
-            ? NothingPage()
+            ? NothingPage(top: 190, text: "首页空空")
             : SingleChildScrollView(
                 child: Column(
-                  children: homeJson.data.bookStacks.map((a) {
-                    return oneHome(context, a);
-                  }).toList(),
+                  children: [SizedBox(height: 155)]
+                    ..addAll(homeJson.data.bookStacks.map((a) {
+                      return oneHome(context, a);
+                    }).toList()),
                 ),
               );
   }

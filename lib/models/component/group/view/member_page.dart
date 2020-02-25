@@ -25,11 +25,12 @@ class _MemberPageState extends State<MemberPage> {
         ? loading()
         : SingleChildScrollView(
             child: aniColumn(
-              aniWhich: 4,
-              children: memberJson.data.map((a) {
-                return oneMember(context, a);
-              }).toList(),
-            ),
+                aniWhich: 4,
+                children: [SizedBox(height: 155)]..addAll(
+                    memberJson.data.map((a) {
+                      return oneMember(context, a);
+                    }).toList(),
+                  )),
           );
   }
 }

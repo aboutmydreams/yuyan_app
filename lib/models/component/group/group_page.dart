@@ -154,107 +154,111 @@ class _GroupPageState extends State<GroupPage>
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             // These are the slivers that show up in the "outer" scroll view.
             return <Widget>[
-              SliverAppBar(
-                leading: new IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                title: Text('${groupdata.name}'),
-                centerTitle: false,
-                pinned: true,
-                floating: false,
-                snap: false,
-                primary: true,
-                expandedHeight: 230.0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4.0)),
-                stretchTriggerOffset: 10,
-                elevation: 10,
-                // 是否显示阴影，直接取值innerBoxIsScrolled，展开不显示阴影，合并后会显示
-                forceElevated: innerBoxIsScrolled,
-
-                actions: <Widget>[
-                  IconButton(
-                    icon: ifMark ? Icon(Icons.star) : Icon(Icons.star_border),
+              SliverOverlapAbsorber(
+                handle:
+                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                child: SliverAppBar(
+                  leading: new IconButton(
+                    icon: Icon(Icons.arrow_back),
                     onPressed: () {
-                      changeMark();
+                      Navigator.pop(context);
                     },
                   ),
-                  PopupMenuButton(
-                    itemBuilder: (BuildContext context) =>
-                        <PopupMenuItem<String>>[
-                      menuItem("A", "查看所有话题"),
-                      menuItem("B", "打开网页版"),
-                    ],
-                    onSelected: (String action) {
-                      // 点击选项的时候
-                      switch (action) {
-                        case 'A':
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (_) {
-                            return AllTopicPage(
-                              groupId: groupdata.id,
-                              openTopicJson: topicJson,
-                            );
-                          }));
-                          break;
-                        case 'B':
-                          break;
-                        case 'C':
-                          break;
-                      }
-                    },
-                  ),
-                ],
+                  title: Text('${groupdata.name}'),
+                  centerTitle: false,
+                  pinned: true,
+                  floating: false,
+                  snap: false,
+                  primary: true,
+                  expandedHeight: 230.0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4.0)),
+                  stretchTriggerOffset: 10,
+                  elevation: 10,
+                  // 是否显示阴影，直接取值innerBoxIsScrolled，展开不显示阴影，合并后会显示
+                  forceElevated: innerBoxIsScrolled,
 
-                flexibleSpace: FlexibleSpaceBar(
-                  background: Stack(
-                    children: <Widget>[
-                      Positioned(
-                        child: Container(
-                          // height: 230,
-                          width: MediaQuery.of(context).size.width,
-                          child: Image.asset(
-                            "assets/images/first.jpg",
-                            color: Colors.black45,
-                            colorBlendMode: BlendMode.darken,
-                            fit: BoxFit.cover,
+                  actions: <Widget>[
+                    IconButton(
+                      icon: ifMark ? Icon(Icons.star) : Icon(Icons.star_border),
+                      onPressed: () {
+                        changeMark();
+                      },
+                    ),
+                    PopupMenuButton(
+                      itemBuilder: (BuildContext context) =>
+                          <PopupMenuItem<String>>[
+                        menuItem("A", "查看所有话题"),
+                        menuItem("B", "打开网页版"),
+                      ],
+                      onSelected: (String action) {
+                        // 点击选项的时候
+                        switch (action) {
+                          case 'A':
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (_) {
+                              return AllTopicPage(
+                                groupId: groupdata.id,
+                                openTopicJson: topicJson,
+                              );
+                            }));
+                            break;
+                          case 'B':
+                            break;
+                          case 'C':
+                            break;
+                        }
+                      },
+                    ),
+                  ],
+
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: Stack(
+                      children: <Widget>[
+                        Positioned(
+                          child: Container(
+                            // height: 230,
+                            width: MediaQuery.of(context).size.width,
+                            child: Image.asset(
+                              "assets/images/first.jpg",
+                              color: Colors.black45,
+                              colorBlendMode: BlendMode.darken,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        left: 72,
-                        top: 125,
-                        right: 38,
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 170,
-                              child: Text(
-                                "${groupdata.description ?? '暂无介绍'}",
-                                style: AppStyles.groupTextStyle,
-                                maxLines: 4,
+                        Positioned(
+                          left: 72,
+                          top: 125,
+                          right: 38,
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 170,
+                                child: Text(
+                                  "${groupdata.description ?? '暂无介绍'}",
+                                  style: AppStyles.groupTextStyle,
+                                  maxLines: 4,
+                                ),
                               ),
-                            ),
-                            Spacer(),
-                            Hero(
-                              tag: groupdata.id,
-                              child:
-                                  userAvatar(groupdata.avatarUrl, height: 60),
-                            ),
-                          ],
+                              Spacer(),
+                              Hero(
+                                tag: groupdata.id,
+                                child:
+                                    userAvatar(groupdata.avatarUrl, height: 60),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
 
-                bottom: TabBar(
-                  indicatorColor: Colors.white54,
-                  controller: _tabController,
-                  tabs: _tabs.map((String name) => Tab(text: name)).toList(),
+                  bottom: TabBar(
+                    indicatorColor: Colors.white54,
+                    controller: _tabController,
+                    tabs: _tabs.map((String name) => Tab(text: name)).toList(),
+                  ),
                 ),
               ),
             ];

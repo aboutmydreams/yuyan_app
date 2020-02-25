@@ -26,13 +26,14 @@ class _BookPageState extends State<BookPage> {
     return bookJson == null
         ? loading()
         : bookJson.data.isEmpty
-            ? NothingPage(top: 30)
+            ? NothingPage(top: 190, text: "知识库空空")
             : SingleChildScrollView(
                 child: aniColumn(
                   aniWhich: 4,
-                  children: bookJson.data.map((a) {
-                    return oneBook(context, a);
-                  }).toList(),
+                  children: [SizedBox(height: 155)]
+                    ..addAll(bookJson.data.map((a) {
+                      return oneBook(context, a);
+                    }).toList()),
                 ),
               );
   }
