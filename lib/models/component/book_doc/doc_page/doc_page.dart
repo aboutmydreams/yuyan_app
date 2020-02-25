@@ -6,6 +6,7 @@ import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/doc_data_v2.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
+import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_big/html/body_html.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
@@ -47,7 +48,7 @@ class _DocPageState extends State<DocPage> {
   }
 
   getDocComment() async {
-    Comments ans = await DioDoc.getComments(docId);
+    Comments ans = await DioUser.getComments(docId);
     setState(() {
       comments = ans;
     });

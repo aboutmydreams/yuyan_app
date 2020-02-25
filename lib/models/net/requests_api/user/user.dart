@@ -1,4 +1,5 @@
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
+import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/my_follow_book_data.dart';
 import 'package:yuyan_app/models/tools/get_pref.dart';
 
@@ -20,6 +21,8 @@ class DioUser {
     UserBookJson theData = UserBookJson.fromJson(res);
     return theData;
   }
+
+  /// [关注相关]
 
   // 获取关注者信息
   static getFollowerData(int offset, int userId) async {
@@ -96,6 +99,8 @@ class DioUser {
     return theData;
   }
 
+  /// [收藏相关]
+
   // 查看是否收藏(文章或团队)
   static ifMark({String targetType: "Doc", int targetId}) async {
     Map ans = await DioReq.get(
@@ -129,5 +134,78 @@ class DioUser {
     } else {
       return 0;
     }
+  }
+
+  /// [评论相关]
+
+  // 评论操作/comments
+  static addComment(
+      {String comment, int commentId, int parentId, String type: "Doc"}) async {
+    // type = "Doc" "Topic"
+    Map data = {
+      "commentable_type": type,
+      "commentable_id": commentId,
+      "parent_id": parentId,
+      "body_asl":
+          "<!doctype lake><meta name=\"doc-version\" content=\"1\" /><p>$comment<cursor /></p>",
+      "body":
+          "<div class=\"lake-content-editor-core lake-engine\" data-lake-element=\"root\"><p style=\"font-size: 14px; color: rgb(38, 38, 38); line-height: 24px; letter-spacing: 0.05em; outline-style: none; overflow-wrap: break-word; margin: 0px;\">$comment</p></div>",
+      "format": "lake"
+    };
+    Map ans = await DioReq.post("/comments", data: data);
+    return ans.containsKey("data");
+  }
+
+  // 修改评论操作
+  static putComment({String comment, int commentId, String type: "Doc"}) async {
+    Map data = {
+      "commentable_type": type,
+      "commentable_id": commentId,
+      "parent_id": null,
+      "body_asl":
+          "<!doctype lake><meta name=\"doc-version\" content=\"1\" /><p>$comment<cursor /></p>",
+      "body":
+          "<div class=\"lake-content-editor-core lake-engine\" data-lake-element=\"root\"><p style=\"font-size: 14px; color: rgb(38, 38, 38); line-height: 24px; letter-spacing: 0.05em; outline-style: none; overflow-wrap: break-word; margin: 0px;\">$comment</p></div>",
+      "format": "lake"
+    };
+    Map ans = await DioReq.put("/comments", data: data);
+    return ans.containsKey("data");
+  }
+
+  // 评论列表
+  static getComments(int docId) async {
+    var ans = await DioReq.get(
+        "/comments?commentable_id=$docId&commentable_type=Doc");
+    return Comments.fromJson(ans);
+  }
+
+  // 删除评论操作/comments/348963
+  static deleteComment({int commentId}) async {
+    Map ans = await DioReq.delete("/comments/$commentId");
+    return ans.containsKey("data");
+  }
+
+  /// [点赞相关]
+
+  // 点赞操作
+  static addLike(int docId) async {
+    Map data = {
+      "action_type": "like",
+      "target_type": "Doc",
+      "target_id": docId
+    };
+    Map ans = await DioReq.post("/actions", data: data);
+    return ans.containsKey("id");
+  }
+
+  // 取消点赞操作
+  static deleteLike(int docId) async {
+    Map data = {
+      "action_type": "like",
+      "target_type": "Doc",
+      "target_id": docId
+    };
+    var ans = await DioReq.delete("/actions", data: data);
+    return ans == {};
   }
 }
