@@ -188,12 +188,8 @@ class DioUser {
   /// [点赞相关]
 
   // 点赞操作
-  static addLike(int docId) async {
-    Map data = {
-      "action_type": "like",
-      "target_type": "Doc",
-      "target_id": docId
-    };
+  static addLike({int docId, String type: "Doc"}) async {
+    Map data = {"action_type": "like", "target_type": type, "target_id": docId};
     Map ans = await DioReq.post("/actions", data: data);
     return ans.containsKey("id");
   }
