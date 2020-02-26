@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/group/group_page.dart';
+import 'package:yuyan_app/models/widgets_big/image_page/test1.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 import 'package:yuyan_app/views/begin_init/first_page/first_page.dart';
 import 'package:yuyan_app/views/begin_init/guide_page/guide_page.dart';
@@ -19,6 +20,7 @@ import 'package:yuyan_app/views/my_page/topic/topic_page.dart';
 
 Map<String, WidgetBuilder> routeData = {
   '/': (context) => HomePage(),
+  // '/first': (context) => GalleryExample(),
   '/first': (context) => FirstPage(),
   '/login': (context) => LoginPage(),
   '/guide': (context) => GuidePage(),

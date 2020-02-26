@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:yuyan_app/models/browser_web/browser_appbar.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/selection_data.dart';
@@ -11,25 +11,9 @@ Widget secItemUI(BuildContext context, Data data) {
   String imageUrl = data.cover +
       "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_200%2Ch_120%2Fformat%2Cpng";
   return GestureDetector(
-    onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return BrowserWithBar(
-        url:
-            "https://www.yuque.com/${data.book.user.login}/${data.book.slug}/${data.slug}",
-        appbar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-            ),
-          ),
-          elevation: 0,
-          backgroundColor: AppColors.background,
-        ),
-      );
-    })),
+    onTap: () {
+      OpenPage.doc(context, bookId: data.bookId, docId: data.id);
+    },
     child: Container(
       height: 102,
       margin: EdgeInsets.only(left: 16, top: 21, right: 15),

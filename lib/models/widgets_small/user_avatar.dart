@@ -5,13 +5,15 @@ Widget userAvatar(String imgUrl, {double height}) {
   height ??= 34;
   imgUrl ??=
       "https://cdn.nlark.com/yuque/0/2019/png/84147/1547032500238-d93512f4-db23-442f-b4d8-1d46304f9673.png";
-  if (!imgUrl.contains("assets/") && !imgUrl.contains("x-oss-process")) {
-    // 如果不包含dingtalk则使用压缩模式
-    imgUrl = imgUrl.contains("dingtalk")
-        ? imgUrl
-        : imgUrl +
-            "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_120%2Ch_120%2Fformat%2Cpng";
-  }
+  // 如果不包含某些关键词 则使用压缩模式
+  imgUrl = (imgUrl.contains("dingtalk") ||
+          (imgUrl.contains("aliyuncs") ||
+              (imgUrl.contains("alipay") ||
+                  (imgUrl.contains("assets/") ||
+                      (imgUrl.contains("x-oss-process"))))))
+      ? imgUrl
+      : imgUrl +
+          "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_120%2Ch_120%2Fformat%2Cpng";
 
   return ClipRRect(
     borderRadius: BorderRadius.circular(height / 2 + 3),

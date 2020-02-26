@@ -23,9 +23,6 @@ Widget getHtml(BuildContext context, String bodyHtml, {EdgeInsets padding}) {
           // print(node.localName);
 
           switch (node.localName) {
-            case 'br':
-              return Text("\n");
-
             case 'img':
               if (node.attributes['src'] == null) {
                 return null;
@@ -229,6 +226,8 @@ Widget getHtml(BuildContext context, String bodyHtml, {EdgeInsets padding}) {
               //   ));
               // }
               break;
+            case 'br':
+              return Text("\n");
             case 'p':
               if (!node.outerHtml.contains("img")) {
                 return HtmlWidget(node.outerHtml,

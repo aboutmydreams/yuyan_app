@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/browser_web/browser_appbar.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/widgets_small/user_event.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/selection_data.dart';
 
@@ -10,25 +11,9 @@ Widget firstItemUI(BuildContext context, Data data) {
       "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_400%2Ch_220%2Fformat%2Cpng";
   return GestureDetector(
     /// 临时解决方案，临时的时间可能会很久
-    onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return BrowserWithBar(
-        url:
-            "https://www.yuque.com/${data.book.user.login}/${data.book.slug}/${data.slug}",
-        appbar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-            ),
-          ),
-          elevation: 0,
-          backgroundColor: AppColors.background,
-        ),
-      );
-    })),
+    onTap: () {
+      OpenPage.doc(context, bookId: data.bookId, docId: data.id);
+    },
     child: Container(
       height: 216,
       margin: EdgeInsets.only(left: 18, top: 9, right: 18),
