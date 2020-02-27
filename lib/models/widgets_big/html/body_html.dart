@@ -6,10 +6,14 @@ import 'package:html/dom.dart' as dom;
 import 'package:flutter_html/flutter_html.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
+import 'package:yuyan_app/models/widgets_big/html/view/blockquote.dart';
+import 'package:yuyan_app/models/widgets_big/html/view/img.dart';
+import 'package:yuyan_app/models/widgets_big/html/view/pre.dart';
 import 'package:yuyan_app/models/widgets_big/image_page/image_page.dart';
 import 'package:yuyan_app/views/my_page/my_page.dart';
 
 Widget getHtml(BuildContext context, String bodyHtml, {EdgeInsets padding}) {
+  // print(bodyHtml.substring(bodyHtml.length - 400));
   return Html(
     data: bodyHtml,
     useRichText: false,
@@ -21,94 +25,25 @@ Widget getHtml(BuildContext context, String bodyHtml, {EdgeInsets padding}) {
       try {
         if (node is dom.Element) {
           // print(node.localName);
+          // if (node.outerHtml.contains("对外开放")) {
+          //   print(node.localName);
+          //   if (node.localName == 'blockquote') {
+          //     print(node.innerHtml);
+          //   }
+          // }
 
           switch (node.localName) {
             case 'img':
               if (node.attributes['src'] == null) {
                 return null;
               }
-              return GestureDetector(
-                  onTap: () {
-                    print("object");
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return ImagePage(
-                          node.attributes['src'],
-                        );
-                      },
-                    );
-                  },
-                  child: Center(
-                    child: CachedNetworkImage(
-                      imageUrl: node.attributes['src'],
-                      placeholder: (context, url) =>
-                          new CircularProgressIndicator(
-                        valueColor: new AlwaysStoppedAnimation<Color>(
-                            Theme.of(context).primaryColor),
-                      ),
-                      errorWidget: (context, url, error) => new Icon(
-                        Icons.error,
-                        color: Colors.redAccent,
-                      ),
-                    ),
-                  ));
+              return imgHtml(context, node.attributes['src']);
 
             case 'pre':
-              return Container(
-                constraints: BoxConstraints(
-                    minWidth: MediaQuery.of(context).size.width - 20),
-                color: Colors.grey[200],
-                child: HtmlWidget(
-                  node.outerHtml,
-                  bodyPadding: EdgeInsets.all(16),
-                  webView: true,
-                  onTapUrl: (url) {
-                    openUrl(context, url);
-                  },
-                ),
-              );
+              return preHtml(context, node.outerHtml);
+
             case 'blockquote':
-              return Stack(
-                children: <Widget>[
-                  Container(
-                    child: Transform(
-                      transform: Matrix4.translationValues(-30, 0, 0),
-                      child: HtmlWidget(
-                        node.outerHtml,
-                        textStyle: AppStyles.textStyleB,
-                        builderCallback: (nn, ee) {
-                          if (ee.localName == 'code') {
-                            print('----blockquote里面的code---${node.text}');
-
-                            return lazySet(null, buildOp: BuildOp(
-                              onPieces: (meta, pieces) {
-                                final text = ' ';
-
-                                return pieces..first?.block?.addText(text);
-                              },
-                            ));
-                          }
-
-                          return nn;
-                        },
-                        onTapUrl: (url) {
-                          _onLinkTap(context, url);
-                        },
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    child: Container(
-                      color: Colors.grey[300],
-                      width: 3,
-                    ),
-                    left: 0,
-                    top: 5,
-                    bottom: 5,
-                  ),
-                ],
-              );
+              return blockquoteHtml(context, node.outerHtml);
             case 'code':
               return Container(
                 color: Colors.grey[300],
@@ -143,44 +78,48 @@ Widget getHtml(BuildContext context, String bodyHtml, {EdgeInsets padding}) {
                   if (element.localName == 'li' &&
                       element.outerHtml.contains('checkbox') &&
                       element.getElementsByTagName('input').length > 0) {
-                    return lazySet(null, buildOp: BuildOp(
-                      onWidgets: (n, w) {
-                        return [
-                          Container(
-                            // padding: EdgeInsets.only(bottom: 10),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Container(
-                                  margin: EdgeInsets.only(right: 5),
-                                  constraints: BoxConstraints(
-                                      maxHeight: 20, maxWidth: 20),
-                                  child: AbsorbPointer(
-                                    child: Checkbox(
-                                      activeColor: Colors.green,
-                                      checkColor: Colors.white,
-                                      tristate: true,
-                                      value:
-                                          element.outerHtml.contains('checked'),
-                                      onChanged: (checked) {
-                                        print(checked);
-                                      },
+                    return lazySet(
+                      null,
+                      buildOp: BuildOp(
+                        onWidgets: (n, w) {
+                          return [
+                            Container(
+                              // padding: EdgeInsets.only(bottom: 10),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(
+                                    margin: EdgeInsets.only(right: 5),
+                                    constraints: BoxConstraints(
+                                        maxHeight: 20, maxWidth: 20),
+                                    child: AbsorbPointer(
+                                      child: Checkbox(
+                                        activeColor: Colors.green,
+                                        checkColor: Colors.white,
+                                        tristate: true,
+                                        value: element.outerHtml
+                                            .contains('checked'),
+                                        onChanged: (checked) {
+                                          print(checked);
+                                        },
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  child: Text('${element.text}'),
-                                  constraints: BoxConstraints(
-                                      maxWidth:
-                                          MediaQuery.of(context).size.width -
-                                              45),
-                                ),
-                              ],
-                            ),
-                          )
-                        ];
-                      },
-                    ));
+                                  Container(
+                                    margin: EdgeInsets.only(bottom: 3),
+                                    child: Text('${element.text}'),
+                                    constraints: BoxConstraints(
+                                        maxWidth:
+                                            MediaQuery.of(context).size.width -
+                                                45),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ];
+                        },
+                      ),
+                    );
                   }
                   return nodeData;
                 },
@@ -227,11 +166,16 @@ Widget getHtml(BuildContext context, String bodyHtml, {EdgeInsets padding}) {
               // }
               break;
             case 'br':
-              return Text("\n");
+              return Container(
+                margin: EdgeInsets.all(2),
+                child: Text("\n"),
+              );
             case 'p':
               if (!node.outerHtml.contains("img")) {
-                return HtmlWidget(node.outerHtml,
-                    bodyPadding: EdgeInsets.only(bottom: 3));
+                return HtmlWidget(
+                  node.outerHtml,
+                  bodyPadding: EdgeInsets.only(bottom: 3),
+                );
               }
               break;
           }
@@ -249,13 +193,14 @@ _onLinkTap(context, url) {
     openUrl(context, url);
   } else {
     showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: Container(
-                height: 20, alignment: Alignment(0, 0), child: Text('超链接识别有误')),
-            contentTextStyle: TextStyle(color: Colors.black54, fontSize: 17),
-          );
-        });
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: Container(
+              height: 20, alignment: Alignment(0, 0), child: Text('超链接识别有误')),
+          contentTextStyle: TextStyle(color: Colors.black54, fontSize: 17),
+        );
+      },
+    );
   }
 }
