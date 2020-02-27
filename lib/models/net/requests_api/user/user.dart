@@ -1,7 +1,6 @@
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/my_follow_book_data.dart';
-import 'package:yuyan_app/models/tools/get_pref.dart';
 
 import 'data/user_follow_data.dart';
 import 'data/user_profile_data.dart';
@@ -42,7 +41,7 @@ class DioUser {
   }
 
   // 获取关注了信息
-  static getFollowingData(int offset, int userId) async {
+  static getFollowingData({int offset: 0, int userId}) async {
     var res = await DioReq.get(
         "/actions/targets?action_type=follow&offset=$offset&target_type=User&user_id=$userId");
     Follows theData = Follows.fromJson(res, []);
