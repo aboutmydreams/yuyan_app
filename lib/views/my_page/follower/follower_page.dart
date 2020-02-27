@@ -33,7 +33,8 @@ class _FollowerPageState extends State<FollowerPage> {
 
   getFollowerData() async {
     var myId = await getPrefIntData("my_id");
-    Follows theData = await DioUser.getFollowerData(offset, myId);
+    Follows theData =
+        await DioUser.getFollowerData(offset: offset, userId: myId);
 
     if (mounted) {
       setState(() {

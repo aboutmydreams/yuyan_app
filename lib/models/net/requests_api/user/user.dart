@@ -1,6 +1,7 @@
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/my_follow_book_data.dart';
+import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 
 import 'data/user_follow_data.dart';
 import 'data/user_profile_data.dart';
@@ -21,10 +22,17 @@ class DioUser {
     return theData;
   }
 
+  // 团队信息
+  static getGroupData(int userId) async {
+    var res = await DioReq.get("/users/$userId/groups?limit=1000&offset=0");
+    Group groupData = Group.fromJson(res);
+    return groupData;
+  }
+
   /// [关注相关]
 
   // 获取关注者信息
-  static getFollowerData(int offset, int userId) async {
+  static getFollowerData({int userId, int offset: 0}) async {
     var res = await DioReq.get(
         "/actions/users?action_type=follow&offset=$offset&target_id=$userId&target_type=User");
     // 获取关注者中关注了我的 followedList
@@ -41,7 +49,7 @@ class DioUser {
   }
 
   // 获取关注了信息
-  static getFollowingData({int offset: 0, int userId}) async {
+  static getFollowingData({int userId, int offset: 0}) async {
     var res = await DioReq.get(
         "/actions/targets?action_type=follow&offset=$offset&target_type=User&user_id=$userId");
     Follows theData = Follows.fromJson(res, []);

@@ -2,59 +2,77 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/group/all_topic/topic_page.dart';
 import 'package:yuyan_app/models/component/group/topic/add_topic/add_topic.dart';
-import 'package:yuyan_app/models/component/group/view/book_page.dart';
-import 'package:yuyan_app/models/component/group/view/home_page.dart';
-import 'package:yuyan_app/models/component/group/view/member_page.dart';
-import 'package:yuyan_app/models/component/group/view/topic_page.dart';
-import 'package:yuyan_app/models/net/requests_api/group/data/group_book_data.dart';
-import 'package:yuyan_app/models/net/requests_api/group/data/group_home_data.dart';
-import 'package:yuyan_app/models/net/requests_api/group/data/group_member_data.dart';
-import 'package:yuyan_app/models/net/requests_api/group/data/group_topic_data.dart';
-import 'package:yuyan_app/models/net/requests_api/group/group.dart';
+import 'package:yuyan_app/models/net/requests_api/user/data/user_profile_data.dart';
+import 'package:yuyan_app/models/net/requests_api/user/data/user_repos_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 import 'package:yuyan_app/models/widgets_small/menu_item.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 
-class GroupPage extends StatefulWidget {
-  GroupPage({Key key, this.groupdata, this.pageIndex}) : super(key: key);
-  final GroupData groupdata;
+class UserPage extends StatefulWidget {
+  UserPage(
+      {Key key,
+      this.login,
+      this.name,
+      this.userId,
+      this.avatarUrl,
+      this.description,
+      this.pageIndex})
+      : super(key: key);
+  final String login;
+  final int userId;
+  final String name;
+  final String avatarUrl;
+  final String description;
   final int pageIndex;
 
   @override
-  _GroupPageState createState() =>
-      _GroupPageState(groupdata: groupdata, pageIndex: pageIndex);
+  _UserPageState createState() => _UserPageState(
+        login: login,
+        name: name,
+        userId: userId,
+        avatarUrl: avatarUrl,
+        pageIndex: pageIndex,
+      );
 }
 
-class _GroupPageState extends State<GroupPage>
+class _UserPageState extends State<UserPage>
     with SingleTickerProviderStateMixin {
-  _GroupPageState({Key key, this.groupdata, this.pageIndex});
-  final GroupData groupdata;
+  _UserPageState(
+      {Key key,
+      this.login,
+      this.name,
+      this.userId,
+      this.avatarUrl,
+      this.description,
+      this.pageIndex});
+  final String login;
+  final int userId;
+  final String name;
+  final String description;
+  final String avatarUrl;
 
   int pageIndex;
-  bool ifMark = false;
+  bool isFollow = false;
   TabController _tabController;
 
   List<String> _tabs = [
-    "首页",
     "知识库",
-    "讨论区",
-    "成员",
+    "团队",
+    "关注了",
+    "关注者",
   ];
 
-  MemberJson memberJson;
-  GroupTopicJson topicJson;
-  GroupBookJson bookJson;
-  GroupHomeJson homeJson;
+  ProfileData profileJson;
+  UserBookJson bookJson;
+  Group groupJson;
 
   @override
   void initState() {
     super.initState();
-    getIfMark();
-    getHome();
+    getFollower();
     getBook();
-    getTopic();
-    getMember();
+    getGroup();
     _tabController =
         TabController(vsync: this, initialIndex: pageIndex, length: 4)
           ..addListener(() {
@@ -77,53 +95,44 @@ class _GroupPageState extends State<GroupPage>
     }
   }
 
-  getIfMark() async {
-    bool ifMarkIt =
-        await DioUser.ifMark(targetType: "User", targetId: groupdata.id);
+  getFollower() async {
+    bool isFollowIt = await DioUser.getFollowerData(userId: userId);
     setState(() {
-      ifMark = ifMarkIt;
+      isFollow = isFollowIt;
     });
   }
 
   changeMark() async {
     setState(() {
-      ifMark = !ifMark;
+      isFollow = !isFollow;
     });
-    if (ifMark) {
-      var ans =
-          await DioUser.cancelMark(targetType: "User", targetId: groupdata.id);
+    if (isFollow) {
+      var ans = await DioUser.cancelFollow(userId);
       print(ans);
     } else {
-      var ans = await DioUser.mark(targetType: "User", targetId: groupdata.id);
+      var ans = await DioUser.followUser(userId);
       print(ans);
     }
   }
 
-  getHome() async {
-    GroupHomeJson home = await DioGroup.getHomeData(groupId: groupdata.id);
+  getProfile() async {
+    ProfileData profileData = await DioUser.getProfileData(userId);
     setState(() {
-      homeJson = home;
+      profileJson = profileData;
     });
   }
 
   getBook() async {
-    GroupBookJson book = await DioGroup.getBookData(groupId: groupdata.id);
+    UserBookJson book = await DioUser.getReposData(login);
     setState(() {
       bookJson = book;
     });
   }
 
-  getTopic() async {
-    GroupTopicJson topic = await DioGroup.getTopicData(groupId: groupdata.id);
+  getGroup() async {
+    Group groupData = await DioUser.getGroupData(userId);
     setState(() {
-      topicJson = topic;
-    });
-  }
-
-  getMember() async {
-    MemberJson member = await DioGroup.getMemberData(groupId: groupdata.id);
-    setState(() {
-      memberJson = member;
+      groupJson = groupData;
     });
   }
 
@@ -137,7 +146,7 @@ class _GroupPageState extends State<GroupPage>
         return FloatingActionButton(
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-              return AddTopicPage(groupId: groupdata.id);
+              return AddTopicPage(groupId: userId);
             }));
           },
           child: Icon(Icons.add_comment),
@@ -169,7 +178,7 @@ class _GroupPageState extends State<GroupPage>
                       Navigator.pop(context);
                     },
                   ),
-                  title: Text('${groupdata.name}'),
+                  title: Text('$name'),
                   centerTitle: false,
                   pinned: true,
                   floating: false,
@@ -185,7 +194,8 @@ class _GroupPageState extends State<GroupPage>
 
                   actions: <Widget>[
                     IconButton(
-                      icon: ifMark ? Icon(Icons.star) : Icon(Icons.star_border),
+                      icon:
+                          isFollow ? Icon(Icons.star) : Icon(Icons.star_border),
                       onPressed: () {
                         changeMark();
                       },
@@ -203,8 +213,8 @@ class _GroupPageState extends State<GroupPage>
                             Navigator.of(context)
                                 .push(MaterialPageRoute(builder: (_) {
                               return AllTopicPage(
-                                groupId: groupdata.id,
-                                openTopicJson: topicJson,
+                                groupId: userId,
+                                // openTopicJson: topicJson,
                               );
                             }));
                             break;
@@ -241,16 +251,15 @@ class _GroupPageState extends State<GroupPage>
                               Container(
                                 width: 170,
                                 child: Text(
-                                  "${groupdata.description ?? '暂无介绍'}",
+                                  "${description ?? '暂����介绍'}",
                                   style: AppStyles.groupTextStyle,
                                   maxLines: 4,
                                 ),
                               ),
                               Spacer(),
                               Hero(
-                                tag: groupdata.id,
-                                child:
-                                    userAvatar(groupdata.avatarUrl, height: 60),
+                                tag: userId,
+                                child: userAvatar(avatarUrl, height: 60),
                               ),
                             ],
                           ),
@@ -271,22 +280,25 @@ class _GroupPageState extends State<GroupPage>
           body: TabBarView(
             controller: _tabController,
             children: [
-              GroupHome(
-                homeJson: homeJson,
+              Container(
+                width: 300,
+                height: 400,
+                child: Text("data"),
               ),
-              BookPage(
-                bookJson: bookJson,
+              Container(
+                width: 300,
+                height: 400,
+                child: Text("data"),
               ),
-              TopicPage(
-                topicJson: topicJson,
-                groupId: groupdata.id,
+              Container(
+                width: 300,
+                height: 400,
+                child: Text("data"),
               ),
-              Builder(
-                builder: (BuildContext context) {
-                  return MemberPage(
-                    memberJson: memberJson,
-                  );
-                },
+              Container(
+                width: 300,
+                height: 400,
+                child: Text("data"),
               ),
             ],
           ),
