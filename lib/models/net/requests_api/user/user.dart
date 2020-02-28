@@ -48,6 +48,13 @@ class DioUser {
     return theData;
   }
 
+  static getFollowerData2({int userId, int offset: 0}) async {
+    var res = await DioReq.get(
+        "/actions/users?action_type=follow&offset=$offset&target_id=$userId&target_type=User");
+    Follows theData = Follows.fromJson(res, []);
+    return theData;
+  }
+
   // 获取关注了信息
   static getFollowingData({int userId, int offset: 0}) async {
     var res = await DioReq.get(

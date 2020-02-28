@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_member_data.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
@@ -38,7 +39,14 @@ class _MemberPageState extends State<MemberPage> {
 Widget oneMember(BuildContext context, MemberData data) {
   return GestureDetector(
     onTap: () {
-      // openUrl(context, "https://www.yuque.com/${data.login}");
+      OpenPage.user(
+        context,
+        login: data.user.login,
+        userId: data.userId,
+        avatarUrl: data.user.avatarUrl,
+        description: data.user.description,
+        name: data.user.name,
+      );
     },
     child: Container(
       height: 70,

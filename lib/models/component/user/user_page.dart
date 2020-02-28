@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/models/component/group/all_topic/topic_page.dart';
-import 'package:yuyan_app/models/component/group/topic/add_topic/add_topic.dart';
+import 'package:yuyan_app/models/component/user/view/book_page.dart';
+import 'package:yuyan_app/models/component/user/view/follower_page.dart';
+import 'package:yuyan_app/models/net/requests_api/user/data/user_follow_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_profile_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_repos_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
-import 'package:yuyan_app/models/widgets_small/menu_item.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 
@@ -32,6 +32,7 @@ class UserPage extends StatefulWidget {
         name: name,
         userId: userId,
         avatarUrl: avatarUrl,
+        description: description,
         pageIndex: pageIndex,
       );
 }
@@ -46,15 +47,14 @@ class _UserPageState extends State<UserPage>
       this.avatarUrl,
       this.description,
       this.pageIndex});
-  final String login;
-  final int userId;
-  final String name;
-  final String description;
-  final String avatarUrl;
+  String login;
+  int userId;
+  String name;
+  String description;
+  String avatarUrl;
 
   int pageIndex;
   bool isFollow = false;
-  TabController _tabController;
 
   List<String> _tabs = [
     "知识库",
@@ -66,6 +66,7 @@ class _UserPageState extends State<UserPage>
   ProfileData profileJson;
   UserBookJson bookJson;
   Group groupJson;
+  Follows followsJson;
 
   @override
   void initState() {
@@ -73,18 +74,6 @@ class _UserPageState extends State<UserPage>
     getFollower();
     getBook();
     getGroup();
-    _tabController =
-        TabController(vsync: this, initialIndex: pageIndex, length: 4)
-          ..addListener(() {
-            print(_tabController.index);
-            changeIndex(_tabController.index);
-          });
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
   }
 
   changeIndex(int index) {
@@ -96,13 +85,13 @@ class _UserPageState extends State<UserPage>
   }
 
   getFollower() async {
-    bool isFollowIt = await DioUser.getFollowerData(userId: userId);
+    Follows followsData = await DioUser.getFollowerData2(userId: userId);
     setState(() {
-      isFollow = isFollowIt;
+      followsJson = followsData;
     });
   }
 
-  changeMark() async {
+  changeFollow() async {
     setState(() {
       isFollow = !isFollow;
     });
@@ -136,31 +125,10 @@ class _UserPageState extends State<UserPage>
     });
   }
 
-  floatingActionButton(int index) {
-    switch (index) {
-      case 0:
-        break;
-      case 1:
-        break;
-      case 2:
-        return FloatingActionButton(
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-              return AddTopicPage(groupId: userId);
-            }));
-          },
-          child: Icon(Icons.add_comment),
-        );
-      case 3:
-        // print(4);
-        break;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    print(description);
     return Scaffold(
-      floatingActionButton: floatingActionButton(pageIndex),
       body: DefaultTabController(
         initialIndex: pageIndex,
         length: _tabs.length,
@@ -197,32 +165,7 @@ class _UserPageState extends State<UserPage>
                       icon:
                           isFollow ? Icon(Icons.star) : Icon(Icons.star_border),
                       onPressed: () {
-                        changeMark();
-                      },
-                    ),
-                    PopupMenuButton(
-                      itemBuilder: (BuildContext context) =>
-                          <PopupMenuItem<String>>[
-                        menuItem("A", "查看所有话题"),
-                        menuItem("B", "打开网页版"),
-                      ],
-                      onSelected: (String action) {
-                        // 点击选项的时候
-                        switch (action) {
-                          case 'A':
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (_) {
-                              return AllTopicPage(
-                                groupId: userId,
-                                // openTopicJson: topicJson,
-                              );
-                            }));
-                            break;
-                          case 'B':
-                            break;
-                          case 'C':
-                            break;
-                        }
+                        changeFollow();
                       },
                     ),
                   ],
@@ -251,7 +194,7 @@ class _UserPageState extends State<UserPage>
                               Container(
                                 width: 170,
                                 child: Text(
-                                  "${description ?? '暂����介绍'}",
+                                  "${description ?? '这人很懒，签名也没有'}",
                                   style: AppStyles.groupTextStyle,
                                   maxLines: 4,
                                 ),
@@ -270,7 +213,6 @@ class _UserPageState extends State<UserPage>
 
                   bottom: TabBar(
                     indicatorColor: Colors.white54,
-                    controller: _tabController,
                     tabs: _tabs.map((String name) => Tab(text: name)).toList(),
                   ),
                 ),
@@ -278,23 +220,14 @@ class _UserPageState extends State<UserPage>
             ];
           },
           body: TabBarView(
-            controller: _tabController,
             children: [
+              UserBookPage(bookJson: bookJson),
               Container(
                 width: 300,
                 height: 400,
                 child: Text("data"),
               ),
-              Container(
-                width: 300,
-                height: 400,
-                child: Text("data"),
-              ),
-              Container(
-                width: 300,
-                height: 400,
-                child: Text("data"),
-              ),
+              FollowerPage(followerJson: followsJson),
               Container(
                 width: 300,
                 height: 400,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/group/group_page.dart';
 import 'package:yuyan_app/models/component/group/topic/topic_detail_page.dart';
+import 'package:yuyan_app/models/component/user/user_page.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 
 import 'book_doc/doc_page/doc_page.dart';
@@ -17,11 +18,23 @@ class OpenPage {
   }
 
   // 打开其他用户的页面
-  static user(BuildContext context, {int bookId, int docId}) {
+  static user(BuildContext context,
+      {String login,
+      String name,
+      int userId,
+      String avatarUrl,
+      String description,
+      int pageIndex: 0}) {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return DocPage(
-        bookId: bookId,
-        docId: docId,
+      print("description====");
+      print(description);
+      return UserPage(
+        login: login,
+        name: name,
+        userId: userId,
+        avatarUrl: avatarUrl,
+        description: description,
+        pageIndex: pageIndex,
       );
     }));
   }

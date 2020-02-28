@@ -3,23 +3,24 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_book_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_topic_data.dart';
+import 'package:yuyan_app/models/net/requests_api/user/data/user_repos_data.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
-class BookPage extends StatefulWidget {
-  BookPage({Key key, this.bookJson}) : super(key: key);
-  final GroupBookJson bookJson;
+class UserBookPage extends StatefulWidget {
+  UserBookPage({Key key, this.bookJson}) : super(key: key);
+  final UserBookJson bookJson;
 
   @override
-  _BookPageState createState() => _BookPageState(bookJson: bookJson);
+  _UserBookPageState createState() => _UserBookPageState(bookJson: bookJson);
 }
 
-class _BookPageState extends State<BookPage> {
-  _BookPageState({Key key, this.bookJson});
-  GroupBookJson bookJson;
+class _UserBookPageState extends State<UserBookPage> {
+  _UserBookPageState({Key key, this.bookJson});
+  UserBookJson bookJson;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class _BookPageState extends State<BookPage> {
   }
 }
 
-Widget oneBook(BuildContext context, BookData data) {
+Widget oneBook(BuildContext context, UserBookData data) {
   return GestureDetector(
     onTap: () {
       // openUrl(context, "https://www.yuque.com/${data.login}");

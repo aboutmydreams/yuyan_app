@@ -2,40 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_member_data.dart';
+import 'package:yuyan_app/models/net/requests_api/user/data/user_follow_data.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
+import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
-class MemberPage extends StatefulWidget {
-  MemberPage({Key key, this.memberJson}) : super(key: key);
-  final MemberJson memberJson;
+class FollowerPage extends StatefulWidget {
+  FollowerPage({Key key, this.followerJson}) : super(key: key);
+  final Follows followerJson;
 
   @override
-  _MemberPageState createState() => _MemberPageState(memberJson: memberJson);
+  _FollowerPageState createState() =>
+      _FollowerPageState(followerJson: followerJson);
 }
 
-class _MemberPageState extends State<MemberPage> {
-  _MemberPageState({Key key, this.memberJson});
-  MemberJson memberJson;
+class _FollowerPageState extends State<FollowerPage> {
+  _FollowerPageState({Key key, this.followerJson});
+  Follows followerJson;
 
   @override
   Widget build(BuildContext context) {
-    return memberJson == null
+    return followerJson == null
         ? loading()
-        : SingleChildScrollView(
-            child: aniColumn(
-                aniWhich: 4,
-                children: [SizedBox(height: 155)]..addAll(
-                    memberJson.data.map((a) {
-                      return oneMember(context, a);
-                    }).toList(),
-                  )),
-          );
+        : followerJson.data.isEmpty
+            ? NothingPage()
+            : SingleChildScrollView(
+                child: aniColumn(
+                    aniWhich: 4,
+                    children: [SizedBox(height: 155)]..addAll(
+                        followerJson.data.map((a) {
+                          return oneFollower(context, a);
+                        }).toList(),
+                      )),
+              );
   }
 }
 
-Widget oneMember(BuildContext context, MemberData data) {
+Widget oneFollower(BuildContext context, FollowsData data) {
   return GestureDetector(
     onTap: () {
       // openUrl(context, "https://www.yuque.com/${data.login}");
@@ -58,25 +63,25 @@ Widget oneMember(BuildContext context, MemberData data) {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           SizedBox(width: 20),
-          userAvatar(data.user.avatarUrl, height: 50),
+          userAvatar(data.avatarUrl, height: 50),
           Container(
             width: MediaQuery.of(context).size.width * 0.4,
             margin: EdgeInsets.only(left: 20),
-            child: data.user.description != null
+            child: data.description != null
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Container(
                         child: Text(
-                          clearText(data.user.name, 10),
+                          clearText(data.name, 10),
                           style: AppStyles.textStyleB,
                         ),
                       ),
                       SizedBox(height: 2),
                       Container(
                         child: Text(
-                          "${clearText(data.user.description, 15)}",
+                          "${clearText(data.description, 15)}",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppStyles.textStyleC,
@@ -86,7 +91,7 @@ Widget oneMember(BuildContext context, MemberData data) {
                   )
                 : Container(
                     child: Text(
-                      "${data.user.name}",
+                      "${data.name}",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppStyles.textStyleB,
