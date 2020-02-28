@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/models/component/web/open_url.dart';
-import 'package:yuyan_app/models/net/requests_api/group/data/group_member_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_follow_data.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
@@ -9,38 +7,29 @@ import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
-class FollowerPage extends StatefulWidget {
-  FollowerPage({Key key, this.followerJson}) : super(key: key);
-  final Follows followerJson;
-
-  @override
-  _FollowerPageState createState() =>
-      _FollowerPageState(followerJson: followerJson);
-}
-
-class _FollowerPageState extends State<FollowerPage> {
-  _FollowerPageState({Key key, this.followerJson});
-  Follows followerJson;
+class FollowingPage extends StatelessWidget {
+  FollowingPage({Key key, this.followingJson}) : super(key: key);
+  final Follows followingJson;
 
   @override
   Widget build(BuildContext context) {
-    return followerJson == null
+    return followingJson == null
         ? loading()
-        : followerJson.data.isEmpty
+        : followingJson.data.isEmpty
             ? NothingPage(text: "暂无关注", top: 180)
             : SingleChildScrollView(
                 child: aniColumn(
                     aniWhich: 4,
                     children: [SizedBox(height: 155)]..addAll(
-                        followerJson.data.map((a) {
-                          return oneFollower(context, a);
+                        followingJson.data.map((a) {
+                          return oneFollowing(context, a);
                         }).toList(),
                       )),
               );
   }
 }
 
-Widget oneFollower(BuildContext context, FollowsData data) {
+Widget oneFollowing(BuildContext context, FollowsData data) {
   return GestureDetector(
     onTap: () {
       // openUrl(context, "https://www.yuque.com/${data.login}");

@@ -1,17 +1,16 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
+import 'package:yuyan_app/models/net/requests_api/user/data/user_info_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_profile_data.dart';
 import 'package:yuyan_app/models/tools/write_json.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 
-import 'data/my_page/my_data.dart';
-
 class MyInfoManage extends Model {
-  MyInfoData _myInfoData = MyInfoData();
+  UserInfoJson _myInfoData = UserInfoJson();
   ProfileData _profileData = ProfileData();
   GroupJson _groupData = GroupJson();
-  MyInfoData get myInfoData => _myInfoData;
+  UserInfoJson get myInfoData => _myInfoData;
   ProfileData get profileData => _profileData;
   GroupJson get groupData => _groupData;
 
@@ -19,7 +18,7 @@ class MyInfoManage extends Model {
     var myInfoDoc = await readJson('myInfo');
     var myProfileDoc = await readJson('myProfile');
     var myGroup = await readJson('myGroup');
-    MyInfoData myInfoData = MyInfoData.fromJson(myInfoDoc);
+    UserInfoJson myInfoData = UserInfoJson.fromJson(myInfoDoc);
     ProfileData myProfileData = ProfileData.fromJson(myProfileDoc);
     GroupJson myGroupData = GroupJson.fromJson(myGroup);
 
@@ -30,7 +29,7 @@ class MyInfoManage extends Model {
     return 1;
   }
 
-  saveMyInfoData() async {
+  saveUserInfoJson() async {
     // 先获取个人 id 与 login 并缓存
     // 知识库 follow 页面要用
     // 为什么不写在这个 manage 里面是出于在满足一级页面UI的数据基础上减少 init 流量。
@@ -51,7 +50,7 @@ class MyInfoManage extends Model {
   }
 
   void update() {
-    saveMyInfoData().then((res) {
+    saveUserInfoJson().then((res) {
       getSaveData();
     });
   }

@@ -26,8 +26,6 @@ class OpenPage {
       String description,
       int pageIndex: 0}) {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      print("description====");
-      print(description);
       return UserPage(
         login: login,
         name: name,

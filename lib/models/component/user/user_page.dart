@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/user/view/book_page.dart';
+import 'package:yuyan_app/models/component/user/view/flex_space.dart';
 import 'package:yuyan_app/models/component/user/view/follower_page.dart';
+import 'package:yuyan_app/models/component/user/view/following_page.dart';
 import 'package:yuyan_app/models/component/user/view/groups_page.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_follow_data.dart';
+import 'package:yuyan_app/models/net/requests_api/user/data/user_info_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_profile_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_repos_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
-import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 
 class UserPage extends StatefulWidget {
@@ -65,16 +67,22 @@ class _UserPageState extends State<UserPage>
   ];
 
   ProfileData profileJson;
+  UserInfoJson userInfoJson;
   UserBookJson bookJson;
   GroupJson groupJson;
   Follows followsJson;
+  Follows followingJson;
 
   @override
   void initState() {
     super.initState();
-    getFollower();
+    getProfile();
+    getIfFollow();
+    getInfo();
     getBook();
     getGroup();
+    getFollowing();
+    getFollower();
   }
 
   changeIndex(int index) {
@@ -83,6 +91,51 @@ class _UserPageState extends State<UserPage>
         pageIndex = index;
       });
     }
+  }
+
+  getProfile() async {
+    ProfileData profileData = await DioUser.getProfileData(userId);
+    setState(() {
+      profileJson = profileData;
+    });
+  }
+
+  getInfo() async {
+    UserInfoJson info = await DioUser.getUserInfo(userId);
+    setState(() {
+      userInfoJson = info;
+      _tabs[2] = _tabs[2] + " ${info.data.followingCount}";
+      _tabs[3] = _tabs[3] + " ${info.data.followersCount}";
+      description = info.data.description;
+    });
+  }
+
+  getIfFollow() async {
+    bool ifFollowHim = await DioUser.getIfFollow(userId);
+    setState(() {
+      isFollow = ifFollowHim;
+    });
+  }
+
+  getBook() async {
+    UserBookJson book = await DioUser.getReposData(login);
+    setState(() {
+      bookJson = book;
+    });
+  }
+
+  getGroup() async {
+    GroupJson groupData = await DioUser.getGroupData(userId);
+    setState(() {
+      groupJson = groupData;
+    });
+  }
+
+  getFollowing() async {
+    Follows followingData = await DioUser.getFollowingData(userId: userId);
+    setState(() {
+      followingJson = followingData;
+    });
   }
 
   getFollower() async {
@@ -105,27 +158,6 @@ class _UserPageState extends State<UserPage>
     }
   }
 
-  getProfile() async {
-    ProfileData profileData = await DioUser.getProfileData(userId);
-    setState(() {
-      profileJson = profileData;
-    });
-  }
-
-  getBook() async {
-    UserBookJson book = await DioUser.getReposData(login);
-    setState(() {
-      bookJson = book;
-    });
-  }
-
-  getGroup() async {
-    GroupJson groupData = await DioUser.getGroupData(userId);
-    setState(() {
-      groupJson = groupData;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     print(description);
@@ -141,7 +173,7 @@ class _UserPageState extends State<UserPage>
                 handle:
                     NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                 child: SliverAppBar(
-                  leading: new IconButton(
+                  leading: IconButton(
                     icon: Icon(Icons.arrow_back),
                     onPressed: () {
                       Navigator.pop(context);
@@ -172,43 +204,11 @@ class _UserPageState extends State<UserPage>
                   ],
 
                   flexibleSpace: FlexibleSpaceBar(
-                    background: Stack(
-                      children: <Widget>[
-                        Positioned(
-                          child: Container(
-                            // height: 230,
-                            width: MediaQuery.of(context).size.width,
-                            child: Image.asset(
-                              "assets/images/first.jpg",
-                              color: Colors.black45,
-                              colorBlendMode: BlendMode.darken,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          left: 72,
-                          top: 125,
-                          right: 38,
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 170,
-                                child: Text(
-                                  "${description ?? '这人很懒，签名也没有'}",
-                                  style: AppStyles.groupTextStyle,
-                                  maxLines: 4,
-                                ),
-                              ),
-                              Spacer(),
-                              Hero(
-                                tag: userId,
-                                child: userAvatar(avatarUrl, height: 60),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                    background: userFlexSpace(
+                      context,
+                      description: description,
+                      userId: userId,
+                      avatarUrl: avatarUrl,
                     ),
                   ),
 
@@ -224,12 +224,8 @@ class _UserPageState extends State<UserPage>
             children: [
               UserBookPage(bookJson: bookJson),
               UserGroupPage(groupJson: groupJson),
+              FollowingPage(followingJson: followingJson),
               FollowerPage(followerJson: followsJson),
-              Container(
-                width: 300,
-                height: 400,
-                child: Text("data"),
-              ),
             ],
           ),
         ),

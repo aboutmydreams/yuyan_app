@@ -1,10 +1,10 @@
-class MyInfoData {
-  MyData data;
+class UserInfoJson {
+  TheInfo data;
 
-  MyInfoData({this.data});
+  UserInfoJson({this.data});
 
-  MyInfoData.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? new MyData.fromJson(json['data']) : null;
+  UserInfoJson.fromJson(Map<String, dynamic> json) {
+    data = json['data'] != null ? new TheInfo.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -16,7 +16,7 @@ class MyInfoData {
   }
 }
 
-class MyData {
+class TheInfo {
   int id;
   String type;
   int spaceId;
@@ -37,7 +37,7 @@ class MyData {
   String updatedAt;
   String sSerializer;
 
-  MyData(
+  TheInfo(
       {this.id,
       this.type,
       this.spaceId,
@@ -58,7 +58,7 @@ class MyData {
       this.updatedAt,
       this.sSerializer});
 
-  MyData.fromJson(Map<String, dynamic> json) {
+  TheInfo.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     type = json['type'];
     spaceId = json['space_id'];

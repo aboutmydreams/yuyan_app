@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/net/requests_api/user/data/user_info_data.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
-import 'package:yuyan_app/state_manage/dataManage/data/my_page/my_data.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
-import 'package:yuyan_app/views/my_page/group/my_group_page.dart';
 
 Widget infoCount(BuildContext context) {
-  MyInfoData myInfo = topModel.myInfoManage.myInfoData;
+  UserInfoJson myInfo = topModel.myInfoManage.myInfoData;
 
   List<GroupData> groupList = topModel.myInfoManage.groupData.data;
   int groupLength = groupList.length;
