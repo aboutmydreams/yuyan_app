@@ -8,6 +8,7 @@ import 'package:yuyan_app/models/net/requests_api/group/group.dart';
 
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
+import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 class AllTopicPage extends StatefulWidget {
@@ -27,7 +28,7 @@ class _AllTopicPageState extends State<AllTopicPage> {
 
   int offset = 0;
   int offset2 = 0;
-  List<OneTopicData> closeList = [];
+  List<OneTopicData> closeList;
 
   @override
   void initState() {
@@ -67,7 +68,7 @@ class _AllTopicPageState extends State<AllTopicPage> {
           children: <Widget>[
             Container(
               child: openTopicJson.data.isEmpty
-                  ? loading()
+                  ? NothingPage(top: 30, text: "暂无正在进行中的讨论")
                   : animationList(
                       context: context,
                       dataList: openTopicJson.data,
@@ -75,13 +76,15 @@ class _AllTopicPageState extends State<AllTopicPage> {
                     ),
             ),
             Container(
-              child: closeList.isEmpty
+              child: closeList == null
                   ? loading()
-                  : animationList(
-                      context: context,
-                      dataList: closeList,
-                      childBuilder: oneTopic,
-                    ),
+                  : closeList.isEmpty
+                      ? NothingPage(top: 30, text: "暂无正在已关闭的讨论")
+                      : animationList(
+                          context: context,
+                          dataList: closeList,
+                          childBuilder: oneTopic,
+                        ),
             ),
           ],
         ),
