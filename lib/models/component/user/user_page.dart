@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/user/view/book_page.dart';
 import 'package:yuyan_app/models/component/user/view/follower_page.dart';
+import 'package:yuyan_app/models/component/user/view/groups_page.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_follow_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_profile_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_repos_data.dart';
@@ -65,7 +66,7 @@ class _UserPageState extends State<UserPage>
 
   ProfileData profileJson;
   UserBookJson bookJson;
-  Group groupJson;
+  GroupJson groupJson;
   Follows followsJson;
 
   @override
@@ -119,7 +120,7 @@ class _UserPageState extends State<UserPage>
   }
 
   getGroup() async {
-    Group groupData = await DioUser.getGroupData(userId);
+    GroupJson groupData = await DioUser.getGroupData(userId);
     setState(() {
       groupJson = groupData;
     });
@@ -222,11 +223,7 @@ class _UserPageState extends State<UserPage>
           body: TabBarView(
             children: [
               UserBookPage(bookJson: bookJson),
-              Container(
-                width: 300,
-                height: 400,
-                child: Text("data"),
-              ),
+              UserGroupPage(groupJson: groupJson),
               FollowerPage(followerJson: followsJson),
               Container(
                 width: 300,

@@ -1,9 +1,9 @@
-class Group {
+class GroupJson {
   List<GroupData> data;
 
-  Group({this.data});
+  GroupJson({this.data});
 
-  Group.fromJson(Map<String, dynamic> json) {
+  GroupJson.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
       data = new List<GroupData>();
       json['data'].forEach((v) {

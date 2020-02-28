@@ -10,17 +10,9 @@ import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
-class UserBookPage extends StatefulWidget {
+class UserBookPage extends StatelessWidget {
   UserBookPage({Key key, this.bookJson}) : super(key: key);
   final UserBookJson bookJson;
-
-  @override
-  _UserBookPageState createState() => _UserBookPageState(bookJson: bookJson);
-}
-
-class _UserBookPageState extends State<UserBookPage> {
-  _UserBookPageState({Key key, this.bookJson});
-  UserBookJson bookJson;
 
   @override
   Widget build(BuildContext context) {

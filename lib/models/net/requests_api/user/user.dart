@@ -25,7 +25,7 @@ class DioUser {
   // 团队信息
   static getGroupData(int userId) async {
     var res = await DioReq.get("/users/$userId/groups?limit=1000&offset=0");
-    Group groupData = Group.fromJson(res);
+    GroupJson groupData = GroupJson.fromJson(res);
     return groupData;
   }
 

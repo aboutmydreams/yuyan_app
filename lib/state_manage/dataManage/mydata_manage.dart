@@ -10,10 +10,10 @@ import 'data/my_page/my_data.dart';
 class MyInfoManage extends Model {
   MyInfoData _myInfoData = MyInfoData();
   ProfileData _profileData = ProfileData();
-  Group _groupData = Group();
+  GroupJson _groupData = GroupJson();
   MyInfoData get myInfoData => _myInfoData;
   ProfileData get profileData => _profileData;
-  Group get groupData => _groupData;
+  GroupJson get groupData => _groupData;
 
   getSaveData() async {
     var myInfoDoc = await readJson('myInfo');
@@ -21,7 +21,7 @@ class MyInfoManage extends Model {
     var myGroup = await readJson('myGroup');
     MyInfoData myInfoData = MyInfoData.fromJson(myInfoDoc);
     ProfileData myProfileData = ProfileData.fromJson(myProfileDoc);
-    Group myGroupData = Group.fromJson(myGroup);
+    GroupJson myGroupData = GroupJson.fromJson(myGroup);
 
     _myInfoData = myInfoData;
     _profileData = myProfileData;
