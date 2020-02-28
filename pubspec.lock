@@ -408,6 +408,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  sliding_up_panel:
+    dependency: "direct main"
+    description:
+      name: sliding_up_panel
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.0"
   smart_color:
     dependency: "direct main"
     description:

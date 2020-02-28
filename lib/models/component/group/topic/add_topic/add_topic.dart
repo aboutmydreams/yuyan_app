@@ -106,12 +106,9 @@ class _AddTopicPageState extends State<AddTopicPage> {
           Container(
             margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
             padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-            //类似cardview
             child: Card(
               color: Theme.of(context).accentColor,
-              // 阴影
               elevation: 3.0,
-              //按钮
               child: FlatButton(
                 child: Padding(
                   padding: EdgeInsets.all(10.0),
@@ -120,30 +117,7 @@ class _AddTopicPageState extends State<AddTopicPage> {
                     style: TextStyle(color: Colors.white, fontSize: 16.0),
                   ),
                 ),
-                // disabledColor: Colors.grey,
-                // disabledTextColor: Colors.black,
-                onPressed: () {
-                  // if (addTitleController.text.isEmpty) {
-                  //   myToast("标题不能为空哦");
-                  // } else {
-                  //   var newTitle = addTitleController.text;
-                  //   var newContent = contentController.text;
-                  //   String labelsId = "4";
-                  //   pubTopic(newTitle, newContent, labelsId).then(
-                  //     (res) {
-                  //       if (res == 200) {
-                  //         Navigator.push(
-                  //             context,
-                  //             MaterialPageRoute(
-                  //                 builder: (context) => new MyHomePage()));
-                  //       } else {
-                  //         myToast("$res");
-                  //         Navigator.popAndPushNamed(context, "/");
-                  //       }
-                  //     },
-                  //   );
-                  // }
-                },
+                onPressed: () {},
               ),
             ),
           ),

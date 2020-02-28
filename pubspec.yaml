@@ -85,6 +85,9 @@ dependencies:
   # 图片放大
   photo_view: ^0.9.2
 
+  # 评论 下滑出的抽屉
+  sliding_up_panel: ^1.0.0
+
   flutter_webview_plugin:
     git: https://github.com/aboutmydreams/flutter_webview_plugin.git
 

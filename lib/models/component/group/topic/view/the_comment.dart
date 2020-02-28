@@ -34,9 +34,6 @@ class TheComment extends StatelessWidget {
 }
 
 Widget oneComment(BuildContext context, CommentData data) {
-  print(data.user.avatarUrl);
-  print(data.user.name);
-  print("=================");
   return Container(
     margin: EdgeInsets.only(bottom: 16),
     child: Row(
