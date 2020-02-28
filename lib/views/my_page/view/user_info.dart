@@ -36,8 +36,8 @@ Widget userInfo(BuildContext context) {
       children: [
         GestureDetector(
           onTap: () async {
-            var _allCookie = await getPrefStringData("all_cookies");
-            print(_allCookie);
+            // var _allCookie = await getPrefStringData("all_cookies");
+            // print(_allCookie);
             myToast(context, "text");
           },
           child: aniRow(
