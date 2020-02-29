@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/my_follow_book_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_info_data.dart';
+import 'package:yuyan_app/models/oauth2/sha1/sha1.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 
 import 'data/user_follow_data.dart';
@@ -167,6 +170,30 @@ class DioUser {
     }
   }
 
+  /// [话题相关]
+  // 添加新的话题
+  static addTopic({
+    String title,
+    String body,
+    int groupId: 12321,
+  }) async {
+    // getSha1();
+    var stime = DateTime.now().millisecondsSinceEpoch;
+    String uuid = getSha1(groupId.toString(), stime.toString());
+    // print(base64Encode(stime));
+    Map<String, dynamic> data = {
+      "group_id": groupId,
+      "title": title,
+      "body_asl":
+          "<div class=\"lake-content-editor-core lake-engine\" data-lake-element=\"root\"><p style=\"font-size: 14px; color: rgb(38, 38, 38); line-height: 24px; letter-spacing: 0.05em; outline-style: none; overflow-wrap: break-word; margin: 0px;\">$body</p></div>",
+      "assignee_id": null,
+      "format": "lake",
+      "public": 1,
+      "milestone_id": null,
+      "uuid": "mgchfypvg3p27yso0ug9m8ggwrqe3bfnfb7knmhy0xy7g3uveo108mk2i1zy0hfx"
+    };
+  }
+
   /// [评论相关]
 
   // 评论操作/comments
@@ -204,7 +231,7 @@ class DioUser {
     return ans.containsKey("data");
   }
 
-  // 评论列表
+  // ���论列表
   static getComments(int docId) async {
     var ans = await DioReq.get(
         "/comments?commentable_id=$docId&commentable_type=Doc");
@@ -226,7 +253,7 @@ class DioUser {
     return ans.containsKey("id");
   }
 
-  // 取消点赞操作
+  // 取���点赞操作
   static deleteLike(int docId) async {
     Map data = {
       "action_type": "like",

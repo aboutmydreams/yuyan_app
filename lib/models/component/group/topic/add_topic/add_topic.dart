@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 
 class AddTopicPage extends StatefulWidget {
   AddTopicPage({Key key, this.groupId, this.iid, this.id}) : super();
@@ -16,6 +17,10 @@ class _AddTopicPageState extends State<AddTopicPage> {
 
   var addTitleController = new TextEditingController();
   var contentController = new TextEditingController();
+
+  addTopic() async {
+    DioUser.addTopic();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +122,9 @@ class _AddTopicPageState extends State<AddTopicPage> {
                     style: TextStyle(color: Colors.white, fontSize: 16.0),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  addTopic();
+                },
               ),
             ),
           ),
