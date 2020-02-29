@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
-import 'package:yuyan_app/models/widgets_small/user_event.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/news_data.dart';
 
 class OneNewsContainer extends StatelessWidget {
@@ -31,8 +31,15 @@ class OneNewsContainer extends StatelessWidget {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                var url = "https://www.yuque.com/${data.actor.login}";
-                openUrl(context, url);
+                // var url = "https://www.yuque.com/${data.actor.login}";
+                // openUrl(context, url);
+                OpenPage.user(
+                  context,
+                  login: data.actor.login,
+                  name: data.actor.name,
+                  avatarUrl: data.actor.avatarUrl,
+                  userId: data.actor.id,
+                );
               },
               child: Container(
                 margin: EdgeInsets.only(right: 20),

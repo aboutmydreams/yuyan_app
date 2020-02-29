@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 Widget userEvent(BuildContext context,
-    {String userImg, String login, String title, String event, String time}) {
+    {String userImg,
+    String login,
+    int userId,
+    String name,
+    String event,
+    String time}) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
       GestureDetector(
         onTap: () {
-          openUrl(context, "https://www.yuque.com/$login");
+          OpenPage.user(
+            context,
+            login: login,
+            name: name,
+            avatarUrl: userImg,
+            userId: userId,
+          );
         },
-        child: userAvatar(userImg),
+        child: Hero(tag: userId, child: userAvatar(userImg)),
       ),
       Expanded(
         flex: 1,
@@ -29,7 +41,7 @@ Widget userEvent(BuildContext context,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "$title",
+                  "$name",
                   maxLines: 1,
                   textAlign: TextAlign.center,
                   style: AppStyles.textStyleBB,

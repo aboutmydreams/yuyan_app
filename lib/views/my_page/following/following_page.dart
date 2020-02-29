@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_follow_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
@@ -58,7 +59,13 @@ Widget oneFollow(BuildContext context, FollowsData data) {
   data.isfollow = true;
   return GestureDetector(
     onTap: () {
-      openUrl(context, "https://www.yuque.com/${data.login}");
+      OpenPage.user(
+        context,
+        login: data.login,
+        name: data.name,
+        avatarUrl: data.avatarUrl,
+        userId: data.id,
+      );
     },
     child: Container(
       height: 70,
