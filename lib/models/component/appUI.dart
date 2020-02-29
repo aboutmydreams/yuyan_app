@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/state_manage/toppest.dart';
 
 // 白天主题
 class AppColors {
@@ -8,8 +9,13 @@ class AppColors {
   // 副标题
   static Color nextText = Colors.black87;
 
+  // 副标题
+  static Color nextText2 = Colors.black54;
+
   // 主要文字段落灰色 纯黑的45%
   static Color primaryText = Colors.black45;
+
+  static Color primary = topModel.primarySwatchColor;
 
   // 页面背景
   static Color background = Colors.white;
@@ -47,6 +53,14 @@ class AppStyles {
     color: AppColors.nextText,
     fontFamily: "sans_bold",
     fontWeight: FontWeight.w500,
+    fontSize: 13,
+  );
+
+  // 各种动态用户名文字样式
+  static TextStyle textStyleBBB = TextStyle(
+    color: AppColors.nextText2,
+    fontFamily: "sans_bold",
+    fontWeight: FontWeight.w400,
     fontSize: 13,
   );
 
