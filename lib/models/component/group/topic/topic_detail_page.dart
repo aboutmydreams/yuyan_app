@@ -8,6 +8,7 @@ import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/one_topic/topic_comment_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/one_topic/topic_detail_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/group.dart';
+import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/menu_item.dart';
 import 'package:yuyan_app/models/widgets_small/text_field.dart';
@@ -65,7 +66,9 @@ class _TopicDetailState extends State<TopicDetail> {
 
   pulishComment(String com) async {
     print("pulish");
-    return 1;
+    var ans = await DioUser.addComment(
+        type: "Topic", comment: com, commentId: id, parentId: null);
+    return ans;
   }
 
   _pulishClickListener() async {
@@ -73,11 +76,15 @@ class _TopicDetailState extends State<TopicDetail> {
       myToast(context, "评论不能为空");
       return null;
     } else {
-      pulishComment(_tc.text).then((res) {
-        if (res == 1) {
+      pulishComment(_tc.text).then((ans) {
+        if (ans) {
           _pc.close();
+          getComment();
         }
       });
+      // setState(() {
+      //   // topicComments.data.add(CommentData());
+      // });
     }
   }
 
@@ -87,7 +94,7 @@ class _TopicDetailState extends State<TopicDetail> {
     return SlidingUpPanel(
       controller: _pc,
       minHeight: 0,
-      maxHeight: 500,
+      // maxHeight: MediaQuery.of(context).viewInsets.bottom,
       panel: Scaffold(
         body: Container(
           height: 110,
