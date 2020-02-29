@@ -4,6 +4,7 @@ import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/my_follow_book_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_info_data.dart';
+import 'package:yuyan_app/models/oauth2/random_string/random_string.dart';
 import 'package:yuyan_app/models/oauth2/sha1/sha1.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 
@@ -172,15 +173,8 @@ class DioUser {
 
   /// [话题相关]
   // 添加新的话题
-  static addTopic({
-    String title,
-    String body,
-    int groupId: 12321,
-  }) async {
-    // getSha1();
-    var stime = DateTime.now().millisecondsSinceEpoch;
-    String uuid = getSha1(groupId.toString(), stime.toString());
-    // print(base64Encode(stime));
+  static addTopic({String title, String body, int groupId}) async {
+    String uuid = randomString(64);
     Map<String, dynamic> data = {
       "group_id": groupId,
       "title": title,
@@ -190,8 +184,11 @@ class DioUser {
       "format": "lake",
       "public": 1,
       "milestone_id": null,
-      "uuid": "mgchfypvg3p27yso0ug9m8ggwrqe3bfnfb7knmhy0xy7g3uveo108mk2i1zy0hfx"
+      "uuid": uuid
     };
+    print(data);
+    var res = await DioReq.post('/topics', data: data);
+    return res.toString().contains("id");
   }
 
   /// [评论相关]

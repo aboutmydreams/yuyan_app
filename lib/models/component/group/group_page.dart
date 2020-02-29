@@ -136,9 +136,31 @@ class _GroupPageState extends State<GroupPage>
       case 2:
         return FloatingActionButton(
           onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-              return AddTopicPage(groupId: groupdata.id);
-            }));
+            Navigator.push(
+                context,
+                PageRouteBuilder(
+                  settings: RouteSettings(name: 'AddTopic'),
+                  transitionDuration: const Duration(milliseconds: 400),
+                  pageBuilder: (context, _, __) => AddTopicPage(
+                    groupId: groupdata.id,
+                    callback: getTopic,
+                  ),
+                  transitionsBuilder:
+                      (_, Animation<double> animation, __, Widget child) =>
+                          SlideTransition(
+                    position: Tween<Offset>(
+                      begin: Offset(0.0, 1.0),
+                      end: Offset(0.0, 0.0),
+                    ).animate(animation),
+                    child: child,
+                  ),
+                ));
+            // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+            //   return AddTopicPage(
+            //     groupId: groupdata.id,
+            //     callback: getTopic,
+            //   );
+            // }));
           },
           child: Icon(Icons.add_comment),
         );

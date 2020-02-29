@@ -82,9 +82,6 @@ class _TopicDetailState extends State<TopicDetail> {
           getComment();
         }
       });
-      // setState(() {
-      //   // topicComments.data.add(CommentData());
-      // });
     }
   }
 
