@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_info_data.dart';
 import 'package:yuyan_app/models/tools/get_pref.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
@@ -36,9 +37,14 @@ Widget userInfo(BuildContext context) {
       children: [
         GestureDetector(
           onTap: () async {
-            // var _allCookie = await getPrefStringData("all_cookies");
-            // print(_allCookie);
-            myToast(context, "text");
+            OpenPage.user(
+              context,
+              login: myInfo.data.login,
+              userId: myInfo.data.id,
+              description: myInfo.data.description,
+              name: myInfo.data.name,
+              avatarUrl: myInfo.data.avatarUrl,
+            );
           },
           child: aniRow(
             crossAxisAlignment: CrossAxisAlignment.center,
