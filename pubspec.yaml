@@ -16,6 +16,11 @@ version: 1.0.0+1
 environment:
   sdk: ">=2.1.0 <3.0.0"
 
+dependency_overrides:
+  chewie:
+    git:
+      url: https://github.com/masewo/chewie.git
+
 dependencies:
   flutter:
     sdk: flutter

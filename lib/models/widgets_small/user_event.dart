@@ -23,9 +23,12 @@ Widget userEvent(BuildContext context,
             name: name,
             avatarUrl: userImg,
             userId: userId,
+            tag: userId + DateTime.now().microsecond,
           );
         },
-        child: Hero(tag: userId, child: userAvatar(userImg)),
+        child: Hero(
+            tag: userId + DateTime.now().microsecond,
+            child: userAvatar(userImg)),
       ),
       Expanded(
         flex: 1,

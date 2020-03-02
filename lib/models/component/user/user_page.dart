@@ -20,6 +20,7 @@ class UserPage extends StatefulWidget {
       this.userId,
       this.avatarUrl,
       this.description,
+      this.tag,
       this.pageIndex})
       : super(key: key);
   final String login;
@@ -27,6 +28,7 @@ class UserPage extends StatefulWidget {
   final String name;
   final String avatarUrl;
   final String description;
+  final int tag;
   final int pageIndex;
 
   @override
@@ -49,11 +51,13 @@ class _UserPageState extends State<UserPage>
       this.userId,
       this.avatarUrl,
       this.description,
+      this.tag,
       this.pageIndex});
   String login;
   int userId;
   String name;
   String description;
+  int tag;
   String avatarUrl;
 
   int pageIndex;
@@ -172,7 +176,7 @@ class _UserPageState extends State<UserPage>
               SliverOverlapAbsorber(
                 handle:
                     NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-                child: SliverAppBar(
+                sliver: SliverAppBar(
                   leading: IconButton(
                     icon: Icon(Icons.arrow_back),
                     onPressed: () {

@@ -48,6 +48,14 @@ class AppStyles {
     fontSize: 15,
   );
 
+  // 我的页面 下方文字 较细
+  static TextStyle textStyleBC = TextStyle(
+    color: AppColors.accentText,
+    fontFamily: "sans_bold",
+    fontWeight: FontWeight.w400,
+    fontSize: 14,
+  );
+
   // 各种动态用户名文字样式
   static TextStyle textStyleBB = TextStyle(
     color: AppColors.nextText,
@@ -84,9 +92,9 @@ class AppStyles {
 
   // 我的页面数字样式
   static TextStyle countStyle = TextStyle(
-    color: AppColors.primaryText,
+    color: AppColors.nextText,
     fontFamily: "sans_bold",
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w400,
     fontSize: 18,
   );
 
@@ -94,7 +102,7 @@ class AppStyles {
   static TextStyle countTextStyle = TextStyle(
     color: AppColors.primaryText,
     fontFamily: "sans_bold",
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w500,
     fontSize: 12,
   );
 

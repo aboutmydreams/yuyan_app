@@ -44,7 +44,7 @@ Widget oneColumn(BuildContext context,
     title: Text(
       '$text',
       textAlign: TextAlign.left,
-      style: AppStyles.textStyleB,
+      style: AppStyles.textStyleBC,
     ),
     trailing: Container(
       margin: EdgeInsets.only(right: 20),
