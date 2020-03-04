@@ -8,6 +8,7 @@ import 'package:yuyan_app/views/begin_init/login_page/login_page.dart';
 import 'package:yuyan_app/views/dashboard/dashboard.dart';
 import 'package:yuyan_app/views/dashboard/quick/setting/quick_set.dart';
 import 'package:yuyan_app/views/home_page.dart';
+import 'package:yuyan_app/views/my_page/about_yuyan/about.dart';
 import 'package:yuyan_app/views/my_page/follow_book/follow_book_page.dart';
 import 'package:yuyan_app/views/my_page/follower/follower_page.dart';
 import 'package:yuyan_app/views/my_page/following/following_page.dart';
@@ -21,7 +22,8 @@ import 'package:yuyan_app/views/my_page/topic/topic_page.dart';
 Map<String, WidgetBuilder> routeData = {
   '/': (context) => HomePage(),
   // '/first': (context) => GalleryExample(),
-  '/first': (context) => FirstPage(),
+  '/first': (context) => AboutYuyan(),
+  // '/first': (context) => FirstPage(),
   '/login': (context) => LoginPage(),
   '/guide': (context) => GuidePage(),
   '/quickset': (context) => QuickSetPage(),
@@ -35,6 +37,7 @@ Map<String, WidgetBuilder> routeData = {
   '/my/repos': (context) => MyReposPage(),
   '/my/mark': (context) => MarkPage(),
   '/my/topic': (context) => TopicPage(),
+  '/my/about': (context) => AboutYuyan(),
   '/my/suggest': (context) => GroupPage(
       pageIndex: 2,
       groupdata: GroupData(

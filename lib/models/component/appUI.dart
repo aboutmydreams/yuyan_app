@@ -36,7 +36,7 @@ class AppStyles {
   static TextStyle textStyleA = TextStyle(
     color: AppColors.accentText,
     fontFamily: "sans_bold",
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w500,
     fontSize: 22,
   );
 

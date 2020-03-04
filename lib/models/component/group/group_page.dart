@@ -184,7 +184,7 @@ class _GroupPageState extends State<GroupPage>
               SliverOverlapAbsorber(
                 handle:
                     NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-                child: SliverAppBar(
+                sliver: SliverAppBar(
                   leading: new IconButton(
                     icon: Icon(Icons.arrow_back),
                     onPressed: () {
