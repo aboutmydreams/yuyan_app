@@ -47,6 +47,8 @@ class _DocPageState extends State<DocPage> {
     // TODO: implement initState
     super.initState();
     getDocContextData();
+    getIfLike();
+    getIfMark();
     getDocComment();
   }
 
@@ -67,6 +69,24 @@ class _DocPageState extends State<DocPage> {
     });
   }
 
+  getIfMark() async {
+    var ans = await DioUser.ifMark(targetId: docId);
+    setState(() {
+      ifMark = ans;
+    });
+  }
+
+  changeMark() async {
+    if (ifMark) {
+      var ans = await DioUser.cancelMark(targetId: docId);
+    } else {
+      var ans = await DioUser.mark(targetId: docId);
+    }
+    setState(() {
+      ifMark = !ifMark;
+    });
+  }
+
   getIfLike() async {
     var ifLikeIt = await DioUser.ifLike(docId: docId);
     setState(() {
@@ -80,10 +100,14 @@ class _DocPageState extends State<DocPage> {
     } else {
       var ans = await DioUser.addLike(docId: docId);
     }
-
     setState(() {
       ifLike = !ifLike;
     });
+  }
+
+  // 点击下方评论
+  clickBottom() {
+    _pc.open();
   }
 
   pulishComment(String com) async {
@@ -169,7 +193,13 @@ class _DocPageState extends State<DocPage> {
                   ),
                   Positioned(
                     bottom: 0,
-                    child: FloatingCollaps(panelControl: _pc),
+                    child: FloatingCollaps(
+                      onTap: clickBottom,
+                      ifLike: ifLike,
+                      ifMark: ifMark,
+                      markFunc: changeMark,
+                      likeFunc: changeLike,
+                    ),
                   )
                 ],
               ),

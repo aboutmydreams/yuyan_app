@@ -6,7 +6,7 @@ import 'package:yuyan_app/models/component/appUI.dart';
 class FloatingCollaps extends StatelessWidget {
   const FloatingCollaps(
       {Key key,
-      this.panelControl,
+      this.onTap,
       this.markFunc,
       this.likeFunc,
       this.ifMark: false,
@@ -15,16 +15,15 @@ class FloatingCollaps extends StatelessWidget {
 
   final Function markFunc;
   final Function likeFunc;
-  final PanelController panelControl;
+  final Function onTap;
   final bool ifMark;
   final bool ifLike;
 
   @override
   Widget build(BuildContext context) {
+    print(ifLike);
     return GestureDetector(
-      onTap: () {
-        panelControl.open();
-      },
+      onTap: onTap,
       child: Container(
         height: 60,
         width: MediaQuery.of(context).size.width,
@@ -65,9 +64,9 @@ class FloatingCollaps extends StatelessWidget {
                   ? Container(
                       height: 48,
                       width: 47,
-                      margin: EdgeInsets.all(0),
+                      // margin: EdgeInsets.all(0),
                       child: FlareActor(
-                        "assets/flare/Like.flr",
+                        "assets/flares/Like.flr",
                         animation: "Like heart",
                       ),
                     )
@@ -79,9 +78,7 @@ class FloatingCollaps extends StatelessWidget {
                         color: Colors.red,
                       ),
                     ),
-              onTap: () {
-                print("object");
-              },
+              onTap: likeFunc,
             ),
             IconButton(
               icon: ifMark ? Icon(Icons.star) : Icon(Icons.star_border),

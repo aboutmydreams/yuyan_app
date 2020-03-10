@@ -5,15 +5,21 @@ import 'package:yuyan_app/models/widgets_small/text_field.dart';
 
 class HidePanel extends StatelessWidget {
   const HidePanel(
-      {Key key, this.textControl, this.panelControl, this.onpressed})
+      {Key key,
+      this.textControl,
+      this.panelControl,
+      this.onpressed,
+      this.autofocus: false})
       : super(key: key);
   final TextEditingController textControl;
   final PanelController panelControl;
   final Function onpressed;
+  final bool autofocus;
 
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
+    bool nowfocus = autofocus;
     return Scaffold(
       body: Container(
         height: 110,
@@ -27,6 +33,7 @@ class HidePanel extends StatelessWidget {
               child: CommentTextfierd(
                 controller: textControl,
                 w: w * 0.76,
+                autofocus: nowfocus,
               ),
             ),
             Container(
@@ -37,7 +44,9 @@ class HidePanel extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.20,
                     child: FlatButton.icon(
                       onPressed: () {
-                        panelControl.close();
+                        panelControl.close().then((value) {
+                          nowfocus = false;
+                        });
                       },
                       icon: Icon(Icons.swap_vert),
                       label: Text("收起", style: AppStyles.textStyleBBB),

@@ -40,6 +40,7 @@ class _TopicDetailState extends State<TopicDetail> {
 
   // 下方抽屉
   PanelController _pc = PanelController();
+  bool autofocus = false;
   TextEditingController _tc = TextEditingController();
 
   @override
@@ -95,10 +96,16 @@ class _TopicDetailState extends State<TopicDetail> {
         textControl: _tc,
         panelControl: _pc,
         onpressed: _pulishClickListener,
+        autofocus: autofocus,
       ),
       body: Scaffold(
         floatingActionButton: FloatingActionButton(
-          onPressed: () => _pc.open(),
+          onPressed: () {
+            _pc.open();
+            setState(() {
+              autofocus = true;
+            });
+          },
           child: Icon(Icons.add),
         ),
         appBar: AppBar(title: Text("话题详情"), //

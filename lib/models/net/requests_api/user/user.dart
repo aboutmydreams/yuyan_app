@@ -138,7 +138,7 @@ class DioUser {
 
   // 查看是否收藏(文章或团队)
   static ifMark({String targetType: "Doc", int targetId}) async {
-    Map ans = await DioReq.get(
+    var ans = await DioReq.get(
         "/actions?action_type=mark&target_id=$targetId&target_type=$targetType"); // User or Doc
     return ans["data"]["actioned"] != null;
   }
@@ -258,14 +258,19 @@ class DioUser {
 
   // 点赞操作
   static addLike({int docId, String type: "Doc"}) async {
-    Map data = {"action_type": "like", "target_type": type, "target_id": docId};
+    Map<String, dynamic> data = {
+      "action_type": "like",
+      "target_type": type,
+      "target_id": docId
+    };
     var ans = await DioReq.post("/actions", data: data);
-    return ans.containsKey("id");
+    print(ans);
+    return ans;
   }
 
   // 取消点赞操作
   static deleteLike({int docId}) async {
-    Map data = {
+    Map<String, dynamic> data = {
       "action_type": "like",
       "target_type": "Doc",
       "target_id": docId
