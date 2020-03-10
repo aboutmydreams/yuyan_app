@@ -72,14 +72,16 @@ Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
       }
       oneData["event"].add(event);
     } else {
-      if (i["event_type"] == "upload_artboards") {
+      if (i["event_type"] == "upload_asset") {
+      } else if (i["event_type"] == "upload_artboards") {
         Map<String, dynamic> event = {};
         oneData["subject_type"] = "Artboard";
 
         for (Map image in i["params"]["artboards"]) {
           event["title"] = subject["name"] ?? subject["title"] ?? "";
           event["book_id"] = image["id"];
-          event["image"] = image["image"];
+          event["image"] = image["image"] ??
+              "https://cdn.nlark.com/yuque/0/2020/png/164272/1583828663329-dc340cf5-fd01-423b-84c1-af8a4e294c36.png";
           event["avatar_url"] = subject["user"]["avatar_url"];
           String atwho = subject.keys.toList().contains("login")
               ? subject["login"]
@@ -106,7 +108,7 @@ Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
           event["id"] = sub["id"] ?? 0;
           event["avatar_url"] = sub["avatar_url"] ?? "";
           String slug = sub["slug"] ?? "";
-          String atwho = sub["login"] ?? sub["user"]["login"];
+          String atwho = sub["login"] ?? sub["user"]["login"] ?? "";
           event["url"] = "https://www.yuque.com/" + atwho + "/" + slug;
           oneData["event"].add(event);
         }

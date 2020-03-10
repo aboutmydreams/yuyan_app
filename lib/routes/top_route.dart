@@ -22,8 +22,8 @@ import 'package:yuyan_app/views/my_page/topic/topic_page.dart';
 Map<String, WidgetBuilder> routeData = {
   '/': (context) => HomePage(),
   // '/first': (context) => GalleryExample(),
-  '/first': (context) => AboutYuyan(),
-  // '/first': (context) => FirstPage(),
+  // '/first': (context) => AboutYuyan(),
+  '/first': (context) => FirstPage(),
   '/login': (context) => LoginPage(),
   '/guide': (context) => GuidePage(),
   '/quickset': (context) => QuickSetPage(),

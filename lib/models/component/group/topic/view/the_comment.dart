@@ -22,7 +22,7 @@ class TheComment extends StatelessWidget {
         children: <Widget>[
           Text(
             count == 0 ? "" : "评论 ($count)",
-            style: AppStyles.textStyleB,
+            style: AppStyles.textStyleBp,
           ),
           SizedBox(height: 10),
         ]..addAll(comment.data.map((m) {
