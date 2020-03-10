@@ -98,14 +98,14 @@ class _UserPageState extends State<UserPage>
   }
 
   getProfile() async {
-    ProfileData profileData = await DioUser.getProfileData(userId);
+    ProfileData profileData = await DioUser.getProfileData(userId: userId);
     setState(() {
       profileJson = profileData;
     });
   }
 
   getInfo() async {
-    UserInfoJson info = await DioUser.getUserInfo(userId);
+    UserInfoJson info = await DioUser.getUserInfo(userId: userId);
     setState(() {
       userInfoJson = info;
       _tabs[2] = _tabs[2] + " ${info.data.followingCount}";
@@ -115,21 +115,21 @@ class _UserPageState extends State<UserPage>
   }
 
   getIfFollow() async {
-    bool ifFollowHim = await DioUser.getIfFollow(userId);
+    bool ifFollowHim = await DioUser.getIfFollow(userId: userId);
     setState(() {
       isFollow = ifFollowHim;
     });
   }
 
   getBook() async {
-    UserBookJson book = await DioUser.getReposData(login);
+    UserBookJson book = await DioUser.getReposData(login: login);
     setState(() {
       bookJson = book;
     });
   }
 
   getGroup() async {
-    GroupJson groupData = await DioUser.getGroupData(userId);
+    GroupJson groupData = await DioUser.getGroupData(userId: userId);
     setState(() {
       groupJson = groupData;
     });

@@ -19,7 +19,7 @@ class TheComment extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            count == 0 ? "" : "评论 ($count)",
+            count == 0 ? "" : "评论",
             style: AppStyles.textStyleBp,
           ),
           SizedBox(height: 10),

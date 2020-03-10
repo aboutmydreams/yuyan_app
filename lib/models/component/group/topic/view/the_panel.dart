@@ -24,7 +24,7 @@ class HidePanel extends StatelessWidget {
             Container(
               width: w * 0.80,
               padding: EdgeInsets.fromLTRB(w * 0.02, 16, w * 0.02, 12),
-              child: textfield(
+              child: CommentTextfierd(
                 controller: textControl,
                 w: w * 0.76,
               ),

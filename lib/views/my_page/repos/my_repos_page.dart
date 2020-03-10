@@ -27,7 +27,7 @@ class _MyReposPageState extends State<MyReposPage> {
 
   getFollowerData() async {
     var login = await getLogin();
-    UserBookJson res = await DioUser.getReposData(login);
+    UserBookJson res = await DioUser.getReposData(login: login);
     setState(() {
       dataList = res.data;
     });

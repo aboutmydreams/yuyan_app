@@ -66,7 +66,6 @@ class _TopicDetailState extends State<TopicDetail> {
   }
 
   pulishComment(String com) async {
-    print("pulish");
     var ans = await DioUser.addComment(
         type: "Topic", comment: com, commentId: id, parentId: null);
     return ans;
@@ -88,7 +87,6 @@ class _TopicDetailState extends State<TopicDetail> {
 
   @override
   Widget build(BuildContext context) {
-    double w = MediaQuery.of(context).size.width;
     return SlidingUpPanel(
       controller: _pc,
       minHeight: 0,

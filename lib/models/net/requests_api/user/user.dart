@@ -14,28 +14,28 @@ import 'data/user_repos_data.dart';
 
 class DioUser {
   // 地址、职业的信息根据
-  static getProfileData(int userId) async {
+  static getProfileData({int userId}) async {
     var res = await DioReq.get("/users/$userId/profile?");
     ProfileData theData = ProfileData.fromJson(res);
     return theData;
   }
 
   // v2 基本信息
-  static getUserInfo(int userId) async {
+  static getUserInfo({int userId}) async {
     var res = await DioReq.get("/v2/users/$userId");
     UserInfoJson theData = UserInfoJson.fromJson(res);
     return theData;
   }
 
   // 获取公开知识库
-  static getReposData(String login) async {
+  static getReposData({String login}) async {
     var res = await DioReq.get("/v2/users/$login/repos");
     UserBookJson theData = UserBookJson.fromJson(res);
     return theData;
   }
 
   // 团队信息
-  static getGroupData(int userId) async {
+  static getGroupData({int userId}) async {
     var res = await DioReq.get("/users/$userId/groups?limit=1000&offset=0");
     GroupJson groupData = GroupJson.fromJson(res);
     return groupData;
@@ -45,7 +45,7 @@ class DioUser {
 
   // 获取关注者信息
 
-  static getIfFollow(int userId) async {
+  static getIfFollow({int userId}) async {
     var res = await DioReq.get(
         "/actions/user-owned?action_type=follow&target_ids=$userId&target_type=User");
     print(res["data"]);
@@ -208,7 +208,6 @@ class DioUser {
       "format": "lake"
     };
     var ans = await DioReq.post("/comments", data: data);
-    print(ans);
     return ans.toString().contains("data");
   }
 
@@ -228,8 +227,8 @@ class DioUser {
     return ans.containsKey("data");
   }
 
-  // ���论列表
-  static getComments(int docId) async {
+  // 评论列表
+  static getComments({int docId}) async {
     var ans = await DioReq.get(
         "/comments?commentable_id=$docId&commentable_type=Doc");
     return Comments.fromJson(ans);
@@ -241,17 +240,31 @@ class DioUser {
     return ans.containsKey("data");
   }
 
+  /// [知识库相关]
+  // 是否关注
+  static ifWatch({int bookId, String type: "Book"}) async {
+    var ans = await DioReq.get(
+        "/actions?action_type=watch&target_id=$bookId&target_type=$type");
+    return ans["actioned"] == null;
+  }
+
   /// [点赞相关]
+  // 是否点赞
+  static ifLike({int docId, String type: "Doc"}) async {
+    var ans = await DioReq.get(
+        "/actions?action_type=like&target_id=$docId&target_type=$type");
+    return ans["actioned"] == null;
+  }
 
   // 点赞操作
   static addLike({int docId, String type: "Doc"}) async {
     Map data = {"action_type": "like", "target_type": type, "target_id": docId};
-    Map ans = await DioReq.post("/actions", data: data);
+    var ans = await DioReq.post("/actions", data: data);
     return ans.containsKey("id");
   }
 
-  // 取���点赞操作
-  static deleteLike(int docId) async {
+  // 取消点赞操作
+  static deleteLike({int docId}) async {
     Map data = {
       "action_type": "like",
       "target_type": "Doc",
