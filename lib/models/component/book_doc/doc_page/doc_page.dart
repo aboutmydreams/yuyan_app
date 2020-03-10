@@ -30,6 +30,9 @@ class _DocPageState extends State<DocPage> {
   DocV2 doc;
   Comments comments;
 
+  int hits = 0;
+  bool ifMark = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -47,8 +50,10 @@ class _DocPageState extends State<DocPage> {
 
   getDocComment() async {
     Comments ans = await DioUser.getComments(docId);
+    var theHit = await DioDoc.getHits(docId);
     setState(() {
       comments = ans;
+      hits = theHit;
     });
   }
 
@@ -86,7 +91,7 @@ class _DocPageState extends State<DocPage> {
                           doc.data.creator.name,
                           style: AppStyles.textStyleB,
                         ),
-                        Spacer(),
+                        SizedBox(width: 10),
                         Text(
                           timeCut(doc.data.creator.updatedAt),
                           style: AppStyles.textStyleCC,
@@ -100,6 +105,21 @@ class _DocPageState extends State<DocPage> {
                     context,
                     doc.data.bodyHtml,
                     padding: EdgeInsets.all(16),
+                  ),
+
+                  // 浏览 点赞 收藏
+                  Container(
+                    margin: EdgeInsets.all(16),
+                    child: Row(
+                      children: <Widget>[
+                        Text("浏览量 $hits", style: AppStyles.textStyleC),
+                        IconButton(
+                            icon: ifMark
+                                ? Icon(Icons.star)
+                                : Icon(Icons.star_border),
+                            onPressed: null)
+                      ],
+                    ),
                   ),
 
                   // 评论

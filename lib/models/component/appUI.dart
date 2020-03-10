@@ -48,12 +48,11 @@ class AppStyles {
     fontSize: 15,
   );
 
-  // 各种动态标题文字样式
+  // 各种动态标题文 文档评论标题 字样式
   static TextStyle textStyleBp = TextStyle(
     color: AppColors.primary,
-    fontFamily: "sans_bold",
     fontWeight: FontWeight.w700,
-    fontSize: 15,
+    fontSize: 16,
   );
 
   // 我的页面 下方文字 较细

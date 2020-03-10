@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:yuyan_app/models/component/group/topic/view/the_comment.dart';
+import 'package:yuyan_app/models/component/group/topic/view/the_panel.dart';
 import 'package:yuyan_app/models/component/group/topic/view/the_topic.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
@@ -92,52 +93,10 @@ class _TopicDetailState extends State<TopicDetail> {
       controller: _pc,
       minHeight: 0,
       // maxHeight: MediaQuery.of(context).viewInsets.bottom,
-      panel: Scaffold(
-        body: Container(
-          height: 110,
-          margin: EdgeInsets.only(top: 26),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                width: w * 0.80,
-                padding: EdgeInsets.fromLTRB(w * 0.02, 16, w * 0.02, 12),
-                child: textfield(
-                  controller: _tc,
-                  w: w * 0.76,
-                ),
-              ),
-              Container(
-                height: 100,
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.20,
-                      child: FlatButton.icon(
-                        onPressed: () {
-                          _pc.close();
-                        },
-                        icon: Icon(Icons.swap_vert),
-                        label: Text("收起", style: AppStyles.textStyleBBB),
-                        padding: EdgeInsets.all(0),
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.16,
-                      child: FlatButton(
-                        onPressed: _pulishClickListener,
-                        autofocus: true,
-                        color: AppColors.primary,
-                        textColor: Colors.white.withAlpha(235),
-                        child: Text("发表"),
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
+      panel: HidePanel(
+        textControl: _tc,
+        panelControl: _pc,
+        onpressed: _pulishClickListener,
       ),
       body: Scaffold(
         floatingActionButton: FloatingActionButton(
