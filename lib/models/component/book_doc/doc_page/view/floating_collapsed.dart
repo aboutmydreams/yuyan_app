@@ -79,10 +79,33 @@ class FloatingCollaps extends StatelessWidget {
                     ),
               onTap: likeFunc,
             ),
-            IconButton(
-              icon: ifMark ? Icon(Icons.star) : Icon(Icons.star_border),
-              onPressed: markFunc,
-            )
+
+            // 收藏
+            GestureDetector(
+              child: ifMark
+                  ? Container(
+                      height: 48,
+                      width: 47,
+                      // margin: EdgeInsets.all(0),
+                      child: FlareActor(
+                        "assets/flares/mark.flr",
+                        animation: "Like heart",
+                      ),
+                    )
+                  : Container(
+                      margin: EdgeInsets.all(13),
+                      child: Icon(
+                        Icons.favorite_border,
+                        size: 22,
+                        color: Colors.red,
+                      ),
+                    ),
+              onTap: markFunc,
+            ),
+            // IconButton(
+            //   icon: ifMark ? Icon(Icons.star) : Icon(Icons.star_border),
+            //   onPressed: markFunc,
+            // )
           ],
         ),
       ),

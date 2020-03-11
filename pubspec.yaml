@@ -45,7 +45,7 @@ dependencies:
   dio: ^3.0.7
 
   # 弱提示
-  fluttertoast: ^3.1.3
+  # fluttertoast: ^3.1.3
 
   # 图片缓存
   cached_network_image: ^2.0.0
@@ -58,7 +58,7 @@ dependencies:
   scoped_model: ^1.0.1
 
   # 数据分析
-  firebase_core: ^0.4.4+2       # This dependency was added during initial configuration.
+  firebase_core: 0.4.4      # This dependency was added during initial configuration.
   firebase_analytics: ^5.0.11  # add dependency for Google Analytics for Firebase
 
   # html
@@ -118,6 +118,7 @@ flutter:
   assets:
     - assets/flares/yuyan_first.flr
     - assets/flares/Like.flr
+    - assets/flares/mark.flr
     - assets/images/logo.png
     - assets/images/paddy.svg
     - assets/images/first.jpg
