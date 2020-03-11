@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:yuyan_app/models/tools/analytics.dart';
 import 'package:yuyan_app/routes/top_route.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 
@@ -40,6 +41,7 @@ class MyMeterialApp extends StatelessWidget {
           debugShowCheckedModeBanner: false, // 去除debug标志
           routes: routeData,
           theme: model.themeData,
+          navigatorObservers: <NavigatorObserver>[observer], //加入路由统计
           // home: MyHomePage(),
         );
       },
