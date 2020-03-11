@@ -22,50 +22,62 @@ class HidePanel extends StatelessWidget {
     bool nowfocus = autofocus;
     return Scaffold(
       body: Container(
-        height: 110,
-        margin: EdgeInsets.only(top: 26),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        height: 130,
+        margin: EdgeInsets.only(top: 13),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              width: w * 0.80,
-              padding: EdgeInsets.fromLTRB(w * 0.02, 16, w * 0.02, 12),
-              child: CommentTextfierd(
-                controller: textControl,
-                w: w * 0.76,
-                autofocus: nowfocus,
+              margin: EdgeInsets.only(left: 24),
+              child: Text(
+                "发表评论",
+                style: AppStyles.textStyleBBB,
               ),
             ),
-            Container(
-              height: 100,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.20,
-                    child: FlatButton.icon(
-                      onPressed: () {
-                        panelControl.close().then((value) {
-                          nowfocus = false;
-                        });
-                      },
-                      icon: Icon(Icons.swap_vert),
-                      label: Text("收起", style: AppStyles.textStyleBBB),
-                      padding: EdgeInsets.all(0),
-                    ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  width: w * 0.80,
+                  padding: EdgeInsets.fromLTRB(w * 0.02, 12, w * 0.02, 12),
+                  child: CommentTextfierd(
+                    controller: textControl,
+                    w: w * 0.76,
+                    autofocus: nowfocus,
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.16,
-                    child: FlatButton(
-                      onPressed: onpressed,
-                      autofocus: true,
-                      color: AppColors.primary,
-                      textColor: Colors.white.withAlpha(235),
-                      child: Text("发表"),
-                    ),
-                  )
-                ],
-              ),
-            )
+                ),
+                Container(
+                  height: 100,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.20,
+                        child: FlatButton.icon(
+                          onPressed: () {
+                            panelControl.close().then((value) {
+                              nowfocus = false;
+                            });
+                          },
+                          icon: Icon(Icons.swap_vert),
+                          label: Text("收起", style: AppStyles.textStyleBBB),
+                          padding: EdgeInsets.all(0),
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.16,
+                        child: FlatButton(
+                          onPressed: onpressed,
+                          autofocus: true,
+                          color: AppColors.primary,
+                          textColor: Colors.white.withAlpha(235),
+                          child: Text("发表"),
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),

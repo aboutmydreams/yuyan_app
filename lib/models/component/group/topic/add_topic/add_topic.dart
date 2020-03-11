@@ -75,7 +75,7 @@ class _AddTopicPageState extends State<AddTopicPage> {
                   borderRadius: BorderRadius.all(Radius.circular(6)),
                 ),
                 contentPadding: EdgeInsets.all(15.0),
-                hintText: ' Ready to drive a car',
+                hintText: ' 起个一目了然的标题~',
                 hintStyle: TextStyle(
                   color: Colors.black26,
                   fontSize: 18,

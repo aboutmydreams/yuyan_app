@@ -1,6 +1,5 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 
 class FloatingCollaps extends StatelessWidget {

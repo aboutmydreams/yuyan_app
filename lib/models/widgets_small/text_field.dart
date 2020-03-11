@@ -4,7 +4,7 @@ import 'package:yuyan_app/models/component/appUI.dart';
 class CommentTextfierd extends StatelessWidget {
   const CommentTextfierd(
       {Key key,
-      this.hintText: "评论",
+      this.hintText: "说点什么吧⋯⋯",
       this.w: 340,
       this.controller,
       this.autofocus: false})
@@ -37,7 +37,7 @@ class CommentTextfierd extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(6)),
           ),
           contentPadding: EdgeInsets.all(15.0),
-          hintText: ' Ready to drive a car',
+          hintText: hintText,
           hintStyle: TextStyle(
             color: Colors.black26,
             fontSize: 16,

@@ -78,13 +78,16 @@ class _DocPageState extends State<DocPage> {
 
   changeMark() async {
     if (ifMark) {
+      setState(() {
+        ifMark = !ifMark;
+      });
       var ans = await DioUser.cancelMark(targetId: docId);
     } else {
+      setState(() {
+        ifMark = !ifMark;
+      });
       var ans = await DioUser.mark(targetId: docId);
     }
-    setState(() {
-      ifMark = !ifMark;
-    });
   }
 
   getIfLike() async {
@@ -112,7 +115,7 @@ class _DocPageState extends State<DocPage> {
 
   pulishComment(String com) async {
     var ans = await DioUser.addComment(
-        type: "Topic", comment: com, commentId: docId, parentId: null);
+        type: "Doc", comment: com, commentId: docId, parentId: null);
     return ans;
   }
 
@@ -133,16 +136,20 @@ class _DocPageState extends State<DocPage> {
   @override
   Widget build(BuildContext context) {
     // Abilities theAbileties = doc.abilities;
+    BorderRadiusGeometry radius = BorderRadius.only(
+      topLeft: Radius.circular(24.0),
+      topRight: Radius.circular(24.0),
+    );
     return SlidingUpPanel(
       controller: _pc,
       minHeight: 0,
-      // maxHeight: MediaQuery.of(context).viewInsets.bottom,
+      // maxHeight: MediaQuery.of(context).viewInsets.bottom,// 键盘
       panel: HidePanel(
         textControl: _tc,
         panelControl: _pc,
         onpressed: _pulishClickListener,
       ),
-      // collapsed: FloatingCollaps(panelControl: _pc, ifMark: ifMark),
+      borderRadius: radius,
       body: Scaffold(
         appBar: AppBar(
           title: Text("详情"),
