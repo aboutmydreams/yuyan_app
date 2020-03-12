@@ -99,13 +99,16 @@ class _DocPageState extends State<DocPage> {
 
   changeLike() async {
     if (ifLike) {
+      setState(() {
+        ifLike = !ifLike;
+      });
       var ans = await DioUser.deleteLike(docId: docId);
     } else {
+      setState(() {
+        ifLike = !ifLike;
+      });
       var ans = await DioUser.addLike(docId: docId);
     }
-    setState(() {
-      ifLike = !ifLike;
-    });
   }
 
   // 点击下方评论

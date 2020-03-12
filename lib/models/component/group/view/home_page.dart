@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_home_data.dart';
 import 'package:yuyan_app/models/tools/time_cut.dart';
@@ -114,17 +115,22 @@ Widget oneBook(BuildContext context, Books data) {
 }
 
 Widget oneDoc(BuildContext context, Summary data) {
-  return Container(
-    padding: EdgeInsets.fromLTRB(0, 7, 0, 2),
-    child: Row(
-      children: <Widget>[
-        Text(data.title ?? data.filename),
-        Spacer(),
-        Text(
-          timeCut(data.contentUpdatedAt ?? data.createdAt),
-          style: AppStyles.textStyleCC,
-        ),
-      ],
+  return InkWell(
+    onTap: () {
+      OpenPage.doc(context, bookId: data.bookId, docId: data.id);
+    },
+    child: Container(
+      padding: EdgeInsets.fromLTRB(0, 7, 0, 2),
+      child: Row(
+        children: <Widget>[
+          Text(data.title ?? data.filename),
+          Spacer(),
+          Text(
+            timeCut(data.contentUpdatedAt ?? data.createdAt),
+            style: AppStyles.textStyleCC,
+          ),
+        ],
+      ),
     ),
   );
 }

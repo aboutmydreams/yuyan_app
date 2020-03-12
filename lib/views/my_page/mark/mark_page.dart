@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/my_mark_data.dart';
@@ -60,8 +61,7 @@ Widget oneMark(BuildContext context, MarkData data) {
 
   return GestureDetector(
     onTap: () {
-      var url = "https://www.yuque.com${data.sUrl}";
-      openUrl(context, url);
+      OpenPage.doc(context, bookId: data.targetBookId, docId: data.targetId);
     },
     child: Container(
       margin: EdgeInsets.only(top: 2, bottom: 9, left: 10, right: 10),
