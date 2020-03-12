@@ -84,18 +84,20 @@ class FloatingCollaps extends StatelessWidget {
             GestureDetector(
               child: ifMark
                   ? Container(
-                      height: 48,
-                      width: 47,
-                      // margin: EdgeInsets.all(0),
+                      height: 62,
+                      width: 48,
+                      margin: EdgeInsets.all(0),
                       child: FlareActor(
                         "assets/flares/mark.flr",
-                        animation: "Like heart",
+                        animation: "Favourite_star",
+                        isPaused: false,
+                        fit: BoxFit.fitHeight,
                       ),
                     )
                   : Container(
                       margin: EdgeInsets.all(13),
                       child: Icon(
-                        Icons.favorite_border,
+                        Icons.star_border,
                         size: 22,
                         color: Colors.red,
                       ),
