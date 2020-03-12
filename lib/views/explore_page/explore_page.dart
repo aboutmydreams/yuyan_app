@@ -23,18 +23,18 @@ class _ExplorePageState extends State<ExplorePage>
           // backgroundColor: Colors.black,
           toolbarOpacity: 1.0,
           bottomOpacity: 5.0,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.search,
-                color: Colors.black,
-              ),
-              tooltip: 'Search',
-              onPressed: () {
-                showSearch(context: context, delegate: searchBarDelegate());
-              },
-            )
-          ],
+          // actions: <Widget>[
+          //   IconButton(
+          //     icon: Icon(
+          //       Icons.search,
+          //       color: Colors.black,
+          //     ),
+          //     tooltip: 'Search',
+          //     onPressed: () {
+          //       showSearch(context: context, delegate: searchBarDelegate());
+          //     },
+          //   )
+          // ],
           elevation: 0.0,
           title: TabBar(
             // labelColor: Colors.black,
@@ -89,6 +89,7 @@ getBody(context) {
           backgroundColor: Colors.black,
           toolbarOpacity: 1.0,
           bottomOpacity: 5.0,
+          // 迭代计划中 首页的搜索优先搜索全部
           actions: <Widget>[
             IconButton(
               icon: Icon(
@@ -96,9 +97,7 @@ getBody(context) {
                 color: Colors.black,
               ),
               tooltip: 'Search',
-              onPressed: () {
-                showSearch(context: context, delegate: searchBarDelegate());
-              },
+              onPressed: () => debugPrint('Search button is pressed.'),
             )
           ],
           elevation: 0.0,
