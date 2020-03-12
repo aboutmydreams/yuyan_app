@@ -42,11 +42,16 @@ class _LoginPageState extends State<LoginPage> {
           bool isLogin = await oauth2.saveAccessToken();
           if (isLogin) {
             // myOldToast("登录成功");
-            getAllCookies(flutterWebviewPlugin).then((res) {
-              topModel.update();
+
+            Timer(const Duration(milliseconds: 3000), () {
+              getAllCookies(flutterWebviewPlugin).then((res) {
+                topModel.update();
+              });
             });
+
+            // 3s 后跳转
             Timer(
-              const Duration(microseconds: 5),
+              const Duration(milliseconds: 3000),
               () {
                 setState(
                   () {
@@ -62,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
           print(askTimes);
           askTimes += 1;
 
-          if ((askTimes < timeoutTimes) & (!logined)) {
+          if ((askTimes < timeoutTimes) && (!logined)) {
             askYuque(askTimes);
           } else if (askTimes >= timeoutTimes) {
             myToast(context, "验证超时，请稍后重试");
@@ -78,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
 
   // 获取cookie并保存
   Future<Null> getAllCookies(FlutterWebviewPlugin flutterWebviewPlugin) async {
-    final String result = await flutterWebviewPlugin
+    String result = await flutterWebviewPlugin
         .getAllCookies("https://www.yuque.com/dashboard");
     Map<String, dynamic> cookieData = {};
     List<String> cookiesList = result.split(";");
@@ -106,8 +111,8 @@ class _LoginPageState extends State<LoginPage> {
     print(oauthUrl);
     return WebviewScaffold(
       url: oauthUrl,
-      appBar: new AppBar(
-        title: new Text("登录语雀", style: TextStyle(color: Colors.black)),
+      appBar: AppBar(
+        title: Text("登录语雀", style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.white,
       ),
     );
