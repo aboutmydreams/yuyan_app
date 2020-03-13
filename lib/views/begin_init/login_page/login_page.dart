@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
 
             // 3s 后跳转
             Timer(
-              const Duration(milliseconds: 3000),
+              const Duration(milliseconds: 6000),
               () {
                 setState(
                   () {
