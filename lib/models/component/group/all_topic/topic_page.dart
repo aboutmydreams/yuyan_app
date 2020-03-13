@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_color/smart_color.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_topic_data.dart';
@@ -96,8 +97,12 @@ class _AllTopicPageState extends State<AllTopicPage> {
 Widget oneTopic(BuildContext context, OneTopicData data) {
   return GestureDetector(
     onTap: () {
-      var url = "https://www.yuque.com/${data.group.login}/topics/${data.iid}";
-      openUrl(context, url);
+      OpenPage.topic(
+        context,
+        id: data.id,
+        iid: data.iid,
+        groupId: data.groupId,
+      );
     },
     child: Container(
       margin: EdgeInsets.only(top: 10, left: 10, right: 10),
