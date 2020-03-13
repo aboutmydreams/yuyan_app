@@ -22,21 +22,22 @@ class _DashboardState extends State<Dashboard> {
         bottomOpacity: 5.0,
         elevation: 1,
         title: Text("书桌"),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.search,
-              color: Colors.black,
-            ),
-            tooltip: 'Search',
-            onPressed: () => debugPrint('Search button is pressed.'),
-          )
-        ],
+        // 迭代计划中 工作台的搜索优先搜索我的
+        // actions: <Widget>[
+        //   IconButton(
+        //     icon: Icon(
+        //       Icons.search,
+        //       color: Colors.black,
+        //     ),
+        //     tooltip: 'Search',
+        //     onPressed: () => debugPrint('Search button is pressed.'),
+        //   )
+        // ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.edit),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {},
+      //   child: Icon(Icons.edit),
+      // ),
       body: SingleChildScrollView(
         child: Column(children: [
           quickView(context, quickDataList),
