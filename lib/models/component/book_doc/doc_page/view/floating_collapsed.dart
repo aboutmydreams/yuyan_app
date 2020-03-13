@@ -104,10 +104,6 @@ class FloatingCollaps extends StatelessWidget {
                     ),
               onTap: markFunc,
             ),
-            // IconButton(
-            //   icon: ifMark ? Icon(Icons.star) : Icon(Icons.star_border),
-            //   onPressed: markFunc,
-            // )
           ],
         ),
       ),

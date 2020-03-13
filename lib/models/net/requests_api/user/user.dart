@@ -255,7 +255,7 @@ class DioUser {
   static ifLike({int docId, String type: "Doc"}) async {
     var ans = await DioReq.get(
         "/actions?action_type=like&target_id=$docId&target_type=$type");
-    return ans["actioned"] == null;
+    return ans["actioned"] != null;
   }
 
   // 点赞操作

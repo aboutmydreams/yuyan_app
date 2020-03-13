@@ -11,7 +11,7 @@ class MyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    analytics.logEvent(name: '/MyPage', parameters: {'name': '/MyPage'});
+    analytics.logEvent(name: 'my_page', parameters: {'name': '/MyPage'});
     List<Widget> widgetList = [
       userInfo(context),
       threeWidget(context),
