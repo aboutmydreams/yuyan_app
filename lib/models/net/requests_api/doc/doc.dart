@@ -36,19 +36,19 @@ class DioDoc {
   }
 
   // 获取浏览量
-  static getHits(int docId) async {
+  static getHits({int docId}) async {
     var ans = await DioReq.get("/hits?id=$docId&type=Doc");
     return ans["data"]["hits"];
   }
 
   // 获取前后文章
-  static getPrevNext(int docId) async {
+  static getPrevNext({int docId}) async {
     var ans = await DioReq.get("/docs/$docId/pager?");
     return PrevNext.fromJson(ans);
   }
 
   // 是否点赞，返回是否与点赞数
-  static getAction(int docId) async {
+  static getAction({int docId}) async {
     var ans = await DioReq.get(
         "/actions?action_type=like&target_id=$docId&target_type=Doc");
     bool like = ans["data"]["action"] != null;
