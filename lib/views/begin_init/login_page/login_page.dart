@@ -86,24 +86,28 @@ class _LoginPageState extends State<LoginPage> {
     String result = await flutterWebviewPlugin
         .getAllCookies("https://www.yuque.com/dashboard");
     Map<String, dynamic> cookieData = {};
-    List<String> cookiesList = result.split(";");
-    cookiesList.removeLast();
-    for (var cookie in cookiesList) {
-      cookieData[cookie.substring(0, cookie.indexOf("="))] = cookie.substring(
-        cookie.indexOf("=") + 1,
-      );
-    }
-    bool haveSession(String cookie) =>
-        cookie.contains("_yuque_session") && cookie.contains("ctoken");
-    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    if (haveSession(result)) {
-      // print(result);
-      prefs.setString("_yuque_session", cookieData["_yuque_session"]);
-      prefs.setString("ctoken", cookieData["ctoken"]);
-    }
+    print("getAllCookies=========");
+    if (result != null) {
+      List<String> cookiesList = result.split(";");
+      cookiesList.removeLast();
+      for (var cookie in cookiesList) {
+        cookieData[cookie.substring(0, cookie.indexOf("="))] = cookie.substring(
+          cookie.indexOf("=") + 1,
+        );
+      }
+      bool haveSession(String cookie) =>
+          cookie.contains("_yuque_session") && cookie.contains("ctoken");
+      SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    prefs.setString("all_cookies", result);
+      if (haveSession(result)) {
+        // print(result);
+        prefs.setString("_yuque_session", cookieData["_yuque_session"]);
+        prefs.setString("ctoken", cookieData["ctoken"]);
+      }
+
+      prefs.setString("all_cookies", result);
+    }
   }
 
   @override

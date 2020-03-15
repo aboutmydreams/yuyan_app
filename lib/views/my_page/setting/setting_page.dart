@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/begin_init/login_page/login_page.dart';
 
@@ -28,14 +30,16 @@ class _SettingPageState extends State<SettingPage> {
               Icons.power_settings_new,
             ),
             onTap: () async {
-              // Navigator.pushNamed(context, "/login");
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.clear();
+
+              CookieManager cookieManager = CookieManager();
+              bool hadCookies = await cookieManager.clearCookies();
               Navigator.of(context).pushAndRemoveUntil(
                   new MaterialPageRoute(
                     builder: (BuildContext context) => new LoginPage(),
                   ),
                   (Route route) => route == null);
-              SharedPreferences prefs = await SharedPreferences.getInstance();
-              prefs.clear();
             },
           ),
         ],

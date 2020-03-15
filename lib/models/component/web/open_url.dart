@@ -3,7 +3,7 @@ import 'package:yuyan_app/models/browser_web/browser_appbar.dart';
 
 import '../appUI.dart';
 
-openUrl(BuildContext context, String url) {
+openUrl(BuildContext context, String url, {title: ""}) {
   print(url);
   return Navigator.of(context).push(MaterialPageRoute(builder: (_) {
     return BrowserWithBar(
@@ -18,6 +18,7 @@ openUrl(BuildContext context, String url) {
             color: Colors.black,
           ),
         ),
+        title: Text(title),
         elevation: 0,
         backgroundColor: AppColors.background,
       ),

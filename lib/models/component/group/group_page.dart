@@ -6,6 +6,7 @@ import 'package:yuyan_app/models/component/group/view/book_page.dart';
 import 'package:yuyan_app/models/component/group/view/home_page.dart';
 import 'package:yuyan_app/models/component/group/view/member_page.dart';
 import 'package:yuyan_app/models/component/group/view/topic_page.dart';
+import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_book_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_home_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_member_data.dart';
@@ -231,8 +232,8 @@ class _GroupPageState extends State<GroupPage>
                             }));
                             break;
                           case 'B':
-                            break;
-                          case 'C':
+                            openUrl(context,
+                                "https://www.yuque.com/${groupdata.id}");
                             break;
                         }
                       },
