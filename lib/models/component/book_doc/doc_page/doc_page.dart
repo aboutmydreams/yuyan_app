@@ -33,8 +33,9 @@ class _DocPageState extends State<DocPage> {
   DocV2 doc;
   Comments comments;
 
-  // 浏览量 收藏
+  // 浏览量 点赞 收藏
   int hits = 0;
+  int likeCount = 0;
   bool ifMark = false;
   bool ifLike = false;
 
@@ -61,7 +62,7 @@ class _DocPageState extends State<DocPage> {
 
   getDocComment() async {
     Comments ans = await DioUser.getComments(docId: docId);
-    var theHit = await DioDoc.getHits(docId);
+    var theHit = await DioDoc.getHits(docId: docId);
 
     setState(() {
       comments = ans;
@@ -91,9 +92,10 @@ class _DocPageState extends State<DocPage> {
   }
 
   getIfLike() async {
-    var ifLikeIt = await DioUser.ifLike(docId: docId);
+    Map ifLikeIt = await DioDoc.getAction(docId: docId);
     setState(() {
-      ifLike = ifLikeIt;
+      ifLike = ifLikeIt["like"];
+      likeCount = ifLikeIt["count"];
     });
   }
 
@@ -101,11 +103,13 @@ class _DocPageState extends State<DocPage> {
     if (ifLike) {
       setState(() {
         ifLike = !ifLike;
+        likeCount -= 1;
       });
       var ans = await DioUser.deleteLike(docId: docId);
     } else {
       setState(() {
         ifLike = !ifLike;
+        likeCount += 1;
       });
       var ans = await DioUser.addLike(docId: docId);
     }
@@ -187,7 +191,8 @@ class _DocPageState extends State<DocPage> {
                             margin: EdgeInsets.only(left: 16),
                             child: Row(
                               children: <Widget>[
-                                Text("浏览量 $hits   评论 ${comments.data.length}",
+                                Text(
+                                    "浏览量 $hits   评论 ${comments.data.length}   稻谷 ${likeCount * 7}",
                                     style: AppStyles.textStyleC),
                               ],
                             ),

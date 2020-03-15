@@ -75,9 +75,9 @@ class _NewsPageState extends State<NewsPage> {
             child: newsCountView(context),
           ),
           Positioned(
-              top: 39,
-              child: ScopedModelDescendant<NewsManage>(
-                  builder: (context, child, model) {
+            top: 39,
+            child: ScopedModelDescendant<NewsManage>(
+              builder: (context, child, model) {
                 return Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height - 80,
@@ -106,46 +106,9 @@ class _NewsPageState extends State<NewsPage> {
                     ),
                   ),
                 );
-              })
-
-              // Container(
-              //   width: MediaQuery.of(context).size.width,
-              //   height: MediaQuery.of(context).size.height - 80,
-              //   child: RefreshIndicator(
-              //     onRefresh: onfresh,
-              //     child: AnimationLimiter(
-              //       child: ListView.builder(
-              //         controller: _controller,
-              //         itemCount: unreadList.length + readedList.length + 1,
-              //         itemBuilder: (BuildContext context, int index) {
-              //           // 先展示未读消息列表，再显示最近已读消息列表
-              //           if (index < unreadList.length) {
-              //             return animationChild(
-              //               index: index,
-              //               child: OneNewsContainer(
-              //                 data: unreadList[index],
-              //                 unread: true,
-              //               ),
-              //             );
-              //           } else {
-              //             if (index >= unreadList.length + readedList.length) {
-              //               return SizedBox(height: 100);
-              //             } else {
-              //               return animationChild(
-              //                 index: index,
-              //                 child: OneNewsContainer(
-              //                   data: readedList[index - unreadList.length],
-              //                   unread: false,
-              //                 ),
-              //               );
-              //             }
-              //           }
-              //         },
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              ),
+              },
+            ),
+          ),
         ],
       ),
     );
