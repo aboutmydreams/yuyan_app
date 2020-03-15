@@ -101,7 +101,7 @@ myToast(BuildContext context, String text) {
         onPressed: () {},
         child: Text(
           "$text",
-          style: TextStyle(color: Colors.black87, decoration: null),
+          style: TextStyle(color: Colors.white, decoration: null),
         ),
       ),
     ),

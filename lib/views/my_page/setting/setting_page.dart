@@ -3,6 +3,7 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/begin_init/login_page/login_page.dart';
 
@@ -28,6 +29,7 @@ class _SettingPageState extends State<SettingPage> {
             ),
             leading: Icon(
               Icons.power_settings_new,
+              color: topModel.primarySwatchColor,
             ),
             onTap: () async {
               SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -58,8 +60,7 @@ class ChangeColorTile extends StatelessWidget {
       ),
       leading: Icon(
         Icons.insert_emoticon,
-        // color: Colors.black12,
-        // size: 22.0,
+        color: topModel.primarySwatchColor,
       ),
       onTap: topModel.changeColor,
     );
