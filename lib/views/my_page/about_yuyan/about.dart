@@ -39,7 +39,7 @@ class _AboutYuyanState extends State<AboutYuyan> {
                   style: AppStyles.textStyleBC,
                 ),
                 Text(
-                  "注：语燕没有对其他团队的无恶意，在语雀官方App发布后不保证会继续维护。\n",
+                  "注：语燕没有恶意，在语雀官方App发布后不保证会继续维护。\n",
                   style: AppStyles.textStyleBBB,
                 ),
                 SizedBox(height: 10),
