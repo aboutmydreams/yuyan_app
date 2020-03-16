@@ -21,6 +21,7 @@ Widget userAvatar(String imgUrl, {double height}) {
       width: height,
       height: height,
       decoration: BoxDecoration(
+        color: Colors.white,
         boxShadow: [
           BoxShadow(
             color: Color.fromARGB(128, 116, 116, 116),
