@@ -46,6 +46,8 @@ PODS:
     - GoogleUtilities/Environment (~> 6.5)
     - GoogleUtilities/UserDefaults (~> 6.5)
   - Flutter (1.0.0)
+  - flutter_native_html_view (0.0.1):
+    - Flutter
   - flutter_webview_plugin (0.0.1):
     - Flutter
   - FMDB (2.7.5):
@@ -119,6 +121,7 @@ DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_core_web (from `.symlinks/plugins/firebase_core_web/ios`)
   - Flutter (from `Flutter`)
+  - flutter_native_html_view (from `.symlinks/plugins/flutter_native_html_view/ios`)
   - flutter_webview_plugin (from `.symlinks/plugins/flutter_webview_plugin/ios`)
   - liquid_swipe (from `.symlinks/plugins/liquid_swipe/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
@@ -160,6 +163,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_core_web/ios"
   Flutter:
     :path: Flutter
+  flutter_native_html_view:
+    :path: ".symlinks/plugins/flutter_native_html_view/ios"
   flutter_webview_plugin:
     :path: ".symlinks/plugins/flutter_webview_plugin/ios"
   liquid_swipe:
@@ -201,6 +206,7 @@ SPEC CHECKSUMS:
   FirebaseInstallations: 575cd32f2aec0feeb0e44f5d0110a09e5e60b47b
   FirebaseInstanceID: 6668efc1655a4052c083f287a7141f1ead12f9c2
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  flutter_native_html_view: 1ebd0fb2bd5530d27a79ab05ac5bbcbbf72e95ae
   flutter_webview_plugin: ed9e8a6a96baf0c867e90e1bce2673913eeac694
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   GoogleAppMeasurement: d0560d915abf15e692e8538ba1d58442217b6aff
