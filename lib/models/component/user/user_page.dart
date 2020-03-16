@@ -28,7 +28,7 @@ class UserPage extends StatefulWidget {
   final String name;
   final String avatarUrl;
   final String description;
-  final int tag;
+  final String tag;
   final int pageIndex;
 
   @override

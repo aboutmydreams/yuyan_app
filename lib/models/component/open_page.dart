@@ -24,7 +24,7 @@ class OpenPage {
       int userId,
       String avatarUrl,
       String description,
-      int tag,
+      String tag,
       int pageIndex: 0}) {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return UserPage(
