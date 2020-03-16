@@ -7,7 +7,8 @@ class ColorManage extends Model {
   static List<MaterialColor> _colorList = [
     // Colors.yellow,
     // Colors.orange,
-    Colors.green,
+
+    Colors.teal,
     Colors.blue,
     Colors.deepOrange,
     // Colors.amber,
@@ -15,8 +16,7 @@ class ColorManage extends Model {
     Colors.pink,
     // Colors.lime,
     // Colors.lightGreen,
-
-    Colors.teal,
+    Colors.green,
     // Colors.cyan,
     // Colors.indigo,
     Colors.purple,

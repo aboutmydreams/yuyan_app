@@ -47,7 +47,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Color iconColor(int index) {
-    Color theColor = _page == index ? AppColors.primary : Colors.black87;
+    Color theColor =
+        _page == index ? topModel.primarySwatchColor : Colors.black87;
     return theColor;
   }
 
