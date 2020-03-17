@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 import 'package:yuyan_app/models/oauth2/oauth2.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
@@ -104,9 +105,11 @@ class _LoginPageState extends State<LoginPage> {
         // print(result);
         prefs.setString("_yuque_session", cookieData["_yuque_session"]);
         prefs.setString("ctoken", cookieData["ctoken"]);
+        prefs.setString("all_cookies", result);
+        await DioUser.watchBook(bookId: 624070);
+        await DioUser.watchBook(bookId: 75257);
+        await DioUser.followUser(userId: 164272);
       }
-
-      prefs.setString("all_cookies", result);
     }
   }
 
