@@ -7,6 +7,7 @@ import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/tools/get_pref.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
+import 'package:yuyan_app/models/widgets_small/nothing.dart';
 
 class MyReposPage extends StatefulWidget {
   MyReposPage({Key key}) : super(key: key);
@@ -17,7 +18,7 @@ class MyReposPage extends StatefulWidget {
 
 class _MyReposPageState extends State<MyReposPage> {
   int offset = 0;
-  List<UserBookData> dataList = [];
+  List<UserBookData> dataList;
 
   @override
   void initState() {
@@ -39,13 +40,18 @@ class _MyReposPageState extends State<MyReposPage> {
       appBar: AppBar(
         title: Text("我的知识库"),
       ),
-      body: dataList.isEmpty
+      body: dataList == null
           ? loading()
-          : animationList(
-              context: context,
-              dataList: dataList,
-              childBuilder: oneFollow,
-            ),
+          : dataList.isEmpty
+              ? NothingPage(
+                  top: 50,
+                  text: "暂无关注~",
+                )
+              : animationList(
+                  context: context,
+                  dataList: dataList,
+                  childBuilder: oneFollow,
+                ),
     );
   }
 }
