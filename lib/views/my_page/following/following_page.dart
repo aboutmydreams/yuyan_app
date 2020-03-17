@@ -7,6 +7,7 @@ import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/tools/get_pref.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
+import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/views/my_page/follower/one_buttom.dart';
 
@@ -43,13 +44,18 @@ class _FollowingPageState extends State<FollowingPage> {
       appBar: AppBar(
         title: Text("我关注的"),
       ),
-      body: dataList.isEmpty
+      body: dataList == null
           ? loading()
-          : animationList(
-              context: context,
-              dataList: dataList,
-              childBuilder: oneFollow,
-            ),
+          : dataList.isEmpty
+              ? NothingPage(
+                  top: 50,
+                  text: "暂无关注~",
+                )
+              : animationList(
+                  context: context,
+                  dataList: dataList,
+                  childBuilder: oneFollow,
+                ),
     );
   }
 }

@@ -7,6 +7,7 @@ import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/tools/get_pref.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
+import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 import 'one_buttom.dart';
@@ -20,7 +21,7 @@ class FollowerPage extends StatefulWidget {
 
 class _FollowerPageState extends State<FollowerPage> {
   int offset = 0;
-  List<FollowsData> dataList = [];
+  List<FollowsData> dataList;
   List<int> userIdFollowed = [];
   ScrollController _controller;
 
@@ -49,14 +50,19 @@ class _FollowerPageState extends State<FollowerPage> {
       appBar: AppBar(
         title: Text("关注我的"),
       ),
-      body: dataList.isEmpty
+      body: dataList == null
           ? loading()
-          : animationList(
-              context: context,
-              controller: _controller,
-              dataList: dataList,
-              childBuilder: oneFollow,
-            ),
+          : dataList.isEmpty
+              ? NothingPage(
+                  top: 50,
+                  text: "暂无收藏~",
+                )
+              : animationList(
+                  context: context,
+                  controller: _controller,
+                  dataList: dataList,
+                  childBuilder: oneFollow,
+                ),
 
       // ListView.builder(
       //   controller: _controller,
