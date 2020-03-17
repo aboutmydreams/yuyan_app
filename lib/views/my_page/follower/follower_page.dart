@@ -55,7 +55,7 @@ class _FollowerPageState extends State<FollowerPage> {
           : dataList.isEmpty
               ? NothingPage(
                   top: 50,
-                  text: "暂无收藏~",
+                  text: "暂无关注者",
                 )
               : animationList(
                   context: context,

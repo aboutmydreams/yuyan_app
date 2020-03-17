@@ -20,7 +20,7 @@ class FollowingPage extends StatefulWidget {
 
 class _FollowingPageState extends State<FollowingPage> {
   int offset = 0;
-  List<FollowsData> dataList = [];
+  List<FollowsData> dataList;
   ScrollController _controller;
 
   @override
