@@ -33,7 +33,6 @@ class UserGroupPage extends StatelessWidget {
 Widget oneGroup(BuildContext context, GroupData data) {
   return GestureDetector(
     onTap: () {
-      // openUrl(context, "https://www.yuque.com/${data.login}");
       OpenPage.group(context, groupdata: data);
     },
     child: Container(
