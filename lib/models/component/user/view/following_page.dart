@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_follow_data.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
@@ -32,7 +33,13 @@ class FollowingPage extends StatelessWidget {
 Widget oneFollowing(BuildContext context, FollowsData data) {
   return GestureDetector(
     onTap: () {
-      // openUrl(context, "https://www.yuque.com/${data.login}");
+      OpenPage.user(
+        context,
+        login: data.login,
+        name: data.name,
+        avatarUrl: data.avatarUrl,
+        userId: data.id,
+      );
     },
     child: Container(
       height: 70,
