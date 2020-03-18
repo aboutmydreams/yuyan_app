@@ -19,10 +19,13 @@ import 'package:yuyan_app/views/my_page/repos/my_repos_page.dart';
 import 'package:yuyan_app/views/my_page/setting/setting_page.dart';
 import 'package:yuyan_app/views/my_page/topic/topic_page.dart';
 
+import 'dev_test/firebase_analytics.dart';
+
 Map<String, WidgetBuilder> routeData = {
   '/': (context) => HomePage(),
   // '/first': (context) => GalleryExample(),
   // '/first': (context) => AboutYuyan(),
+  // '/first': (context) => MyAnalyPage(),
   '/first': (context) => FirstPage(),
   '/login': (context) => LoginPage(),
   '/guide': (context) => GuidePage(),

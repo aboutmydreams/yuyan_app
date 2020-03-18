@@ -127,12 +127,18 @@ Map<String, String> newsType = {
   "topic_assign": "指派了话题",
   "publish_doc": "发布了文章",
   "watch_book": "关注了知识库",
+  "delete_book": "删除了知识库",
+  "public_book": "公开了知识库",
   "follow_user": "关注了你",
   "like_artboard": "赞赏了画板稻谷",
   "upload_artboards": "更新了画板",
   "apply_join_group": "申请加入团队",
   "join_group_user": "添加了团队成员",
-  "close_topic": "关闭了话题"
+  "joined_a_group": "将你添加到了团队",
+  "group_invitation": "邀请你加入团队",
+  "close_topic": "关闭了话题",
+  "user_member_will_expire": "会员即将到期",
+  "apply_collaborator": "申请文档协作"
 };
 
 // 处理了一堆复杂的数据orz

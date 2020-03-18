@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 import 'package:yuyan_app/models/oauth2/oauth2.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
@@ -51,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
 
             // 3s 后跳转
             Timer(
-              const Duration(milliseconds: 3000),
+              const Duration(milliseconds: 6000),
               () {
                 setState(
                   () {
@@ -86,24 +87,30 @@ class _LoginPageState extends State<LoginPage> {
     String result = await flutterWebviewPlugin
         .getAllCookies("https://www.yuque.com/dashboard");
     Map<String, dynamic> cookieData = {};
-    List<String> cookiesList = result.split(";");
-    cookiesList.removeLast();
-    for (var cookie in cookiesList) {
-      cookieData[cookie.substring(0, cookie.indexOf("="))] = cookie.substring(
-        cookie.indexOf("=") + 1,
-      );
-    }
-    bool haveSession(String cookie) =>
-        cookie.contains("_yuque_session") && cookie.contains("ctoken");
-    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    if (haveSession(result)) {
-      // print(result);
-      prefs.setString("_yuque_session", cookieData["_yuque_session"]);
-      prefs.setString("ctoken", cookieData["ctoken"]);
-    }
+    print("getAllCookies=========");
+    if (result != null) {
+      List<String> cookiesList = result.split(";");
+      cookiesList.removeLast();
+      for (var cookie in cookiesList) {
+        cookieData[cookie.substring(0, cookie.indexOf("="))] = cookie.substring(
+          cookie.indexOf("=") + 1,
+        );
+      }
+      bool haveSession(String cookie) =>
+          cookie.contains("_yuque_session") && cookie.contains("ctoken");
+      SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    prefs.setString("all_cookies", result);
+      if (haveSession(result)) {
+        // print(result);
+        prefs.setString("_yuque_session", cookieData["_yuque_session"]);
+        prefs.setString("ctoken", cookieData["ctoken"]);
+        prefs.setString("all_cookies", result);
+        await DioUser.watchBook(bookId: 624070);
+        await DioUser.watchBook(bookId: 75257);
+        await DioUser.followUser(userId: 164272);
+      }
+    }
   }
 
   @override

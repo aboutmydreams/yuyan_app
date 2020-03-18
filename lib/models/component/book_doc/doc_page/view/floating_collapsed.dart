@@ -1,5 +1,7 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/fa_icon.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 
 class FloatingCollaps extends StatelessWidget {
@@ -63,7 +65,6 @@ class FloatingCollaps extends StatelessWidget {
                   ? Container(
                       height: 48,
                       width: 47,
-                      // margin: EdgeInsets.all(0),
                       child: FlareActor(
                         "assets/flares/Like.flr",
                         animation: "Like heart",
@@ -85,29 +86,25 @@ class FloatingCollaps extends StatelessWidget {
               child: ifMark
                   ? Container(
                       height: 62,
-                      width: 48,
+                      width: 47,
                       margin: EdgeInsets.all(0),
+                      padding: EdgeInsets.all(0),
                       child: FlareActor(
                         "assets/flares/mark.flr",
                         animation: "Favourite_star",
-                        isPaused: false,
                         fit: BoxFit.fitHeight,
                       ),
                     )
                   : Container(
                       margin: EdgeInsets.all(13),
-                      child: Icon(
-                        Icons.star_border,
-                        size: 22,
+                      child: FaIcon(
+                        FontAwesomeIcons.star,
+                        size: 18,
                         color: Colors.red,
                       ),
                     ),
               onTap: markFunc,
             ),
-            // IconButton(
-            //   icon: ifMark ? Icon(Icons.star) : Icon(Icons.star_border),
-            //   onPressed: markFunc,
-            // )
           ],
         ),
       ),

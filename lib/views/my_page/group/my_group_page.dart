@@ -28,7 +28,7 @@ class MyGroup extends StatelessWidget {
               child: SlideAnimation(
                 verticalOffset: 50.0,
                 child: FadeInAnimation(
-                  child: oneSetQuick(context, groupList[index]),
+                  child: oneGroup(context, groupList[index]),
                 ),
               ),
             );
@@ -39,20 +39,22 @@ class MyGroup extends StatelessWidget {
   }
 }
 
-Widget oneSetQuick(BuildContext context, GroupData data) {
+Widget oneGroup(BuildContext context, GroupData data,
+    {int index, EdgeInsets margin}) {
   String imageUrl = data.avatarUrl.toString().contains("http")
       ? data.avatarUrl
       : iconType[data.type] ?? "assets/images/explore/book.png";
   data.avatarUrl = imageUrl;
+  margin = margin ?? EdgeInsets.only(top: 2, bottom: 9, left: 10, right: 10);
   return GestureDetector(
     onTap: () {
       // var url = "https://www.yuque.com/" + data.login;
       // openUrl(context, url);
-      OpenPage.group(context, groupdata: data);
+      OpenPage.group(context, groupdata: data, pageIndex: index ?? 0);
     },
     child: Container(
       height: 70,
-      margin: EdgeInsets.only(top: 2, bottom: 9, left: 10, right: 10),
+      margin: margin,
       decoration: BoxDecoration(
         color: AppColors.background,
         boxShadow: [

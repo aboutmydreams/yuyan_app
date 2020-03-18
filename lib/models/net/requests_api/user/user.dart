@@ -57,14 +57,17 @@ class DioUser {
     var res = await DioReq.get(
         "/actions/users?action_type=follow&offset=$offset&target_id=$userId&target_type=User");
     // 获取关注者中关注了我的 followedList
+    List<int> followedList = [];
     List userIdList = res["data"].map((f) => f["id"].toString()).toList();
-    String userIdString = userIdList.join('%2C');
-    var res2 = await DioReq.get(
-        "/actions/user-owned?action_type=follow&target_ids=$userIdString&target_type=User");
-    List dataList = res2["data"];
-    List<int> followedList = dataList
-        .map((onedata) => int.parse(onedata["target_id"].toString()))
-        .toList();
+    if (userIdList.isNotEmpty) {
+      String userIdString = userIdList.join('%2C');
+      var res2 = await DioReq.get(
+          "/actions/user-owned?action_type=follow&target_ids=$userIdString&target_type=User");
+      List dataList = res2["data"];
+      followedList = dataList
+          .map((onedata) => int.parse(onedata["target_id"].toString()))
+          .toList();
+    }
     Follows theData = Follows.fromJson(res, followedList);
     return theData;
   }
@@ -85,7 +88,7 @@ class DioUser {
   }
 
   // 关注他人
-  static followUser(int userId) async {
+  static followUser({int userId}) async {
     try {
       Map<String, dynamic> data = {
         "action_type": "follow",
@@ -106,7 +109,7 @@ class DioUser {
   }
 
   // 取消关注他人
-  static cancelFollow(int userId) async {
+  static cancelFollow({int userId}) async {
     try {
       Map<String, dynamic> data = {
         "action_type": "follow",
@@ -250,12 +253,32 @@ class DioUser {
     return ans["actioned"] == null;
   }
 
+  static watchBook({int bookId}) async {
+    try {
+      Map<String, dynamic> data = {
+        "action_type": "watch",
+        "target_type": "Book",
+        "target_id": bookId,
+        "action_option": "normal"
+      };
+      Map<String, dynamic> res = await DioReq.post("/actions", data: data);
+      if (res.containsKey("data")) {
+        return 1;
+      } else {
+        return 0;
+      }
+    } catch (e) {
+      print(e);
+      return 0;
+    }
+  }
+
   /// [点赞相关]
   // 是否点赞
   static ifLike({int docId, String type: "Doc"}) async {
     var ans = await DioReq.get(
         "/actions?action_type=like&target_id=$docId&target_type=$type");
-    return ans["actioned"] == null;
+    return ans["actioned"] != null;
   }
 
   // 点赞操作

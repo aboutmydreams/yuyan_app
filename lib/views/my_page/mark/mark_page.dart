@@ -6,6 +6,7 @@ import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/my_mark_data.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
+import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 class MarkPage extends StatefulWidget {
@@ -17,7 +18,7 @@ class MarkPage extends StatefulWidget {
 
 class _MarkPageState extends State<MarkPage> {
   int offset = 0;
-  List<MarkData> dataList = [];
+  List<MarkData> dataList;
   ScrollController _controller;
 
   @override
@@ -40,13 +41,18 @@ class _MarkPageState extends State<MarkPage> {
       appBar: AppBar(
         title: Text("我的收藏"),
       ),
-      body: dataList.isEmpty
+      body: dataList == null
           ? loading()
-          : animationList(
-              context: context,
-              dataList: dataList,
-              childBuilder: oneMark,
-            ),
+          : dataList.isEmpty
+              ? NothingPage(
+                  top: 50,
+                  text: "暂无收藏~",
+                )
+              : animationList(
+                  context: context,
+                  dataList: dataList,
+                  childBuilder: oneMark,
+                ),
     );
   }
 }

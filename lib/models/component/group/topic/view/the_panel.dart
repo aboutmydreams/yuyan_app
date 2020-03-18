@@ -38,7 +38,7 @@ class HidePanel extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Container(
-                  width: w * 0.80,
+                  width: w * 0.79,
                   padding: EdgeInsets.fromLTRB(w * 0.02, 12, w * 0.02, 12),
                   child: CommentTextfierd(
                     controller: textControl,
@@ -51,7 +51,8 @@ class HidePanel extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.20,
+                        width: w * 0.20,
+                        margin: EdgeInsets.only(left: w * 0.003),
                         child: FlatButton.icon(
                           onPressed: () {
                             panelControl.close().then((value) {
@@ -70,7 +71,12 @@ class HidePanel extends StatelessWidget {
                           autofocus: true,
                           color: AppColors.primary,
                           textColor: Colors.white.withAlpha(235),
-                          child: Text("发表"),
+                          child: Text("发表",
+                              style: TextStyle(
+                                fontFamily: "sans_bold",
+                                fontWeight: FontWeight.w400,
+                                fontSize: 13,
+                              )),
                         ),
                       )
                     ],
