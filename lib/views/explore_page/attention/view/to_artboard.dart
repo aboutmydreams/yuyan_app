@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
+import 'package:yuyan_app/models/oauth2/random_string/random_string.dart';
 import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_small/user_event.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/attent_data.dart';
@@ -83,11 +84,11 @@ Widget toArtboard(BuildContext context, Data data) {
                   child: Stack(
                     children: <Widget>[
                       Hero(
-                        tag: "artboard",
+                        tag: randomString(5),
                         child: FadeInImage.assetNetwork(
                           width: MediaQuery.of(context).size.width - 36,
                           image: data.event[0].image,
-                          placeholder: 'assets/images/explore/book.png',
+                          placeholder: 'assets/images/logo.png',
                           fit: BoxFit.fitWidth,
                         ),
                       ),

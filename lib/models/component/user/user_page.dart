@@ -28,7 +28,7 @@ class UserPage extends StatefulWidget {
   final String name;
   final String avatarUrl;
   final String description;
-  final int tag;
+  final String tag;
   final int pageIndex;
 
   @override
@@ -154,10 +154,10 @@ class _UserPageState extends State<UserPage>
       isFollow = !isFollow;
     });
     if (isFollow) {
-      var ans = await DioUser.cancelFollow(userId);
+      var ans = await DioUser.cancelFollow(userId: userId);
       print(ans);
     } else {
-      var ans = await DioUser.followUser(userId);
+      var ans = await DioUser.followUser(userId: userId);
       print(ans);
     }
   }

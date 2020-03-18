@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_follow_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
-import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
-import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 
 class FollowButtom extends StatefulWidget {
@@ -56,7 +54,7 @@ class _FollowButtomState extends State<FollowButtom> {
         onPressed: () async {
           changeLoading();
           if (followed) {
-            var ans = await DioUser.cancelFollow(data.id);
+            var ans = await DioUser.cancelFollow(userId: data.id);
             if (ans == 1) {
               myToast(context, "取消关注成功");
               changeLoading();
@@ -66,7 +64,7 @@ class _FollowButtomState extends State<FollowButtom> {
               changeLoading();
             }
           } else {
-            var ans = await DioUser.followUser(data.id);
+            var ans = await DioUser.followUser(userId: data.id);
             if (ans == 1) {
               myToast(context, "关注成功");
               changeLoading();

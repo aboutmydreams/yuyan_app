@@ -8,6 +8,7 @@ import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/my_topic_data.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
+import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 class TopicPage extends StatefulWidget {
@@ -20,9 +21,9 @@ class TopicPage extends StatefulWidget {
 class _TopicPageState extends State<TopicPage> {
   int offset = 0;
   int offset2 = 0;
-  List<TopicData> dataList = [];
-  List<TopicData> dataList2 = [];
-  ScrollController _controller;
+  List<TopicData> dataList;
+  List<TopicData> dataList2;
+  // ScrollController _controller;
 
   @override
   void initState() {
@@ -66,22 +67,32 @@ class _TopicPageState extends State<TopicPage> {
         body: TabBarView(
           children: <Widget>[
             Container(
-              child: dataList.isEmpty
+              child: dataList == null
                   ? loading()
-                  : animationList(
-                      context: context,
-                      dataList: dataList,
-                      childBuilder: oneTopic,
-                    ),
+                  : dataList.isEmpty
+                      ? NothingPage(
+                          top: 50,
+                          text: "没有正在进行的话题~",
+                        )
+                      : animationList(
+                          context: context,
+                          dataList: dataList,
+                          childBuilder: oneTopic,
+                        ),
             ),
             Container(
-              child: dataList2.isEmpty
+              child: dataList2 == null
                   ? loading()
-                  : animationList(
-                      context: context,
-                      dataList: dataList2,
-                      childBuilder: oneTopic,
-                    ),
+                  : dataList2.isEmpty
+                      ? NothingPage(
+                          top: 50,
+                          text: "没有已关闭的话题~",
+                        )
+                      : animationList(
+                          context: context,
+                          dataList: dataList2,
+                          childBuilder: oneTopic,
+                        ),
             ),
           ],
         ),

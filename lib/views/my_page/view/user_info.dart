@@ -16,6 +16,8 @@ Widget userInfo(BuildContext context) {
   String description = myInfo.data.description ?? "笔墨待识君";
 
   double leftMargin = MediaQuery.of(context).size.width * 0.075;
+  double descriptionWidth =
+      MediaQuery.of(context).size.width - leftMargin * 3.6 - 95;
 
   return Container(
     margin: EdgeInsets.only(
@@ -61,6 +63,7 @@ Widget userInfo(BuildContext context) {
                   children: [
                     Container(
                       height: 33,
+                      width: descriptionWidth,
                       margin: EdgeInsets.only(left: 2),
                       child: Row(
                         children: [
@@ -75,10 +78,12 @@ Widget userInfo(BuildContext context) {
                       ),
                     ),
                     Container(
+                      width: descriptionWidth,
                       margin: EdgeInsets.only(left: 3),
                       child: Text(
                         "$description",
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.left,
+                        maxLines: 2,
                         style: AppStyles.countTextStyle,
                       ),
                     ),
