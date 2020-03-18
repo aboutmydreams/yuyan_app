@@ -150,7 +150,8 @@ class _DocPageState extends State<DocPage> {
     return SlidingUpPanel(
       controller: _pc,
       minHeight: 0,
-      // maxHeight: MediaQuery.of(context).viewInsets.bottom,// 键盘
+      maxHeight: MediaQuery.of(context).size.height * 0.4 + 132,
+      // maxHeight: MediaQuery.of(context).viewInsets.bottom, // 键盘
       panel: HidePanel(
         textControl: _tc,
         panelControl: _pc,
