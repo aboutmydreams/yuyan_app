@@ -19,8 +19,33 @@ class OneNewsContainer extends StatelessWidget {
     String lastSub = clearSub(data);
     return GestureDetector(
       onTap: () {
-        var url = "https://www.yuque.com/go/notification/${data.id}";
-        openUrl(context, url);
+        if (data.subjectType == "User") {
+          OpenPage.user(
+            context,
+            login: data.actor.login,
+            name: data.actor.name,
+            avatarUrl: data.actor.avatarUrl,
+            userId: data.actor.id,
+          );
+        } else if (data.subjectType == "Doc") {
+          OpenPage.doc(
+            context,
+            bookId: data.subject.bookId,
+            docId: data.subject.id,
+          );
+        } else if (data.subjectType == "Topic") {
+          OpenPage.topic(
+            context,
+            id: data.subjectId,
+            iid: data.subject.iid,
+            groupId: data.subject.groupId,
+          );
+        } else {
+          // 如果是评论的话 Comment 看 second_subject_type 定位
+          // print(data.subjectType);
+          var url = "https://www.yuque.com/go/notification/${data.id}";
+          openUrl(context, url);
+        }
       },
       child: Container(
         height: 70,

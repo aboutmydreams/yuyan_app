@@ -410,6 +410,8 @@ class Subject {
   bool isPaid;
   bool hasPaidBefore;
   int id;
+  int iid;
+  int groupId;
   int spaceId;
   String type;
   String login;
@@ -496,6 +498,8 @@ class Subject {
       this.isPaid,
       this.hasPaidBefore,
       this.id,
+      this.iid,
+      this.groupId,
       this.spaceId,
       this.type,
       this.login,
@@ -582,6 +586,8 @@ class Subject {
     isPaid = json['isPaid'];
     hasPaidBefore = json['hasPaidBefore'];
     id = json['id'];
+    iid = json['iid'];
+    groupId = json['group_id'];
     spaceId = json['space_id'];
     type = json['type'];
     login = json['login'];
@@ -670,6 +676,8 @@ class Subject {
     data['isPaid'] = this.isPaid;
     data['hasPaidBefore'] = this.hasPaidBefore;
     data['id'] = this.id;
+    data['iid'] = this.iid;
+    data['group_id'] = this.groupId;
     data['space_id'] = this.spaceId;
     data['type'] = this.type;
     data['login'] = this.login;
