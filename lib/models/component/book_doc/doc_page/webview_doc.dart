@@ -44,19 +44,28 @@ class _DocPageWebState extends State<DocPageWeb> {
   PanelController _pc = PanelController();
   TextEditingController _tc = TextEditingController();
 
-  bool isload = true;
+  bool isWebLoad = true;
+  bool isWebEnd = false;
 
   InAppWebViewController webView;
   String theUrl = "";
   double progress = 0;
-  InAppWebViewController _controller;
+  double webHeight;
+  InAppWebViewController _webController;
   ScrollController _listController;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // getDocContextData();
+    // _listController = ScrollController();
+    // _listController.addListener(() {
+    //   if (_listController.position.pixels ==
+    //       _listController.position.maxScrollExtent) {
+    //     print("object");
+    //   }
+    //   print(_listController.position.pixels);
+    // });
     getIfLike();
     getIfMark();
     getDocComment();
@@ -65,7 +74,7 @@ class _DocPageWebState extends State<DocPageWeb> {
   @override
   void dispose() {
     super.dispose();
-    _controller = null;
+    _webController = null;
   }
 
   getDocComment() async {
@@ -158,7 +167,7 @@ class _DocPageWebState extends State<DocPageWeb> {
     String url =
         "https://www.yuque.com/$login/$bookSlug/$docId?view=doc_embed&from=yuyan&title=1&outline=1";
 
-    print(url);
+    // print(url);
     return SlidingUpPanel(
       controller: _pc,
       minHeight: 0,
@@ -184,13 +193,15 @@ class _DocPageWebState extends State<DocPageWeb> {
                 height: MediaQuery.of(context).size.height - 60,
                 color: Colors.white,
                 child: ListView(
-                  physics:
-                      ScrollPhysics(parent: NeverScrollableScrollPhysics()),
+                  physics: ScrollPhysics(
+                      parent: isWebEnd ? NeverScrollableScrollPhysics() : null),
                   controller: _listController,
                   children: <Widget>[
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height - 60,
+                      height: webHeight + 30 ??
+                          MediaQuery.of(context).size.height - 10,
+                      padding: EdgeInsets.all(16),
                       child: InAppWebView(
                         initialUrl: url,
                         initialOptions: InAppWebViewWidgetOptions(
@@ -199,7 +210,25 @@ class _DocPageWebState extends State<DocPageWeb> {
                           ),
                         ),
                         onWebViewCreated: (InAppWebViewController controller) {
-                          webView = controller;
+                          _webController = controller;
+                        },
+                        onLoadStop: (InAppWebViewController controller,
+                            String url) async {
+                          // 页面加载完成后注入js方法, 获取页面总高度
+                          double height =
+                              await _webController.evaluateJavascript(
+                            source: """
+                              document.body.scrollHeight;
+                            """,
+                          );
+                          print(height);
+                          setState(() {
+                            webHeight = height;
+                          });
+                        },
+                        onConsoleMessage: (InAppWebViewController controller,
+                            ConsoleMessage consoleMessage) {
+                          print("console message: ${consoleMessage.message}");
                         },
                         onProgressChanged:
                             (InAppWebViewController controller, int progress) {
@@ -210,12 +239,11 @@ class _DocPageWebState extends State<DocPageWeb> {
                         },
                       ),
                     ),
-                    Text("data"),
-                    Text("data"),
-                    Text("data"),
-                    Text("data"),
-                    Text("data"),
-                    Text("data"),
+                    (comments == null)
+                        ? loading()
+                        : TheComment(
+                            comment: comments,
+                          ),
                   ],
                 ),
               ),

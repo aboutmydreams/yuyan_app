@@ -22,7 +22,6 @@ class FloatingCollaps extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(ifLike);
     return GestureDetector(
       onTap: onTap,
       child: Container(

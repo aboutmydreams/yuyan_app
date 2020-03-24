@@ -15,7 +15,6 @@ Widget userEvent(BuildContext context,
     String time}) {
   String tag =
       randomString(5) + DateTime.now().microsecondsSinceEpoch.toString();
-  print(tag);
   return Row(
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [

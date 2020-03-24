@@ -46,13 +46,9 @@ class _ExplorePageState extends State<ExplorePage>
               Tab(
                 text: "精选",
               ),
-              // Tab(
-              //   text: "广场",
-              // ),
             ],
           ),
         ),
-
         body: TabBarView(
           children: <Widget>[
             GestureDetector(
@@ -66,13 +62,8 @@ class _ExplorePageState extends State<ExplorePage>
             Container(
               child: SelectionPage(),
             ),
-            // Container(
-            //   child: Text("data"),
-            // ),
           ],
         ),
-
-        // bottomNavigationBar: BottomNavigationBarDemo(),
       ),
     );
   }
