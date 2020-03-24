@@ -70,6 +70,7 @@ dependencies:
 
   # webView
   webview_flutter: ^0.3.18+1
+  flutter_inappwebview: ^2.1.0+1
 
   # flare
   flare_flutter: ^1.8.2

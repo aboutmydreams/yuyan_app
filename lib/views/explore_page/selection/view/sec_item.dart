@@ -12,7 +12,13 @@ Widget secItemUI(BuildContext context, Data data) {
       "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_200%2Ch_120%2Fformat%2Cpng";
   return GestureDetector(
     onTap: () {
-      OpenPage.doc(context, bookId: data.bookId, docId: data.id);
+      OpenPage.docWeb(
+        context,
+        login: data.book.user.login,
+        bookSlug: data.book.slug,
+        bookId: data.bookId,
+        docId: data.id,
+      );
     },
     child: Container(
       height: 102,
