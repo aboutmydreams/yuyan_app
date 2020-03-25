@@ -44,28 +44,18 @@ class _DocPageWebState extends State<DocPageWeb> {
   PanelController _pc = PanelController();
   TextEditingController _tc = TextEditingController();
 
-  bool isWebLoad = true;
-  bool isWebEnd = false;
-
-  InAppWebViewController webView;
-  String theUrl = "";
+  String theUrl = "https://yuque.com/";
   double progress = 0;
-  double webHeight;
+  double webHeight = 0;
   InAppWebViewController _webController;
-  ScrollController _listController;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    // _listController = ScrollController();
-    // _listController.addListener(() {
-    //   if (_listController.position.pixels ==
-    //       _listController.position.maxScrollExtent) {
-    //     print("object");
-    //   }
-    //   print(_listController.position.pixels);
-    // });
+    // doc：https://pub.dev/documentation/flutter_inappwebview/latest/
+    theUrl =
+        "https://www.yuque.com/$login/$bookSlug/$docId?view=doc_embed&from=yuyan&title=1&outline=1";
+
     getIfLike();
     getIfMark();
     getDocComment();
@@ -164,10 +154,6 @@ class _DocPageWebState extends State<DocPageWeb> {
       topLeft: Radius.circular(24.0),
       topRight: Radius.circular(24.0),
     );
-    String url =
-        "https://www.yuque.com/$login/$bookSlug/$docId?view=doc_embed&from=yuyan&title=1&outline=1";
-
-    // print(url);
     return SlidingUpPanel(
       controller: _pc,
       minHeight: 0,
@@ -193,43 +179,60 @@ class _DocPageWebState extends State<DocPageWeb> {
                 height: MediaQuery.of(context).size.height - 60,
                 color: Colors.white,
                 child: ListView(
-                  physics: ScrollPhysics(
-                      parent: isWebEnd ? NeverScrollableScrollPhysics() : null),
-                  controller: _listController,
                   children: <Widget>[
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      height: webHeight + 30 ??
-                          MediaQuery.of(context).size.height - 10,
+                      height: webHeight != 0
+                          ? webHeight + 30
+                          : MediaQuery.of(context).size.height - 10,
                       padding: EdgeInsets.all(16),
                       child: InAppWebView(
-                        initialUrl: url,
+                        initialUrl: theUrl,
                         initialOptions: InAppWebViewWidgetOptions(
+                          androidInAppWebViewOptions:
+                              AndroidInAppWebViewOptions(
+                            databaseEnabled: true,
+                            domStorageEnabled: true,
+                          ),
                           inAppWebViewOptions: InAppWebViewOptions(
                             debuggingEnabled: true,
+                            cacheEnabled: true,
+                            transparentBackground: true,
+                            javaScriptCanOpenWindowsAutomatically: true,
+                            horizontalScrollBarEnabled: false,
+                            contentBlockers: [],
+                            userAgent:
+                                "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1",
                           ),
                         ),
+                        initialHeaders: {},
                         onWebViewCreated: (InAppWebViewController controller) {
                           _webController = controller;
+                        },
+                        onLoadStart:
+                            (InAppWebViewController controller, String url) {
+                          setState(() {
+                            this.theUrl = url;
+                          });
                         },
                         onLoadStop: (InAppWebViewController controller,
                             String url) async {
                           // 页面加载完成后注入js方法, 获取页面总高度
-                          double height =
-                              await _webController.evaluateJavascript(
+                          var height = await _webController.evaluateJavascript(
                             source: """
                               document.body.scrollHeight;
                             """,
                           );
-                          print(height);
                           setState(() {
-                            webHeight = height;
+                            this.theUrl = url;
+                            webHeight = double.parse(height.toString());
                           });
                         },
-                        onConsoleMessage: (InAppWebViewController controller,
-                            ConsoleMessage consoleMessage) {
-                          print("console message: ${consoleMessage.message}");
-                        },
+
+                        // onConsoleMessage: (InAppWebViewController controller,
+                        //     ConsoleMessage consoleMessage) {
+                        // },
+
                         onProgressChanged:
                             (InAppWebViewController controller, int progress) {
                           setState(() {
@@ -257,6 +260,16 @@ class _DocPageWebState extends State<DocPageWeb> {
                 markFunc: changeMark,
                 likeFunc: changeLike,
               ),
+            ),
+            Positioned(
+              top: 0,
+              child: progress < 0.75
+                  ? Container(
+                      height: MediaQuery.of(context).size.height - 100,
+                      width: MediaQuery.of(context).size.width,
+                      child: loading(),
+                    )
+                  : SizedBox(),
             ),
           ],
         ),
