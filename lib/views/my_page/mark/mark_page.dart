@@ -67,7 +67,14 @@ Widget oneMark(BuildContext context, MarkData data) {
 
   return GestureDetector(
     onTap: () {
-      OpenPage.doc(context, bookId: data.targetBookId, docId: data.targetId);
+      // OpenPage.doc(context, bookId: data.targetBookId, docId: data.targetId);
+      OpenPage.docWeb(
+        context,
+        login: data.targetGroup.login,
+        bookSlug: data.targetBook.slug,
+        bookId: data.targetBookId,
+        docId: data.targetId,
+      );
     },
     child: Container(
       margin: EdgeInsets.only(top: 2, bottom: 9, left: 10, right: 10),
