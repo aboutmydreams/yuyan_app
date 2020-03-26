@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
+import 'package:yuyan_app/models/oauth2/random_string/random_string.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
@@ -17,6 +18,8 @@ class OneNewsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String lastSub = clearSub(data);
+    String tag =
+        randomString(5) + DateTime.now().microsecondsSinceEpoch.toString();
     return GestureDetector(
       onTap: () {
         if (data.subjectType == "User") {
@@ -26,6 +29,7 @@ class OneNewsContainer extends StatelessWidget {
             name: data.actor.name,
             avatarUrl: data.actor.avatarUrl,
             userId: data.actor.id,
+            tag: tag,
           );
         } else if (data.subjectType == "Doc") {
           OpenPage.doc(
@@ -58,21 +62,27 @@ class OneNewsContainer extends StatelessWidget {
               onTap: () {
                 // var url = "https://www.yuque.com/${data.actor.login}";
                 // openUrl(context, url);
-                OpenPage.user(
-                  context,
-                  login: data.actor.login,
-                  name: data.actor.name,
-                  avatarUrl: data.actor.avatarUrl,
-                  userId: data.actor.id,
-                );
+                if (data.actor != null) {
+                  OpenPage.user(
+                    context,
+                    login: data.actor.login,
+                    name: data.actor.name,
+                    avatarUrl: data.actor.avatarUrl,
+                    userId: data.actor.id,
+                    tag: tag,
+                  );
+                }
               },
               child: Container(
                 margin: EdgeInsets.only(right: 20),
-                child: userAvatar(
-                    data.actor != null
-                        ? data.actor.avatarUrl
-                        : "https://cdn.nlark.com/yuque/0/2019/png/84147/1547032500238-d93512f4-db23-442f-b4d8-1d46304f9673.png",
-                    height: 45),
+                child: Hero(
+                  tag: tag,
+                  child: userAvatar(
+                      data.actor != null
+                          ? data.actor.avatarUrl
+                          : "https://cdn.nlark.com/yuque/0/2019/png/84147/1547032500238-d93512f4-db23-442f-b4d8-1d46304f9673.png",
+                      height: 45),
+                ),
               ),
             ),
             Column(
