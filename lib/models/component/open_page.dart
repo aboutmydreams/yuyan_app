@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/models/component/book_doc/doc_page/webview_doc.dart';
 import 'package:yuyan_app/models/component/group/group_page.dart';
 import 'package:yuyan_app/models/component/group/topic/topic_detail_page.dart';
 import 'package:yuyan_app/models/component/user/user_page.dart';
@@ -11,6 +12,19 @@ class OpenPage {
   static doc(BuildContext context, {int bookId, int docId}) {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return DocPage(
+        bookId: bookId,
+        docId: docId,
+      );
+    }));
+  }
+
+  static docWeb(BuildContext context,
+      {String login, String bookSlug, String url, int bookId, int docId}) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return DocPageWeb(
+        login: login,
+        url: url,
+        bookSlug: bookSlug,
         bookId: bookId,
         docId: docId,
       );

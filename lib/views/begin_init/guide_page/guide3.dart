@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 
-class Guide3 extends StatelessWidget {
-  const Guide3({Key key}) : super(key: key);
+class Guide3 extends StatefulWidget {
+  Guide3({Key key}) : super(key: key);
+
+  @override
+  _Guide3State createState() => _Guide3State();
+}
+
+class _Guide3State extends State<Guide3> {
+  bool enableButtom = true;
+  onPressed() {
+    setState(() {
+      enableButtom = false;
+    });
+    Navigator.of(context).pushNamed("/login");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +49,7 @@ class Guide3 extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(30)),
               ),
               child: FlatButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed("/login");
-                },
+                onPressed: () => enableButtom ? onPressed() : null,
                 child: Text(
                   "使用语雀登录",
                   style: TextStyle(

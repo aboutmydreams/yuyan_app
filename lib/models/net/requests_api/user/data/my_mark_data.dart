@@ -178,6 +178,7 @@ class Target {
   int stackId;
   int rank;
   int resourceSize;
+  String login;
   dynamic scene;
   dynamic source;
 
@@ -190,6 +191,7 @@ class Target {
       this.isSuspect,
       this.avatarUrl,
       this.id,
+      this.login,
       this.spaceId,
       this.type,
       this.subType,
@@ -310,6 +312,7 @@ class Target {
     stackId = json['stack_id'];
     rank = json['rank'];
     resourceSize = json['resource_size'];
+    login = json['login'];
     scene = json['scene'];
     source = json['source'];
   }
@@ -380,6 +383,7 @@ class Target {
     data['stack_id'] = this.stackId;
     data['rank'] = this.rank;
     data['resource_size'] = this.resourceSize;
+    data['login'] = this.login;
     data['scene'] = this.scene;
     data['source'] = this.source;
     return data;
