@@ -19,10 +19,11 @@ class OpenPage {
   }
 
   static docWeb(BuildContext context,
-      {String login, String bookSlug, int bookId, int docId}) {
+      {String login, String bookSlug, String url, int bookId, int docId}) {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return DocPageWeb(
         login: login,
+        url: url,
         bookSlug: bookSlug,
         bookId: bookId,
         docId: docId,

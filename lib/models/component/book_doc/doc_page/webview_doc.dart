@@ -11,25 +11,28 @@ import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 
 class DocPageWeb extends StatefulWidget {
-  DocPageWeb({Key key, this.login, this.bookSlug, this.bookId, this.docId})
+  DocPageWeb(
+      {Key key, this.login, this.bookSlug, this.url, this.bookId, this.docId})
       : super(key: key);
 
   final int bookId;
   final int docId;
+  final String url;
   final String login;
   final String bookSlug;
 
   @override
   _DocPageWebState createState() => _DocPageWebState(
-      login: login, bookSlug: bookSlug, bookId: bookId, docId: docId);
+      login: login, bookSlug: bookSlug, url: url, bookId: bookId, docId: docId);
 }
 
 class _DocPageWebState extends State<DocPageWeb> {
   _DocPageWebState(
-      {Key key, this.login, this.bookSlug, this.bookId, this.docId});
+      {Key key, this.login, this.bookSlug, this.url, this.bookId, this.docId});
   final int bookId;
   final int docId;
   final String login;
+  final String url;
   final String bookSlug;
 
   Comments comments;
@@ -53,9 +56,11 @@ class _DocPageWebState extends State<DocPageWeb> {
   void initState() {
     super.initState();
     // doc：https://pub.dev/documentation/flutter_inappwebview/latest/
-    theUrl =
+    theUrl = url ??
         "https://www.yuque.com/$login/$bookSlug/$docId?view=doc_embed&from=yuyan&title=1&outline=1";
-
+    theUrl = theUrl.contains("view=doc_embed")
+        ? theUrl
+        : theUrl + "?view=doc_embed&from=yuyan&title=1&outline=1";
     getIfLike();
     getIfMark();
     getDocComment();
@@ -263,7 +268,7 @@ class _DocPageWebState extends State<DocPageWeb> {
             ),
             Positioned(
               top: 0,
-              child: progress < 0.75
+              child: progress < 0.85
                   ? Container(
                       height: MediaQuery.of(context).size.height - 100,
                       width: MediaQuery.of(context).size.width,
