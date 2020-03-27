@@ -32,8 +32,10 @@ class OneNewsContainer extends StatelessWidget {
             tag: tag,
           );
         } else if (data.subjectType == "Doc") {
-          OpenPage.doc(
+          OpenPage.docWeb(
             context,
+            login: data.secondSubject.user.login,
+            bookSlug: data.secondSubject.slug,
             bookId: data.subject.bookId,
             docId: data.subject.id,
           );
