@@ -46,9 +46,18 @@ class OneNewsContainer extends StatelessWidget {
             iid: data.subject.iid,
             groupId: data.subject.groupId,
           );
-        } else {
+        } else if (((data.subjectType == "Comment") &&
+            (data.secondSubjectType == "Doc"))) {
           // 如果是评论的话 Comment 看 second_subject_type 定位
           // print(data.subjectType);
+          OpenPage.docWeb(
+            context,
+            login: data.thirdSubject.user.login,
+            bookSlug: data.thirdSubject.slug,
+            bookId: data.thirdSubjectId,
+            docId: data.secondSubjectId,
+          );
+        } else {
           var url = "https://www.yuque.com/go/notification/${data.id}";
           openUrl(context, url);
         }
