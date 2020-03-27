@@ -78,10 +78,11 @@ class OneNewsContainer extends StatelessWidget {
                 child: Hero(
                   tag: tag,
                   child: userAvatar(
-                      data.actor != null
-                          ? data.actor.avatarUrl
-                          : "https://cdn.nlark.com/yuque/0/2019/png/84147/1547032500238-d93512f4-db23-442f-b4d8-1d46304f9673.png",
-                      height: 45),
+                    data.actor != null
+                        ? data.actor.avatarUrl
+                        : "https://cdn.nlark.com/yuque/0/2019/png/84147/1547032500238-d93512f4-db23-442f-b4d8-1d46304f9673.png",
+                    height: 45,
+                  ),
                 ),
               ),
             ),
