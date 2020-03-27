@@ -100,7 +100,7 @@ Widget oneBook(BuildContext context, Books data) {
           ),
         ]..addAll(data.type != "Design"
             ? data.summary.map((s) {
-                return oneDoc(context, s);
+                return oneDoc(context, s, data.user.login, data.slug);
               })
             : [
                 Row(
@@ -114,10 +114,17 @@ Widget oneBook(BuildContext context, Books data) {
   );
 }
 
-Widget oneDoc(BuildContext context, Summary data) {
+Widget oneDoc(
+    BuildContext context, Summary data, String login, String bookSlug) {
   return InkWell(
     onTap: () {
-      OpenPage.doc(context, bookId: data.bookId, docId: data.id);
+      OpenPage.docWeb(
+        context,
+        login: login,
+        bookSlug: bookSlug,
+        bookId: data.bookId,
+        docId: data.id,
+      );
     },
     child: Container(
       padding: EdgeInsets.fromLTRB(0, 7, 0, 2),

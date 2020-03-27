@@ -10,12 +10,6 @@ Widget toDoc(BuildContext context, Data data) {
   return GestureDetector(
     onTap: () {
       // openUrl(context, data.event[0].url);
-      // OpenPage.doc(
-      //   context,
-      //   bookId: data.event[0].bookId,
-      //   docId: data.event[0].id,
-      // );
-      print(data.event[0].url);
       OpenPage.docWeb(
         context,
         url: data.event[0].url,

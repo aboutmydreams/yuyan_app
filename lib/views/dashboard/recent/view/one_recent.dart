@@ -13,8 +13,10 @@ Widget oneRecent(BuildContext context, Recent data) {
   return GestureDetector(
     onTap: () {
       if (data.subjectType == "Doc") {
-        OpenPage.doc(
+        OpenPage.docWeb(
           context,
+          login: data.book.user.login,
+          bookSlug: data.book.slug,
           bookId: data.book.id,
           docId: data.targetId,
         );
