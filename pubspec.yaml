@@ -68,6 +68,9 @@ dependencies:
   # 缓存
   shared_preferences: ^0.5.6
 
+  # 分享
+  share: ^0.6.3+6
+
   # webView
   webview_flutter: ^0.3.18+1
   flutter_inappwebview: ^2.1.0+1
@@ -98,6 +101,9 @@ dependencies:
 
   # 评论 下滑出的抽屉
   sliding_up_panel: ^1.0.0
+
+  # 更新apk https://github.com/xuexiangjys/XUpdate
+  # flutter_xupdate: ^0.0.3
 
   flutter_webview_plugin:
     git: https://github.com/aboutmydreams/flutter_webview_plugin.git

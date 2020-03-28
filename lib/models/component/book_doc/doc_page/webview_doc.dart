@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:share/share.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:yuyan_app/models/component/book_doc/doc_page/view/floating_collapsed.dart';
 import 'package:yuyan_app/models/component/group/topic/view/the_comment.dart';
 import 'package:yuyan_app/models/component/group/topic/view/the_panel.dart';
+import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
+import 'package:yuyan_app/models/net/requests_api/doc/data/doc_data_v2.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
+import 'package:yuyan_app/models/widgets_small/menu_item.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 
 class DocPageWeb extends StatefulWidget {
@@ -36,6 +41,7 @@ class _DocPageWebState extends State<DocPageWeb> {
   final String bookSlug;
 
   Comments comments;
+  DocV2 doc;
 
   // 浏览量 点赞 收藏
   int hits = 0;
@@ -48,6 +54,7 @@ class _DocPageWebState extends State<DocPageWeb> {
   TextEditingController _tc = TextEditingController();
 
   String theUrl = "https://yuque.com/";
+  String shareUrl = "https://yuque.com/";
   double progress = 0;
   double webHeight = 0;
   InAppWebViewController _webController;
@@ -61,15 +68,25 @@ class _DocPageWebState extends State<DocPageWeb> {
     theUrl = theUrl.contains("view=doc_embed")
         ? theUrl
         : theUrl + "?view=doc_embed&from=yuyan&title=1&outline=1";
+    shareUrl =
+        theUrl.replaceAll("?view=doc_embed&from=yuyan&title=1&outline=1", "");
     getIfLike();
     getIfMark();
     getDocComment();
+    getDocContextData();
   }
 
   @override
   void dispose() {
     super.dispose();
     _webController = null;
+  }
+
+  getDocContextData() async {
+    DocV2 docData = await DioDoc.getDocV2(bookId, docId);
+    setState(() {
+      doc = docData;
+    });
   }
 
   getDocComment() async {
@@ -173,6 +190,34 @@ class _DocPageWebState extends State<DocPageWeb> {
       body: Scaffold(
         appBar: AppBar(
           title: Text("详情"),
+          actions: <Widget>[
+            PopupMenuButton(
+              itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
+                menuItem("A", "打开网页版"),
+                menuItem("B", "从浏览器打开"),
+                menuItem("C", "复制文档链接"),
+                menuItem("D", "分享"),
+              ],
+              onSelected: (String action) {
+                // 点击选项的时候
+                switch (action) {
+                  case 'A':
+                    openUrl(context, shareUrl);
+                    break;
+                  case 'B':
+                    openUrlOuter(shareUrl);
+                    break;
+                  case 'C':
+                    Clipboard.setData(new ClipboardData(text: shareUrl));
+                    myToast(context, "已复制剪贴板");
+                    break;
+                  case 'D':
+                    Share.share('我在语雀上分享了文档「${doc.data.title}」快来瞧瞧！ $shareUrl');
+                    break;
+                }
+              },
+            ),
+          ],
         ),
         body: Stack(
           children: <Widget>[
