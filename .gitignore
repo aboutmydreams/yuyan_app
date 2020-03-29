@@ -12,6 +12,7 @@
 
 key.properties
 key.jks
+yuyan.jks
 
 # IntelliJ related
 *.iml
