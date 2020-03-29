@@ -285,10 +285,12 @@ class _DocPageWebState extends State<DocPageWeb> {
 
                         onProgressChanged:
                             (InAppWebViewController controller, int progress) {
-                          setState(() {
-                            this.progress = progress / 100;
-                            print(this.progress);
-                          });
+                          if (progress > 85) {
+                            setState(() {
+                              this.progress = progress / 100;
+                              print(this.progress);
+                            });
+                          }
                         },
                       ),
                     ),
