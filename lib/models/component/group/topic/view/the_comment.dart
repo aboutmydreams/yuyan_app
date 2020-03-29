@@ -63,7 +63,7 @@ Widget oneComment(BuildContext context, CommentData data) {
             ),
             Container(
               width: MediaQuery.of(context).size.width - 80,
-              margin: EdgeInsets.only(top: 2),
+              margin: EdgeInsets.only(top: 2, bottom: 16),
               child: getHtml(
                 context,
                 data.bodyHtml,
