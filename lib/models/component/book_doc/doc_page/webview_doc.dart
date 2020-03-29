@@ -212,7 +212,7 @@ class _DocPageWebState extends State<DocPageWeb> {
                     myToast(context, "已复制剪贴板");
                     break;
                   case 'D':
-                    Share.share('我在语雀上分享了文档「${doc.data.title}」快来瞧瞧！ $shareUrl');
+                    Share.share('我上分享了语雀文档「${doc.data.title}」快来瞧瞧！ $shareUrl');
                     break;
                 }
               },
@@ -236,6 +236,7 @@ class _DocPageWebState extends State<DocPageWeb> {
                           ? webHeight + 30
                           : MediaQuery.of(context).size.height - 10,
                       padding: EdgeInsets.all(16),
+                      color: Colors.white,
                       child: InAppWebView(
                         initialUrl: theUrl,
                         initialOptions: InAppWebViewWidgetOptions(
@@ -251,8 +252,8 @@ class _DocPageWebState extends State<DocPageWeb> {
                             javaScriptCanOpenWindowsAutomatically: true,
                             horizontalScrollBarEnabled: false,
                             contentBlockers: [],
-                            userAgent:
-                                "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1",
+                            // userAgent:
+                            //     "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1",
                           ),
                         ),
                         initialHeaders: {},

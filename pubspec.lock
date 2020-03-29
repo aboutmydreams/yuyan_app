@@ -186,10 +186,12 @@ packages:
   flutter_inappwebview:
     dependency: "direct main"
     description:
-      name: flutter_inappwebview
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "2.1.0+1"
+      path: "."
+      ref: HEAD
+      resolved-ref: "87e5e8d546772715178112999c366b27f1be5566"
+      url: "https://github.com/aboutmydreams/flutter_inappwebview.git"
+    source: git
+    version: "3.0.0"
   flutter_staggered_animations:
     dependency: "direct main"
     description:
@@ -237,6 +239,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.3.2+1"
+  flutter_xupdate:
+    dependency: "direct main"
+    description:
+      name: flutter_xupdate
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.3"
   font_awesome_flutter:
     dependency: "direct main"
     description:
@@ -328,6 +337,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.3.0"
+  package_info:
+    dependency: "direct main"
+    description:
+      name: package_info
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.4.0+16"
   path:
     dependency: transitive
     description:

@@ -6,12 +6,17 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/begin_init/login_page/login_page.dart';
+import 'package:yuyan_app/views/my_page/setting/view/one_tile.dart';
 
 class SettingPage extends StatefulWidget {
   _SettingPageState createState() => _SettingPageState();
 }
 
 class _SettingPageState extends State<SettingPage> {
+  checkVersion() {
+    topModel.versionManage.checkVersion(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,11 +26,24 @@ class _SettingPageState extends State<SettingPage> {
       backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[
-          ChangeColorTile(),
+          // ChangeColorTile(),
+          SettingTile(
+            title: '神奇按键',
+            icon: Icons.insert_emoticon,
+            onTap: topModel.changeColor,
+          ),
+          SettingTile(
+            title: '检查更新',
+            icon: Icons.vertical_align_top,
+            onTap: checkVersion,
+            ifBadge: topModel.versionManage.isLastest,
+          ),
+
           ListTile(
             title: Text(
               '退出登录',
               textAlign: TextAlign.left,
+              style: AppStyles.textStyleBC,
             ),
             leading: Icon(
               Icons.power_settings_new,
@@ -34,9 +52,8 @@ class _SettingPageState extends State<SettingPage> {
             onTap: () async {
               SharedPreferences prefs = await SharedPreferences.getInstance();
               prefs.clear();
-
               CookieManager cookieManager = CookieManager();
-              bool hadCookies = await cookieManager.clearCookies();
+              await cookieManager.clearCookies();
               Navigator.of(context).pushAndRemoveUntil(
                   new MaterialPageRoute(
                     builder: (BuildContext context) => new LoginPage(),
@@ -46,23 +63,6 @@ class _SettingPageState extends State<SettingPage> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class ChangeColorTile extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
-        '神奇按键',
-        textAlign: TextAlign.left,
-      ),
-      leading: Icon(
-        Icons.insert_emoticon,
-        color: topModel.primarySwatchColor,
-      ),
-      onTap: topModel.changeColor,
     );
   }
 }
