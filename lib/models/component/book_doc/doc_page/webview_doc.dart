@@ -240,12 +240,11 @@ class _DocPageWebState extends State<DocPageWeb> {
                       child: InAppWebView(
                         initialUrl: theUrl,
                         initialOptions: InAppWebViewWidgetOptions(
-                          androidInAppWebViewOptions:
-                              AndroidInAppWebViewOptions(
+                          android: AndroidInAppWebViewOptions(
                             databaseEnabled: true,
                             domStorageEnabled: true,
                           ),
-                          inAppWebViewOptions: InAppWebViewOptions(
+                          crossPlatform: InAppWebViewOptions(
                             debuggingEnabled: true,
                             cacheEnabled: true,
                             transparentBackground: true,
