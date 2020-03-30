@@ -67,7 +67,6 @@ Widget oneMark(BuildContext context, MarkData data) {
 
   return GestureDetector(
     onTap: () {
-      // OpenPage.doc(context, bookId: data.targetBookId, docId: data.targetId);
       if (data.targetType == "User") {
         OpenPage.group(
           context,

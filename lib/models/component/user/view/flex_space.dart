@@ -4,6 +4,7 @@ import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 Widget userFlexSpace(BuildContext context,
     {String description, int userId, String avatarUrl, String tag}) {
+  tag ??= userId.toString();
   return Stack(
     children: <Widget>[
       Positioned(

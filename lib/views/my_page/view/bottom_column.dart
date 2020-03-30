@@ -1,6 +1,8 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
+import 'package:yuyan_app/state_manage/toppest.dart';
 
 Widget threeWidget(BuildContext context) {
   return Container(
@@ -23,15 +25,20 @@ Widget threeWidget(BuildContext context) {
             imgName: "suggest", text: "意见与反馈", routeName: "/my/suggest"),
         oneColumn(context,
             imgName: "about", text: "关于语燕", routeName: "/my/about"),
-        oneColumn(context,
-            imgName: "setting", text: "设置", routeName: "/my/setting"),
+        oneColumn(
+          context,
+          imgName: "setting",
+          text: "设置",
+          routeName: "/my/setting",
+          ifBadge: topModel.versionManage.isLastest,
+        ),
       ],
     ),
   );
 }
 
 Widget oneColumn(BuildContext context,
-    {String text, String imgName, String routeName}) {
+    {String text, String imgName, String routeName, bool ifBadge: false}) {
   return ListTile(
     leading: Container(
       margin: EdgeInsets.only(left: 24),
@@ -42,11 +49,21 @@ Widget oneColumn(BuildContext context,
         fit: BoxFit.contain,
       ),
     ),
-    title: Text(
-      '$text',
-      textAlign: TextAlign.left,
-      style: AppStyles.textStyleBC,
-    ),
+    title: (text == "设置" && !ifBadge)
+        ? Badge(
+            padding: EdgeInsets.all(3),
+            position: BadgePosition(left: 34),
+            child: Text(
+              '$text',
+              textAlign: TextAlign.left,
+              style: AppStyles.textStyleBC,
+            ),
+          )
+        : Text(
+            '$text',
+            textAlign: TextAlign.left,
+            style: AppStyles.textStyleBC,
+          ),
     trailing: Container(
       margin: EdgeInsets.only(right: 20),
       child: Icon(Icons.chevron_right),

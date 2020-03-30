@@ -32,8 +32,10 @@ class OneNewsContainer extends StatelessWidget {
             tag: tag,
           );
         } else if (data.subjectType == "Doc") {
-          OpenPage.doc(
+          OpenPage.docWeb(
             context,
+            login: data.secondSubject.user.login,
+            bookSlug: data.secondSubject.slug,
             bookId: data.subject.bookId,
             docId: data.subject.id,
           );
@@ -44,9 +46,18 @@ class OneNewsContainer extends StatelessWidget {
             iid: data.subject.iid,
             groupId: data.subject.groupId,
           );
-        } else {
+        } else if (((data.subjectType == "Comment") &&
+            (data.secondSubjectType == "Doc"))) {
           // 如果是评论的话 Comment 看 second_subject_type 定位
           // print(data.subjectType);
+          OpenPage.docWeb(
+            context,
+            login: data.thirdSubject.user.login,
+            bookSlug: data.thirdSubject.slug,
+            bookId: data.thirdSubjectId,
+            docId: data.secondSubjectId,
+          );
+        } else {
           var url = "https://www.yuque.com/go/notification/${data.id}";
           openUrl(context, url);
         }
@@ -78,10 +89,11 @@ class OneNewsContainer extends StatelessWidget {
                 child: Hero(
                   tag: tag,
                   child: userAvatar(
-                      data.actor != null
-                          ? data.actor.avatarUrl
-                          : "https://cdn.nlark.com/yuque/0/2019/png/84147/1547032500238-d93512f4-db23-442f-b4d8-1d46304f9673.png",
-                      height: 45),
+                    data.actor != null
+                        ? data.actor.avatarUrl
+                        : "https://cdn.nlark.com/yuque/0/2019/png/84147/1547032500238-d93512f4-db23-442f-b4d8-1d46304f9673.png",
+                    height: 45,
+                  ),
                 ),
               ),
             ),
