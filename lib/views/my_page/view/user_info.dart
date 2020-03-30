@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_info_data.dart';
+import 'package:yuyan_app/models/oauth2/random_string/random_string.dart';
 import 'package:yuyan_app/models/tools/get_pref.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/member.dart';
@@ -18,6 +19,8 @@ Widget userInfo(BuildContext context) {
   double leftMargin = MediaQuery.of(context).size.width * 0.075;
   double descriptionWidth =
       MediaQuery.of(context).size.width - leftMargin * 3.6 - 95;
+  String tag =
+      randomString(5) + DateTime.now().microsecondsSinceEpoch.toString();
 
   return Container(
     margin: EdgeInsets.only(
@@ -42,6 +45,7 @@ Widget userInfo(BuildContext context) {
             OpenPage.user(
               context,
               login: myInfo.data.login,
+              tag: tag,
               userId: myInfo.data.id,
               description: myInfo.data.description,
               name: myInfo.data.name,
@@ -53,7 +57,10 @@ Widget userInfo(BuildContext context) {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(width: 16),
-              userAvatar(myInfo.data.avatarUrl, height: 60),
+              Hero(
+                tag: tag,
+                child: userAvatar(myInfo.data.avatarUrl, height: 60),
+              ),
               SizedBox(width: 16),
               Container(
                 height: 84,

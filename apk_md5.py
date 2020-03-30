@@ -17,3 +17,4 @@ def get_md5_01(file_path):
 
 
 print(get_md5_01("./build/app/outputs/apk/release/app-release.apk"))
+# print(get_md5_01("./build/app/outputs/apk/release/yuyan-1.0.9.apk"))

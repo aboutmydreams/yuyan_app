@@ -13,6 +13,8 @@ import 'package:yuyan_app/state_manage/version_manage/data/update_data.dart';
 class VersionManage extends Model {
   String checkUrl =
       "https://service-iw6blmei-1256880247.gz.apigw.tencentcs.com/release/yuyan_v?v=";
+  String checkUrl2 =
+      "https://service-kuz2fghy-1256880247.gz.apigw.tencentcs.com/release/yuyan_v2?";
   bool _isLastest = true;
   bool get isLastest => _isLastest;
   String _message;
@@ -34,7 +36,7 @@ class VersionManage extends Model {
     var version = await getVersion();
     _version = version;
     try {
-      Response response = await Dio().get(checkUrl + _version);
+      Response response = await Dio().get(checkUrl2 + _version);
       await writeJson('version', response.data);
       print(response.data);
       if (response.data["UpdateStatus"] == 1) {
@@ -146,7 +148,7 @@ class VersionManage extends Model {
   }
 
   void checkUpdateDefault() {
-    FlutterXUpdate.checkUpdate(url: checkUrl + _version);
+    FlutterXUpdate.checkUpdate(url: checkUrl2 + _version);
   }
 
   void initAll() {
