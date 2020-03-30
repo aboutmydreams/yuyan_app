@@ -15,10 +15,10 @@ class SettingTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: (title == "设置" && !ifBadge)
+      title: (title == "检查更新" && !ifBadge)
           ? Badge(
               padding: EdgeInsets.all(3),
-              position: BadgePosition(left: 34),
+              position: BadgePosition(left: 60),
               child: Text(
                 '$title',
                 textAlign: TextAlign.left,

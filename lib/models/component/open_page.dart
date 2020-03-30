@@ -29,6 +29,8 @@ class OpenPage {
         docId: docId,
       );
     }));
+    // print(
+    // "login: $login,url: $url,bookSlug: $bookSlug,bookId: $bookId,docId: $docId,");
   }
 
   // 打开其他用户的页面

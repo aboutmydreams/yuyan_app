@@ -19,6 +19,7 @@ class _SettingPageState extends State<SettingPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(topModel.versionManage.isLastest);
     return Scaffold(
       appBar: AppBar(
         title: Text("设置"),
@@ -38,17 +39,9 @@ class _SettingPageState extends State<SettingPage> {
             onTap: checkVersion,
             ifBadge: topModel.versionManage.isLastest,
           ),
-
-          ListTile(
-            title: Text(
-              '退出登录',
-              textAlign: TextAlign.left,
-              style: AppStyles.textStyleBC,
-            ),
-            leading: Icon(
-              Icons.power_settings_new,
-              color: topModel.primarySwatchColor,
-            ),
+          SettingTile(
+            title: '退出登录',
+            icon: Icons.power_settings_new,
             onTap: () async {
               SharedPreferences prefs = await SharedPreferences.getInstance();
               prefs.clear();

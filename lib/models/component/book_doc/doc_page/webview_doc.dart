@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:share/share.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/book_doc/doc_page/view/doc_title.dart';
 import 'package:yuyan_app/models/component/book_doc/doc_page/view/floating_collapsed.dart';
 import 'package:yuyan_app/models/component/group/topic/view/the_comment.dart';
 import 'package:yuyan_app/models/component/group/topic/view/the_panel.dart';
@@ -11,6 +13,7 @@ import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/doc_data_v2.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
+import 'package:yuyan_app/models/widgets_big/html/body_html.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/menu_item.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
@@ -53,6 +56,7 @@ class _DocPageWebState extends State<DocPageWeb> {
   PanelController _pc = PanelController();
   TextEditingController _tc = TextEditingController();
 
+  bool useWebView = true;
   String theUrl = "https://yuque.com/";
   String shareUrl = "https://yuque.com/";
   double progress = 0;
@@ -212,7 +216,8 @@ class _DocPageWebState extends State<DocPageWeb> {
                     myToast(context, "已复制剪贴板");
                     break;
                   case 'D':
-                    Share.share('我上分享了语雀文档「${doc.data.title}」快来瞧瞧！ $shareUrl');
+                    Share.share(
+                        '我上分享了语雀文档「${doc != null ? doc.data.title : '文档'}」快来瞧瞧！ $shareUrl');
                     break;
                 }
               },
@@ -230,70 +235,111 @@ class _DocPageWebState extends State<DocPageWeb> {
                 color: Colors.white,
                 child: ListView(
                   children: <Widget>[
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: webHeight != 0
-                          ? webHeight + 30
-                          : MediaQuery.of(context).size.height - 10,
-                      padding: EdgeInsets.all(16),
-                      color: Colors.white,
-                      child: InAppWebView(
-                        initialUrl: theUrl,
-                        initialOptions: InAppWebViewWidgetOptions(
-                          android: AndroidInAppWebViewOptions(
-                            databaseEnabled: true,
-                            domStorageEnabled: true,
-                          ),
-                          crossPlatform: InAppWebViewOptions(
-                            debuggingEnabled: true,
-                            cacheEnabled: true,
-                            transparentBackground: true,
-                            javaScriptCanOpenWindowsAutomatically: true,
-                            horizontalScrollBarEnabled: false,
-                            contentBlockers: [],
-                            // userAgent:
-                            //     "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1",
-                          ),
-                        ),
-                        initialHeaders: {},
-                        onWebViewCreated: (InAppWebViewController controller) {
-                          _webController = controller;
-                        },
-                        onLoadStart:
-                            (InAppWebViewController controller, String url) {
-                          setState(() {
-                            this.theUrl = url;
-                          });
-                        },
-                        onLoadStop: (InAppWebViewController controller,
-                            String url) async {
-                          // 页面加载完成后注入js方法, 获取页面总高度
-                          var height = await _webController.evaluateJavascript(
-                            source: """
+                    useWebView
+                        ? Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height - 60,
+                            padding: EdgeInsets.all(16),
+                            color: Colors.white,
+                            child: InAppWebView(
+                              initialUrl: theUrl,
+                              initialOptions: InAppWebViewWidgetOptions(
+                                android: AndroidInAppWebViewOptions(
+                                  databaseEnabled: true,
+                                  domStorageEnabled: true,
+                                ),
+                                crossPlatform: InAppWebViewOptions(
+                                  debuggingEnabled: true,
+                                  cacheEnabled: true,
+                                  transparentBackground: true,
+                                  javaScriptCanOpenWindowsAutomatically: true,
+                                  horizontalScrollBarEnabled: false,
+                                  contentBlockers: [],
+                                  // userAgent:
+                                  //     "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1",
+                                ),
+                              ),
+                              initialHeaders: {},
+                              onWebViewCreated:
+                                  (InAppWebViewController controller) {
+                                _webController = controller;
+                              },
+                              onLoadStart: (InAppWebViewController controller,
+                                  String url) {
+                                setState(() {
+                                  this.theUrl = url;
+                                });
+                              },
+                              onLoadStop: (InAppWebViewController controller,
+                                  String url) async {
+                                // 页面加载完成后注入js方法, 获取页面总高度
+                                var height =
+                                    await _webController.evaluateJavascript(
+                                  source: """
                               document.body.scrollHeight;
                             """,
-                          );
-                          setState(() {
-                            this.theUrl = url;
-                            webHeight = double.parse(height.toString());
-                          });
-                        },
+                                );
+                                double theWebH =
+                                    double.parse(height.toString());
+                                print("theWebH=======");
+                                print(theWebH);
+                                if (theWebH < 5000) {
+                                  setState(() {
+                                    this.theUrl = url;
+                                    webHeight = theWebH;
+                                  });
+                                } else {
+                                  setState(() {
+                                    this.theUrl = url;
+                                    useWebView = false;
+                                  });
+                                }
+                              },
 
-                        // onConsoleMessage: (InAppWebViewController controller,
-                        //     ConsoleMessage consoleMessage) {
-                        // },
+                              // onConsoleMessage: (InAppWebViewController controller,
+                              //     ConsoleMessage consoleMessage) {
+                              // },
 
-                        onProgressChanged:
-                            (InAppWebViewController controller, int progress) {
-                          if (progress > 85) {
-                            setState(() {
-                              this.progress = progress / 100;
-                              print(this.progress);
-                            });
-                          }
-                        },
-                      ),
-                    ),
+                              onProgressChanged:
+                                  (InAppWebViewController controller,
+                                      int progress) {
+                                if (progress > 85) {
+                                  setState(() {
+                                    this.progress = progress / 100;
+                                    print(this.progress);
+                                  });
+                                }
+                              },
+                            ),
+                          )
+                        : (doc != null) && (comments != null)
+                            ? Column(
+                                children: <Widget>[
+                                  // 文档标题
+                                  docTitle(doc.data.title),
+
+                                  // 作者
+                                  docAuthor(doc.data),
+
+                                  // 文档内容
+                                  getHtml(
+                                    context,
+                                    doc.data.bodyHtml,
+                                    padding: EdgeInsets.all(16),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 16),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Text(
+                                            "浏览量 $hits   评论 ${comments.data.length}   稻谷 ${likeCount * 7}",
+                                            style: AppStyles.textStyleC),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : loading(),
                     (comments == null)
                         ? loading()
                         : TheComment(

@@ -12,6 +12,8 @@ Widget toDoc(BuildContext context, Data data) {
       // openUrl(context, data.event[0].url);
       OpenPage.docWeb(
         context,
+        login: data.event[0].url.split("/")[3],
+        bookSlug: data.event[0].url.split("/")[4],
         url: data.event[0].url,
         bookId: data.event[0].bookId,
         docId: data.event[0].id,
