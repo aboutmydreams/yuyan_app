@@ -3,7 +3,8 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 Widget userFlexSpace(BuildContext context,
-    {String description, int userId, String avatarUrl, int tag}) {
+    {String description, int userId, String avatarUrl, String tag}) {
+  tag ??= userId.toString();
   return Stack(
     children: <Widget>[
       Positioned(
@@ -34,7 +35,7 @@ Widget userFlexSpace(BuildContext context,
             ),
             Spacer(),
             Hero(
-              tag: tag ?? userId,
+              tag: tag,
               child: userAvatar(avatarUrl, height: 60),
             ),
           ],

@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:yuyan_app/models/browser_web/browser_appbar.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/widgets_small/user_event.dart';
@@ -10,9 +9,14 @@ Widget firstItemUI(BuildContext context, Data data) {
   String imageUrl = data.cover +
       "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_400%2Ch_220%2Fformat%2Cpng";
   return GestureDetector(
-    /// 临时解决方案，临时的时间可能会很久
     onTap: () {
-      OpenPage.doc(context, bookId: data.bookId, docId: data.id);
+      OpenPage.docWeb(
+        context,
+        login: data.book.user.login,
+        bookSlug: data.book.slug,
+        bookId: data.bookId,
+        docId: data.id,
+      );
     },
     child: Container(
       height: 216,

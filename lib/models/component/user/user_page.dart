@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/user/view/book_page.dart';
 import 'package:yuyan_app/models/component/user/view/flex_space.dart';
 import 'package:yuyan_app/models/component/user/view/follower_page.dart';
@@ -39,6 +38,7 @@ class UserPage extends StatefulWidget {
         avatarUrl: avatarUrl,
         description: description,
         pageIndex: pageIndex,
+        tag: tag,
       );
 }
 
@@ -57,7 +57,7 @@ class _UserPageState extends State<UserPage>
   int userId;
   String name;
   String description;
-  int tag;
+  String tag;
   String avatarUrl;
 
   int pageIndex;
@@ -213,6 +213,7 @@ class _UserPageState extends State<UserPage>
                       description: description,
                       userId: userId,
                       avatarUrl: avatarUrl,
+                      tag: tag,
                     ),
                   ),
 

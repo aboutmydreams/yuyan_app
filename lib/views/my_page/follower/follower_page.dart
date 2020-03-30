@@ -38,7 +38,7 @@ class _FollowerPageState extends State<FollowerPage> {
 
     if (mounted) {
       setState(() {
-        dataList.addAll(theData.data);
+        dataList = theData.data;
         offset += 20;
       });
     }

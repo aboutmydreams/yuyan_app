@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
-import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/my_mark_data.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
+import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 
 class MarkPage extends StatefulWidget {
   MarkPage({Key key}) : super(key: key);
@@ -67,7 +67,26 @@ Widget oneMark(BuildContext context, MarkData data) {
 
   return GestureDetector(
     onTap: () {
-      OpenPage.doc(context, bookId: data.targetBookId, docId: data.targetId);
+      if (data.targetType == "User") {
+        OpenPage.group(
+          context,
+          groupdata: GroupData(
+            id: data.target.id,
+            login: data.target.login,
+            name: data.target.name,
+            description: data.target.description,
+            avatarUrl: data.target.avatarUrl,
+          ),
+        );
+      } else {
+        OpenPage.docWeb(
+          context,
+          login: data.targetGroup.login,
+          bookSlug: data.targetBook.slug,
+          bookId: data.targetBookId,
+          docId: data.targetId,
+        );
+      }
     },
     child: Container(
       margin: EdgeInsets.only(top: 2, bottom: 9, left: 10, right: 10),

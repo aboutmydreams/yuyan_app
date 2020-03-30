@@ -52,7 +52,7 @@ dependencies:
   cached_network_image: ^2.0.0
 
   # 写入文件
-  path_provider: ^1.5.1
+  path_provider: ^1.6.5
 
   # 状态管理
   provider: ^3.1.0+1
@@ -66,10 +66,15 @@ dependencies:
   flutter_widget_from_html: ^0.3.2+1
 
   # 缓存
-  shared_preferences: ^0.5.6
+  shared_preferences: ^0.5.6+3
+
+  # 分享
+  share: ^0.6.3+6
 
   # webView
   webview_flutter: ^0.3.18+1
+  flutter_inappwebview:
+    git: https://github.com/aboutmydreams/flutter_inappwebview.git
 
   # flare
   flare_flutter: ^1.8.2
@@ -98,6 +103,12 @@ dependencies:
   # 评论 下滑出的抽屉
   sliding_up_panel: ^1.0.0
 
+  # 更新apk https://github.com/xuexiangjys/XUpdate
+  flutter_xupdate: ^0.0.3
+
+  # 获取版本号
+  package_info: ^0.4.0+16
+
   flutter_webview_plugin:
     git: https://github.com/aboutmydreams/flutter_webview_plugin.git
 
@@ -117,6 +128,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/js/doc_height.js
     - assets/flares/yuyan_first.flr
     - assets/flares/Like.flr
     - assets/flares/mark.flr

@@ -6,7 +6,7 @@ import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_small/user_event.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/attent_data.dart';
 
-Widget toUserOrBook(BuildContext context, Data data) {
+Widget toBook(BuildContext context, Data data) {
   return Container(
     padding: EdgeInsets.only(top: 14, bottom: 20),
     decoration: BoxDecoration(

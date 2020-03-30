@@ -4,8 +4,9 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/attent_data.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/explore_page/attention/view/to_artboard.dart';
+import 'package:yuyan_app/views/explore_page/attention/view/to_book.dart';
 import 'package:yuyan_app/views/explore_page/attention/view/to_doc.dart';
-import 'package:yuyan_app/views/explore_page/attention/view/to_user_or_book.dart';
+import 'package:yuyan_app/views/explore_page/attention/view/to_user.dart';
 
 class AttentionPage extends StatefulWidget {
   AttentionPage({Key key}) : super(key: key);
@@ -65,9 +66,9 @@ class _AttentionPageState extends State<AttentionPage>
             } else if (attentDatas[index].subjectType == "Artboard") {
               return toArtboard(context, attentDatas[index]);
             } else if (attentDatas[index].subjectType == "User") {
-              return toUserOrBook(context, attentDatas[index]);
+              return toUser(context, attentDatas[index]);
             } else if (attentDatas[index].subjectType == "Book") {
-              return toUserOrBook(context, attentDatas[index]);
+              return toBook(context, attentDatas[index]);
             } else {
               return Text(attentDatas[index].subjectType);
             }

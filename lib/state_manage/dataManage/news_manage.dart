@@ -3,7 +3,6 @@ import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/tools/write_json.dart';
 
 import 'data/news_data.dart';
-import 'dart:io';
 
 class NewsManage extends Model {
   int offset = 0;
@@ -60,7 +59,11 @@ class NewsManage extends Model {
       // _newsCount.count = _newsCount.count - 1;
       int longTime = 80 * i;
       Future.delayed(Duration(milliseconds: longTime), () {
-        _newsCount.count -= 1;
+        if (_newsCount.count > 0) {
+          _newsCount.count -= 1;
+        } else {
+          _newsCount.count = 0;
+        }
         _allNews.notifications[i].unread = false;
         notifyListeners();
       });

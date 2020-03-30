@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
+import 'package:yuyan_app/models/oauth2/random_string/random_string.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
@@ -17,10 +18,49 @@ class OneNewsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String lastSub = clearSub(data);
+    String tag =
+        randomString(5) + DateTime.now().microsecondsSinceEpoch.toString();
     return GestureDetector(
       onTap: () {
-        var url = "https://www.yuque.com/go/notification/${data.id}";
-        openUrl(context, url);
+        if (data.subjectType == "User") {
+          OpenPage.user(
+            context,
+            login: data.actor.login,
+            name: data.actor.name,
+            avatarUrl: data.actor.avatarUrl,
+            userId: data.actor.id,
+            tag: tag,
+          );
+        } else if (data.subjectType == "Doc") {
+          OpenPage.docWeb(
+            context,
+            login: data.secondSubject.user.login,
+            bookSlug: data.secondSubject.slug,
+            bookId: data.subject.bookId,
+            docId: data.subject.id,
+          );
+        } else if (data.subjectType == "Topic") {
+          OpenPage.topic(
+            context,
+            id: data.subjectId,
+            iid: data.subject.iid,
+            groupId: data.subject.groupId,
+          );
+        } else if (((data.subjectType == "Comment") &&
+            (data.secondSubjectType == "Doc"))) {
+          // 如果是评论的话 Comment 看 second_subject_type 定位
+          // print(data.subjectType);
+          OpenPage.docWeb(
+            context,
+            login: data.thirdSubject.user.login,
+            bookSlug: data.thirdSubject.slug,
+            bookId: data.thirdSubjectId,
+            docId: data.secondSubjectId,
+          );
+        } else {
+          var url = "https://www.yuque.com/go/notification/${data.id}";
+          openUrl(context, url);
+        }
       },
       child: Container(
         height: 70,
@@ -33,21 +73,28 @@ class OneNewsContainer extends StatelessWidget {
               onTap: () {
                 // var url = "https://www.yuque.com/${data.actor.login}";
                 // openUrl(context, url);
-                OpenPage.user(
-                  context,
-                  login: data.actor.login,
-                  name: data.actor.name,
-                  avatarUrl: data.actor.avatarUrl,
-                  userId: data.actor.id,
-                );
+                if (data.actor != null) {
+                  OpenPage.user(
+                    context,
+                    login: data.actor.login,
+                    name: data.actor.name,
+                    avatarUrl: data.actor.avatarUrl,
+                    userId: data.actor.id,
+                    tag: tag,
+                  );
+                }
               },
               child: Container(
                 margin: EdgeInsets.only(right: 20),
-                child: userAvatar(
+                child: Hero(
+                  tag: tag,
+                  child: userAvatar(
                     data.actor != null
                         ? data.actor.avatarUrl
                         : "https://cdn.nlark.com/yuque/0/2019/png/84147/1547032500238-d93512f4-db23-442f-b4d8-1d46304f9673.png",
-                    height: 45),
+                    height: 45,
+                  ),
+                ),
               ),
             ),
             Column(

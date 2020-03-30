@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -9,8 +8,6 @@ import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/widgets_big/html/view/blockquote.dart';
 import 'package:yuyan_app/models/widgets_big/html/view/img.dart';
 import 'package:yuyan_app/models/widgets_big/html/view/pre.dart';
-import 'package:yuyan_app/models/widgets_big/image_page/image_page.dart';
-import 'package:yuyan_app/views/my_page/my_page.dart';
 
 Widget getHtml(BuildContext context, String bodyHtml, {EdgeInsets padding}) {
   // print(bodyHtml.substring(bodyHtml.length - 400));
@@ -172,9 +169,34 @@ Widget getHtml(BuildContext context, String bodyHtml, {EdgeInsets padding}) {
               );
             case 'p':
               if (!node.outerHtml.contains("img")) {
-                return HtmlWidget(
-                  node.outerHtml,
-                  bodyPadding: EdgeInsets.only(bottom: 3),
+                // return HtmlWidget(
+                //   node.outerHtml,
+                //   bodyPadding: EdgeInsets.only(bottom: 3),
+                // );
+                return Text(node.text);
+              }
+              break;
+            case 'h1':
+              if (!node.outerHtml.contains("img")) {
+                // return HtmlWidget(
+                //   node.outerHtml,
+                //   bodyPadding: EdgeInsets.only(bottom: 3),
+                // );
+                return Text(
+                  node.text,
+                  style: AppStyles.textStyleA,
+                );
+              }
+              break;
+            case 'h2':
+              if (!node.outerHtml.contains("img")) {
+                // return HtmlWidget(
+                //   node.outerHtml,
+                //   bodyPadding: EdgeInsets.only(bottom: 3),
+                // );
+                return Text(
+                  node.text,
+                  style: AppStyles.textStyleA,
                 );
               }
               break;
