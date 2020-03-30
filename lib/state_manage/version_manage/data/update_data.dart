@@ -2,7 +2,7 @@ class UpdateJson {
   int code;
   String msg;
   int updateStatus;
-  String versionCode;
+  int versionCode;
   String versionName;
   String iOSVersionName;
   String iOSInstallUrl;
