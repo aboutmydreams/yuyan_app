@@ -5,6 +5,7 @@ import 'package:yuyan_app/models/net/requests_api/user/data/user_follow_data.dar
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/tools/get_pref.dart';
+import 'package:yuyan_app/models/tools/get_tag.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
@@ -76,10 +77,12 @@ class _FollowerPageState extends State<FollowerPage> {
 }
 
 Widget oneFollow(BuildContext context, FollowsData data) {
+  String tag = getTag();
   return GestureDetector(
     onTap: () {
       OpenPage.user(
         context,
+        tag: tag,
         login: data.login,
         name: data.name,
         avatarUrl: data.avatarUrl,

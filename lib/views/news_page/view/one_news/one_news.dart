@@ -4,6 +4,7 @@ import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/oauth2/random_string/random_string.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
+import 'package:yuyan_app/models/tools/get_tag.dart';
 import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/news_data.dart';
@@ -18,8 +19,8 @@ class OneNewsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String lastSub = clearSub(data);
-    String tag =
-        randomString(5) + DateTime.now().microsecondsSinceEpoch.toString();
+    String tag = getTag();
+
     return GestureDetector(
       onTap: () {
         if (data.subjectType == "User") {
