@@ -11,7 +11,7 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.8+1.0.8
+version: 1.0.10+1.0.10
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -101,7 +101,7 @@ dependencies:
   photo_view: ^0.9.2
 
   # 评论 下滑出的抽屉
-  sliding_up_panel: ^1.0.0
+  sliding_up_panel: ^1.0.1
 
   # 更新apk https://github.com/xuexiangjys/XUpdate
   flutter_xupdate: ^0.0.3
