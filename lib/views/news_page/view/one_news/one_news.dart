@@ -183,6 +183,7 @@ Map<String, String> newsType = {
   "apply_join_group": "申请加入团队",
   "join_group_user": "添加了团队成员",
   "joined_a_group": "将你添加到了团队",
+  "join_collaborator": "加入了协作",
   "group_invitation": "邀请你加入团队",
   "close_topic": "关闭了话题",
   "user_member_will_expire": "会员即将到期",
