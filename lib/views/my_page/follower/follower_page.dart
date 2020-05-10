@@ -10,7 +10,6 @@ import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
-
 import 'one_buttom.dart';
 
 class FollowerPage extends StatefulWidget {
@@ -78,7 +77,6 @@ class _FollowerPageState extends State<FollowerPage> {
 
 Widget oneFollow(BuildContext context, FollowsData data) {
   String tag = getTag();
-  // print(clearText(data.description, 15));
   return GestureDetector(
     onTap: () {
       OpenPage.user(
