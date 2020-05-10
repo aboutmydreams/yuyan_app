@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
+import 'package:yuyan_app/models/tools/get_tag.dart';
 import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_big/html/body_html.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
@@ -32,13 +34,29 @@ class TheComment extends StatelessWidget {
 }
 
 Widget oneComment(BuildContext context, CommentData data) {
+  String tag = getTag();
   return Container(
     margin: EdgeInsets.only(bottom: 16),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        userAvatar(data.user.avatarUrl, height: 28),
+        InkWell(
+          onTap: () {
+            OpenPage.user(
+              context,
+              tag: tag,
+              login: data.user.login,
+              name: data.user.name,
+              avatarUrl: data.user.avatarUrl,
+              userId: data.id,
+            );
+          },
+          child: Hero(
+            tag: tag,
+            child: userAvatar(data.user.avatarUrl, height: 28),
+          ),
+        ),
         SizedBox(width: 10),
         Column(
           mainAxisAlignment: MainAxisAlignment.start,

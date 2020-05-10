@@ -7,6 +7,7 @@ class CommentTextfierd extends StatelessWidget {
       this.hintText: "说点什么吧⋯⋯",
       this.w: 340,
       this.controller,
+      this.maxLines: 3,
       this.autofocus: false})
       : super(key: key);
 
@@ -14,6 +15,7 @@ class CommentTextfierd extends StatelessWidget {
   final String hintText;
   final bool autofocus;
   final double w;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class CommentTextfierd extends StatelessWidget {
       child: TextField(
         controller: controller,
         keyboardType: TextInputType.text,
-        maxLines: 3,
+        maxLines: maxLines,
         // 是否自动更正
         autocorrect: true,
         // 是否自动对焦

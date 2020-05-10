@@ -4,6 +4,7 @@ import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_member_data.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
+import 'package:yuyan_app/models/tools/get_tag.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
@@ -37,10 +38,12 @@ class _MemberPageState extends State<MemberPage> {
 }
 
 Widget oneMember(BuildContext context, MemberData data) {
+  String tag = getTag();
   return GestureDetector(
     onTap: () {
       OpenPage.user(
         context,
+        tag: tag,
         login: data.user.login,
         userId: data.userId,
         avatarUrl: data.user.avatarUrl,

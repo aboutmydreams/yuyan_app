@@ -10,6 +10,7 @@ class FloatingCollaps extends StatelessWidget {
       this.onTap,
       this.markFunc,
       this.likeFunc,
+      this.commentCount,
       this.ifMark: false,
       this.ifLike: false})
       : super(key: key);
@@ -19,6 +20,7 @@ class FloatingCollaps extends StatelessWidget {
   final Function onTap;
   final bool ifMark;
   final bool ifLike;
+  final int commentCount;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,7 @@ class FloatingCollaps extends StatelessWidget {
             ),
             Container(
               child: Text(
-                "  说点什么吧⋯⋯",
+                "  $commentCount 人评论 说点什么吧⋯⋯",
                 style: TextStyle(
                   color: AppColors.primaryText,
                   fontFamily: "sans_bold",
