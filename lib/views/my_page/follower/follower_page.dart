@@ -78,6 +78,7 @@ class _FollowerPageState extends State<FollowerPage> {
 
 Widget oneFollow(BuildContext context, FollowsData data) {
   String tag = getTag();
+  // print(clearText(data.description, 15));
   return GestureDetector(
     onTap: () {
       OpenPage.user(
@@ -125,7 +126,7 @@ Widget oneFollow(BuildContext context, FollowsData data) {
                       SizedBox(height: 2),
                       Container(
                         child: Text(
-                          "${clearText(data.description, 15)}",
+                          "${clearText(String.fromCharCodes(data.description.toString().runes), 15)}",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppStyles.textStyleC,
