@@ -161,7 +161,9 @@ class _DocPageWebState extends State<DocPageWeb> {
     } else {
       pulishComment(_tc.text).then((ans) {
         if (ans) {
+          // 关闭抽屉，清空输入
           _pc.close();
+          _tc.clear();
           getDocComment();
         }
       });
