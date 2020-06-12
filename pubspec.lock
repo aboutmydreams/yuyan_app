@@ -186,12 +186,10 @@ packages:
   flutter_inappwebview:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "87e5e8d546772715178112999c366b27f1be5566"
-      url: "https://github.com/aboutmydreams/flutter_inappwebview.git"
-    source: git
-    version: "3.0.0"
+      name: flutter_inappwebview
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.3.0+3"
   flutter_staggered_animations:
     dependency: "direct main"
     description:
@@ -658,5 +656,5 @@ packages:
     source: hosted
     version: "3.5.0"
 sdks:
-  dart: ">=2.7.0-dev <3.0.0"
+  dart: ">=2.7.0 <3.0.0"
   flutter: ">=1.12.13+hotfix.5 <2.0.0"

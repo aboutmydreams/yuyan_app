@@ -226,7 +226,7 @@ SPEC CHECKSUMS:
   FirebaseInstallations: 575cd32f2aec0feeb0e44f5d0110a09e5e60b47b
   FirebaseInstanceID: 6668efc1655a4052c083f287a7141f1ead12f9c2
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  flutter_inappwebview: 239198123453705522ba6c4f78d3d7468215f248
+  flutter_inappwebview: 69dfbac46157b336ffbec19ca6dfd4638c7bf189
   flutter_webview_plugin: ed9e8a6a96baf0c867e90e1bce2673913eeac694
   flutter_xupdate: c7c62e59874a8d7dde645563cd3c458fdfa1830a
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a

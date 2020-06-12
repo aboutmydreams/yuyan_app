@@ -237,10 +237,16 @@ class _DocPageWebState extends State<DocPageWeb> {
                 color: Colors.white,
                 child: InAppWebView(
                   initialUrl: theUrl,
-                  initialOptions: InAppWebViewWidgetOptions(
+                  initialOptions: InAppWebViewGroupOptions(
                     android: AndroidInAppWebViewOptions(
                       databaseEnabled: true,
                       domStorageEnabled: true,
+                    ),
+                    ios: IOSInAppWebViewOptions(
+                      // disallowOverScroll: true,
+                      enableViewportScale: true,
+                      suppressesIncrementalRendering: true,
+                      allowsLinkPreview: true,
                     ),
                     crossPlatform: InAppWebViewOptions(
                       debuggingEnabled: true,
