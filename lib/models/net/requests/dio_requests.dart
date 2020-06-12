@@ -18,6 +18,7 @@ class DioReq {
     headers["Cookie"] = _allCookie;
     headers["x-csrf-token"] = ctoken.toString();
     headers["X-Auth-Token"] = token.toString();
+    // print(token.toString());
 
     try {
       Options options = Options(
