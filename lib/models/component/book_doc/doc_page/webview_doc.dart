@@ -232,8 +232,8 @@ class _DocPageWebState extends State<DocPageWeb> {
               bottom: 60,
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height - 30,
-                padding: EdgeInsets.all(16),
+                height: MediaQuery.of(context).size.height,
+                padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 color: Colors.white,
                 child: InAppWebView(
                   initialUrl: theUrl,
