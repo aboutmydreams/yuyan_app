@@ -103,9 +103,9 @@ class _LoginPageState extends State<LoginPage> {
 
       if (haveSession(result)) {
         // print(result);
-        prefs.setString("_yuque_session", cookieData["_yuque_session"]);
-        prefs.setString("ctoken", cookieData["ctoken"]);
-        prefs.setString("all_cookies", result);
+        await prefs.setString("_yuque_session", cookieData["_yuque_session"]);
+        await prefs.setString("ctoken", cookieData["yuque_ctoken"]);
+        await prefs.setString("all_cookies", result);
         await DioUser.watchBook(bookId: 624070);
         await DioUser.watchBook(bookId: 103555);
         // await DioUser.followUser(userId: 164272);

@@ -10,9 +10,11 @@ class Guide3 extends StatefulWidget {
 
 class _Guide3State extends State<Guide3> {
   bool enableButtom = true;
+
   onPressed() {
     setState(() {
       enableButtom = false;
+      print(enableButtom);
     });
     Navigator.of(context).pushNamed("/login");
   }
