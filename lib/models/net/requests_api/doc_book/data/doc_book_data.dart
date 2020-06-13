@@ -1,13 +1,13 @@
 class DocBookJson {
-  List<Data> data;
+  List<TocData> data;
 
   DocBookJson({this.data});
 
   DocBookJson.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<Data>();
+      data = new List<TocData>();
       json['data'].forEach((v) {
-        data.add(new Data.fromJson(v));
+        data.add(new TocData.fromJson(v));
       });
     }
   }
@@ -21,7 +21,7 @@ class DocBookJson {
   }
 }
 
-class Data {
+class TocData {
   int id;
   int spaceId;
   String type;
@@ -61,7 +61,7 @@ class Data {
   bool isPreimum;
   String sSerializer;
 
-  Data(
+  TocData(
       {this.id,
       this.spaceId,
       this.type,
@@ -101,7 +101,7 @@ class Data {
       this.isPreimum,
       this.sSerializer});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  TocData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     spaceId = json['space_id'];
     type = json['type'];

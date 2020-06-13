@@ -233,7 +233,7 @@ class _DocPageWebState extends State<DocPageWeb> {
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                padding: EdgeInsets.fromLTRB(16, 0, 16, 4),
                 color: Colors.white,
                 child: InAppWebView(
                   initialUrl: theUrl,
@@ -243,10 +243,11 @@ class _DocPageWebState extends State<DocPageWeb> {
                       domStorageEnabled: true,
                     ),
                     ios: IOSInAppWebViewOptions(
-                      // disallowOverScroll: true,
+                      disallowOverScroll: true,
                       enableViewportScale: true,
                       suppressesIncrementalRendering: true,
-                      allowsLinkPreview: true,
+                      alwaysBounceVertical: true,
+                      allowsLinkPreview: false,
                     ),
                     crossPlatform: InAppWebViewOptions(
                       debuggingEnabled: true,

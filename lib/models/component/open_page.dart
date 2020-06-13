@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/models/component/book_doc/book_doc.dart';
 import 'package:yuyan_app/models/component/book_doc/doc_page/webview_doc.dart';
 import 'package:yuyan_app/models/component/group/group_page.dart';
 import 'package:yuyan_app/models/component/group/topic/topic_detail_page.dart';
@@ -63,6 +64,11 @@ class OpenPage {
   }
 
   // 打开文档知识库
+  static docBook(BuildContext context, {int bookId}) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return BookDocPage(bookId: bookId);
+    }));
+  }
 
   // 打开画板知识库
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_repos_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
@@ -59,7 +60,11 @@ class _MyReposPageState extends State<MyReposPage> {
 Widget oneFollow(BuildContext context, UserBookData data) {
   return GestureDetector(
     onTap: () {
-      openUrl(context, "https://www.yuque.com/${data.namespace}");
+      if (data.type == "Book") {
+        OpenPage.docBook(context, bookId: data.id);
+      } else {
+        openUrl(context, "https://www.yuque.com/${data.namespace}");
+      }
     },
     child: Container(
       height: 70,
