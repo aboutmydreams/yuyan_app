@@ -60,11 +60,13 @@ class _MyReposPageState extends State<MyReposPage> {
 Widget oneFollow(BuildContext context, UserBookData data) {
   return GestureDetector(
     onTap: () {
-      if (data.type == "Book") {
-        OpenPage.docBook(context, bookId: data.id);
-      } else {
-        openUrl(context, "https://www.yuque.com/${data.namespace}");
-      }
+      openUrl(context, "https://www.yuque.com/${data.namespace}");
+
+      // if (data.type == "Book") {
+      //   OpenPage.docBook(context, bookId: data.id);
+      // } else {
+      //   openUrl(context, "https://www.yuque.com/${data.namespace}");
+      // }
     },
     child: Container(
       height: 70,
