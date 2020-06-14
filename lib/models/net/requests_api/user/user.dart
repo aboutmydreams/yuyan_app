@@ -253,13 +253,13 @@ class DioUser {
     return ans["actioned"] == null;
   }
 
-  static watchBook({int bookId}) async {
+  static watchBook({int bookId, String actionOption: "normal"}) async {
     try {
       Map<String, dynamic> data = {
         "action_type": "watch",
         "target_type": "Book",
         "target_id": bookId,
-        "action_option": "normal"
+        "action_option": actionOption // normal 关注提醒, notify 消息 邮件推送
       };
       Map<String, dynamic> res = await DioReq.post("/actions", data: data);
       if (res.containsKey("data")) {
