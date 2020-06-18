@@ -7,8 +7,35 @@ import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/my_page/view/bottom_column.dart';
 import 'package:yuyan_app/views/my_page/view/user_info.dart';
 
-class MyPage extends StatelessWidget {
+class MyPage extends StatefulWidget {
   MyPage({Key key}) : super(key: key);
+
+  @override
+  _MyPageState createState() => _MyPageState();
+}
+
+class _MyPageState extends State<MyPage> {
+  ScrollController _controller;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _controller = ScrollController();
+    _controller.addListener(() {
+      print(_controller.position.pixels);
+      if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+        // getMoreData();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    //为了避免内存泄露，需要调用_controller.dispose
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +43,7 @@ class MyPage extends StatelessWidget {
     List<Widget> widgetList = [
       userInfo(context),
       threeWidget(context),
+      SizedBox(height: 300)
     ];
     getVersion();
     return Scaffold(
@@ -35,12 +63,13 @@ class MyPage extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: model.primarySwatchColor,
                       gradient: LinearGradient(
-                          colors: [
-                            model.primarySwatchColor,
-                            model.primarySwatchColor.withAlpha(60)
-                          ],
-                          begin: FractionalOffset(0, 0),
-                          end: FractionalOffset(0, 1)),
+                        colors: [
+                          model.primarySwatchColor,
+                          model.primarySwatchColor.withAlpha(60)
+                        ],
+                        begin: FractionalOffset(0, 0),
+                        end: FractionalOffset(0, 1),
+                      ),
                       boxShadow: [
                         BoxShadow(
                           color: Color.fromARGB(55, 0, 0, 0),
