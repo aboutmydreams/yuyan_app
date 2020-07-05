@@ -47,7 +47,7 @@ class Data {
 }
 
 class Notifications {
-  Null params;
+  dynamic params;
   int id;
   int spaceId;
   int organizationId;
@@ -58,9 +58,9 @@ class Notifications {
   int subjectId;
   String secondSubjectType;
   int secondSubjectId;
-  Null thirdSubjectType;
-  Null thirdSubjectId;
-  Null readAt;
+  dynamic thirdSubjectType;
+  dynamic thirdSubjectId;
+  dynamic readAt;
   String createdAt;
   String updatedAt;
   Actor actor;
@@ -161,9 +161,9 @@ class Actor {
   String type;
   String login;
   String name;
-  Null description;
+  dynamic description;
   String avatar;
-  Null ownerId;
+  dynamic ownerId;
   int topicsCount;
   int publicTopicsCount;
   int membersCount;
@@ -178,19 +178,19 @@ class Actor {
   bool wantsEmail;
   bool wantsMarketingEmail;
   int topicUpdatedAtMs;
-  Null deletedSlug;
+  dynamic deletedSlug;
   String language;
   int organizationId;
-  Null empType;
-  Null groupDepartmentUpdatedAt;
-  Null memberLevel;
-  Null expiredAt;
-  Null scene;
-  Null source;
-  Null maxMember;
+  dynamic empType;
+  dynamic groupDepartmentUpdatedAt;
+  dynamic memberLevel;
+  dynamic expiredAt;
+  dynamic scene;
+  dynamic source;
+  dynamic maxMember;
   String createdAt;
   String updatedAt;
-  Null deletedAt;
+  dynamic deletedAt;
 
   Actor(
       {this.workId,
@@ -355,11 +355,11 @@ class Subject {
   int bookId;
   int userId;
   String title;
-  Null tag;
-  Null cover;
+  dynamic tag;
+  dynamic cover;
   String description;
-  Null customDescription;
-  Null titleDraft;
+  dynamic customDescription;
+  dynamic titleDraft;
   String format;
   int status;
   int readStatus;
@@ -369,15 +369,15 @@ class Subject {
   int collaborationCount;
   int lastEditorId;
   int draftVersion;
-  Null deletedSlug;
+  dynamic deletedSlug;
   int wordCount;
   String createdAt;
   String updatedAt;
   String publishedAt;
   String firstPublishedAt;
-  Null selectedAt;
+  dynamic selectedAt;
   String editorMeta;
-  Null deletedAt;
+  dynamic deletedAt;
   User user;
 
   Subject(
@@ -523,7 +523,7 @@ class User {
   String name;
   String description;
   String avatar;
-  Null ownerId;
+  dynamic ownerId;
   int topicsCount;
   int publicTopicsCount;
   int membersCount;
@@ -538,19 +538,19 @@ class User {
   bool wantsEmail;
   bool wantsMarketingEmail;
   int topicUpdatedAtMs;
-  Null deletedSlug;
+  dynamic deletedSlug;
   String language;
   int organizationId;
-  Null empType;
-  Null groupDepartmentUpdatedAt;
-  Null memberLevel;
-  Null expiredAt;
-  Null scene;
-  Null source;
-  Null maxMember;
+  dynamic empType;
+  dynamic groupDepartmentUpdatedAt;
+  dynamic memberLevel;
+  dynamic expiredAt;
+  dynamic scene;
+  dynamic source;
+  dynamic maxMember;
   String createdAt;
   String updatedAt;
-  Null deletedAt;
+  dynamic deletedAt;
 
   User(
       {this.workId,
@@ -720,7 +720,7 @@ class SecondSubject {
   String description;
   String toc;
   String tocYml;
-  Null body;
+  dynamic body;
   int userId;
   int creatorId;
   int public;
@@ -731,18 +731,18 @@ class SecondSubject {
   int likesCount;
   int watchesCount;
   int contentUpdatedAtMs;
-  Null deletedSlug;
+  dynamic deletedSlug;
   String createdAt;
   String updatedAt;
   String pinnedAt;
-  Null archivedAt;
+  dynamic archivedAt;
   int collaborationCount;
   int stackId;
   int rank;
   int resourceSize;
-  Null scene;
-  Null source;
-  Null deletedAt;
+  dynamic scene;
+  dynamic source;
+  dynamic deletedAt;
   User user;
 
   SecondSubject(
