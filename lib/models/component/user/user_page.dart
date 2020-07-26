@@ -9,6 +9,7 @@ import 'package:yuyan_app/models/net/requests_api/user/data/user_info_data.dart'
 import 'package:yuyan_app/models/net/requests_api/user/data/user_profile_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_repos_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
+import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 
 class UserPage extends StatefulWidget {
@@ -153,12 +154,16 @@ class _UserPageState extends State<UserPage>
     setState(() {
       isFollow = !isFollow;
     });
-    if (isFollow) {
+    if (!isFollow) {
       var ans = await DioUser.cancelFollow(userId: userId);
-      print(ans);
+      if (ans == 1) {
+        myToast(context, "有缘再会");
+      }
     } else {
       var ans = await DioUser.followUser(userId: userId);
-      print(ans);
+      if (ans == 1) {
+        myToast(context, "谢谢");
+      }
     }
   }
 
