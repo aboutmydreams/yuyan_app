@@ -98,7 +98,7 @@ Widget userInfo(BuildContext context) {
           ),
         ),
         Divider(),
-        infoCount(context),
+        InfoCount(),
       ],
     ),
   );

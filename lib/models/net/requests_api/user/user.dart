@@ -7,6 +7,7 @@ import 'package:yuyan_app/models/net/requests_api/user/data/user_info_data.dart'
 import 'package:yuyan_app/models/oauth2/random_string/random_string.dart';
 import 'package:yuyan_app/models/oauth2/sha1/sha1.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
+import 'package:yuyan_app/state_manage/toppest.dart';
 
 import 'data/user_follow_data.dart';
 import 'data/user_profile_data.dart';
@@ -107,6 +108,7 @@ class DioUser {
 
       print(res);
       if (res.containsKey("data")) {
+        topModel.myInfoManage.update();
         return 1;
       } else {
         return 0;
@@ -126,8 +128,8 @@ class DioUser {
         "target_id": userId
       };
       Map<String, dynamic> res = await DioReq.delete("/actions", data: data);
-      print(res);
       if (res.toString() == "{}") {
+        topModel.myInfoManage.update();
         return 1;
       } else {
         return 0;
