@@ -12,7 +12,7 @@ class DioReq {
     var token = await getToken();
     var ctoken = await getCtoken();
     var _allCookie = await getPrefStringData("all_cookies");
-    print(path);
+
     headers ??= {};
     headers["Content-Type"] = "application/json";
     headers["Cookie"] = _allCookie;
@@ -33,8 +33,7 @@ class DioReq {
         options: options,
       );
 
-      print(response.statusCode);
-
+      print("get: $path ${response.statusCode}");
       return response.data;
     } on DioError catch (e) {
       print(e);

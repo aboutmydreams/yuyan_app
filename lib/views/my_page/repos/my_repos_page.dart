@@ -28,8 +28,8 @@ class _MyReposPageState extends State<MyReposPage> {
   }
 
   getFollowerData() async {
-    var login = await getLogin();
-    UserBookJson res = await DioUser.getReposData(login: login);
+    var userId = await getUserId();
+    UserBookJson res = await DioUser.getReposData(userId: userId);
     setState(() {
       dataList = res.data;
     });
@@ -60,7 +60,7 @@ class _MyReposPageState extends State<MyReposPage> {
 Widget oneFollow(BuildContext context, UserBookData data) {
   return GestureDetector(
     onTap: () {
-      openUrl(context, "https://www.yuque.com/${data.namespace}");
+      openUrl(context, "https://www.yuque.com/${data.slug}");
 
       // if (data.type == "Book") {
       //   OpenPage.docBook(context, bookId: data.id);

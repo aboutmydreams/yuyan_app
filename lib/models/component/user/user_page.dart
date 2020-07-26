@@ -122,7 +122,7 @@ class _UserPageState extends State<UserPage>
   }
 
   getBook() async {
-    UserBookJson book = await DioUser.getReposData(login: login);
+    UserBookJson book = await DioUser.getReposData(userId: userId);
     setState(() {
       bookJson = book;
     });
