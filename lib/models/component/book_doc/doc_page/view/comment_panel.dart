@@ -13,19 +13,18 @@ class CommentPanel extends StatelessWidget {
     this.onpressed,
     this.comments,
     this.scrollController,
-    this.autofocus: false,
+    this.myFocusNode,
   }) : super(key: key);
   final TextEditingController textControl;
   final PanelController panelControl;
   final Function onpressed;
-  final bool autofocus;
+  final FocusNode myFocusNode;
   final Comments comments;
   final scrollController;
 
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
-    bool nowfocus = autofocus;
     print(comments.data.length);
     return Scaffold(
       body: Container(
@@ -72,7 +71,7 @@ class CommentPanel extends StatelessWidget {
                           controller: textControl,
                           w: w * 0.76,
                           maxLines: 1,
-                          autofocus: nowfocus,
+                          focusNode: myFocusNode,
                           hintText: " 说点什么吧⋯",
                         ),
                       ),

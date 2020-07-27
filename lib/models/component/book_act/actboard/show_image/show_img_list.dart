@@ -1,4 +1,3 @@
-import 'package:liquid_swipe/Constants/Helpers.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/views/begin_init/guide_page/guide1.dart';

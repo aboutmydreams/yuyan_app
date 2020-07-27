@@ -3,23 +3,51 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/widgets_small/text_field.dart';
 
-class HidePanel extends StatelessWidget {
+class HidePanel extends StatefulWidget {
   const HidePanel(
       {Key key,
       this.textControl,
       this.panelControl,
       this.onpressed,
-      this.autofocus: false})
+      this.focusNode})
       : super(key: key);
   final TextEditingController textControl;
   final PanelController panelControl;
   final Function onpressed;
-  final bool autofocus;
+  final FocusNode focusNode;
+
+  @override
+  _HidePanelState createState() => _HidePanelState(
+        textControl: textControl,
+        panelControl: panelControl,
+        onpressed: onpressed,
+        focusNode: focusNode,
+      );
+}
+
+class _HidePanelState extends State<HidePanel> {
+  _HidePanelState(
+      {Key key,
+      this.textControl,
+      this.panelControl,
+      this.onpressed,
+      this.focusNode});
+  final TextEditingController textControl;
+  final PanelController panelControl;
+  final Function onpressed;
+  final FocusNode focusNode;
+
+  @override
+  void dispose() {
+    // Clean up the focus node when the Form is disposed.
+    focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
-    bool nowfocus = autofocus;
+    // FocusNode focusNode;
     return Scaffold(
       body: Container(
         height: 130,
@@ -43,7 +71,7 @@ class HidePanel extends StatelessWidget {
                   child: CommentTextfierd(
                     controller: textControl,
                     w: w * 0.76,
-                    autofocus: nowfocus,
+                    focusNode: focusNode,
                   ),
                 ),
                 Container(
@@ -55,9 +83,8 @@ class HidePanel extends StatelessWidget {
                         margin: EdgeInsets.only(left: w * 0.003),
                         child: FlatButton.icon(
                           onPressed: () {
-                            panelControl.close().then((value) {
-                              nowfocus = false;
-                            });
+                            panelControl.close().then((value) {});
+                            FocusScope.of(context).requestFocus(FocusNode());
                           },
                           icon: Icon(Icons.swap_vert),
                           label: Text("收起", style: AppStyles.textStyleBBB),
