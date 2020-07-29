@@ -35,7 +35,7 @@ packages:
       name: characters
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.1.0-nullsafety"
+    version: "1.0.0"
   charcode:
     dependency: transitive
     description:
@@ -44,14 +44,12 @@ packages:
     source: hosted
     version: "1.1.3"
   chewie:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: edb18418f763980d18dadefe380554654eb6b860
-      url: "https://github.com/masewo/chewie.git"
-    source: git
-    version: "0.9.8+2"
+      name: chewie
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.9.10"
   clock:
     dependency: transitive
     description:
@@ -65,7 +63,7 @@ packages:
       name: collection
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.15.0-nullsafety"
+    version: "1.14.13"
   convert:
     dependency: transitive
     description:
@@ -128,16 +126,30 @@ packages:
       name: firebase
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "7.2.1"
+    version: "7.3.0"
   firebase_analytics:
     dependency: "direct main"
     description:
       name: firebase_analytics
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "5.0.11"
+    version: "5.0.16"
+  firebase_analytics_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_analytics_platform_interface
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.3"
+  firebase_analytics_web:
+    dependency: transitive
+    description:
+      name: firebase_analytics_web
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.1"
   firebase_core:
-    dependency: "direct main"
+    dependency: "direct overridden"
     description:
       name: firebase_core
       url: "https://pub.flutter-io.cn"
@@ -327,14 +339,14 @@ packages:
       name: matcher
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.12.9"
+    version: "0.12.8"
   meta:
     dependency: transitive
     description:
       name: meta
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.3.0-nullsafety"
+    version: "1.1.8"
   mime:
     dependency: transitive
     description:
@@ -502,7 +514,14 @@ packages:
       name: shared_preferences
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.5.6+3"
+    version: "0.5.8"
+  shared_preferences_linux:
+    dependency: transitive
+    description:
+      name: shared_preferences_linux
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.2+1"
   shared_preferences_macos:
     dependency: transitive
     description:
@@ -598,14 +617,14 @@ packages:
       name: test_api
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.2.18"
+    version: "0.2.17"
   typed_data:
     dependency: transitive
     description:
       name: typed_data
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.3.0-nullsafety"
+    version: "1.2.0"
   url_launcher:
     dependency: transitive
     description:
@@ -647,7 +666,7 @@ packages:
       name: vector_math
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.1.0-nullsafety"
+    version: "2.0.8"
   video_player:
     dependency: transitive
     description:
@@ -698,5 +717,5 @@ packages:
     source: hosted
     version: "4.2.0"
 sdks:
-  dart: ">=2.9.0-18.0 <2.9.0"
+  dart: ">=2.9.0-14.0.dev <3.0.0"
   flutter: ">=1.18.0-6.0.pre <2.0.0"

@@ -30,8 +30,9 @@ getLogin() async {
 
 getUserId() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  String getIt(String key) => prefs.getString(key);
-  String userId = getIt("my_id");
+  int getIt(String key) => prefs.getInt(key);
+
+  int userId = getIt("my_id");
   return userId;
 }
 

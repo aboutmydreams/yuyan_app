@@ -90,7 +90,8 @@ Map<String, String> actionType = {
   "Create": "新建了",
   "Edit": "编辑了",
   "Join": "加入了",
-  "Collect": "收藏了"
+  "Collect": "收藏了",
+  "Collab": "加入了协作"
 };
 
 Map<String, String> subjectType = {
