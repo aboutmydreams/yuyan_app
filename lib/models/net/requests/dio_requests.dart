@@ -60,7 +60,6 @@ class DioReq {
     var token = await getToken();
     var ctoken = await getCtoken();
     var _allCookie = await getPrefStringData("all_cookies");
-    print(path);
     headers ??= {};
     headers["Content-Type"] = "application/json";
     headers["X-Auth-Token"] = token;
@@ -80,6 +79,7 @@ class DioReq {
         options: options,
       );
 
+      print("post: $path ${response.statusCode}");
       return response.data;
     } on DioError catch (e) {
       print(e);
@@ -102,7 +102,6 @@ class DioReq {
       {Map<String, dynamic> headers,
       Map<String, dynamic> data,
       Map<String, dynamic> param}) async {
-    print(path);
     var diopath = path[0] == "/" ? baseUrl + path : path;
     var token = await getToken();
     var ctoken = await getCtoken();
@@ -124,6 +123,7 @@ class DioReq {
         data: data,
         options: options,
       );
+      print("put: $path ${response.statusCode}");
       return response.data;
     } on DioError catch (e) {
       print(e);
@@ -146,7 +146,6 @@ class DioReq {
       {Map<String, dynamic> headers,
       Map<String, dynamic> data,
       Map<String, dynamic> param}) async {
-    print(path);
     var diopath = path[0] == "/" ? baseUrl + path : path;
     var token = await getToken();
     var ctoken = await getCtoken();
@@ -169,6 +168,7 @@ class DioReq {
         data: data,
         options: options,
       );
+      print("del: $path ${response.statusCode}");
       return response.data;
     } on DioError catch (e) {
       print(e);
