@@ -57,6 +57,8 @@ class _MyPageState extends State<MyPage> {
               clipper: ArcClipper(),
               child: ScopedModelDescendant<TopStateModel>(
                 builder: (context, child, model) {
+                  print("model.primarySwatchColor=====");
+                  print(model.primarySwatchColor);
                   return Container(
                     height: MediaQuery.of(context).size.height * 0.33,
                     width: MediaQuery.of(context).size.width,

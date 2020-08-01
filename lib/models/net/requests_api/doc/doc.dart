@@ -51,7 +51,8 @@ class DioDoc {
   static getAction({int docId}) async {
     var ans = await DioReq.get(
         "/actions?action_type=like&target_id=$docId&target_type=Doc");
-    bool like = ans["data"]["action"] != null;
+    print(ans);
+    bool like = ans["data"]["actioned"] != null;
     int count = ans["data"]["count"];
     return {"like": like, "count": count};
   }
