@@ -44,7 +44,7 @@ Widget userInfo(BuildContext context) {
               login: myInfo.data.login,
               tag: tag,
               userId: myInfo.data.id,
-              description: myInfo.data.description,
+              description: description,
               name: myInfo.data.name,
               avatarUrl: myInfo.data.avatarUrl,
             );

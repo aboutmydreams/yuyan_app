@@ -93,8 +93,6 @@ class _DocPageState extends State<DocPage> {
 
   getIfLike() async {
     Map ifLikeIt = await DioDoc.getAction(docId: docId);
-    print("ifLikeIt===");
-    print(ifLikeIt);
     setState(() {
       ifLike = ifLikeIt["like"];
       likeCount = ifLikeIt["count"];

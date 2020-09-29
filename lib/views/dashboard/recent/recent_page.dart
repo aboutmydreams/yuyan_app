@@ -10,7 +10,7 @@ class RecentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Recent> recentDataList = topModel.recentManage.recentData.data;
+    List<RecentData> recentDataList = topModel.recentManage.recentData.data;
     return Container(
         width: MediaQuery.of(context).size.width,
         child: aniColumn(

@@ -20,6 +20,7 @@ class MyReposPage extends StatefulWidget {
 class _MyReposPageState extends State<MyReposPage> {
   int offset = 0;
   List<UserBookData> dataList;
+  int userIdLocal;
 
   @override
   void initState() {
@@ -31,6 +32,7 @@ class _MyReposPageState extends State<MyReposPage> {
     var userId = await getUserId();
     UserBookJson res = await DioUser.getReposData(userId: userId);
     setState(() {
+      userIdLocal = userId;
       dataList = res.data;
     });
   }
@@ -51,22 +53,22 @@ class _MyReposPageState extends State<MyReposPage> {
               : animationList(
                   context: context,
                   dataList: dataList,
-                  childBuilder: oneFollow,
+                  childBuilder: oneRepos,
                 ),
     );
   }
 }
 
-Widget oneFollow(BuildContext context, UserBookData data) {
+Widget oneRepos(BuildContext context, UserBookData data) {
   return GestureDetector(
     onTap: () {
-      openUrl(context, "https://www.yuque.com/${data.slug}");
+      // openUrl(context, "https://www.yuque.com/${data.userId}/${data.slug}");
 
-      // if (data.type == "Book") {
-      //   OpenPage.docBook(context, bookId: data.id);
-      // } else {
-      //   openUrl(context, "https://www.yuque.com/${data.namespace}");
-      // }
+      if (data.type == "Book") {
+        OpenPage.docBook(context, bookId: data.id);
+      } else {
+        openUrl(context, "https://www.yuque.com/${data.userId}/${data.slug}");
+      }
     },
     child: Container(
       height: 70,
