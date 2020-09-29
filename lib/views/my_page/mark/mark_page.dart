@@ -60,10 +60,10 @@ class _MarkPageState extends State<MarkPage> {
 Widget oneMark(BuildContext context, MarkData data) {
   // 如果收藏的是团队，那么 avatarUrl 的位置变了一下...
   String userName =
-      data.targetType == "User" ? data.title : data.targetGroup.name;
+      data.targetType == "User" ? data.title : data.target.user.name;
   String avatarUrl = data.targetType == "User"
       ? data.target.avatarUrl
-      : data.targetGroup.avatarUrl;
+      : data.target.user.avatarUrl;
 
   return GestureDetector(
     onTap: () {
@@ -73,7 +73,7 @@ Widget oneMark(BuildContext context, MarkData data) {
           groupdata: GroupData(
             id: data.target.id,
             login: data.target.login,
-            name: data.target.name,
+            name: data.target.name ?? "",
             description: data.target.description,
             avatarUrl: data.target.avatarUrl,
           ),
