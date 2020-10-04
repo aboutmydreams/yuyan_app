@@ -21,18 +21,18 @@ class _ExplorePageState extends State<ExplorePage>
         appBar: AppBar(
           toolbarOpacity: 1.0,
           bottomOpacity: 5.0,
-          // actions: <Widget>[
-          //   IconButton(
-          //     icon: Icon(
-          //       Icons.search,
-          //       color: Colors.black,
-          //     ),
-          //     tooltip: 'Search',
-          //     onPressed: () {
-          //       showSearch(context: context, delegate: searchBarDelegate());
-          //     },
-          //   )
-          // ],
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+              tooltip: 'Search',
+              onPressed: () {
+                showSearch(context: context, delegate: searchBarDelegate());
+              },
+            )
+          ],
           elevation: 0.0,
           title: TabBar(
             labelColor: Colors.white,

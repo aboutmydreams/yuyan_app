@@ -9,6 +9,14 @@ import 'data/user_data.dart';
 
 class DioSearch {
   // 搜索文档
+  static getBaidu({String text}) async {
+    var url =
+        "http://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&wd=$text";
+    var ans = await DioReq.get(url);
+    return SearchDocJson.fromJson(ans);
+  }
+
+  // 搜索文档
   static getDoc({String text, int page, bool aboutMe: false}) async {
     var url = "/zsearch?p=$page&q=$text&scope=&type=doc";
     url = aboutMe ? url + "&related=true" : url;

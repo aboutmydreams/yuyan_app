@@ -6,19 +6,27 @@ class DioReq {
   static Dio dio = Dio();
 
   static String baseUrl = "https://www.yuque.com/api";
-  static get(String path,
-      {Map<String, dynamic> headers, Map<String, dynamic> param}) async {
-    var diopath = path[0] == "/" ? baseUrl + path : path;
+
+  static autoheader({Map<String, dynamic> headers}) async {
     var token = await getToken();
     var ctoken = await getCtoken();
     var _allCookie = await getPrefStringData("all_cookies");
+    if (headers == null) {
+      headers ??= {};
+      headers["Content-Type"] = "application/json";
+      headers["Cookie"] = _allCookie;
+      headers["x-csrf-token"] = ctoken.toString();
+      headers["X-Auth-Token"] = token.toString();
+      return headers;
+    } else {
+      return headers;
+    }
+  }
 
-    headers ??= {};
-    headers["Content-Type"] = "application/json";
-    headers["Cookie"] = _allCookie;
-    headers["x-csrf-token"] = ctoken.toString();
-    headers["X-Auth-Token"] = token.toString();
-    // print(token.toString());
+  static get(String path,
+      {Map<String, dynamic> headers, Map<String, dynamic> param}) async {
+    var diopath = path[0] == "/" ? baseUrl + path : path;
+    headers ??= await autoheader(headers: headers);
 
     try {
       Options options = Options(
@@ -57,14 +65,8 @@ class DioReq {
       Map<String, dynamic> data,
       Map<String, dynamic> param}) async {
     var diopath = path[0] == "/" ? baseUrl + path : path;
-    var token = await getToken();
-    var ctoken = await getCtoken();
-    var _allCookie = await getPrefStringData("all_cookies");
-    headers ??= {};
-    headers["Content-Type"] = "application/json";
-    headers["X-Auth-Token"] = token;
-    headers["Cookie"] = _allCookie;
-    headers["x-csrf-token"] = ctoken.toString();
+    headers ??= await autoheader(headers: headers);
+
     try {
       Options options = Options(
         headers: headers,
@@ -103,14 +105,7 @@ class DioReq {
       Map<String, dynamic> data,
       Map<String, dynamic> param}) async {
     var diopath = path[0] == "/" ? baseUrl + path : path;
-    var token = await getToken();
-    var ctoken = await getCtoken();
-    var _allCookie = await getPrefStringData("all_cookies");
-    headers ??= {};
-    headers["Content-Type"] = "application/json";
-    headers["X-Auth-Token"] = token;
-    headers["Cookie"] = _allCookie;
-    headers["x-csrf-token"] = ctoken.toString();
+    headers ??= await autoheader(headers: headers);
     try {
       Options options = Options(
         headers: headers,
@@ -147,15 +142,7 @@ class DioReq {
       Map<String, dynamic> data,
       Map<String, dynamic> param}) async {
     var diopath = path[0] == "/" ? baseUrl + path : path;
-    var token = await getToken();
-    var ctoken = await getCtoken();
-    var _allCookie = await getPrefStringData("all_cookies");
-
-    headers ??= {};
-    headers["Content-Type"] = "application/json";
-    headers["X-Auth-Token"] = token;
-    headers["Cookie"] = _allCookie;
-    headers["x-csrf-token"] = ctoken.toString();
+    headers ??= await autoheader(headers: headers);
     try {
       Options options = Options(
         headers: headers,
