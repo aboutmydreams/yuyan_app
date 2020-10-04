@@ -1,14 +1,24 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
+import 'package:yuyan_app/models/net/requests_api/search/search.dart';
+import 'package:yuyan_app/views/explore_page/search/search_result/result_page.dart';
 
-class searchBarDelegate extends SearchDelegate<String> {
+class SearchBarDelegate extends SearchDelegate<String> {
+  List searchList = ["wangcai", "xiaoxianrou", "dachangtui", "nvfengsi"];
+
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
         icon: Icon(Icons.clear),
         //将搜索内容置为空
-        onPressed: () => query = "",
+        onPressed: () {
+          if (query.length > 0) {
+            query = "";
+          } else {
+            close(context, "");
+          }
+        },
       )
     ];
   }
@@ -26,58 +36,58 @@ class searchBarDelegate extends SearchDelegate<String> {
     );
   }
 
-  //重写搜索结果
+  // 重写搜索结果
   @override
   Widget buildResults(BuildContext context) {
-    return Container(
-      width: 100.0,
-      height: 100.0,
-      child: Card(
-        color: Colors.redAccent,
-        child: Center(
-          child: Text(query),
-        ),
-      ),
-    );
+    return SearchResultPage(text: query, aboutMe: false);
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final suggestionList = query.isEmpty
-        ? recentSuggest
-        : searchList.where((input) => input.startsWith(query)).toList();
+    searchList = query == "" ? [] : []; //DioSearch.getBaidu(text: query)
+    // final suggestionList = query.isEmpty ? [] : [];
+    //searchList.where((input) => input.startsWith(query)).toList();
 
     return ListView.builder(
-      itemCount: suggestionList.length,
+      itemCount: 6,
       itemBuilder: (context, index) => ListTile(
         title: RichText(
           text: TextSpan(
-            text: suggestionList[index].substring(0, query.length),
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
+            text: "搜索 ",
+            style: TextStyle(color: Colors.grey),
             children: [
               TextSpan(
-                text: suggestionList[index].substring(query.length),
+                text: query + " ",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              TextSpan(
+                text: recentSuggest[index],
                 style: TextStyle(color: Colors.grey),
               ),
             ],
           ),
         ),
+        trailing: Icon(suggestIcons[index]),
+        focusColor: Colors.amber,
+        onTap: () {
+          index == 0
+              ? OpenPage.search(context, text: query, aboutMe: true)
+              : OpenPage.search(context, text: query);
+        },
       ),
     );
   }
 }
 
-searchBaidu(String text) async {
-  String url =
-      "https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&wd=$text";
-  Dio dio = Dio();
-  Response data = await dio.get(url);
-  print(data.data["data"]);
-}
-
-const searchList = ["wangcai", "xiaoxianrou", "dachangtui", "nvfengsi"];
-
-const recentSuggest = ["和我相关", "语雀"];
+const recentSuggest = ["文档", "知识库", "画板", "讨论", "团队", "用户"];
+const List<IconData> suggestIcons = [
+  Icons.description,
+  Icons.book,
+  Icons.collections,
+  Icons.comment,
+  Icons.supervised_user_circle,
+  Icons.person
+];

@@ -11,8 +11,8 @@ import 'package:yuyan_app/state_manage/toppest.dart';
 import 'info_count.dart';
 
 Widget userInfo(BuildContext context) {
-  UserInfoJson myInfo = topModel.myInfoManage.myInfoData;
-  String description = myInfo.data.description ?? "笔墨待识君";
+  TheInfo myInfo = topModel.myInfoManage.myInfoData.data ??
+      TheInfo(description: "笔墨待识君", avatarUrl: "");
 
   double leftMargin = MediaQuery.of(context).size.width * 0.075;
   double descriptionWidth =
@@ -41,12 +41,12 @@ Widget userInfo(BuildContext context) {
           onTap: () async {
             OpenPage.user(
               context,
-              login: myInfo.data.login,
+              login: myInfo.login,
               tag: tag,
-              userId: myInfo.data.id,
-              description: description,
-              name: myInfo.data.name,
-              avatarUrl: myInfo.data.avatarUrl,
+              userId: myInfo.id,
+              description: myInfo.description,
+              name: myInfo.name,
+              avatarUrl: myInfo.avatarUrl,
             );
           },
           child: aniRow(
@@ -56,7 +56,7 @@ Widget userInfo(BuildContext context) {
               SizedBox(width: 16),
               Hero(
                 tag: tag,
-                child: userAvatar(myInfo.data.avatarUrl, height: 60),
+                child: userAvatar(myInfo.avatarUrl, height: 60),
               ),
               SizedBox(width: 16),
               Container(
@@ -72,7 +72,7 @@ Widget userInfo(BuildContext context) {
                       child: Row(
                         children: [
                           Text(
-                            "${myInfo.data.name}",
+                            "${myInfo.name}",
                             textAlign: TextAlign.center,
                             style: AppStyles.textStyleA,
                           ),
@@ -85,7 +85,7 @@ Widget userInfo(BuildContext context) {
                       width: descriptionWidth,
                       margin: EdgeInsets.only(left: 3),
                       child: Text(
-                        "$description",
+                        "${myInfo.description}",
                         textAlign: TextAlign.left,
                         maxLines: 2,
                         style: AppStyles.countTextStyle,

@@ -29,7 +29,7 @@ class _ExplorePageState extends State<ExplorePage>
               ),
               tooltip: 'Search',
               onPressed: () {
-                showSearch(context: context, delegate: searchBarDelegate());
+                showSearch(context: context, delegate: SearchBarDelegate());
               },
             )
           ],

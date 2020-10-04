@@ -5,6 +5,7 @@ import 'package:yuyan_app/models/component/group/group_page.dart';
 import 'package:yuyan_app/models/component/group/topic/topic_detail_page.dart';
 import 'package:yuyan_app/models/component/user/user_page.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
+import 'package:yuyan_app/views/explore_page/search/search_result/result_page.dart';
 
 import 'book_doc/doc_page/doc_page.dart';
 
@@ -78,6 +79,13 @@ class OpenPage {
   static topic(BuildContext context, {int id, int iid, int groupId}) {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return TopicDetail(id: id, iid: iid, groupId: groupId);
+    }));
+  }
+
+  // 打开搜索
+  static search(BuildContext context, {String text, bool aboutMe}) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return SearchResultPage(text: text, aboutMe: aboutMe);
     }));
   }
 }

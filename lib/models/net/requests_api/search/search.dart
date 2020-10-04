@@ -1,5 +1,5 @@
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
-
+import 'dart:convert';
 import 'data/artboard_data.dart';
 import 'data/doc_data.dart';
 import 'data/group_data.dart';
@@ -12,8 +12,19 @@ class DioSearch {
   static getBaidu({String text}) async {
     var url =
         "http://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&wd=$text";
-    var ans = await DioReq.get(url);
-    return SearchDocJson.fromJson(ans);
+    var ans =
+        await DioReq.get(url, headers: {"Content-Type": "application/json"});
+    print(ans);
+
+    Map valueMap = jsonDecode(ans);
+
+    if (valueMap.containsKey("g")) {
+      List ansList = [];
+      ans["g"].forEach((element) => ansList.add(element));
+      return ansList;
+    } else {
+      return [];
+    }
   }
 
   // 搜索文档
