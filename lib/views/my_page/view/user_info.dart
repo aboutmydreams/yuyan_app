@@ -11,8 +11,9 @@ import 'package:yuyan_app/state_manage/toppest.dart';
 import 'info_count.dart';
 
 Widget userInfo(BuildContext context) {
-  TheInfo myInfo = topModel.myInfoManage.myInfoData.data ??
-      TheInfo(description: "笔墨待识君", avatarUrl: "");
+  TheInfo myInfo =
+      topModel.myInfoManage.myInfoData.data ?? TheInfo(avatarUrl: "");
+  myInfo.description ??= "笔墨待识君";
 
   double leftMargin = MediaQuery.of(context).size.width * 0.075;
   double descriptionWidth =

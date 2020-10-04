@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/net/requests_api/search/search.dart';
+import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/views/explore_page/search/search_result/result_page.dart';
 
 class SearchBarDelegate extends SearchDelegate<String> {
@@ -39,7 +40,11 @@ class SearchBarDelegate extends SearchDelegate<String> {
   // 重写搜索结果
   @override
   Widget buildResults(BuildContext context) {
-    return SearchResultPage(text: query, aboutMe: false);
+    searchSomething(context, text: query, index: 0);
+    return SearchResultPage(
+      text: query,
+      aboutMe: false,
+    );
   }
 
   @override
@@ -51,33 +56,28 @@ class SearchBarDelegate extends SearchDelegate<String> {
     return ListView.builder(
       itemCount: 6,
       itemBuilder: (context, index) => ListTile(
-        title: RichText(
-          text: TextSpan(
-            text: "搜索 ",
-            style: TextStyle(color: Colors.grey),
-            children: [
-              TextSpan(
-                text: query + " ",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
+          title: RichText(
+            text: TextSpan(
+              text: "搜索 ",
+              style: TextStyle(color: Colors.grey),
+              children: [
+                TextSpan(
+                  text: query + " ",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              TextSpan(
-                text: recentSuggest[index],
-                style: TextStyle(color: Colors.grey),
-              ),
-            ],
+                TextSpan(
+                  text: recentSuggest[index],
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ],
+            ),
           ),
-        ),
-        trailing: Icon(suggestIcons[index]),
-        focusColor: Colors.amber,
-        onTap: () {
-          index == 0
-              ? OpenPage.search(context, text: query, aboutMe: true)
-              : OpenPage.search(context, text: query);
-        },
-      ),
+          trailing: Icon(suggestIcons[index]),
+          focusColor: Colors.amber,
+          onTap: () => searchSomething(context, index: index, text: query)),
     );
   }
 }
@@ -91,3 +91,13 @@ const List<IconData> suggestIcons = [
   Icons.supervised_user_circle,
   Icons.person
 ];
+
+Null searchSomething(context, {String text, int index}) {
+  if (text == "") {
+    myToast(context, "🔍找点什么呢❓");
+  } else {
+    index == 0
+        ? OpenPage.search(context, text: text, aboutMe: true)
+        : OpenPage.search(context, text: text);
+  }
+}
