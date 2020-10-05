@@ -44,6 +44,7 @@ class SearchBarDelegate extends SearchDelegate<String> {
     return SearchResultPage(
       text: query,
       aboutMe: false,
+      pageIndex: 0,
     );
   }
 

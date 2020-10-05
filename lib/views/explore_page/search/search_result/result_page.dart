@@ -4,29 +4,51 @@ import 'package:yuyan_app/models/net/requests_api/search/data/doc_data.dart';
 import 'package:yuyan_app/models/net/requests_api/search/search.dart';
 
 class SearchResultPage extends StatefulWidget {
-  SearchResultPage({Key key, this.text, this.aboutMe}) : super(key: key);
+  SearchResultPage({Key key, this.text, this.aboutMe, this.pageIndex})
+      : super(key: key);
   final String text;
   final bool aboutMe;
+  final int pageIndex;
 
   @override
-  _SearchResultPageState createState() =>
-      _SearchResultPageState(text: text, aboutMe: aboutMe);
+  _SearchResultPageState createState() => _SearchResultPageState(
+      text: text, aboutMe: aboutMe, pageIndex: pageIndex);
 }
 
 class _SearchResultPageState extends State<SearchResultPage>
-    with AutomaticKeepAliveClientMixin {
-  _SearchResultPageState({Key key, this.text, this.aboutMe});
+    with SingleTickerProviderStateMixin {
+  _SearchResultPageState({Key key, this.text, this.aboutMe, this.pageIndex});
   final String text;
   final bool aboutMe;
-  SearchDocJson searchDocJson;
+  int pageIndex;
 
-  bool get wantKeepAlive => true;
+  TabController _tabController;
+  SearchDocJson searchDocJson;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getData();
+    _tabController =
+        TabController(vsync: this, initialIndex: pageIndex, length: 4)
+          ..addListener(() {
+            print(_tabController.index);
+            changeIndex(_tabController.index);
+          });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  changeIndex(int index) {
+    if (mounted) {
+      setState(() {
+        pageIndex = index;
+      });
+    }
   }
 
   getData() async {
@@ -38,7 +60,6 @@ class _SearchResultPageState extends State<SearchResultPage>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return DefaultTabController(
       length: 6,
       child: Scaffold(
@@ -48,6 +69,7 @@ class _SearchResultPageState extends State<SearchResultPage>
           // brightness: Colors.black.withOpacity(0.95),
           // indicatorSize: TabBarIndicatorSize.label,
           // indicatorWeight: 3.0,
+          controller: _tabController,
           tabs: [
             ShiftingTab(
               icon: Icon(Icons.directions_bike),

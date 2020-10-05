@@ -83,9 +83,11 @@ class OpenPage {
   }
 
   // 打开搜索
-  static search(BuildContext context, {String text, bool aboutMe}) {
+  static search(BuildContext context,
+      {String text, bool aboutMe, int pageIndex}) {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return SearchResultPage(text: text, aboutMe: aboutMe);
+      return SearchResultPage(
+          text: text, aboutMe: aboutMe, pageIndex: pageIndex);
     }));
   }
 }
