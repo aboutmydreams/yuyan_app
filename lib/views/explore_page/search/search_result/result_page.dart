@@ -50,10 +50,10 @@ class _SearchResultPageState extends State<SearchResultPage>
   }
 
   getData() async {
-    SearchDocJson docData = await DioSearch.getDoc(text: text, page: 1);
-    setState(() {
-      searchDocJson = docData;
-    });
+    // SearchDocJson docData = await DioSearch.getDoc(text: text, page: 1);
+    // setState(() {
+    //   searchDocJson = docData;
+    // });
   }
 
   @override
