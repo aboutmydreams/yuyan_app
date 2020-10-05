@@ -543,6 +543,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.1.2+2"
+  shifting_tabbar:
+    dependency: "direct main"
+    description:
+      name: shifting_tabbar
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.3.1"
   sky_engine:
     dependency: transitive
     description: flutter

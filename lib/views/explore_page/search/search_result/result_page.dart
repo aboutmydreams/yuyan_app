@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shifting_tabbar/shifting_tabbar.dart';
 import 'package:yuyan_app/models/net/requests_api/search/data/doc_data.dart';
 import 'package:yuyan_app/models/net/requests_api/search/search.dart';
 
@@ -39,37 +40,51 @@ class _SearchResultPageState extends State<SearchResultPage>
   Widget build(BuildContext context) {
     super.build(context);
     return DefaultTabController(
-      length: 4,
+      length: 6,
       child: Scaffold(
-        appBar: AppBar(
-          toolbarOpacity: 1.0,
-          bottomOpacity: 5.0,
-          elevation: 0.0,
-          title: TabBar(
-            labelColor: Colors.white,
-            indicatorColor: Colors.white.withOpacity(0.95),
-            indicatorSize: TabBarIndicatorSize.label,
-            indicatorWeight: 3.0,
-            tabs: <Widget>[
-              Tab(
-                text: "关注",
-              ),
-              Tab(
-                text: "精选",
-              ),
-              Tab(
-                text: "关注2",
-              ),
-              Tab(
-                text: "精选2",
-              ),
-            ],
-          ),
+        appBar: ShiftingTabBar(
+          color: Colors.white,
+          brightness: Brightness.light,
+          // brightness: Colors.black.withOpacity(0.95),
+          // indicatorSize: TabBarIndicatorSize.label,
+          // indicatorWeight: 3.0,
+          tabs: [
+            ShiftingTab(
+              icon: Icon(Icons.directions_bike),
+              text: "关注",
+            ),
+            ShiftingTab(
+              icon: Icon(Icons.directions_bike),
+              text: "关注1",
+            ),
+            ShiftingTab(
+              icon: Icon(Icons.directions_bike),
+              text: "精选",
+            ),
+            ShiftingTab(
+              icon: Icon(Icons.directions_bike),
+              text: "关注2",
+            ),
+            ShiftingTab(
+              icon: Icon(Icons.directions_bike),
+              text: "关注2",
+            ),
+            ShiftingTab(
+              icon: Icon(Icons.directions_bike),
+              text: "关注2",
+            ),
+          ],
         ),
         body: TabBarView(
           children: <Widget>[
             Container(
               child: Text("t1"),
+            ),
+            Container(
+              child: Text("t2"),
+            ),
+            Container(
+              child: Text("t2"),
             ),
             Container(
               child: Text("t2"),

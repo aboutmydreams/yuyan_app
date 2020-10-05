@@ -115,6 +115,9 @@ dependencies:
   # 获取版本号
   package_info: ^0.4.0+16
 
+  # 滑动tab
+  shifting_tabbar: ^0.3.1
+
   flutter_webview_plugin:
     git: https://github.com/aboutmydreams/flutter_webview_plugin.git
 

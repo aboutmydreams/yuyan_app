@@ -40,7 +40,7 @@ class SearchBarDelegate extends SearchDelegate<String> {
   // 重写搜索结果
   @override
   Widget buildResults(BuildContext context) {
-    searchSomething(context, text: query, index: 0);
+    // searchSomething(context, text: query, index: 0);
     return SearchResultPage(
       text: query,
       aboutMe: false,
