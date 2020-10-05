@@ -141,6 +141,7 @@ flutter:
     - assets/flares/yuyan_first.flr
     - assets/flares/Like.flr
     - assets/flares/mark.flr
+    - assets/flares/progress.flr
     - assets/images/logo.png
     - assets/images/paddy.svg
     - assets/images/first.jpg

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 
 Widget userAvatar(String imgUrl, {double height}) {
@@ -35,8 +36,10 @@ Widget userAvatar(String imgUrl, {double height}) {
             ? Image.asset(imgUrl)
             : CachedNetworkImage(
                 imageUrl: imgUrl,
-                placeholder: (context, url) =>
-                    CircularProgressIndicator(), //Colors.white10,
+                placeholder: (context, url) => FlareActor(
+                  "assets/flares/progress.flr",
+                  animation: "active",
+                ),
                 errorWidget: (context, url, error) => Icon(Icons.error),
                 fit: BoxFit.cover,
               ),
@@ -79,8 +82,10 @@ Widget circularImage(String imgUrl,
           ? Image.asset(imgUrl)
           : CachedNetworkImage(
               imageUrl: imgUrl,
-              placeholder: (context, url) =>
-                  CircularProgressIndicator(), //Colors.white10,
+              placeholder: (context, url) => FlareActor(
+                "assets/flares/progress.flr",
+                animation: "active",
+              ),
               errorWidget: (context, url, error) => Icon(Icons.error),
               fit: BoxFit.cover,
             ),
