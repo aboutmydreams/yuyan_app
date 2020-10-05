@@ -36,7 +36,7 @@ class RecentData {
   String updatedAt;
   String title;
   Book book;
-  Null user;
+  dynamic user;
   Share share;
   String sSerializer;
   bool isShare;
@@ -123,7 +123,7 @@ class Book {
   String slug;
   String name;
   User user;
-  Null creator;
+  dynamic creator;
   String sSerializer;
 
   Book(
@@ -166,11 +166,11 @@ class User {
   String login;
   String name;
   String avatar;
-  Null profile;
+  dynamic profile;
   String sSerializer;
-  Null scene;
-  Null organization;
-  Null owners;
+  dynamic scene;
+  dynamic organization;
+  dynamic owners;
 
   User(
       {this.id,
@@ -259,9 +259,9 @@ class Target {
   String type;
   String slug;
   String name;
-  Null scene;
-  Null user;
-  Null creator;
+  dynamic scene;
+  dynamic user;
+  dynamic creator;
   String sSerializer;
   int userId;
   String description;
@@ -270,15 +270,15 @@ class Target {
   int watchesCount;
   int creatorId;
   int public;
-  Null source;
+  dynamic source;
   String createdAt;
   String updatedAt;
   String contentUpdatedAt;
-  Null pinnedAt;
-  Null archivedAt;
+  dynamic pinnedAt;
+  dynamic archivedAt;
   int status;
-  Null stackId;
-  Null rank;
+  dynamic stackId;
+  dynamic rank;
   String layout;
   String docViewport;
   String docTypography;

@@ -26,7 +26,7 @@ class Actboard {
   String name;
   int sort;
   String artboardType;
-  Null pinnedAt;
+  dynamic pinnedAt;
   String createdAt;
   String updatedAt;
   String contentUpdatedAt;
@@ -88,7 +88,7 @@ class Artboards {
   int assetVersionId;
   int sort;
   String image;
-  Null smallImage;
+  dynamic smallImage;
   String labelMapUrl;
   String name;
   int width;
@@ -96,10 +96,10 @@ class Artboards {
   int commentsCount;
   String createdAt;
   String updatedAt;
-  Null contentUpdatedAt;
-  Null artboardGroup;
-  Null user;
-  Null book;
+  dynamic contentUpdatedAt;
+  dynamic artboardGroup;
+  dynamic user;
+  dynamic book;
   String sSerializer;
 
   Artboards(

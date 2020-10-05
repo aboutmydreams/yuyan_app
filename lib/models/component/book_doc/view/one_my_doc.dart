@@ -22,7 +22,7 @@ Widget autoText(
         overflow: TextOverflow.ellipsis,
         maxLines: 2,
       ),
-      SizedBox(height: 4),
+      SizedBox(height: 8),
       Row(
         children: [
           userAvatar(userImg, height: 22),
