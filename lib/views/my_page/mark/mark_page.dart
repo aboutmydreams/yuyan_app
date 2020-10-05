@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
+import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/my_mark_data.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
@@ -78,7 +79,13 @@ Widget oneMark(BuildContext context, MarkData data) {
             avatarUrl: data.target.avatarUrl,
           ),
         );
-      } else {
+      } else if (data.targetType == "Book") {
+        OpenPage.docBook(
+          context,
+          bookId: data.target.id,
+          bookSlug: data.target.slug,
+        );
+      } else if (data.targetType == "Doc") {
         OpenPage.docWeb(
           context,
           login: data.targetGroup.login,
@@ -86,6 +93,8 @@ Widget oneMark(BuildContext context, MarkData data) {
           bookId: data.targetBookId,
           docId: data.targetId,
         );
+      } else {
+        openUrl(context, "https://www.yuque.com${data.sUrl}");
       }
     },
     child: Container(
