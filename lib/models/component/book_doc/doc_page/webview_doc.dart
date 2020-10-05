@@ -67,6 +67,7 @@ class _DocPageWebState extends State<DocPageWeb> {
     theUrl = theUrl.contains("view=doc_embed")
         ? theUrl
         : theUrl + "?view=doc_embed&from=yuyan&title=1&outline=1";
+    debugPrint(theUrl);
     shareUrl =
         theUrl.replaceAll("?view=doc_embed&from=yuyan&title=1&outline=1", "");
     getIfLike();

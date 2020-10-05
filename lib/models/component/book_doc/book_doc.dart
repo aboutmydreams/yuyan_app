@@ -9,16 +9,19 @@ import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 
 class BookDocPage extends StatefulWidget {
-  BookDocPage({Key key, this.bookId}) : super(key: key);
+  BookDocPage({Key key, this.bookId, this.bookSlug}) : super(key: key);
   final int bookId;
+  final String bookSlug;
 
   @override
-  _BookDocPageState createState() => _BookDocPageState(bookId: bookId);
+  _BookDocPageState createState() =>
+      _BookDocPageState(bookId: bookId, bookSlug: bookSlug);
 }
 
 class _BookDocPageState extends State<BookDocPage> {
-  _BookDocPageState({Key key, this.bookId});
+  _BookDocPageState({Key key, this.bookId, this.bookSlug});
   final int bookId;
+  final String bookSlug;
 
   DocBookJson docBookJson;
 
@@ -39,11 +42,17 @@ class _BookDocPageState extends State<BookDocPage> {
 
   Map setData(TocData data) {
     return {
+      "type": data.type,
       "title": data.title,
       "cover": data.cover,
+      "slug": data.slug,
       "description": data.description,
       "user": data.user.name,
+      "login": data.user.login,
       "avatar": data.user.avatarUrl,
+      "bookId": data.bookId,
+      "bookSlug": bookSlug,
+      "docId": data.id
     };
   }
 

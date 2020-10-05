@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
+import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
@@ -37,13 +39,18 @@ Widget autoText(
 Widget buildDoc(BuildContext context, Map data) {
   return GestureDetector(
     onTap: () {
-      // openUrl(context, "https://www.yuque.com/${data.userId}/${data.slug}");
-
-      // if (data.type == "Book") {
-      //   OpenPage.docBook(context, bookId: data.id);
-      // } else {
-      //   openUrl(context, "https://www.yuque.com/${data.userId}/${data.slug}");
-      // }
+      if (data["type"] == "Doc") {
+        OpenPage.docWeb(
+          context,
+          login: data["login"],
+          bookId: data["bookId"],
+          docId: data["docId"],
+          bookSlug: data["bookSlug"],
+        );
+      } else {
+        openUrl(context,
+            "https://www.yuque.com/${data['login']}/${data['bookSlug']}/${data['docId']}");
+      }
     },
     child: Container(
       margin: EdgeInsets.only(left: 10, top: 6, bottom: 4, right: 10),

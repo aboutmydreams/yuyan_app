@@ -65,9 +65,9 @@ class OpenPage {
   }
 
   // 打开文档知识库
-  static docBook(BuildContext context, {int bookId}) {
+  static docBook(BuildContext context, {int bookId, String bookSlug}) {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return BookDocPage(bookId: bookId);
+      return BookDocPage(bookId: bookId, bookSlug: bookSlug);
     }));
   }
 

@@ -65,7 +65,7 @@ Widget oneRepos(BuildContext context, UserBookData data) {
       // openUrl(context, "https://www.yuque.com/${data.userId}/${data.slug}");
 
       if (data.type == "Book") {
-        OpenPage.docBook(context, bookId: data.id);
+        OpenPage.docBook(context, bookId: data.id, bookSlug: data.slug);
       } else {
         openUrl(context, "https://www.yuque.com/${data.userId}/${data.slug}");
       }
