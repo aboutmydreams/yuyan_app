@@ -13,7 +13,6 @@ class SearchBarDelegate extends SearchDelegate<String> {
       IconButton(
         icon: Icon(Icons.clear),
         onPressed: () {
-          print(query);
           if (query.length > 0 && query != null) {
             query = "";
           } else {

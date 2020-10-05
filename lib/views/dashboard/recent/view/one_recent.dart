@@ -6,7 +6,7 @@ import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/recent_data.dart';
 
 Widget oneRecent(BuildContext context, RecentData data) {
-  print(data.subjectType);
+  // print(data.subjectType);
   String action = "${actionType[data.action]}${subjectType[data.subjectType]}";
   String url =
       data.url[0] == '/' ? "https://www.yuque.com" + data.url : data.url;
