@@ -85,9 +85,14 @@ class SearchBarDelegate extends SearchDelegate<String> {
           trailing: Icon(searchAll.values.toList()[index]),
           focusColor: Colors.amber,
           onTap: () {
-            pageIndex = index;
-            showResults(context);
-          }), //buildResults(context, pageIndex: index, aboutMe: false)),
+            if (query == "") {
+              myToast(context, "🔍找点什么呢❓");
+              return null;
+            } else {
+              pageIndex = index;
+              showResults(context);
+            }
+          }),
     );
   }
 }

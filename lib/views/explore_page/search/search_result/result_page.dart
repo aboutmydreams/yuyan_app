@@ -30,7 +30,6 @@ class _SearchResultPageState extends State<SearchResultPage>
   void initState() {
     super.initState();
     getData();
-    print(pageIndex);
     _tabController =
         TabController(vsync: this, initialIndex: pageIndex, length: 6)
           ..addListener(() => changeIndex(_tabController.index));
