@@ -35,9 +35,13 @@ Widget autoText(
 }
 
 Widget buildDoc(BuildContext context, Map data) {
+  String url =
+      "https://www.yuque.com/${data['login']}/${data['bookSlug']}/${data['docId'].toString()}";
   return GestureDetector(
     onTap: () {
-      if (data["type"] == "Doc") {
+      debugPrint(data["docId"].runtimeType.toString());
+      debugPrint(data["docId"].toString());
+      if ((data["type"] == "Doc") || (data["type"] == "doc")) {
         OpenPage.docWeb(
           context,
           login: data["login"],
@@ -46,8 +50,7 @@ Widget buildDoc(BuildContext context, Map data) {
           bookSlug: data["bookSlug"],
         );
       } else {
-        openUrl(context,
-            "https://www.yuque.com/${data['login']}/${data['bookSlug']}/${data['docId']}");
+        openUrl(context, url);
       }
     },
     child: Container(

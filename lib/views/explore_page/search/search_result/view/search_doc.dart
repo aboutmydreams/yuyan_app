@@ -21,8 +21,8 @@ class SearchDocPage extends StatelessWidget {
       "login": data.rRecord.book.user.login,
       "avatar": data.rRecord.book.user.avatarUrl,
       "bookId": data.rRecord.bookId,
-      "bookSlug": data.rRecord.slug,
-      "docId": data.id
+      "bookSlug": data.rRecord.book.slug,
+      "docId": data.rRecord.id
     };
   }
 
