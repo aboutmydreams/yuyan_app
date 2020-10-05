@@ -3,9 +3,10 @@ import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/net/requests_api/search/search.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/views/explore_page/search/search_result/result_page.dart';
+import 'package:yuyan_app/views/explore_page/search/tabbar_config.dart';
 
 class SearchBarDelegate extends SearchDelegate<String> {
-  List searchList = ["wangcai", "xiaoxianrou", "dachangtui", "nvfengsi"];
+  int pageIndex = 0;
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -39,23 +40,28 @@ class SearchBarDelegate extends SearchDelegate<String> {
 
   // 重写搜索结果
   @override
-  Widget buildResults(BuildContext context) {
+  Widget buildResults(BuildContext context, {bool aboutMe: false}) {
     // searchSomething(context, text: query, index: 0);
-    return SearchResultPage(
-      text: query,
-      aboutMe: false,
-      pageIndex: 0,
-    );
+    if (query == "") {
+      myToast(context, "🔍找点什么呢❓");
+      return null;
+    } else {
+      return SearchResultPage(
+        text: query,
+        aboutMe: aboutMe,
+        pageIndex: pageIndex,
+      );
+    }
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    searchList = query == "" ? [] : []; //DioSearch.getBaidu(text: query)
+    // searchList = query == "" ? [] : []; //DioSearch.getBaidu(text: query)
     // final suggestionList = query.isEmpty ? [] : [];
     //searchList.where((input) => input.startsWith(query)).toList();
 
     return ListView.builder(
-      itemCount: 6,
+      itemCount: searchAll.keys.length,
       itemBuilder: (context, index) => ListTile(
           title: RichText(
             text: TextSpan(
@@ -70,35 +76,18 @@ class SearchBarDelegate extends SearchDelegate<String> {
                   ),
                 ),
                 TextSpan(
-                  text: recentSuggest[index],
+                  text: searchAll.keys.toList()[index],
                   style: TextStyle(color: Colors.grey),
                 ),
               ],
             ),
           ),
-          trailing: Icon(suggestIcons[index]),
+          trailing: Icon(searchAll.values.toList()[index]),
           focusColor: Colors.amber,
-          onTap: () => searchSomething(context, index: index, text: query)),
+          onTap: () {
+            pageIndex = index;
+            showResults(context);
+          }), //buildResults(context, pageIndex: index, aboutMe: false)),
     );
-  }
-}
-
-const recentSuggest = ["文档", "知识库", "画板", "讨论", "团队", "用户"];
-const List<IconData> suggestIcons = [
-  Icons.description,
-  Icons.book,
-  Icons.collections,
-  Icons.comment,
-  Icons.supervised_user_circle,
-  Icons.person
-];
-
-Null searchSomething(context, {String text, int index}) {
-  if (text == "") {
-    myToast(context, "🔍找点什么呢❓");
-  } else {
-    index == 0
-        ? OpenPage.search(context, text: text, aboutMe: true)
-        : OpenPage.search(context, text: text);
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shifting_tabbar/shifting_tabbar.dart';
 import 'package:yuyan_app/models/net/requests_api/search/data/doc_data.dart';
 import 'package:yuyan_app/models/net/requests_api/search/search.dart';
+import 'package:yuyan_app/views/explore_page/search/tabbar_config.dart';
 
 class SearchResultPage extends StatefulWidget {
   SearchResultPage({Key key, this.text, this.aboutMe, this.pageIndex})
@@ -29,12 +30,10 @@ class _SearchResultPageState extends State<SearchResultPage>
   void initState() {
     super.initState();
     getData();
+    print(pageIndex);
     _tabController =
-        TabController(vsync: this, initialIndex: pageIndex, length: 4)
-          ..addListener(() {
-            print(_tabController.index);
-            changeIndex(_tabController.index);
-          });
+        TabController(vsync: this, initialIndex: pageIndex, length: 6)
+          ..addListener(() => changeIndex(_tabController.index));
   }
 
   @override
@@ -52,7 +51,7 @@ class _SearchResultPageState extends State<SearchResultPage>
   }
 
   getData() async {
-    SearchDocJson docData = DioSearch.getDoc(text: text, page: 1);
+    SearchDocJson docData = await DioSearch.getDoc(text: text, page: 1);
     setState(() {
       searchDocJson = docData;
     });
@@ -66,38 +65,13 @@ class _SearchResultPageState extends State<SearchResultPage>
         appBar: ShiftingTabBar(
           color: Colors.white,
           brightness: Brightness.light,
-          // brightness: Colors.black.withOpacity(0.95),
-          // indicatorSize: TabBarIndicatorSize.label,
-          // indicatorWeight: 3.0,
           controller: _tabController,
-          tabs: [
-            ShiftingTab(
-              icon: Icon(Icons.directions_bike),
-              text: "关注",
-            ),
-            ShiftingTab(
-              icon: Icon(Icons.directions_bike),
-              text: "关注1",
-            ),
-            ShiftingTab(
-              icon: Icon(Icons.directions_bike),
-              text: "精选",
-            ),
-            ShiftingTab(
-              icon: Icon(Icons.directions_bike),
-              text: "关注2",
-            ),
-            ShiftingTab(
-              icon: Icon(Icons.directions_bike),
-              text: "关注2",
-            ),
-            ShiftingTab(
-              icon: Icon(Icons.directions_bike),
-              text: "关注2",
-            ),
-          ],
+          tabs: searchAll.keys
+              .map((k) => ShiftingTab(text: k, icon: Icon(searchAll[k])))
+              .toList(),
         ),
         body: TabBarView(
+          controller: _tabController,
           children: <Widget>[
             Container(
               child: Text("t1"),
@@ -106,16 +80,16 @@ class _SearchResultPageState extends State<SearchResultPage>
               child: Text("t2"),
             ),
             Container(
-              child: Text("t2"),
+              child: Text("t3"),
             ),
             Container(
-              child: Text("t2"),
+              child: Text("t4"),
             ),
             Container(
-              child: Text("t2"),
+              child: Text("t5"),
             ),
             Container(
-              child: Text("t2"),
+              child: Text("t6"),
             ),
           ],
         ),
