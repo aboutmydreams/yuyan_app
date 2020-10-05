@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/book_doc/view/one_my_doc.dart';
-import 'package:yuyan_app/models/component/group/view/home_page.dart';
 import 'package:yuyan_app/models/net/requests_api/doc_book/book.dart';
 import 'package:yuyan_app/models/net/requests_api/doc_book/data/doc_book_data.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';

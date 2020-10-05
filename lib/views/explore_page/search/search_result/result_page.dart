@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shifting_tabbar/shifting_tabbar.dart';
 import 'package:yuyan_app/models/net/requests_api/search/data/doc_data.dart';
 import 'package:yuyan_app/models/net/requests_api/search/search.dart';
+import 'package:yuyan_app/views/explore_page/search/search_result/view/search_doc.dart';
 import 'package:yuyan_app/views/explore_page/search/tabbar_config.dart';
 
 class SearchResultPage extends StatefulWidget {
@@ -50,10 +51,10 @@ class _SearchResultPageState extends State<SearchResultPage>
   }
 
   getData() async {
-    // SearchDocJson docData = await DioSearch.getDoc(text: text, page: 1);
-    // setState(() {
-    //   searchDocJson = docData;
-    // });
+    SearchDocJson docData = await DioSearch.getDoc(text: text, page: 1);
+    setState(() {
+      searchDocJson = docData;
+    });
   }
 
   @override
@@ -73,7 +74,7 @@ class _SearchResultPageState extends State<SearchResultPage>
           controller: _tabController,
           children: <Widget>[
             Container(
-              child: Text("t1"),
+              child: SearchDocPage(docBookJson: searchDocJson),
             ),
             Container(
               child: Text("t2"),
