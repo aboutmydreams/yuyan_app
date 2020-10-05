@@ -30,7 +30,6 @@ Widget suggestList(BuildContext context, {String query, Function onTap}) {
       onTap: () {
         onTap(context, text: query, index: index);
       },
-      // onTap: onTap(context, index: index),
     ),
   );
 }

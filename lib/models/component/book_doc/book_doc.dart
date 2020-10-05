@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/book_doc/view/one_my_doc.dart';
 import 'package:yuyan_app/models/component/group/view/home_page.dart';
 import 'package:yuyan_app/models/net/requests_api/doc_book/book.dart';
 import 'package:yuyan_app/models/net/requests_api/doc_book/data/doc_book_data.dart';
@@ -36,6 +37,16 @@ class _BookDocPageState extends State<BookDocPage> {
     });
   }
 
+  Map setData(TocData data) {
+    return {
+      "title": data.title,
+      "cover": data.cover,
+      "description": data.description,
+      "user": data.user.name,
+      "avatar": data.user.avatarUrl,
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,23 +62,10 @@ class _BookDocPageState extends State<BookDocPage> {
                 )
               : animationList(
                   context: context,
-                  dataList: docBookJson.data,
+                  dataList:
+                      docBookJson.data.map((data) => setData(data)).toList(),
                   childBuilder: buildDoc,
                 ),
     );
-  }
-
-  Widget buildDoc(BuildContext context, TocData data) {
-    return InkWell(
-      onTap: () {},
-      child: Container(
-        padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
-        child: Text(
-          data.title,
-          style: AppStyles.textStyleB,
-        ),
-      ),
-    );
-    // return oneDoc(context, data, login, bookSlug)
   }
 }
