@@ -10,22 +10,6 @@ class SearchDocPage extends StatelessWidget {
 
   final SearchDocJson docBookJson;
 
-  Map setData(Hits data) {
-    return {
-      "type": data.type,
-      "title": data.title,
-      "cover": data.rRecord.cover,
-      "slug": data.slug,
-      "description": data.rRecord.description,
-      "user": data.groupName,
-      "login": data.rRecord.book.user.login,
-      "avatar": data.rRecord.book.user.avatarUrl,
-      "bookId": data.rRecord.bookId,
-      "bookSlug": data.rRecord.book.slug,
-      "docId": data.rRecord.id
-    };
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,4 +30,20 @@ class SearchDocPage extends StatelessWidget {
                 ),
     );
   }
+}
+
+Map setData(Hits data) {
+  return {
+    "type": data.type,
+    "title": data.title.replaceAll("<em>", "").replaceAll("</em>", ""),
+    "cover": data.rRecord.cover,
+    "slug": data.slug,
+    "description": data.rRecord.description,
+    "user": data.groupName,
+    "login": data.rRecord.book.user.login,
+    "avatar": data.rRecord.book.user.avatarUrl,
+    "bookId": data.rRecord.bookId,
+    "bookSlug": data.rRecord.book.slug,
+    "docId": data.rRecord.id
+  };
 }

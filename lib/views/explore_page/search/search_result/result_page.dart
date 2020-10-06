@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:shifting_tabbar/shifting_tabbar.dart';
 import 'package:yuyan_app/models/net/requests_api/search/data/doc_data.dart';
 import 'package:yuyan_app/models/net/requests_api/search/data/group_data.dart';
+import 'package:yuyan_app/models/net/requests_api/search/data/repos_data.dart';
 import 'package:yuyan_app/models/net/requests_api/search/data/user_data.dart';
 import 'package:yuyan_app/models/net/requests_api/search/search.dart';
 import 'package:yuyan_app/views/explore_page/search/search_result/view/search_doc.dart';
 import 'package:yuyan_app/views/explore_page/search/search_result/view/search_group.dart';
+import 'package:yuyan_app/views/explore_page/search/search_result/view/search_repos.dart';
 import 'package:yuyan_app/views/explore_page/search/search_result/view/search_user.dart';
 import 'package:yuyan_app/views/explore_page/search/tabbar_config.dart';
 
@@ -32,6 +34,7 @@ class _SearchResultPageState extends State<SearchResultPage>
   SearchDocJson searchDocJson;
   SearchUserJson searchUserJson;
   SearchGroupJson searchGroupJson;
+  SearchReposJson searchReposJson;
 
   @override
   void initState() {
@@ -39,6 +42,7 @@ class _SearchResultPageState extends State<SearchResultPage>
     getDocData();
     getUserData();
     getGroupData();
+    getReposData();
     _tabController =
         TabController(vsync: this, initialIndex: pageIndex, length: 6)
           ..addListener(() => changeIndex(_tabController.index));
@@ -79,6 +83,13 @@ class _SearchResultPageState extends State<SearchResultPage>
     });
   }
 
+  getReposData() async {
+    SearchReposJson reposData = await DioSearch.getRepos(text: text, page: 1);
+    setState(() {
+      searchReposJson = reposData;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -99,7 +110,7 @@ class _SearchResultPageState extends State<SearchResultPage>
               child: SearchDocPage(docBookJson: searchDocJson),
             ),
             Container(
-              child: Text("t2"),
+              child: SearchReposPage(searchReposJson: searchReposJson),
             ),
             Container(
               child: Text("t3"),

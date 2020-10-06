@@ -6,8 +6,6 @@ class DioDocBook {
   static getData({int bookId}) async {
     var res = await DioReq.get(
         "/books/$bookId/docs?include_contributors=true&include_hits=true&limit=200&offset=0");
-    print("tocDatares=====");
-    print(res);
     DocBookJson theData = DocBookJson.fromJson(res);
     return theData;
   }

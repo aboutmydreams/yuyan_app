@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yuyan_app/models/component/user/view/book_page.dart';
+import 'package:yuyan_app/models/component/user/view/repos_page.dart';
 import 'package:yuyan_app/models/component/user/view/flex_space.dart';
 import 'package:yuyan_app/models/component/user/view/follower_page.dart';
 import 'package:yuyan_app/models/component/user/view/following_page.dart';
@@ -73,7 +73,7 @@ class _UserPageState extends State<UserPage>
 
   ProfileData profileJson;
   UserInfoJson userInfoJson;
-  UserBookJson bookJson;
+  UserReposJson bookJson;
   GroupJson groupJson;
   Follows followsJson;
   Follows followingJson;
@@ -123,7 +123,7 @@ class _UserPageState extends State<UserPage>
   }
 
   getBook() async {
-    UserBookJson book = await DioUser.getReposData(userId: userId);
+    UserReposJson book = await DioUser.getReposData(userId: userId);
     setState(() {
       bookJson = book;
     });

@@ -1,13 +1,13 @@
-class UserBookJson {
-  List<UserBookData> data;
+class UserReposJson {
+  List<UserReposData> data;
 
-  UserBookJson({this.data});
+  UserReposJson({this.data});
 
-  UserBookJson.fromJson(Map<String, dynamic> json) {
+  UserReposJson.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<UserBookData>();
+      data = new List<UserReposData>();
       json['data'].forEach((v) {
-        data.add(new UserBookData.fromJson(v));
+        data.add(new UserReposData.fromJson(v));
       });
     }
   }
@@ -21,7 +21,7 @@ class UserBookJson {
   }
 }
 
-class UserBookData {
+class UserReposData {
   int id;
   String type;
   String slug;
@@ -40,7 +40,7 @@ class UserBookData {
   User user;
   String sSerializer;
 
-  UserBookData(
+  UserReposData(
       {this.id,
       this.type,
       this.slug,
@@ -59,7 +59,7 @@ class UserBookData {
       this.user,
       this.sSerializer});
 
-  UserBookData.fromJson(Map<String, dynamic> json) {
+  UserReposData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     type = json['type'];
     slug = json['slug'];

@@ -31,7 +31,7 @@ class DioUser {
   // v2 获取公开知识库 暂时弃用
   static getReposV2({String login}) async {
     var res = await DioReq.get("/v2/users/$login/repos");
-    UserBookJson theData = UserBookJson.fromJson(res);
+    UserReposJson theData = UserReposJson.fromJson(res);
     return theData;
   }
 
@@ -39,7 +39,7 @@ class DioUser {
   static getReposData({int userId}) async {
     var res =
         await DioReq.get("/groups/$userId/books?archived=include&limit=200");
-    UserBookJson theData = UserBookJson.fromJson(res);
+    UserReposJson theData = UserReposJson.fromJson(res);
     return theData;
   }
 

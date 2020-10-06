@@ -70,13 +70,6 @@ Widget circularImage(String imgUrl,
       margin: EdgeInsets.all(1),
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromARGB(128, 116, 116, 116),
-            offset: Offset(0, 0),
-            blurRadius: 1,
-          ),
-        ],
       ),
       child: imgUrl.contains("assets/")
           ? Image.asset(imgUrl)

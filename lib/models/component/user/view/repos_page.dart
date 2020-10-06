@@ -10,7 +10,7 @@ import 'package:yuyan_app/models/widgets_small/nothing.dart';
 
 class UserBookPage extends StatelessWidget {
   UserBookPage({Key key, this.bookJson}) : super(key: key);
-  final UserBookJson bookJson;
+  final UserReposJson bookJson;
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +23,14 @@ class UserBookPage extends StatelessWidget {
                   aniWhich: 4,
                   children: [SizedBox(height: 155)]
                     ..addAll(bookJson.data.map((a) {
-                      return oneBook(context, a);
+                      return oneRepos(context, a);
                     }).toList()),
                 ),
               );
   }
 }
 
-Widget oneBook(BuildContext context, UserBookData data) {
+Widget oneRepos(BuildContext context, UserReposData data) {
   return GestureDetector(
     onTap: () {
       if ((data.type == "Book") || (data.type == "Column")) {

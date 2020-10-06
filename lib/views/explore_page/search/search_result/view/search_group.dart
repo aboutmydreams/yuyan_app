@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/models/component/user/view/view/one_group.dart';
 import 'package:yuyan_app/models/net/requests_api/search/data/group_data.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
-import 'package:yuyan_app/views/my_page/group/my_group_page.dart';
 
 class SearchGroupPage extends StatelessWidget {
   const SearchGroupPage({Key key, this.searchGroupJson}) : super(key: key);

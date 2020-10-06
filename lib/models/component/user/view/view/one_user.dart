@@ -6,7 +6,6 @@ import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 Widget oneUser(BuildContext context, Map data) {
   String tag = getTag();
-
   return GestureDetector(
     onTap: () {
       OpenPage.user(
@@ -40,7 +39,7 @@ Widget oneUser(BuildContext context, Map data) {
           Container(
             width: MediaQuery.of(context).size.width * 0.4,
             margin: EdgeInsets.only(left: 20),
-            child: data["description"] != null
+            child: (data["description"] != null) && (data["description"] != "")
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,

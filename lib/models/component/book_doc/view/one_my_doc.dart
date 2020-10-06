@@ -7,6 +7,7 @@ import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 Widget autoText(
     {String title, String des, String user, String userImg, int maxLines: 2}) {
+  des ??= "";
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,

@@ -19,7 +19,7 @@ class MyReposPage extends StatefulWidget {
 
 class _MyReposPageState extends State<MyReposPage> {
   int offset = 0;
-  List<UserBookData> dataList;
+  List<UserReposData> dataList;
   int userIdLocal;
 
   @override
@@ -30,7 +30,7 @@ class _MyReposPageState extends State<MyReposPage> {
 
   getFollowerData() async {
     var userId = await getUserId();
-    UserBookJson res = await DioUser.getReposData(userId: userId);
+    UserReposJson res = await DioUser.getReposData(userId: userId);
     setState(() {
       userIdLocal = userId;
       dataList = res.data;
@@ -53,13 +53,13 @@ class _MyReposPageState extends State<MyReposPage> {
               : animationList(
                   context: context,
                   dataList: dataList,
-                  childBuilder: oneRepos,
+                  childBuilder: myOneRepos,
                 ),
     );
   }
 }
 
-Widget oneRepos(BuildContext context, UserBookData data) {
+Widget myOneRepos(BuildContext context, UserReposData data) {
   return GestureDetector(
     onTap: () {
       // openUrl(context, "https://www.yuque.com/${data.userId}/${data.slug}");

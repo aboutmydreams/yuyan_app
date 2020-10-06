@@ -39,7 +39,7 @@ class _BookDocPageState extends State<BookDocPage> {
   Map setData(TocData data) {
     return {
       "type": data.type,
-      "title": data.title,
+      "title": data.title.replaceAll("<em>", "").replaceAll("</em>", ""),
       "cover": data.cover,
       "slug": data.slug,
       "description": data.description,
