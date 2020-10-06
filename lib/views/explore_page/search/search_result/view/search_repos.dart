@@ -36,9 +36,10 @@ Map<String, dynamic> setData(Hits data) {
   return {
     "type": data.rRecord.type,
     "login": data.rRecord.user.login,
-    "bookId": data.id,
+    "bookId": data.rRecord.id,
     "bookSlug": data.slug,
-    "description": data.description,
-    "name": data.name,
+    "description":
+        data.description.replaceAll("<em>", "").replaceAll("</em>", ""),
+    "name": data.name.replaceAll("<em>", "").replaceAll("</em>", ""),
   };
 }

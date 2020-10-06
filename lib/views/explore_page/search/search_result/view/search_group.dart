@@ -39,6 +39,6 @@ GroupData setData(Hits data) {
     avatarUrl: data.avatarUrl,
     login: data.login,
     description: data.description,
-    name: data.name,
+    name: data.name.replaceAll("<em>", "").replaceAll("</em>", ""),
   );
 }
