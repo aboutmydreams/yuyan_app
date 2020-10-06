@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shifting_tabbar/shifting_tabbar.dart';
 import 'package:yuyan_app/models/net/requests_api/search/data/doc_data.dart';
+import 'package:yuyan_app/models/net/requests_api/search/data/group_data.dart';
 import 'package:yuyan_app/models/net/requests_api/search/data/user_data.dart';
 import 'package:yuyan_app/models/net/requests_api/search/search.dart';
 import 'package:yuyan_app/views/explore_page/search/search_result/view/search_doc.dart';
+import 'package:yuyan_app/views/explore_page/search/search_result/view/search_group.dart';
 import 'package:yuyan_app/views/explore_page/search/search_result/view/search_user.dart';
 import 'package:yuyan_app/views/explore_page/search/tabbar_config.dart';
 
@@ -29,12 +31,14 @@ class _SearchResultPageState extends State<SearchResultPage>
   TabController _tabController;
   SearchDocJson searchDocJson;
   SearchUserJson searchUserJson;
+  SearchGroupJson searchGroupJson;
 
   @override
   void initState() {
     super.initState();
     getDocData();
     getUserData();
+    getGroupData();
     _tabController =
         TabController(vsync: this, initialIndex: pageIndex, length: 6)
           ..addListener(() => changeIndex(_tabController.index));
@@ -68,6 +72,13 @@ class _SearchResultPageState extends State<SearchResultPage>
     });
   }
 
+  getGroupData() async {
+    SearchGroupJson groupData = await DioSearch.getGroup(text: text, page: 1);
+    setState(() {
+      searchGroupJson = groupData;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -97,7 +108,7 @@ class _SearchResultPageState extends State<SearchResultPage>
               child: Text("t4"),
             ),
             Container(
-              child: Text("t5"),
+              child: SearchGroupPage(searchGroupJson: searchGroupJson),
             ),
             Container(
               child: SearchUserPage(searchUserJson: searchUserJson),
