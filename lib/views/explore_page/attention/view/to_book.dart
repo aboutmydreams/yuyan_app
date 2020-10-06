@@ -62,14 +62,13 @@ Widget toBook(BuildContext context, Data data) {
 Widget oneEvent(BuildContext context, Event event) {
   return GestureDetector(
     onTap: () {
-      openUrl(context, event.url);
-      // OpenPage.docWeb(
-      //     context,
-      //     login: event.,
-      //     bookId: data["bookId"],
-      //     docId: data["docId"],
-      //     bookSlug: data["bookSlug"],
-      //   );
+      String slug = event.url.split("/").last;
+      OpenPage.docBook(
+        context,
+        bookId: event.id,
+        bookSlug: slug,
+      );
+      // openUrl(context, event.url);
     },
     child: Container(
       height: 66,
