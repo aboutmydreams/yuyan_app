@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
-import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_small/user_event.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/attent_data.dart';
@@ -63,6 +63,13 @@ Widget oneEvent(BuildContext context, Event event) {
   return GestureDetector(
     onTap: () {
       openUrl(context, event.url);
+      // OpenPage.docWeb(
+      //     context,
+      //     login: event.,
+      //     bookId: data["bookId"],
+      //     docId: data["docId"],
+      //     bookSlug: data["bookSlug"],
+      //   );
     },
     child: Container(
       height: 66,

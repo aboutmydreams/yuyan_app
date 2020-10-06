@@ -31,8 +31,6 @@ class _BookDocPageState extends State<BookDocPage> {
 
   getTocData({int bookId}) async {
     DocBookJson tocData = await DioDocBook.getData(bookId: bookId);
-    print("tocData=====");
-    print(tocData.data);
     setState(() {
       docBookJson = tocData;
     });

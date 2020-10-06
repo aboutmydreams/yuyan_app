@@ -44,28 +44,29 @@ Widget oneRecent(BuildContext context, RecentData data) {
             margin: EdgeInsets.only(left: 20),
             child: AppIcon.iconType(data.subjectType),
           ),
-          Container(
-            margin: EdgeInsets.only(left: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  child: Text(
-                    clearText(data.title, 10),
-                    style: AppStyles.textStyleB,
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.only(left: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      clearText(data.title, 20),
+                      style: AppStyles.textStyleB,
+                    ),
                   ),
-                ),
-                Container(
-                  child: Text(
-                    action,
-                    style: AppStyles.textStyleC,
+                  Container(
+                    child: Text(
+                      action,
+                      style: AppStyles.textStyleC,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-          Spacer(),
           data.canEdit
               ? Container(
                   margin: EdgeInsets.only(right: 16),
