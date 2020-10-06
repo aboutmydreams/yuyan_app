@@ -22,6 +22,12 @@ Widget oneQuick(BuildContext context, Data data) {
             avatarUrl: data.icon,
           ),
         );
+      } else if (data.type == "Book") {
+        OpenPage.docBook(
+          context,
+          bookId: data.targetId,
+          bookSlug: data.url.split("/").last,
+        );
       } else {
         var url =
             data.url[0] == '/' ? "https://www.yuque.com" + data.url : data.url;
