@@ -33,7 +33,7 @@ class UserBookPage extends StatelessWidget {
 Widget oneBook(BuildContext context, UserBookData data) {
   return GestureDetector(
     onTap: () {
-      if (data.type == "Book") {
+      if ((data.type == "Book") || (data.type == "Column")) {
         OpenPage.docBook(context, bookId: data.id, bookSlug: data.slug);
       } else {
         openUrl(context, "https://www.yuque.com/${data.userId}/${data.slug}");
