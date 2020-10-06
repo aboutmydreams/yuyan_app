@@ -38,6 +38,7 @@ class SearchDocPage extends StatelessWidget {
                 )
               : animationList(
                   context: context,
+                  aniWhich: 2,
                   dataList: docBookJson.data.hits
                       .map((data) => setData(data))
                       .toList(),
