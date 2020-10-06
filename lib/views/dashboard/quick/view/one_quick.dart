@@ -29,7 +29,7 @@ Widget oneQuick(BuildContext context, Data data) {
           bookSlug: data.url.split("/").last,
         );
       } else {
-        var url =
+        String url =
             data.url[0] == '/' ? "https://www.yuque.com" + data.url : data.url;
         openUrl(context, url);
       }
