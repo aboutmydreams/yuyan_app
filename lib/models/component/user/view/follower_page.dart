@@ -43,9 +43,7 @@ class _FollowerPageState extends State<FollowerPage> {
 }
 
 Map<String, dynamic> setFollowerData(FollowsData data) {
-  String tag = getTag();
   return {
-    "tag": tag,
     "login": data.login,
     "name": data.name,
     "avatarUrl": data.avatarUrl,

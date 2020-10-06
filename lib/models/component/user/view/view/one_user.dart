@@ -6,7 +6,6 @@ import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 Widget oneUser(BuildContext context, Map data) {
   return GestureDetector(
     onTap: () {
-      print(data);
       OpenPage.user(
         context,
         tag: data["tag"],
