@@ -20,6 +20,12 @@ Widget oneRecent(BuildContext context, RecentData data) {
           bookId: data.book.id,
           docId: data.targetId,
         );
+      } else if (data.subjectType == "Book") {
+        OpenPage.docBook(
+          context,
+          bookId: data.target.id,
+          bookSlug: data.target.slug,
+        );
       } else {
         openUrl(context, url);
       }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
+import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/quick_data.dart';
 
 Widget oneQuick(BuildContext context, Data data) {
@@ -11,9 +13,20 @@ Widget oneQuick(BuildContext context, Data data) {
       : iconType[data.type] ?? "assets/images/dashboard/book.png";
   return GestureDetector(
     onTap: () {
-      var url =
-          data.url[0] == '/' ? "https://www.yuque.com" + data.url : data.url;
-      openUrl(context, url);
+      if (data.type == "Group") {
+        OpenPage.group(
+          context,
+          groupdata: GroupData(
+            id: data.targetId,
+            name: data.title ?? "",
+            avatarUrl: data.icon,
+          ),
+        );
+      } else {
+        var url =
+            data.url[0] == '/' ? "https://www.yuque.com" + data.url : data.url;
+        openUrl(context, url);
+      }
     },
     child: Container(
       height: 50,

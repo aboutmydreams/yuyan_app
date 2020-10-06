@@ -130,8 +130,9 @@ Widget oneDoc(
       padding: EdgeInsets.fromLTRB(0, 7, 0, 2),
       child: Row(
         children: <Widget>[
-          Text(data.title ?? data.filename),
-          Spacer(),
+          Expanded(
+            child: Text(data.title ?? data.filename),
+          ),
           Text(
             timeCut(data.contentUpdatedAt ?? data.createdAt),
             style: AppStyles.textStyleCC,

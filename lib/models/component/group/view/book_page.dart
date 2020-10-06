@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_book_data.dart';
-import 'package:yuyan_app/models/net/requests_api/group/data/group_topic_data.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
-import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 class BookPage extends StatefulWidget {
   BookPage({Key key, this.bookJson}) : super(key: key);
@@ -42,7 +41,16 @@ class _BookPageState extends State<BookPage> {
 Widget oneBook(BuildContext context, BookData data) {
   return GestureDetector(
     onTap: () {
-      // openUrl(context, "https://www.yuque.com/${data.login}");
+      if (data.type == "Book") {
+        OpenPage.docBook(
+          context,
+          bookId: data.id,
+          bookSlug: data.slug,
+        );
+      } else {
+        String url = "https://www.yuque.com/${data.user.login}/${data.slug}";
+        openUrl(context, url);
+      }
     },
     child: Container(
       height: 70,
@@ -59,48 +67,47 @@ Widget oneBook(BuildContext context, BookData data) {
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           SizedBox(width: 20),
           Container(
             margin: EdgeInsets.only(left: 6),
             child: AppIcon.iconType(data.type),
           ),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.4,
-            margin: EdgeInsets.only(left: 20),
-            child: (data.description != null) && (data.description != "")
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        child: Text(
-                          clearText(data.name, 10),
-                          style: AppStyles.textStyleB,
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.only(left: 20),
+              child: (data.description != null) && (data.description != "")
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          child: Text(
+                            clearText(data.name, 10),
+                            style: AppStyles.textStyleB,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 2),
-                      Container(
-                        child: Text(
-                          "${clearText(data.description, 15)}",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppStyles.textStyleC,
+                        SizedBox(height: 2),
+                        Container(
+                          child: Text(
+                            "${data.description}",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppStyles.textStyleC,
+                          ),
                         ),
+                      ],
+                    )
+                  : Container(
+                      child: Text(
+                        "${data.name}",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppStyles.textStyleB,
                       ),
-                    ],
-                  )
-                : Container(
-                    child: Text(
-                      "${data.name}",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppStyles.textStyleB,
                     ),
-                  ),
+            ),
           ),
-          Spacer(),
           // FollowButtom(data: data)
         ],
       ),
