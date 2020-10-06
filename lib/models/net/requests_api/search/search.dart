@@ -66,7 +66,7 @@ class DioSearch {
   }
 
   // 搜索用户(默认与我无关)
-  static getUser(String text, int page) async {
+  static getUser({String text, int page}) async {
     var ans = await DioReq.get("/zsearch?p=$page&q=$text&scope=&type=user");
     return SearchUserJson.fromJson(ans);
   }

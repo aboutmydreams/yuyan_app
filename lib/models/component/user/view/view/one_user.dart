@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
+import 'package:yuyan_app/models/tools/get_tag.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 Widget oneUser(BuildContext context, Map data) {
+  String tag = getTag();
+
   return GestureDetector(
     onTap: () {
       OpenPage.user(
         context,
-        tag: data["tag"],
+        tag: tag,
         login: data["login"],
         name: data["name"],
         avatarUrl: data["avatarUrl"],

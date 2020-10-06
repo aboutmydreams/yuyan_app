@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shifting_tabbar/shifting_tabbar.dart';
 import 'package:yuyan_app/models/net/requests_api/search/data/doc_data.dart';
+import 'package:yuyan_app/models/net/requests_api/search/data/user_data.dart';
 import 'package:yuyan_app/models/net/requests_api/search/search.dart';
 import 'package:yuyan_app/views/explore_page/search/search_result/view/search_doc.dart';
+import 'package:yuyan_app/views/explore_page/search/search_result/view/search_user.dart';
 import 'package:yuyan_app/views/explore_page/search/tabbar_config.dart';
 
 class SearchResultPage extends StatefulWidget {
@@ -26,11 +28,13 @@ class _SearchResultPageState extends State<SearchResultPage>
 
   TabController _tabController;
   SearchDocJson searchDocJson;
+  SearchUserJson searchUserJson;
 
   @override
   void initState() {
     super.initState();
-    getData();
+    getDocData();
+    getUserData();
     _tabController =
         TabController(vsync: this, initialIndex: pageIndex, length: 6)
           ..addListener(() => changeIndex(_tabController.index));
@@ -50,10 +54,17 @@ class _SearchResultPageState extends State<SearchResultPage>
     }
   }
 
-  getData() async {
+  getDocData() async {
     SearchDocJson docData = await DioSearch.getDoc(text: text, page: 1);
     setState(() {
       searchDocJson = docData;
+    });
+  }
+
+  getUserData() async {
+    SearchUserJson userData = await DioSearch.getUser(text: text, page: 1);
+    setState(() {
+      searchUserJson = userData;
     });
   }
 
@@ -89,7 +100,7 @@ class _SearchResultPageState extends State<SearchResultPage>
               child: Text("t5"),
             ),
             Container(
-              child: Text("t6"),
+              child: SearchUserPage(searchUserJson: searchUserJson),
             ),
           ],
         ),
