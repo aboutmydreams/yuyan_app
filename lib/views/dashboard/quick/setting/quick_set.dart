@@ -24,18 +24,18 @@ class QuickSetPage extends StatelessWidget {
           },
         ),
       ),
-      floatingActionButton: Stack(
-        children: <Widget>[
-          Positioned(
-            bottom: 70,
-            right: 0,
-            child: FloatingActionButton(
-              onPressed: () {},
-              child: Icon(Icons.add),
-            ),
-          )
-        ],
-      ),
+      // floatingActionButton: Stack(
+      //   children: <Widget>[
+      //     Positioned(
+      //       bottom: 70,
+      //       right: 0,
+      //       child: FloatingActionButton(
+      //         onPressed: () {},
+      //         child: Icon(Icons.add),
+      //       ),
+      //     )
+      //   ],
+      // ),
     );
   }
 }
