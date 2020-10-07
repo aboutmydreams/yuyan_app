@@ -14,7 +14,6 @@ class InfoCount extends StatelessWidget {
     return ScopedModelDescendant<TopStateModel>(
         builder: (context, child, model) {
       UserInfoJson myInfo = model.myInfoManage.myInfoData;
-      // print("===============${myInfo.data.followingCount}");
       List<GroupData> groupList = model.myInfoManage.groupData.data;
       int groupLength = groupList.length;
       return Align(

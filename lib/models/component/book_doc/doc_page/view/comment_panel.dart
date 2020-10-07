@@ -40,11 +40,10 @@ class CommentPanel extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 25,
+              top: 0,
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.7,
                 width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.only(left: 16),
                 child: ListView.builder(
                   itemCount: comments.data.length,
                   itemBuilder: (BuildContext context, int index) {
@@ -54,7 +53,6 @@ class CommentPanel extends StatelessWidget {
               ),
             ),
             Positioned(
-              // top: 20,
               bottom: 0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

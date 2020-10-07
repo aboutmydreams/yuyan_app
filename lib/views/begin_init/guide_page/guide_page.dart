@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/views/begin_init/guide_page/guide1.dart';
 import 'package:yuyan_app/views/begin_init/guide_page/guide2.dart';
 import 'package:yuyan_app/views/begin_init/guide_page/guide3.dart';
-import 'package:yuyan_app/views/begin_init/login_page/login_page.dart';
 
 class GuidePage extends StatelessWidget {
-  int n = 0;
+  // int n = 0;
 
   final pages = [
     Container(child: Guide1()),
@@ -16,7 +15,7 @@ class GuidePage extends StatelessWidget {
   ];
 
   pageChangeCallback(BuildContext context, int page) {
-    n += 1;
+    // n += 1;
     // if ((n > 3) & (page == 2)) {
     //   print(n);
     //   Navigator.pushNamedAndRemoveUntil(
@@ -38,9 +37,9 @@ class GuidePage extends StatelessWidget {
         enableLoop: false,
         positionSlideIcon: 0.5,
         waveType: WaveType.liquidReveal,
-        onPageChangeCallback: (page) => pageChangeCallback(context, page),
-        currentUpdateTypeCallback: (updateType) =>
-            updateTypeCallback(updateType),
+        // onPageChangeCallback: (page) => pageChangeCallback(context, page),
+        // currentUpdateTypeCallback: (updateType) =>
+        //     updateTypeCallback(updateType),
       ),
     );
   }
