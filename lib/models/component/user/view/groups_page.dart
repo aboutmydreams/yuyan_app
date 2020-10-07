@@ -19,7 +19,7 @@ class UserGroupPage extends StatelessWidget {
     return groupJson == null
         ? loading()
         : groupJson.data.isEmpty
-            ? NothingPage(top: 190, text: "知识库空空")
+            ? NothingPage(top: 190, text: "没有公开团队")
             : SingleChildScrollView(
                 child: aniColumn(
                   aniWhich: 4,
