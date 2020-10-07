@@ -10,3 +10,9 @@ String randomString(int stringLenth) {
   }
   return randomString;
 }
+
+randomChoice(List list) {
+  final _random = new Random();
+  var element = list[_random.nextInt(list.length)];
+  return element;
+}

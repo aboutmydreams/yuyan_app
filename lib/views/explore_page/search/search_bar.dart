@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/models/oauth2/random_string/random_string.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/views/explore_page/search/search_result/result_page.dart';
 import 'package:yuyan_app/views/explore_page/search/view/suggest_list.dart';
@@ -10,6 +11,8 @@ class SearchBarDelegate extends SearchDelegate<String> {
 
   @override
   String get searchFieldLabel => aboutMe ? "🔍 about me" : "Search";
+  @override
+  bool get maintainState => true;
 
   // 重写叉叉
   @override
@@ -63,7 +66,8 @@ class SearchBarDelegate extends SearchDelegate<String> {
 
   goSearch(BuildContext context, {String text, int index: 0}) {
     if (text == "") {
-      myToast(context, "🔍找点什么呢❓");
+      List<String> tipList = ["🔍 丶❔", "找点什么呢", "先打字再 🔍 ❗"];
+      myToast(context, randomChoice(tipList));
       return null;
     } else {
       pageIndex = index;

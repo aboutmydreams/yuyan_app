@@ -37,6 +37,7 @@ OneTopicData setData(Hits data) {
   return OneTopicData(
     id: data.rRecord.id,
     iid: data.rRecord.iid,
+    groupId: data.rRecord.groupId,
     commentsCount: data.rRecord.commentsCount,
     title: data.title,
     updatedAt: data.rRecord.updatedAt,
