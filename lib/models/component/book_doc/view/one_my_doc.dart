@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
-import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 Widget autoText(
@@ -13,7 +12,8 @@ Widget autoText(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
       Text(
-        clearText(title, 10),
+        title,
+        maxLines: 1,
         style: AppStyles.textStyleB,
       ),
       SizedBox(height: 2),
@@ -40,8 +40,6 @@ Widget buildDoc(BuildContext context, Map data) {
       "https://www.yuque.com/${data['login']}/${data['bookSlug']}/${data['docId'].toString()}";
   return GestureDetector(
     onTap: () {
-      debugPrint(data["docId"].runtimeType.toString());
-      debugPrint(data["docId"].toString());
       if ((data["type"] == "Doc") || (data["type"] == "doc")) {
         OpenPage.docWeb(
           context,
@@ -68,7 +66,7 @@ Widget buildDoc(BuildContext context, Map data) {
         ],
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
-      child: data["cover"] != null
+      child: (data["cover"] != null) && (data["cover"] != "")
           ? Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

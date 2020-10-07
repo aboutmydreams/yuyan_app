@@ -3,11 +3,13 @@ import 'package:shifting_tabbar/shifting_tabbar.dart';
 import 'package:yuyan_app/models/net/requests_api/search/data/doc_data.dart';
 import 'package:yuyan_app/models/net/requests_api/search/data/group_data.dart';
 import 'package:yuyan_app/models/net/requests_api/search/data/repos_data.dart';
+import 'package:yuyan_app/models/net/requests_api/search/data/topic_data.dart';
 import 'package:yuyan_app/models/net/requests_api/search/data/user_data.dart';
 import 'package:yuyan_app/models/net/requests_api/search/search.dart';
 import 'package:yuyan_app/views/explore_page/search/search_result/view/search_doc.dart';
 import 'package:yuyan_app/views/explore_page/search/search_result/view/search_group.dart';
 import 'package:yuyan_app/views/explore_page/search/search_result/view/search_repos.dart';
+import 'package:yuyan_app/views/explore_page/search/search_result/view/search_topic.dart';
 import 'package:yuyan_app/views/explore_page/search/search_result/view/search_user.dart';
 import 'package:yuyan_app/views/explore_page/search/tabbar_config.dart';
 
@@ -35,17 +37,22 @@ class _SearchResultPageState extends State<SearchResultPage>
   SearchUserJson searchUserJson;
   SearchGroupJson searchGroupJson;
   SearchReposJson searchReposJson;
+  SearchTopicJson searchTopicJson;
 
   @override
   void initState() {
     super.initState();
+
     getDocData();
     getUserData();
     getGroupData();
     getReposData();
-    _tabController =
-        TabController(vsync: this, initialIndex: pageIndex, length: 6)
-          ..addListener(() => changeIndex(_tabController.index));
+    getTopicData();
+    _tabController = TabController(
+      vsync: this,
+      initialIndex: pageIndex,
+      length: aboutMe ? searchMe.keys.length : searchAll.keys.length,
+    )..addListener(() => changeIndex(_tabController.index));
   }
 
   @override
@@ -90,17 +97,25 @@ class _SearchResultPageState extends State<SearchResultPage>
     });
   }
 
+  getTopicData() async {
+    SearchTopicJson topicData = await DioSearch.getTopic(text: text, page: 1);
+    setState(() {
+      searchTopicJson = topicData;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    Map searchMap = aboutMe ? searchMe : searchAll;
     return DefaultTabController(
-      length: 6,
+      length: searchMap.keys.length,
       child: Scaffold(
         appBar: ShiftingTabBar(
           color: Colors.white,
           brightness: Brightness.light,
           controller: _tabController,
-          tabs: searchAll.keys
-              .map((k) => ShiftingTab(text: k, icon: Icon(searchAll[k])))
+          tabs: searchMap.keys
+              .map((k) => ShiftingTab(text: k, icon: Icon(searchMap[k])))
               .toList(),
         ),
         body: TabBarView(
@@ -112,11 +127,12 @@ class _SearchResultPageState extends State<SearchResultPage>
             Container(
               child: SearchReposPage(searchReposJson: searchReposJson),
             ),
+            // 画板 暂定
+            // Container(
+            //   child: Text("t3"),
+            // ),
             Container(
-              child: Text("t3"),
-            ),
-            Container(
-              child: Text("t4"),
+              child: SearchTopicPage(searchTopicJson: searchTopicJson),
             ),
             Container(
               child: SearchGroupPage(searchGroupJson: searchGroupJson),

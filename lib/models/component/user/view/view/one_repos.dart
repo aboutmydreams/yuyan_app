@@ -42,7 +42,7 @@ Widget oneRepos(BuildContext context, Map data) {
           ),
           Expanded(
             child: Container(
-              margin: EdgeInsets.only(left: 20),
+              padding: EdgeInsets.only(left: 20, right: 16),
               child:
                   (data["description"] != null) && (data["description"] != "")
                       ? Column(
@@ -76,7 +76,6 @@ Widget oneRepos(BuildContext context, Map data) {
                         ),
             ),
           ),
-          // FollowButtom(data: data)
         ],
       ),
     ),

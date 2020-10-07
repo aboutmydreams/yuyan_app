@@ -4,6 +4,8 @@ import 'package:yuyan_app/views/explore_page/search/search_result/result_page.da
 import 'package:yuyan_app/views/explore_page/search/view/suggest_list.dart';
 
 class SearchBarDelegate extends SearchDelegate<String> {
+  SearchBarDelegate({Key key, this.aboutMe: false});
+  final bool aboutMe;
   int pageIndex = 0;
 
   // 重写叉叉
