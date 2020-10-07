@@ -29,7 +29,7 @@ class NothingPage extends StatelessWidget {
               fontFamily: "sans_bold",
               fontWeight: FontWeight.w600,
               fontSize: 22,
-              letterSpacing: 5,
+              letterSpacing: 3,
             ),
           )
         ],

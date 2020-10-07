@@ -27,7 +27,7 @@ class _ExplorePageState extends State<ExplorePage>
                 Icons.search,
                 color: Colors.white,
               ),
-              tooltip: 'Search',
+              tooltip: '在语雀中搜索',
               onPressed: () {
                 showSearch(context: context, delegate: SearchBarDelegate());
               },

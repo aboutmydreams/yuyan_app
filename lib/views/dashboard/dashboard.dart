@@ -3,6 +3,7 @@ import 'package:yuyan_app/state_manage/dataManage/data/quick_data.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/dashboard/quick/quick_view.dart';
 import 'package:yuyan_app/views/dashboard/recent/recent_page.dart';
+import 'package:yuyan_app/views/explore_page/search/search_bar.dart';
 
 class Dashboard extends StatefulWidget {
   Dashboard({Key key}) : super(key: key);
@@ -22,17 +23,21 @@ class _DashboardState extends State<Dashboard> {
         bottomOpacity: 5.0,
         elevation: 1,
         title: Text("书桌"),
-        // 迭代计划中 工作台的搜索优先搜索我的
-        // actions: <Widget>[
-        //   IconButton(
-        //     icon: Icon(
-        //       Icons.search,
-        //       color: Colors.black,
-        //     ),
-        //     tooltip: 'Search',
-        //     onPressed: () => debugPrint('Search button is pressed.'),
-        //   )
-        // ],
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.search,
+              color: Colors.white,
+            ),
+            tooltip: '搜索与我有关',
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: SearchBarDelegate(aboutMe: true),
+              );
+            },
+          )
+        ],
       ),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {},

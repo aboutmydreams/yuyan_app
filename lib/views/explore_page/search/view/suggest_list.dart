@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../tabbar_config.dart';
 
-Widget suggestList(BuildContext context, {String query, Function onTap}) {
+Widget suggestList(
+  BuildContext context, {
+  String query,
+  Function onTap,
+  bool abouMe: false,
+}) {
+  Map searchMap = abouMe ? searchMe : searchAll;
   return ListView.builder(
-    itemCount: searchAll.keys.length,
+    itemCount: searchMap.keys.length,
     itemBuilder: (context, index) => ListTile(
       title: RichText(
         text: TextSpan(
@@ -19,13 +25,13 @@ Widget suggestList(BuildContext context, {String query, Function onTap}) {
               ),
             ),
             TextSpan(
-              text: searchAll.keys.toList()[index],
+              text: searchMap.keys.toList()[index],
               style: TextStyle(color: Colors.grey),
             ),
           ],
         ),
       ),
-      trailing: Icon(searchAll.values.toList()[index]),
+      trailing: Icon(searchMap.values.toList()[index]),
       focusColor: Colors.amber,
       onTap: () {
         onTap(context, text: query, index: index);

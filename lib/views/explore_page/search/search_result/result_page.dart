@@ -43,11 +43,7 @@ class _SearchResultPageState extends State<SearchResultPage>
   void initState() {
     super.initState();
 
-    getDocData();
-    getUserData();
-    getGroupData();
-    getReposData();
-    getTopicData();
+    getAboutAllData();
     _tabController = TabController(
       vsync: this,
       initialIndex: pageIndex,
@@ -69,39 +65,44 @@ class _SearchResultPageState extends State<SearchResultPage>
     }
   }
 
-  getDocData() async {
-    SearchDocJson docData = await DioSearch.getDoc(text: text, page: 1);
-    setState(() {
-      searchDocJson = docData;
-    });
+  getAboutAllData() async {
+    if (aboutMe) {
+      SearchDocJson docData =
+          await DioSearch.getDoc(text: text, aboutMe: true, page: 1);
+      SearchReposJson reposData =
+          await DioSearch.getRepos(text: text, aboutMe: true, page: 1);
+      SearchTopicJson topicData =
+          await DioSearch.getTopic(text: text, aboutMe: true, page: 1);
+      setState(() {
+        searchDocJson = docData;
+        searchReposJson = reposData;
+        searchTopicJson = topicData;
+      });
+    } else {
+      SearchDocJson docData = await DioSearch.getDoc(text: text, page: 1);
+      SearchUserJson userData = await DioSearch.getUser(text: text, page: 1);
+      SearchGroupJson groupData = await DioSearch.getGroup(text: text, page: 1);
+      SearchReposJson reposData = await DioSearch.getRepos(text: text, page: 1);
+      SearchTopicJson topicData = await DioSearch.getTopic(text: text, page: 1);
+      setState(() {
+        searchDocJson = docData;
+        searchUserJson = userData;
+        searchGroupJson = groupData;
+        searchReposJson = reposData;
+        searchTopicJson = topicData;
+      });
+    }
   }
 
-  getUserData() async {
-    SearchUserJson userData = await DioSearch.getUser(text: text, page: 1);
-    setState(() {
-      searchUserJson = userData;
-    });
-  }
-
-  getGroupData() async {
-    SearchGroupJson groupData = await DioSearch.getGroup(text: text, page: 1);
-    setState(() {
-      searchGroupJson = groupData;
-    });
-  }
-
-  getReposData() async {
-    SearchReposJson reposData = await DioSearch.getRepos(text: text, page: 1);
-    setState(() {
-      searchReposJson = reposData;
-    });
-  }
-
-  getTopicData() async {
-    SearchTopicJson topicData = await DioSearch.getTopic(text: text, page: 1);
-    setState(() {
-      searchTopicJson = topicData;
-    });
+  Widget searchResult(String k) {
+    Map<String, Widget> searchResultMap = {
+      "文档": SearchDocPage(docBookJson: searchDocJson),
+      "知识库": SearchReposPage(searchReposJson: searchReposJson),
+      "讨论": SearchTopicPage(searchTopicJson: searchTopicJson),
+      "团队": SearchGroupPage(searchGroupJson: searchGroupJson),
+      "用户": SearchUserPage(searchUserJson: searchUserJson),
+    };
+    return searchResultMap[k];
   }
 
   @override
@@ -120,27 +121,8 @@ class _SearchResultPageState extends State<SearchResultPage>
         ),
         body: TabBarView(
           controller: _tabController,
-          children: <Widget>[
-            Container(
-              child: SearchDocPage(docBookJson: searchDocJson),
-            ),
-            Container(
-              child: SearchReposPage(searchReposJson: searchReposJson),
-            ),
-            // 画板 暂定
-            // Container(
-            //   child: Text("t3"),
-            // ),
-            Container(
-              child: SearchTopicPage(searchTopicJson: searchTopicJson),
-            ),
-            Container(
-              child: SearchGroupPage(searchGroupJson: searchGroupJson),
-            ),
-            Container(
-              child: SearchUserPage(searchUserJson: searchUserJson),
-            ),
-          ],
+          children:
+              searchMap.keys.map((element) => searchResult(element)).toList(),
         ),
       ),
     );

@@ -18,7 +18,7 @@ class SearchReposPage extends StatelessWidget {
           : searchReposJson.data.hits.isEmpty
               ? NothingPage(
                   top: 50,
-                  text: "暂无用户~",
+                  text: "暂无知识库~",
                 )
               : animationList(
                   context: context,

@@ -5,8 +5,11 @@ import 'package:yuyan_app/views/explore_page/search/view/suggest_list.dart';
 
 class SearchBarDelegate extends SearchDelegate<String> {
   SearchBarDelegate({Key key, this.aboutMe: false});
-  final bool aboutMe;
+  bool aboutMe;
   int pageIndex = 0;
+
+  @override
+  String get searchFieldLabel => aboutMe ? "🔍 about me" : "Search";
 
   // 重写叉叉
   @override
@@ -40,9 +43,10 @@ class SearchBarDelegate extends SearchDelegate<String> {
 
   // 重写搜索结果
   @override
-  Widget buildResults(BuildContext context, {bool aboutMe: false}) {
+  Widget buildResults(BuildContext context) {
     if (query == "") {
-      return suggestList(context, query: query, onTap: goSearch);
+      return suggestList(context,
+          query: query, onTap: goSearch, abouMe: aboutMe);
     } else {
       return SearchResultPage(
         text: query,
@@ -54,7 +58,7 @@ class SearchBarDelegate extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return suggestList(context, query: query, onTap: goSearch);
+    return suggestList(context, query: query, onTap: goSearch, abouMe: aboutMe);
   }
 
   goSearch(BuildContext context, {String text, int index: 0}) {

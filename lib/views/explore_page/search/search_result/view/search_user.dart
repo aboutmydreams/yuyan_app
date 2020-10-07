@@ -18,7 +18,7 @@ class SearchUserPage extends StatelessWidget {
           : searchUserJson.data.hits.isEmpty
               ? NothingPage(
                   top: 50,
-                  text: "暂无用户~",
+                  text: "没用相关用户~",
                 )
               : animationList(
                   context: context,

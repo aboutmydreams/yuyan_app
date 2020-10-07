@@ -18,7 +18,7 @@ class SearchDocPage extends StatelessWidget {
           : docBookJson.data.hits.isEmpty
               ? NothingPage(
                   top: 50,
-                  text: "暂无文档~",
+                  text: "没用相关文档~",
                 )
               : animationList(
                   context: context,

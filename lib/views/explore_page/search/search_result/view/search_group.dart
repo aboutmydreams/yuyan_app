@@ -19,7 +19,7 @@ class SearchGroupPage extends StatelessWidget {
           : searchGroupJson.data.hits.isEmpty
               ? NothingPage(
                   top: 50,
-                  text: "暂无用户~",
+                  text: "没用相关团队~",
                 )
               : animationList(
                   context: context,
