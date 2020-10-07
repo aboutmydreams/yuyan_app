@@ -24,6 +24,7 @@ class QuickSetPage extends StatelessWidget {
           },
         ),
       ),
+      // 未来添加设置快捷功能
       // floatingActionButton: Stack(
       //   children: <Widget>[
       //     Positioned(

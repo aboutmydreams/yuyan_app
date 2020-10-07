@@ -125,7 +125,7 @@ Map<String, dynamic> fixAttentData(Map<String, dynamic> data) {
 
 class AttentManage extends Model {
   int offset = 0;
-  AttentData _attentData = AttentData(data: []);
+  AttentData _attentData = AttentData();
   AttentData get attentData => _attentData;
   List<Data> _attentDataList = [];
   List<Data> get attentDataList => _attentData.data;
