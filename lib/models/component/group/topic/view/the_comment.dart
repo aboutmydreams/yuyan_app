@@ -5,6 +5,7 @@ import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 import 'package:yuyan_app/models/tools/get_tag.dart';
 import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_big/html/body_html.dart';
+import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 class TheComment extends StatelessWidget {
@@ -14,21 +15,37 @@ class TheComment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int count = comment.data.length;
-    return Container(
-      padding: EdgeInsets.only(left: 16, right: 16),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.only(left: 16, top: 20, bottom: 2),
+          child: Text(
             count == 0 ? "" : "评论",
-            style: AppStyles.textStyleBp,
+            style: AppStyles.textStyleBBB,
           ),
-          SizedBox(height: 10),
-        ]..addAll(comment.data.map((m) {
-            return oneComment(context, m);
-          }).toList()),
-      ),
+        ),
+        SizedBox(height: 10),
+      ]
+        ..addAll(comment.data.map((m) {
+          return oneComment(context, m);
+        }).toList())
+        ..add(Align(
+            alignment: Alignment.bottomRight,
+            child: InkWell(
+              onTap: () {
+                myToast(context, "加入讨论呗");
+              },
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(0, 20, 100, 45),
+                child: Text(
+                  count > 5 ? "👉" : "",
+                  style: TextStyle(fontSize: 22),
+                ),
+              ),
+            ))),
     );
   }
 }
@@ -36,7 +53,18 @@ class TheComment extends StatelessWidget {
 Widget oneComment(BuildContext context, CommentData data) {
   String tag = getTag();
   return Container(
-    margin: EdgeInsets.only(bottom: 16),
+    margin: EdgeInsets.only(bottom: 1),
+    padding: EdgeInsets.only(left: 15, top: 32, bottom: 20, right: 15),
+    decoration: BoxDecoration(
+      color: AppColors.background,
+      boxShadow: [
+        BoxShadow(
+          color: Color.fromARGB(20, 0, 0, 0),
+          offset: Offset(1, 1),
+          blurRadius: 2,
+        ),
+      ],
+    ),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,37 +86,36 @@ Widget oneComment(BuildContext context, CommentData data) {
           ),
         ),
         SizedBox(width: 10),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              // padding: EdgeInsets.only(right: 10),
-              width: MediaQuery.of(context).size.width - 70,
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    data.user.name,
-                    style: AppStyles.textStyleB,
-                  ),
-                  Spacer(),
-                  Text(
-                    timeCut(data.updatedAt),
-                    style: AppStyles.textStyleCC,
-                  ),
-                ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                // padding: EdgeInsets.only(right: 10),
+                width: MediaQuery.of(context).size.width - 90,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        data.user.name,
+                        style: AppStyles.textStyleB,
+                      ),
+                    ),
+                    Text(
+                      timeCut(data.updatedAt),
+                      style: AppStyles.textStyleCC,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width - 80,
-              margin: EdgeInsets.only(top: 2, bottom: 16),
-              child: getHtml(
+              SizedBox(height: 10),
+              getHtml(
                 context,
                 data.bodyHtml,
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        )
       ],
     ),
   );

@@ -135,7 +135,7 @@ class _TopicDetailState extends State<TopicDetail> {
                 },
               ),
             ]),
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.backgroundB,
         body: (topicDetail == null) || (topicComments == null)
             ? loading()
             : SingleChildScrollView(
