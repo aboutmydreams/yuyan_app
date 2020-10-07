@@ -74,8 +74,9 @@ class CommentPanel extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.16,
+                        width: MediaQuery.of(context).size.width * 0.17,
                         child: FlatButton(
+                          padding: EdgeInsets.all(0),
                           onPressed: onpressed,
                           autofocus: true,
                           color: AppColors.primary,

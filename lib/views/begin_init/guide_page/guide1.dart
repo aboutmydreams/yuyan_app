@@ -41,7 +41,7 @@ class Guide1 extends StatelessWidget {
               ),
             ),
           ),
-        )
+        ),
       ],
     );
   }
