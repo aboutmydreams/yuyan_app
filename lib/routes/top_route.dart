@@ -4,6 +4,7 @@ import 'package:yuyan_app/models/widgets_big/image_page/test1.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 import 'package:yuyan_app/views/begin_init/first_page/first_page.dart';
 import 'package:yuyan_app/views/begin_init/guide_page/guide_page.dart';
+import 'package:yuyan_app/views/begin_init/guide_page/test.dart';
 import 'package:yuyan_app/views/begin_init/login_page/login_page.dart';
 import 'package:yuyan_app/views/dashboard/dashboard.dart';
 import 'package:yuyan_app/views/dashboard/quick/setting/quick_set.dart';

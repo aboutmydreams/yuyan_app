@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
+import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/my_mark_data.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
@@ -60,10 +61,10 @@ class _MarkPageState extends State<MarkPage> {
 Widget oneMark(BuildContext context, MarkData data) {
   // 如果收藏的是团队，那么 avatarUrl 的位置变了一下...
   String userName =
-      data.targetType == "User" ? data.title : data.targetGroup.name;
+      data.targetType == "User" ? data.title : data.target.user.name;
   String avatarUrl = data.targetType == "User"
       ? data.target.avatarUrl
-      : data.targetGroup.avatarUrl;
+      : data.target.user.avatarUrl;
 
   return GestureDetector(
     onTap: () {
@@ -73,12 +74,18 @@ Widget oneMark(BuildContext context, MarkData data) {
           groupdata: GroupData(
             id: data.target.id,
             login: data.target.login,
-            name: data.target.name,
+            name: data.target.name ?? "",
             description: data.target.description,
             avatarUrl: data.target.avatarUrl,
           ),
         );
-      } else {
+      } else if (data.targetType == "Book") {
+        OpenPage.docBook(
+          context,
+          bookId: data.target.id,
+          bookSlug: data.target.slug,
+        );
+      } else if (data.targetType == "Doc") {
         OpenPage.docWeb(
           context,
           login: data.targetGroup.login,
@@ -86,6 +93,8 @@ Widget oneMark(BuildContext context, MarkData data) {
           bookId: data.targetBookId,
           docId: data.targetId,
         );
+      } else {
+        openUrl(context, "https://www.yuque.com${data.sUrl}");
       }
     },
     child: Container(

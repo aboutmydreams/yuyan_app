@@ -2,20 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_info_data.dart';
-import 'package:yuyan_app/models/oauth2/random_string/random_string.dart';
-import 'package:yuyan_app/models/tools/get_pref.dart';
 import 'package:yuyan_app/models/tools/get_tag.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/member.dart';
-import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 
 import 'info_count.dart';
 
 Widget userInfo(BuildContext context) {
-  UserInfoJson myInfo = topModel.myInfoManage.myInfoData;
-  String description = myInfo.data.description ?? "笔墨待识君";
+  TheInfo myInfo =
+      topModel.myInfoManage.myInfoData.data ?? TheInfo(avatarUrl: "");
+  myInfo.description ??= "笔墨待识君";
 
   double leftMargin = MediaQuery.of(context).size.width * 0.075;
   double descriptionWidth =
@@ -44,12 +42,12 @@ Widget userInfo(BuildContext context) {
           onTap: () async {
             OpenPage.user(
               context,
-              login: myInfo.data.login,
+              login: myInfo.login,
               tag: tag,
-              userId: myInfo.data.id,
-              description: myInfo.data.description,
-              name: myInfo.data.name,
-              avatarUrl: myInfo.data.avatarUrl,
+              userId: myInfo.id,
+              description: myInfo.description,
+              name: myInfo.name,
+              avatarUrl: myInfo.avatarUrl,
             );
           },
           child: aniRow(
@@ -59,7 +57,7 @@ Widget userInfo(BuildContext context) {
               SizedBox(width: 16),
               Hero(
                 tag: tag,
-                child: userAvatar(myInfo.data.avatarUrl, height: 60),
+                child: userAvatar(myInfo.avatarUrl, height: 60),
               ),
               SizedBox(width: 16),
               Container(
@@ -75,7 +73,7 @@ Widget userInfo(BuildContext context) {
                       child: Row(
                         children: [
                           Text(
-                            "${myInfo.data.name}",
+                            "${myInfo.name}",
                             textAlign: TextAlign.center,
                             style: AppStyles.textStyleA,
                           ),
@@ -88,7 +86,7 @@ Widget userInfo(BuildContext context) {
                       width: descriptionWidth,
                       margin: EdgeInsets.only(left: 3),
                       child: Text(
-                        "$description",
+                        "${myInfo.description}",
                         textAlign: TextAlign.left,
                         maxLines: 2,
                         style: AppStyles.countTextStyle,
@@ -101,7 +99,7 @@ Widget userInfo(BuildContext context) {
           ),
         ),
         Divider(),
-        infoCount(context),
+        InfoCount(),
       ],
     ),
   );

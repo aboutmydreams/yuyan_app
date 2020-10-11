@@ -27,7 +27,12 @@ class DocPageWeb extends StatefulWidget {
 
   @override
   _DocPageWebState createState() => _DocPageWebState(
-      login: login, bookSlug: bookSlug, url: url, bookId: bookId, docId: docId);
+        login: login,
+        bookSlug: bookSlug,
+        url: url,
+        bookId: bookId,
+        docId: docId,
+      );
 }
 
 class _DocPageWebState extends State<DocPageWeb> {
@@ -67,6 +72,7 @@ class _DocPageWebState extends State<DocPageWeb> {
     theUrl = theUrl.contains("view=doc_embed")
         ? theUrl
         : theUrl + "?view=doc_embed&from=yuyan&title=1&outline=1";
+    debugPrint(theUrl);
     shareUrl =
         theUrl.replaceAll("?view=doc_embed&from=yuyan&title=1&outline=1", "");
     getIfLike();
@@ -232,15 +238,22 @@ class _DocPageWebState extends State<DocPageWeb> {
               bottom: 60,
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height - 30,
-                padding: EdgeInsets.all(16),
+                height: MediaQuery.of(context).size.height,
+                padding: EdgeInsets.fromLTRB(16, 0, 16, 4),
                 color: Colors.white,
                 child: InAppWebView(
                   initialUrl: theUrl,
-                  initialOptions: InAppWebViewWidgetOptions(
+                  initialOptions: InAppWebViewGroupOptions(
                     android: AndroidInAppWebViewOptions(
                       databaseEnabled: true,
                       domStorageEnabled: true,
+                    ),
+                    ios: IOSInAppWebViewOptions(
+                      disallowOverScroll: true,
+                      enableViewportScale: true,
+                      suppressesIncrementalRendering: true,
+                      alwaysBounceVertical: true,
+                      allowsLinkPreview: false,
                     ),
                     crossPlatform: InAppWebViewOptions(
                       debuggingEnabled: true,

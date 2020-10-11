@@ -8,8 +8,8 @@ class ColorManage extends Model {
     // Colors.yellow,
     // Colors.orange,
 
-    Colors.teal,
     Colors.blue,
+    Colors.teal,
     Colors.deepOrange,
     // Colors.amber,
     Colors.red,

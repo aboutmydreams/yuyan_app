@@ -1,13 +1,13 @@
-class RecentData {
-  List<Recent> data;
+class RecentJson {
+  List<RecentData> data;
 
-  RecentData({this.data});
+  RecentJson({this.data});
 
-  RecentData.fromJson(Map<String, dynamic> json) {
+  RecentJson.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<Recent>();
+      data = new List<RecentData>();
       json['data'].forEach((v) {
-        data.add(new Recent.fromJson(v));
+        data.add(new RecentData.fromJson(v));
       });
     }
   }
@@ -21,7 +21,7 @@ class RecentData {
   }
 }
 
-class Recent {
+class RecentData {
   int id;
   int organizationId;
   int userId;
@@ -36,13 +36,13 @@ class Recent {
   String updatedAt;
   String title;
   Book book;
-  User user;
-  Null share;
+  dynamic user;
+  Share share;
   String sSerializer;
+  bool isShare;
   Target target;
-  String avatar;
 
-  Recent(
+  RecentData(
       {this.id,
       this.organizationId,
       this.userId,
@@ -60,10 +60,10 @@ class Recent {
       this.user,
       this.share,
       this.sSerializer,
-      this.target,
-      this.avatar});
+      this.isShare,
+      this.target});
 
-  Recent.fromJson(Map<String, dynamic> json) {
+  RecentData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     organizationId = json['organization_id'];
     userId = json['user_id'];
@@ -78,12 +78,12 @@ class Recent {
     updatedAt = json['updated_at'];
     title = json['title'];
     book = json['book'] != null ? new Book.fromJson(json['book']) : null;
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
-    share = json['share'];
+    user = json['user'];
+    share = json['share'] != null ? new Share.fromJson(json['share']) : null;
     sSerializer = json['_serializer'];
+    isShare = json['isShare'];
     target =
         json['target'] != null ? new Target.fromJson(json['target']) : null;
-    avatar = json['avatar'];
   }
 
   Map<String, dynamic> toJson() {
@@ -104,15 +104,15 @@ class Recent {
     if (this.book != null) {
       data['book'] = this.book.toJson();
     }
-    if (this.user != null) {
-      data['user'] = this.user.toJson();
+    data['user'] = this.user;
+    if (this.share != null) {
+      data['share'] = this.share.toJson();
     }
-    data['share'] = this.share;
     data['_serializer'] = this.sSerializer;
+    data['isShare'] = this.isShare;
     if (this.target != null) {
       data['target'] = this.target.toJson();
     }
-    data['avatar'] = this.avatar;
     return data;
   }
 }
@@ -123,7 +123,7 @@ class Book {
   String slug;
   String name;
   User user;
-  Null creator;
+  dynamic creator;
   String sSerializer;
 
   Book(
@@ -165,30 +165,36 @@ class User {
   String type;
   String login;
   String name;
-  String scene;
-  Null organization;
-  Null owners;
+  String avatar;
+  dynamic profile;
   String sSerializer;
+  dynamic scene;
+  dynamic organization;
+  dynamic owners;
 
   User(
       {this.id,
       this.type,
       this.login,
       this.name,
+      this.avatar,
+      this.profile,
+      this.sSerializer,
       this.scene,
       this.organization,
-      this.owners,
-      this.sSerializer});
+      this.owners});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     type = json['type'];
     login = json['login'];
     name = json['name'];
+    avatar = json['avatar'];
+    profile = json['profile'];
+    sSerializer = json['_serializer'];
     scene = json['scene'];
     organization = json['organization'];
     owners = json['owners'];
-    sSerializer = json['_serializer'];
   }
 
   Map<String, dynamic> toJson() {
@@ -197,9 +203,52 @@ class User {
     data['type'] = this.type;
     data['login'] = this.login;
     data['name'] = this.name;
+    data['avatar'] = this.avatar;
+    data['profile'] = this.profile;
+    data['_serializer'] = this.sSerializer;
     data['scene'] = this.scene;
     data['organization'] = this.organization;
     data['owners'] = this.owners;
+    return data;
+  }
+}
+
+class Share {
+  int id;
+  String token;
+  String targetType;
+  int targetId;
+  int scope;
+  bool passwordEnable;
+  String sSerializer;
+
+  Share(
+      {this.id,
+      this.token,
+      this.targetType,
+      this.targetId,
+      this.scope,
+      this.passwordEnable,
+      this.sSerializer});
+
+  Share.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    token = json['token'];
+    targetType = json['target_type'];
+    targetId = json['target_id'];
+    scope = json['scope'];
+    passwordEnable = json['password_enable'];
+    sSerializer = json['_serializer'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['token'] = this.token;
+    data['target_type'] = this.targetType;
+    data['target_id'] = this.targetId;
+    data['scope'] = this.scope;
+    data['password_enable'] = this.passwordEnable;
     data['_serializer'] = this.sSerializer;
     return data;
   }
@@ -210,13 +259,30 @@ class Target {
   String type;
   String slug;
   String name;
-  String scene;
-  User user;
-  Null creator;
+  dynamic scene;
+  dynamic user;
+  dynamic creator;
   String sSerializer;
-  String login;
-  String avatar;
-  Null profile;
+  int userId;
+  String description;
+  int itemsCount;
+  int likesCount;
+  int watchesCount;
+  int creatorId;
+  int public;
+  dynamic source;
+  String createdAt;
+  String updatedAt;
+  String contentUpdatedAt;
+  dynamic pinnedAt;
+  dynamic archivedAt;
+  int status;
+  dynamic stackId;
+  dynamic rank;
+  String layout;
+  String docViewport;
+  String docTypography;
+  String cover;
 
   Target(
       {this.id,
@@ -227,9 +293,26 @@ class Target {
       this.user,
       this.creator,
       this.sSerializer,
-      this.login,
-      this.avatar,
-      this.profile});
+      this.userId,
+      this.description,
+      this.itemsCount,
+      this.likesCount,
+      this.watchesCount,
+      this.creatorId,
+      this.public,
+      this.source,
+      this.createdAt,
+      this.updatedAt,
+      this.contentUpdatedAt,
+      this.pinnedAt,
+      this.archivedAt,
+      this.status,
+      this.stackId,
+      this.rank,
+      this.layout,
+      this.docViewport,
+      this.docTypography,
+      this.cover});
 
   Target.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -237,12 +320,29 @@ class Target {
     slug = json['slug'];
     name = json['name'];
     scene = json['scene'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'];
     creator = json['creator'];
     sSerializer = json['_serializer'];
-    login = json['login'];
-    avatar = json['avatar'];
-    profile = json['profile'];
+    userId = json['user_id'];
+    description = json['description'];
+    itemsCount = json['items_count'];
+    likesCount = json['likes_count'];
+    watchesCount = json['watches_count'];
+    creatorId = json['creator_id'];
+    public = json['public'];
+    source = json['source'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    contentUpdatedAt = json['content_updated_at'];
+    pinnedAt = json['pinned_at'];
+    archivedAt = json['archived_at'];
+    status = json['status'];
+    stackId = json['stack_id'];
+    rank = json['rank'];
+    layout = json['layout'];
+    docViewport = json['doc_viewport'];
+    docTypography = json['doc_typography'];
+    cover = json['cover'];
   }
 
   Map<String, dynamic> toJson() {
@@ -252,14 +352,29 @@ class Target {
     data['slug'] = this.slug;
     data['name'] = this.name;
     data['scene'] = this.scene;
-    if (this.user != null) {
-      data['user'] = this.user.toJson();
-    }
+    data['user'] = this.user;
     data['creator'] = this.creator;
     data['_serializer'] = this.sSerializer;
-    data['login'] = this.login;
-    data['avatar'] = this.avatar;
-    data['profile'] = this.profile;
+    data['user_id'] = this.userId;
+    data['description'] = this.description;
+    data['items_count'] = this.itemsCount;
+    data['likes_count'] = this.likesCount;
+    data['watches_count'] = this.watchesCount;
+    data['creator_id'] = this.creatorId;
+    data['public'] = this.public;
+    data['source'] = this.source;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['content_updated_at'] = this.contentUpdatedAt;
+    data['pinned_at'] = this.pinnedAt;
+    data['archived_at'] = this.archivedAt;
+    data['status'] = this.status;
+    data['stack_id'] = this.stackId;
+    data['rank'] = this.rank;
+    data['layout'] = this.layout;
+    data['doc_viewport'] = this.docViewport;
+    data['doc_typography'] = this.docTypography;
+    data['cover'] = this.cover;
     return data;
   }
 }

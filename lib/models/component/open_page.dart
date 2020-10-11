@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/models/component/book_doc/book_doc.dart';
 import 'package:yuyan_app/models/component/book_doc/doc_page/webview_doc.dart';
 import 'package:yuyan_app/models/component/group/group_page.dart';
 import 'package:yuyan_app/models/component/group/topic/topic_detail_page.dart';
 import 'package:yuyan_app/models/component/user/user_page.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
+import 'package:yuyan_app/views/explore_page/search/search_result/result_page.dart';
 
 import 'book_doc/doc_page/doc_page.dart';
 
@@ -63,6 +65,12 @@ class OpenPage {
   }
 
   // 打开文档知识库
+  static docBook(BuildContext context,
+      {int bookId, String bookSlug, String login}) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return BookDocPage(bookId: bookId, bookSlug: bookSlug, login: login);
+    }));
+  }
 
   // 打开画板知识库
 
@@ -72,6 +80,15 @@ class OpenPage {
   static topic(BuildContext context, {int id, int iid, int groupId}) {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return TopicDetail(id: id, iid: iid, groupId: groupId);
+    }));
+  }
+
+  // 打开搜索
+  static search(BuildContext context,
+      {String text, bool aboutMe, int pageIndex}) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return SearchResultPage(
+          text: text, aboutMe: aboutMe, pageIndex: pageIndex);
     }));
   }
 }

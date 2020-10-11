@@ -1,7 +1,5 @@
-// import 'package:fluttertoast/fluttertoast.dart' as fluToast;
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 
 class Toast {

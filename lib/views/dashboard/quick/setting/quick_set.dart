@@ -24,24 +24,24 @@ class QuickSetPage extends StatelessWidget {
           },
         ),
       ),
-      floatingActionButton: Stack(
-        children: <Widget>[
-          Positioned(
-            bottom: 70,
-            right: 0,
-            child: FloatingActionButton(
-              onPressed: () {},
-              child: Icon(Icons.add),
-            ),
-          )
-        ],
-      ),
+      // 未来添加设置快捷功能
+      // floatingActionButton: Stack(
+      //   children: <Widget>[
+      //     Positioned(
+      //       bottom: 70,
+      //       right: 0,
+      //       child: FloatingActionButton(
+      //         onPressed: () {},
+      //         child: Icon(Icons.add),
+      //       ),
+      //     )
+      //   ],
+      // ),
     );
   }
 }
 
 Widget oneSetQuick(BuildContext context, Data data) {
-  // print(data.type);
   String imageUrl = data.icon.toString().contains("http")
       ? data.icon
       : iconType[data.type] ?? "assets/images/dashboard/book.png";

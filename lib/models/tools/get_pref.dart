@@ -24,8 +24,16 @@ getCtoken() async {
 getLogin() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String getIt(String key) => prefs.getString(key);
-  String ctoken = getIt("login");
-  return ctoken;
+  String login = getIt("login");
+  return login;
+}
+
+getUserId() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  int getIt(String key) => prefs.getInt(key);
+
+  int userId = getIt("my_id");
+  return userId;
 }
 
 getPrefStringData(String keyName) async {

@@ -15,7 +15,6 @@ class GroupHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print(homeJson.data.bookStacks);
     return homeJson == null
         ? loading()
         : homeJson.data.bookStacks.isEmpty
@@ -49,13 +48,13 @@ Widget oneHome(BuildContext context, BookStacks data) {
           ),
         ),
       ]..addAll(data.books.map((b) {
-          return oneBook(context, b);
+          return oneHomeBook(context, b);
         })),
     ),
   );
 }
 
-Widget oneBook(BuildContext context, Books data) {
+Widget oneHomeBook(BuildContext context, Books data) {
   return GestureDetector(
     onTap: () {
       // openUrl(context, "https://www.yuque.com/${data.login}");
@@ -100,7 +99,7 @@ Widget oneBook(BuildContext context, Books data) {
           ),
         ]..addAll(data.type != "Design"
             ? data.summary.map((s) {
-                return oneDoc(context, s, data.user.login, data.slug);
+                return oneHomeDoc(context, s, data.user.login, data.slug);
               })
             : [
                 Row(
@@ -114,7 +113,7 @@ Widget oneBook(BuildContext context, Books data) {
   );
 }
 
-Widget oneDoc(
+Widget oneHomeDoc(
     BuildContext context, Summary data, String login, String bookSlug) {
   return InkWell(
     onTap: () {
@@ -130,8 +129,9 @@ Widget oneDoc(
       padding: EdgeInsets.fromLTRB(0, 7, 0, 2),
       child: Row(
         children: <Widget>[
-          Text(data.title ?? data.filename),
-          Spacer(),
+          Expanded(
+            child: Text(data.title ?? data.filename),
+          ),
           Text(
             timeCut(data.contentUpdatedAt ?? data.createdAt),
             style: AppStyles.textStyleCC,

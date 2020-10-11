@@ -15,7 +15,7 @@ class _FirstPageState extends State<FirstPage> {
     super.initState();
 
     // 定时器
-    Timer initTime = new Timer(const Duration(milliseconds: 3), () {
+    Timer initTime = new Timer(const Duration(milliseconds: 0), () {
       ifLogin().then((res) {
         if (res) {
           // 初始化数据
@@ -26,7 +26,7 @@ class _FirstPageState extends State<FirstPage> {
 
     // 定时器
     Timer timer = new Timer(
-      const Duration(milliseconds: 3000),
+      const Duration(milliseconds: 2500),
       () {
         try {
           ifLogin().then((haveUserLogin) {

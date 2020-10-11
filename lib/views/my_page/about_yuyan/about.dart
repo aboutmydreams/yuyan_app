@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/user/view/view/one_group.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
-import 'package:yuyan_app/views/my_page/group/my_group_page.dart';
 
 class AboutYuyan extends StatefulWidget {
   AboutYuyan({Key key}) : super(key: key);

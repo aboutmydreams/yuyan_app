@@ -13,19 +13,18 @@ class CommentPanel extends StatelessWidget {
     this.onpressed,
     this.comments,
     this.scrollController,
-    this.autofocus: false,
+    this.myFocusNode,
   }) : super(key: key);
   final TextEditingController textControl;
   final PanelController panelControl;
   final Function onpressed;
-  final bool autofocus;
+  final FocusNode myFocusNode;
   final Comments comments;
   final scrollController;
 
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
-    bool nowfocus = autofocus;
     print(comments.data.length);
     return Scaffold(
       body: Container(
@@ -41,11 +40,10 @@ class CommentPanel extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 25,
+              top: 0,
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.7,
                 width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.only(left: 16),
                 child: ListView.builder(
                   itemCount: comments.data.length,
                   itemBuilder: (BuildContext context, int index) {
@@ -55,7 +53,6 @@ class CommentPanel extends StatelessWidget {
               ),
             ),
             Positioned(
-              // top: 20,
               bottom: 0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,13 +69,14 @@ class CommentPanel extends StatelessWidget {
                           controller: textControl,
                           w: w * 0.76,
                           maxLines: 1,
-                          autofocus: nowfocus,
+                          focusNode: myFocusNode,
                           hintText: " 说点什么吧⋯",
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.16,
+                        width: MediaQuery.of(context).size.width * 0.17,
                         child: FlatButton(
+                          padding: EdgeInsets.all(0),
                           onPressed: onpressed,
                           autofocus: true,
                           color: AppColors.primary,

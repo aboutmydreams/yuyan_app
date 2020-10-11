@@ -5,6 +5,7 @@ Widget animationList(
     {BuildContext context,
     ScrollController controller,
     List dataList,
+    int aniWhich: 1,
     Function childBuilder}) {
   return AnimationLimiter(
     child: ListView.builder(
@@ -16,9 +17,21 @@ Widget animationList(
           duration: const Duration(milliseconds: 375),
           child: SlideAnimation(
             verticalOffset: 50.0,
-            child: FadeInAnimation(
-              child: childBuilder(context, dataList[index]),
-            ),
+            child: aniWhich == 1
+                ? FadeInAnimation(
+                    child: childBuilder(context, dataList[index]),
+                  )
+                : aniWhich == 2
+                    ? SlideAnimation(
+                        child: childBuilder(context, dataList[index]),
+                      )
+                    : aniWhich == 3
+                        ? ScaleAnimation(
+                            child: childBuilder(context, dataList[index]),
+                          )
+                        : FlipAnimation(
+                            child: childBuilder(context, dataList[index]),
+                          ),
           ),
         );
       },
