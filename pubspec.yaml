@@ -79,7 +79,7 @@ dependencies:
   # webView
   webview_flutter: ^0.3.18+1
   flutter_inappwebview:
-    ^3.3.0+3
+    ^4.0.0+4
     # git: https://github.com/aboutmydreams/flutter_inappwebview.git
 
   # flare

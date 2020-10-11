@@ -215,7 +215,7 @@ packages:
       name: flutter_inappwebview
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "3.3.0+3"
+    version: "4.0.0+4"
   flutter_staggered_animations:
     dependency: "direct main"
     description:
