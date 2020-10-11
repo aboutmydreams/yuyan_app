@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/widgets_small/loading.dart';
+import 'package:yuyan_app/models/widgets_small/nothing.dart';
+import 'package:yuyan_app/state_manage/dataManage/attent_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/attent_data.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/explore_page/attention/view/to_artboard.dart';
@@ -22,7 +25,6 @@ class _AttentionPageState extends State<AttentionPage>
   ScrollController _controller;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller = ScrollController();
     _controller.addListener(() {
@@ -54,26 +56,30 @@ class _AttentionPageState extends State<AttentionPage>
       body: RefreshIndicator(onRefresh: () async {
         topModel.attentManage.update();
         await Future.delayed(const Duration(milliseconds: 1500), () {});
-      }, child: ScopedModelDescendant<TopStateModel>(
-          builder: (context, child, model) {
-        List<Data> attentDatas = model.attentManage.attentDataList;
-        return ListView.builder(
-          controller: _controller,
-          itemCount: attentDatas.length,
-          itemBuilder: (BuildContext context, int index) {
-            if (attentDatas[index].subjectType == "Doc") {
-              return toDoc(context, attentDatas[index]);
-            } else if (attentDatas[index].subjectType == "Artboard") {
-              return toArtboard(context, attentDatas[index]);
-            } else if (attentDatas[index].subjectType == "User") {
-              return toUser(context, attentDatas[index]);
-            } else if (attentDatas[index].subjectType == "Book") {
-              return toBook(context, attentDatas[index]);
-            } else {
-              return Text(attentDatas[index].subjectType);
-            }
-          },
-        );
+      }, child:
+          ScopedModelDescendant<AttentManage>(builder: (context, child, model) {
+        List<Data> attentDatas = model.attentDataList;
+        return attentDatas == null
+            ? loading()
+            : attentDatas.isEmpty
+                ? NothingPage(top: 100, text: "去关注一些人叭~")
+                : ListView.builder(
+                    controller: _controller,
+                    itemCount: attentDatas.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (attentDatas[index].subjectType == "Doc") {
+                        return toDoc(context, attentDatas[index]);
+                      } else if (attentDatas[index].subjectType == "Artboard") {
+                        return toArtboard(context, attentDatas[index]);
+                      } else if (attentDatas[index].subjectType == "User") {
+                        return toUser(context, attentDatas[index]);
+                      } else if (attentDatas[index].subjectType == "Book") {
+                        return toBook(context, attentDatas[index]);
+                      } else {
+                        return Text(attentDatas[index].subjectType);
+                      }
+                    },
+                  );
       })),
     );
   }

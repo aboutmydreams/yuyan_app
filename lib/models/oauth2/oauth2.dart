@@ -41,19 +41,20 @@ class Oauth {
 
   /// 获取授权 url
   String getOauthUrl() {
-    Map<String, String> signData = {
+    Map<String, dynamic> signData = {
       "client_id": clientId,
       "code": codeString,
       "response_type": "code",
       "scope": "group,repo,doc,topic,artboard",
-      "timestamp": DateTime.now().millisecondsSinceEpoch.toString()
+      "timestamp": DateTime.now().millisecondsSinceEpoch.toString(),
     };
 
     String theSign = getSha1(sortMap(signData), clientSecret);
+    signData["sign"] = theSign;
 
-    String lastUrl = "https://www.yuque.com/oauth2/authorize?" +
-        sortMap(signData) +
-        '&sign=$theSign';
+    String lastUrl =
+        "https://www.yuque.com/oauth2/authorize?" + sortSignMap(signData);
+    // print(sortMap(signData));
     return lastUrl;
   }
 

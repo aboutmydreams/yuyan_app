@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/models/component/book_doc/doc_page/doc_page.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/recent_data.dart';
 
-Widget oneRecent(BuildContext context, Recent data) {
+Widget oneRecent(BuildContext context, RecentData data) {
   String action = "${actionType[data.action]}${subjectType[data.subjectType]}";
   String url =
       data.url[0] == '/' ? "https://www.yuque.com" + data.url : data.url;
@@ -19,6 +18,13 @@ Widget oneRecent(BuildContext context, Recent data) {
           bookSlug: data.book.slug,
           bookId: data.book.id,
           docId: data.targetId,
+        );
+      } else if (data.subjectType == "Book") {
+        // print(data.u);
+        OpenPage.docBook(
+          context,
+          bookId: data.target.id,
+          bookSlug: data.target.slug,
         );
       } else {
         openUrl(context, url);
@@ -44,28 +50,29 @@ Widget oneRecent(BuildContext context, Recent data) {
             margin: EdgeInsets.only(left: 20),
             child: AppIcon.iconType(data.subjectType),
           ),
-          Container(
-            margin: EdgeInsets.only(left: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  child: Text(
-                    clearText(data.title, 10),
-                    style: AppStyles.textStyleB,
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.only(left: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      clearText(data.title, 20),
+                      style: AppStyles.textStyleB,
+                    ),
                   ),
-                ),
-                Container(
-                  child: Text(
-                    action,
-                    style: AppStyles.textStyleC,
+                  Container(
+                    child: Text(
+                      action,
+                      style: AppStyles.textStyleC,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-          Spacer(),
           data.canEdit
               ? Container(
                   margin: EdgeInsets.only(right: 16),
@@ -90,7 +97,8 @@ Map<String, String> actionType = {
   "Create": "新建了",
   "Edit": "编辑了",
   "Join": "加入了",
-  "Collect": "收藏了"
+  "Collect": "收藏了",
+  "Collab": "加入了协作"
 };
 
 Map<String, String> subjectType = {
@@ -98,6 +106,7 @@ Map<String, String> subjectType = {
   "Book": "知识库",
   "Thread": "话题",
   "Sheet": "表格文档",
+  "Column": "博客专栏",
   "Group": "团队",
   "Design": "画板"
 };

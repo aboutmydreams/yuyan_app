@@ -30,7 +30,7 @@ class GroupPage extends StatefulWidget {
 class _GroupPageState extends State<GroupPage>
     with SingleTickerProviderStateMixin {
   _GroupPageState({Key key, this.groupdata, this.pageIndex});
-  final GroupData groupdata;
+  GroupData groupdata;
 
   int pageIndex;
   bool ifMark = false;
@@ -104,6 +104,10 @@ class _GroupPageState extends State<GroupPage>
     GroupHomeJson home = await DioGroup.getHomeData(groupId: groupdata.id);
     setState(() {
       homeJson = home;
+      if (home.data.bookStacks.length > 0) {
+        groupdata.description =
+            home.data.bookStacks[0].books[0].user.description;
+      }
     });
   }
 
@@ -138,35 +142,29 @@ class _GroupPageState extends State<GroupPage>
         return FloatingActionButton(
           onPressed: () {
             Navigator.push(
-                context,
-                PageRouteBuilder(
-                  settings: RouteSettings(name: 'AddTopic'),
-                  transitionDuration: const Duration(milliseconds: 400),
-                  pageBuilder: (context, _, __) => AddTopicPage(
-                    groupId: groupdata.id,
-                    callback: getTopic,
-                  ),
-                  transitionsBuilder:
-                      (_, Animation<double> animation, __, Widget child) =>
-                          SlideTransition(
-                    position: Tween<Offset>(
-                      begin: Offset(0.0, 1.0),
-                      end: Offset(0.0, 0.0),
-                    ).animate(animation),
-                    child: child,
-                  ),
-                ));
-            // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-            //   return AddTopicPage(
-            //     groupId: groupdata.id,
-            //     callback: getTopic,
-            //   );
-            // }));
+              context,
+              PageRouteBuilder(
+                settings: RouteSettings(name: 'AddTopic'),
+                transitionDuration: const Duration(milliseconds: 400),
+                pageBuilder: (context, _, __) => AddTopicPage(
+                  groupId: groupdata.id,
+                  callback: getTopic,
+                ),
+                transitionsBuilder:
+                    (_, Animation<double> animation, __, Widget child) =>
+                        SlideTransition(
+                  position: Tween<Offset>(
+                    begin: Offset(0.0, 1.0),
+                    end: Offset(0.0, 0.0),
+                  ).animate(animation),
+                  child: child,
+                ),
+              ),
+            );
           },
           child: Icon(Icons.add_comment),
         );
       case 3:
-        // print(4);
         break;
     }
   }
@@ -186,7 +184,7 @@ class _GroupPageState extends State<GroupPage>
                 handle:
                     NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                 sliver: SliverAppBar(
-                  leading: new IconButton(
+                  leading: IconButton(
                     icon: Icon(Icons.arrow_back),
                     onPressed: () {
                       Navigator.pop(context);

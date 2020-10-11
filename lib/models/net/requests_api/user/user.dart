@@ -1,12 +1,10 @@
-import 'dart:convert';
-
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/my_follow_book_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_info_data.dart';
 import 'package:yuyan_app/models/oauth2/random_string/random_string.dart';
-import 'package:yuyan_app/models/oauth2/sha1/sha1.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
+import 'package:yuyan_app/state_manage/toppest.dart';
 
 import 'data/user_follow_data.dart';
 import 'data/user_profile_data.dart';
@@ -27,10 +25,18 @@ class DioUser {
     return theData;
   }
 
-  // 获取公开知识库
-  static getReposData({String login}) async {
+  // v2 获取公开知识库 暂时弃用
+  static getReposV2({String login}) async {
     var res = await DioReq.get("/v2/users/$login/repos");
-    UserBookJson theData = UserBookJson.fromJson(res);
+    UserReposJson theData = UserReposJson.fromJson(res);
+    return theData;
+  }
+
+  // 获取公开知识库
+  static getReposData({int userId}) async {
+    var res =
+        await DioReq.get("/groups/$userId/books?archived=include&limit=200");
+    UserReposJson theData = UserReposJson.fromJson(res);
     return theData;
   }
 
@@ -48,7 +54,6 @@ class DioUser {
   static getIfFollow({int userId}) async {
     var res = await DioReq.get(
         "/actions/user-owned?action_type=follow&target_ids=$userId&target_type=User");
-    print(res["data"]);
     return res["data"].toString() != '[]';
   }
 
@@ -96,8 +101,10 @@ class DioUser {
         "target_id": userId
       };
       Map<String, dynamic> res = await DioReq.post("/actions", data: data);
+
       print(res);
       if (res.containsKey("data")) {
+        topModel.myInfoManage.update();
         return 1;
       } else {
         return 0;
@@ -117,8 +124,8 @@ class DioUser {
         "target_id": userId
       };
       Map<String, dynamic> res = await DioReq.delete("/actions", data: data);
-      print(res);
       if (res.toString() == "{}") {
+        topModel.myInfoManage.update();
         return 1;
       } else {
         return 0;
@@ -210,9 +217,7 @@ class DioUser {
           "<div class=\"lake-content-editor-core lake-engine\" data-lake-element=\"root\"><p style=\"font-size: 14px; color: rgb(38, 38, 38); line-height: 24px; letter-spacing: 0.05em; outline-style: none; overflow-wrap: break-word; margin: 0px;\">$comment</p></div>",
       "format": "lake"
     };
-    print("=====");
     var ans = await DioReq.post("/comments", data: data);
-    print(ans);
     return ans.toString().contains("data");
   }
 
@@ -253,13 +258,13 @@ class DioUser {
     return ans["actioned"] == null;
   }
 
-  static watchBook({int bookId}) async {
+  static watchBook({int bookId, String actionOption: "normal"}) async {
     try {
       Map<String, dynamic> data = {
         "action_type": "watch",
         "target_type": "Book",
         "target_id": bookId,
-        "action_option": "normal"
+        "action_option": actionOption // normal 关注提醒, notify 消息 邮件推送
       };
       Map<String, dynamic> res = await DioReq.post("/actions", data: data);
       if (res.containsKey("data")) {

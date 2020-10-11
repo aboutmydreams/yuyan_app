@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
-import 'package:yuyan_app/models/oauth2/random_string/random_string.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
+import 'package:yuyan_app/models/tools/get_tag.dart';
 import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/news_data.dart';
@@ -18,8 +18,8 @@ class OneNewsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String lastSub = clearSub(data);
-    String tag =
-        randomString(5) + DateTime.now().microsecondsSinceEpoch.toString();
+    String tag = getTag();
+
     return GestureDetector(
       onTap: () {
         if (data.subjectType == "User") {
@@ -180,10 +180,13 @@ Map<String, String> newsType = {
   "like_artboard": "赞赏了画板稻谷",
   "upload_artboards": "更新了画板",
   "apply_join_group": "申请加入团队",
+  "new_group_member": "邀请新成员加入团队",
   "join_group_user": "添加了团队成员",
   "joined_a_group": "将你添加到了团队",
+  "join_collaborator": "加入了协作",
   "group_invitation": "邀请你加入团队",
   "close_topic": "关闭了话题",
+  "reopen_topic": "重新开启了话题",
   "user_member_will_expire": "会员即将到期",
   "apply_collaborator": "申请文档协作"
 };

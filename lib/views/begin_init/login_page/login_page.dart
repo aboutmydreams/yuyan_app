@@ -84,30 +84,35 @@ class _LoginPageState extends State<LoginPage> {
 
   // 获取cookie并保存
   Future<Null> getAllCookies(FlutterWebviewPlugin flutterWebviewPlugin) async {
-    String result = await flutterWebviewPlugin
+    String cookieResult = await flutterWebviewPlugin
         .getAllCookies("https://www.yuque.com/dashboard");
     Map<String, dynamic> cookieData = {};
 
     print("getAllCookies=========");
-    if (result != null) {
-      List<String> cookiesList = result.split(";");
+    if (cookieResult != null) {
+      List<String> cookiesList = cookieResult.split(";");
       cookiesList.removeLast();
+
       for (var cookie in cookiesList) {
         cookieData[cookie.substring(0, cookie.indexOf("="))] = cookie.substring(
           cookie.indexOf("=") + 1,
         );
       }
+
+      // 判断是否有认证 Cookie
       bool haveSession(String cookie) =>
           cookie.contains("_yuque_session") && cookie.contains("ctoken");
-      SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      if (haveSession(result)) {
-        // print(result);
-        prefs.setString("_yuque_session", cookieData["_yuque_session"]);
-        prefs.setString("ctoken", cookieData["ctoken"]);
-        prefs.setString("all_cookies", result);
-        await DioUser.watchBook(bookId: 624070);
-        // await DioUser.watchBook(bookId: 75257);
+      if (haveSession(cookieResult)) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString("_yuque_session", cookieData["_yuque_session"]);
+        await prefs.setString("ctoken", cookieData["yuque_ctoken"]);
+        await prefs.setString("all_cookies", cookieResult);
+
+        // 关注语燕项目文档和语雀的天空推送
+        await DioUser.watchBook(bookId: 624070, actionOption: "notify");
+        await DioUser.watchBook(bookId: 103555);
+        // 👀👀开发者
         // await DioUser.followUser(userId: 164272);
       }
     }

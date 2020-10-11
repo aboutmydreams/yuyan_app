@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:yuyan_app/models/component/group/topic/view/the_comment.dart';
 import 'package:yuyan_app/models/component/group/topic/view/the_panel.dart';
 import 'package:yuyan_app/models/component/group/topic/view/the_topic.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
-import 'package:yuyan_app/models/net/requests_api/group/data/one_topic/topic_comment_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/one_topic/topic_detail_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/group.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/menu_item.dart';
-import 'package:yuyan_app/models/widgets_small/text_field.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 
 import '../../appUI.dart';
@@ -40,15 +37,24 @@ class _TopicDetailState extends State<TopicDetail> {
 
   // 下方抽屉
   PanelController _pc = PanelController();
-  bool autofocus = false;
+  FocusNode myFocusNode;
   TextEditingController _tc = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    myFocusNode = FocusNode();
     getTopic();
     getComment();
     _pc = PanelController();
+  }
+
+  @override
+  void dispose() {
+    // Clean up the focus node when the Form is disposed.
+    myFocusNode.dispose();
+
+    super.dispose();
   }
 
   getTopic() async {
@@ -80,6 +86,8 @@ class _TopicDetailState extends State<TopicDetail> {
       pulishComment(_tc.text).then((ans) {
         if (ans) {
           _pc.close();
+          _tc.clear();
+          FocusScope.of(context).requestFocus(FocusNode());
           getComment();
         }
       });
@@ -96,14 +104,16 @@ class _TopicDetailState extends State<TopicDetail> {
         textControl: _tc,
         panelControl: _pc,
         onpressed: _pulishClickListener,
-        autofocus: autofocus,
+        focusNode: myFocusNode,
       ),
       body: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             _pc.open();
+            myFocusNode.requestFocus();
             setState(() {
-              autofocus = true;
+              myFocusNode.requestFocus();
+              // FocusScope.of(context).requestFocus(FocusNode());
             });
           },
           child: Icon(Icons.add),
@@ -125,7 +135,7 @@ class _TopicDetailState extends State<TopicDetail> {
                 },
               ),
             ]),
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.backgroundB,
         body: (topicDetail == null) || (topicComments == null)
             ? loading()
             : SingleChildScrollView(

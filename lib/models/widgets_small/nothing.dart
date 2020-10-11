@@ -1,5 +1,5 @@
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 
 class NothingPage extends StatelessWidget {
@@ -14,14 +14,12 @@ class NothingPage extends StatelessWidget {
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(top: top),
-            child: SvgPicture.asset(
-              "assets/images/nothing/research.svg",
-              height: MediaQuery.of(context).size.width * 0.6,
-              width: MediaQuery.of(context).size.width * 0.6,
-              semanticsLabel: 'paddy',
+            height: 240,
+            child: FlareActor(
+              "assets/flares/bird.flr",
+              animation: "eye",
             ),
           ),
-          SizedBox(height: 30),
           Text(
             "$text",
             style: TextStyle(
@@ -29,7 +27,7 @@ class NothingPage extends StatelessWidget {
               fontFamily: "sans_bold",
               fontWeight: FontWeight.w600,
               fontSize: 22,
-              letterSpacing: 5,
+              letterSpacing: 3,
             ),
           )
         ],

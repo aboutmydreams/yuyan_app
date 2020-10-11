@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_repos_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
@@ -18,7 +19,8 @@ class MyReposPage extends StatefulWidget {
 
 class _MyReposPageState extends State<MyReposPage> {
   int offset = 0;
-  List<UserBookData> dataList;
+  List<UserReposData> dataList;
+  int userIdLocal;
 
   @override
   void initState() {
@@ -27,9 +29,10 @@ class _MyReposPageState extends State<MyReposPage> {
   }
 
   getFollowerData() async {
-    var login = await getLogin();
-    UserBookJson res = await DioUser.getReposData(login: login);
+    var userId = await getUserId();
+    UserReposJson res = await DioUser.getReposData(userId: userId);
     setState(() {
+      userIdLocal = userId;
       dataList = res.data;
     });
   }
@@ -50,16 +53,22 @@ class _MyReposPageState extends State<MyReposPage> {
               : animationList(
                   context: context,
                   dataList: dataList,
-                  childBuilder: oneFollow,
+                  childBuilder: myOneRepos,
                 ),
     );
   }
 }
 
-Widget oneFollow(BuildContext context, UserBookData data) {
+Widget myOneRepos(BuildContext context, UserReposData data) {
   return GestureDetector(
     onTap: () {
-      openUrl(context, "https://www.yuque.com/${data.namespace}");
+      // openUrl(context, "https://www.yuque.com/${data.userId}/${data.slug}");
+
+      if (data.type == "Book") {
+        OpenPage.docBook(context, bookId: data.id, bookSlug: data.slug);
+      } else {
+        openUrl(context, "https://www.yuque.com/${data.userId}/${data.slug}");
+      }
     },
     child: Container(
       height: 70,

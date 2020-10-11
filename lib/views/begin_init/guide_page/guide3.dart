@@ -9,12 +9,25 @@ class Guide3 extends StatefulWidget {
 }
 
 class _Guide3State extends State<Guide3> {
-  bool enableButtom = true;
-  onPressed() {
+  int onPressedTimes;
+
+  @override
+  void initState() {
+    super.initState();
+    onPressedTimes = 0;
+  }
+
+  goLogin() {
+    print(123);
+    print(onPressedTimes);
     setState(() {
-      enableButtom = false;
+      onPressedTimes = onPressedTimes + 1;
     });
-    Navigator.of(context).pushNamed("/login");
+    if (onPressedTimes <= 2) {
+      Navigator.of(context).pushNamed("/login");
+    } else {
+      return () {};
+    }
   }
 
   @override
@@ -49,7 +62,7 @@ class _Guide3State extends State<Guide3> {
                 borderRadius: BorderRadius.all(Radius.circular(30)),
               ),
               child: FlatButton(
-                onPressed: () => enableButtom ? onPressed() : null,
+                onPressed: goLogin,
                 child: Text(
                   "使用语雀登录",
                   style: TextStyle(

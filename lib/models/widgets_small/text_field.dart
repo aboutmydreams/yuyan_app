@@ -1,19 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 
-class CommentTextfierd extends StatelessWidget {
-  const CommentTextfierd(
+class CommentTextfierd extends StatefulWidget {
+  CommentTextfierd(
       {Key key,
       this.hintText: "说点什么吧⋯⋯",
       this.w: 340,
       this.controller,
-      this.autofocus: false})
+      this.maxLines: 3,
+      this.focusNode})
       : super(key: key);
 
   final TextEditingController controller;
   final String hintText;
-  final bool autofocus;
+  final FocusNode focusNode;
   final double w;
+  final int maxLines;
+
+  @override
+  _CommentTextfierdState createState() => _CommentTextfierdState(
+      hintText: hintText,
+      w: w,
+      controller: controller,
+      maxLines: maxLines,
+      focusNode: focusNode);
+}
+
+class _CommentTextfierdState extends State<CommentTextfierd> {
+  _CommentTextfierdState(
+      {Key key,
+      this.hintText: "说点什么吧⋯⋯",
+      this.w: 340,
+      this.controller,
+      this.maxLines: 3,
+      this.focusNode});
+
+  final TextEditingController controller;
+  final String hintText;
+  final FocusNode focusNode;
+  final double w;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +48,12 @@ class CommentTextfierd extends StatelessWidget {
       child: TextField(
         controller: controller,
         keyboardType: TextInputType.text,
-        maxLines: 3,
+        maxLines: maxLines,
         // 是否自动更正
         autocorrect: true,
         // 是否自动对焦
-        autofocus: autofocus,
+        // autofocus: autofocus,
+        focusNode: focusNode,
         decoration: InputDecoration(
           // labelText: "标 题",
           // labelStyle: TextStyle(textBaseline: TextBaseline.alphabetic),

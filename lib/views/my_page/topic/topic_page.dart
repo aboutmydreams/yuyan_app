@@ -102,6 +102,8 @@ class _TopicPageState extends State<TopicPage> {
 }
 
 Widget oneTopic(BuildContext context, TopicData data) {
+  data.labels ??= [];
+
   return GestureDetector(
     onTap: () {
       // var url = "https://www.yuque.com/${data.group.login}/topics/${data.iid}";

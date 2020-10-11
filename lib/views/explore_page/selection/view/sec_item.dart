@@ -8,8 +8,10 @@ import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/selection_data.dart';
 
 Widget secItemUI(BuildContext context, Data data) {
-  String imageUrl = data.cover +
-      "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_200%2Ch_120%2Fformat%2Cpng";
+  String imageUrl = data.cover.contains("x-oss-process")
+      ? data.cover
+      : data.cover +
+          "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_200%2Ch_120%2Fformat%2Cpng";
   return GestureDetector(
     onTap: () {
       OpenPage.docWeb(
@@ -39,7 +41,7 @@ Widget secItemUI(BuildContext context, Data data) {
                     width: 147,
                     height: 91,
                     color: AppColors.background,
-                  ), //Colors.white10,
+                  ), // Colors.white10,
                   errorWidget: (context, url, error) => Icon(Icons.error),
                   fit: BoxFit.cover,
                 ),
