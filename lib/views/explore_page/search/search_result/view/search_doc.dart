@@ -33,7 +33,6 @@ class SearchDocPage extends StatelessWidget {
 }
 
 Map setData(Hits data) {
-  debugPrint(data.rRecord.cover);
   return {
     "type": data.type,
     "title": data.title.replaceAll("<em>", "").replaceAll("</em>", ""),

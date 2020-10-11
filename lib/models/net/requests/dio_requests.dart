@@ -7,7 +7,7 @@ class DioReq {
 
   static String baseUrl = "https://www.yuque.com/api";
 
-  static autoheader({Map<String, dynamic> headers}) async {
+  static autoHeader({Map<String, dynamic> headers}) async {
     var token = await getToken();
     var ctoken = await getCtoken();
     var _allCookie = await getPrefStringData("all_cookies");
@@ -23,22 +23,24 @@ class DioReq {
     }
   }
 
+  static Options autoOptions({Map<String, dynamic> headers}) {
+    return Options(
+      headers: headers,
+      sendTimeout: 15000,
+      receiveTimeout: 15000,
+    );
+  }
+
   static get(String path,
       {Map<String, dynamic> headers, Map<String, dynamic> param}) async {
     var diopath = path[0] == "/" ? baseUrl + path : path;
-    headers ??= await autoheader(headers: headers);
+    headers ??= await autoHeader(headers: headers);
 
     try {
-      Options options = Options(
-        headers: headers,
-        sendTimeout: 15000,
-        receiveTimeout: 15000,
-      );
-
       Response response = await dio.get(
         diopath,
         queryParameters: param,
-        options: options,
+        options: autoOptions(headers: headers),
       );
 
       print("get: $path ${response.statusCode}");
@@ -65,20 +67,14 @@ class DioReq {
       Map<String, dynamic> data,
       Map<String, dynamic> param}) async {
     var diopath = path[0] == "/" ? baseUrl + path : path;
-    headers ??= await autoheader(headers: headers);
+    headers ??= await autoHeader(headers: headers);
 
     try {
-      Options options = Options(
-        headers: headers,
-        sendTimeout: 10000,
-        receiveTimeout: 10000,
-      );
-
       Response response = await dio.post(
         diopath,
         queryParameters: param,
         data: data,
-        options: options,
+        options: autoOptions(headers: headers),
       );
 
       print("post: $path ${response.statusCode}");
@@ -105,18 +101,13 @@ class DioReq {
       Map<String, dynamic> data,
       Map<String, dynamic> param}) async {
     var diopath = path[0] == "/" ? baseUrl + path : path;
-    headers ??= await autoheader(headers: headers);
+    headers ??= await autoHeader(headers: headers);
     try {
-      Options options = Options(
-        headers: headers,
-        sendTimeout: 10000,
-        receiveTimeout: 10000,
-      );
       Response response = await dio.put(
         diopath,
         queryParameters: param,
         data: data,
-        options: options,
+        options: autoOptions(headers: headers),
       );
       print("put: $path ${response.statusCode}");
       return response.data;
@@ -142,7 +133,7 @@ class DioReq {
       Map<String, dynamic> data,
       Map<String, dynamic> param}) async {
     var diopath = path[0] == "/" ? baseUrl + path : path;
-    headers ??= await autoheader(headers: headers);
+    headers ??= await autoHeader(headers: headers);
     try {
       Options options = Options(
         headers: headers,
@@ -172,5 +163,19 @@ class DioReq {
     } catch (e) {
       throw Exception('UNPROM${e.toString()}');
     }
+  }
+
+  static getRedirect(String path,
+      {Map<String, dynamic> headers, Map<String, dynamic> param}) async {
+    headers ??= await autoHeader(headers: headers);
+
+    var diopath = path[0] == "/" ? baseUrl + path : path;
+    Response res = await dio.get(
+      diopath,
+      queryParameters: param,
+      options: autoOptions(headers: headers),
+    );
+    print("$diopath -> ${res.redirects.last.location}");
+    return res.redirects.last.location;
   }
 }

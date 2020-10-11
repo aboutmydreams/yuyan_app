@@ -63,12 +63,13 @@ Widget oneEvent(BuildContext context, Event event) {
   return GestureDetector(
     onTap: () {
       String slug = event.url.split("/").last;
+      String login = event.url.split("/")[3];
       OpenPage.docBook(
         context,
         bookId: event.id,
         bookSlug: slug,
+        login: login,
       );
-      // openUrl(context, event.url);
     },
     child: Container(
       height: 66,

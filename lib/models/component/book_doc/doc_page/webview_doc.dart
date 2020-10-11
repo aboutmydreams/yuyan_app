@@ -27,7 +27,12 @@ class DocPageWeb extends StatefulWidget {
 
   @override
   _DocPageWebState createState() => _DocPageWebState(
-      login: login, bookSlug: bookSlug, url: url, bookId: bookId, docId: docId);
+        login: login,
+        bookSlug: bookSlug,
+        url: url,
+        bookId: bookId,
+        docId: docId,
+      );
 }
 
 class _DocPageWebState extends State<DocPageWeb> {

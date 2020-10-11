@@ -6,7 +6,6 @@ import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/recent_data.dart';
 
 Widget oneRecent(BuildContext context, RecentData data) {
-  // print(data.subjectType);
   String action = "${actionType[data.action]}${subjectType[data.subjectType]}";
   String url =
       data.url[0] == '/' ? "https://www.yuque.com" + data.url : data.url;
@@ -21,6 +20,7 @@ Widget oneRecent(BuildContext context, RecentData data) {
           docId: data.targetId,
         );
       } else if (data.subjectType == "Book") {
+        // print(data.u);
         OpenPage.docBook(
           context,
           bookId: data.target.id,

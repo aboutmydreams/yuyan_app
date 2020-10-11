@@ -50,6 +50,7 @@ Widget userAvatar(String imgUrl, {double height}) {
 
 Widget circularImage(String imgUrl,
     {double height: 91, double width: 147, double circular: 8}) {
+  int times = height.toInt() ~/ 60;
   imgUrl ??=
       "https://cdn.nlark.com/yuque/0/2019/png/84147/1547032500238-d93512f4-db23-442f-b4d8-1d46304f9673.png";
   // 如果不包含某些关键词 则使用压缩模式
@@ -60,7 +61,7 @@ Widget circularImage(String imgUrl,
                       (imgUrl.contains("x-oss-process"))))))
       ? imgUrl
       : imgUrl +
-          "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_150%2Ch_100%2Fformat%2Cpng";
+          "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_${400 * times}%2Ch_${250 * times}%2Fformat%2Cpng";
 
   return ClipRRect(
     borderRadius: BorderRadius.circular(circular),

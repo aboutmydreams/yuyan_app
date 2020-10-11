@@ -39,7 +39,7 @@ OneTopicData setData(Hits data) {
     iid: data.rRecord.iid,
     groupId: data.rRecord.groupId,
     commentsCount: data.rRecord.commentsCount,
-    title: data.title,
+    title: data.title.replaceAll("<em>", "").replaceAll("</em>", ""),
     updatedAt: data.rRecord.updatedAt,
     createdAt: data.rRecord.createdAt,
     user: User(

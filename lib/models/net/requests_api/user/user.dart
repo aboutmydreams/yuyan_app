@@ -57,7 +57,6 @@ class DioUser {
   static getIfFollow({int userId}) async {
     var res = await DioReq.get(
         "/actions/user-owned?action_type=follow&target_ids=$userId&target_type=User");
-    print(res["data"]);
     return res["data"].toString() != '[]';
   }
 
@@ -221,9 +220,7 @@ class DioUser {
           "<div class=\"lake-content-editor-core lake-engine\" data-lake-element=\"root\"><p style=\"font-size: 14px; color: rgb(38, 38, 38); line-height: 24px; letter-spacing: 0.05em; outline-style: none; overflow-wrap: break-word; margin: 0px;\">$comment</p></div>",
       "format": "lake"
     };
-    print("=====");
     var ans = await DioReq.post("/comments", data: data);
-    print(ans);
     return ans.toString().contains("data");
   }
 

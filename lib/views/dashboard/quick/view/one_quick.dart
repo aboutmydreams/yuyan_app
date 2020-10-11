@@ -27,6 +27,7 @@ Widget oneQuick(BuildContext context, Data data) {
           context,
           bookId: data.targetId,
           bookSlug: data.url.split("/").last,
+          login: data.url.split("/")[1],
         );
       } else {
         String url =
@@ -52,7 +53,10 @@ Widget oneQuick(BuildContext context, Data data) {
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(right: 10),
-            child: userAvatar(imageUrl, height: 50),
+            child: Hero(
+              tag: data.targetId,
+              child: userAvatar(imageUrl, height: 50),
+            ),
           ),
           Container(
             margin: EdgeInsets.only(right: 20),
