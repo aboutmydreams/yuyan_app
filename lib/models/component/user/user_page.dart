@@ -1,14 +1,18 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/user/view/repos_page.dart';
 import 'package:yuyan_app/models/component/user/view/flex_space.dart';
 import 'package:yuyan_app/models/component/user/view/follower_page.dart';
 import 'package:yuyan_app/models/component/user/view/following_page.dart';
 import 'package:yuyan_app/models/component/user/view/groups_page.dart';
+import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_follow_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_info_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_profile_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_repos_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
+import 'package:yuyan_app/models/widgets_small/menu_item.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 
@@ -208,6 +212,25 @@ class _UserPageState extends State<UserPage>
                           isFollow ? Icon(Icons.star) : Icon(Icons.star_border),
                       onPressed: () {
                         changeFollow();
+                      },
+                    ),
+                    PopupMenuButton(
+                      itemBuilder: (BuildContext context) =>
+                          <PopupMenuItem<String>>[
+                        menuItem("A", "打开网页版"),
+                        menuItem("B", "举报用户"),
+                      ],
+                      onSelected: (String action) {
+                        // 点击选项的时候
+                        switch (action) {
+                          case 'A':
+                            openUrl(context, "https://www.yuque.com/$login");
+                            break;
+                          case 'B':
+                            Timer(Duration(milliseconds: 1300), () {
+                              myToast(context, "举报成功，感谢为社群做贡献");
+                            });
+                        }
                       },
                     ),
                   ],

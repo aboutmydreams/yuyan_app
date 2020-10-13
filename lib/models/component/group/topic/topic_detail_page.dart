@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:yuyan_app/models/component/group/topic/view/the_comment.dart';
@@ -123,6 +125,7 @@ class _TopicDetailState extends State<TopicDetail> {
               PopupMenuButton(
                 itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
                   menuItem("A", "打开网页版"),
+                  menuItem("B", "举报话题"),
                 ],
                 onSelected: (String action) {
                   // 点击选项的时候
@@ -131,6 +134,10 @@ class _TopicDetailState extends State<TopicDetail> {
                       openUrl(context,
                           "https://www.yuque.com/$groupId/topics/$iid");
                       break;
+                    case 'B':
+                      Timer(Duration(milliseconds: 1300), () {
+                        myToast(context, "举报成功，感谢为社群做贡献");
+                      });
                   }
                 },
               ),

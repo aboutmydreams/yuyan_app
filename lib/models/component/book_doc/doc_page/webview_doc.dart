@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -207,7 +209,8 @@ class _DocPageWebState extends State<DocPageWeb> {
                 menuItem("A", "打开网页版"),
                 menuItem("B", "从浏览器打开"),
                 menuItem("C", "复制文档链接"),
-                menuItem("D", "分享"),
+                menuItem("D", "举报"),
+                menuItem("E", "分享"),
               ],
               onSelected: (String action) {
                 // 点击选项的时候
@@ -223,6 +226,11 @@ class _DocPageWebState extends State<DocPageWeb> {
                     myToast(context, "已复制剪贴板");
                     break;
                   case 'D':
+                    Timer(Duration(milliseconds: 1300), () {
+                      myToast(context, "举报成功，感谢为社群做贡献");
+                    });
+                    break;
+                  case 'E':
                     Share.share(
                         '我上分享了语雀文档「${doc != null ? doc.data.title : '文档'}」快来瞧瞧！ $shareUrl');
                     break;
