@@ -12,6 +12,7 @@ import 'package:yuyan_app/models/net/requests_api/user/data/user_info_data.dart'
 import 'package:yuyan_app/models/net/requests_api/user/data/user_profile_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_repos_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
+import 'package:yuyan_app/models/tools/report.dart';
 import 'package:yuyan_app/models/widgets_small/menu_item.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
@@ -227,9 +228,7 @@ class _UserPageState extends State<UserPage>
                             openUrl(context, "https://www.yuque.com/$login");
                             break;
                           case 'B':
-                            Timer(Duration(milliseconds: 1300), () {
-                              myToast(context, "举报成功，感谢为社群做贡献");
-                            });
+                            fakeReport(context);
                         }
                       },
                     ),

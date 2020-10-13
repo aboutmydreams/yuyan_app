@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:share/share.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/book_doc/doc_page/view/comment_panel.dart';
 import 'package:yuyan_app/models/component/book_doc/doc_page/view/floating_collapsed.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
@@ -12,6 +13,7 @@ import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/doc_data_v2.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
+import 'package:yuyan_app/models/tools/report.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/menu_item.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
@@ -201,6 +203,7 @@ class _DocPageWebState extends State<DocPageWeb> {
       ),
       borderRadius: radius,
       body: Scaffold(
+        backgroundColor: AppColors.background,
         appBar: AppBar(
           title: Text("详情"),
           actions: <Widget>[
@@ -226,9 +229,7 @@ class _DocPageWebState extends State<DocPageWeb> {
                     myToast(context, "已复制剪贴板");
                     break;
                   case 'D':
-                    Timer(Duration(milliseconds: 1300), () {
-                      myToast(context, "举报成功，感谢为社群做贡献");
-                    });
+                    fakeReport(context);
                     break;
                   case 'E':
                     Share.share(

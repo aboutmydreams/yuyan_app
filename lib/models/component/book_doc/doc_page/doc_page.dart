@@ -159,6 +159,7 @@ class _DocPageState extends State<DocPage> {
       ),
       borderRadius: radius,
       body: Scaffold(
+        backgroundColor: AppColors.background,
         appBar: AppBar(
           title: Text("详情"),
         ),

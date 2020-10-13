@@ -10,6 +10,7 @@ import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/one_topic/topic_detail_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/group.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
+import 'package:yuyan_app/models/tools/report.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/menu_item.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
@@ -109,6 +110,7 @@ class _TopicDetailState extends State<TopicDetail> {
         focusNode: myFocusNode,
       ),
       body: Scaffold(
+        backgroundColor: AppColors.background,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             _pc.open();
@@ -135,14 +137,11 @@ class _TopicDetailState extends State<TopicDetail> {
                           "https://www.yuque.com/$groupId/topics/$iid");
                       break;
                     case 'B':
-                      Timer(Duration(milliseconds: 1300), () {
-                        myToast(context, "举报成功，感谢为社群做贡献");
-                      });
+                      fakeReport(context);
                   }
                 },
               ),
             ]),
-        backgroundColor: AppColors.backgroundB,
         body: (topicDetail == null) || (topicComments == null)
             ? loading()
             : SingleChildScrollView(

@@ -15,6 +15,7 @@ import 'package:yuyan_app/models/net/requests_api/group/data/group_member_data.d
 import 'package:yuyan_app/models/net/requests_api/group/data/group_topic_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/group.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
+import 'package:yuyan_app/models/tools/report.dart';
 import 'package:yuyan_app/models/widgets_small/menu_item.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
@@ -239,9 +240,7 @@ class _GroupPageState extends State<GroupPage>
                             break;
 
                           case 'C':
-                            Timer(Duration(milliseconds: 1300), () {
-                              myToast(context, "举报成功，感谢为社群做贡献");
-                            });
+                            fakeReport(context);
                         }
                       },
                     ),
