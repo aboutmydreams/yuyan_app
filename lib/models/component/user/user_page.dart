@@ -161,13 +161,13 @@ class _UserPageState extends State<UserPage>
     if (!isFollow) {
       var ans = await DioUser.cancelFollow(userId: userId);
       if (ans == 1) {
-        myToast(context, "有缘再会");
+        myToast(context, "有缘再会👋");
         topModel.myInfoManage.cancelFollow();
       }
     } else {
       var ans = await DioUser.followUser(userId: userId);
       if (ans == 1) {
-        myToast(context, "谢谢");
+        myToast(context, "谢谢🙏");
         topModel.myInfoManage.addFollow();
       }
     }
