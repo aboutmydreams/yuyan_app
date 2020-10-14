@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/user/view/repos_page.dart';
 import 'package:yuyan_app/models/component/user/view/flex_space.dart';
@@ -16,6 +14,7 @@ import 'package:yuyan_app/models/tools/report.dart';
 import 'package:yuyan_app/models/widgets_small/menu_item.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
+import 'package:yuyan_app/state_manage/toppest.dart';
 
 class UserPage extends StatefulWidget {
   UserPage(
@@ -163,11 +162,13 @@ class _UserPageState extends State<UserPage>
       var ans = await DioUser.cancelFollow(userId: userId);
       if (ans == 1) {
         myToast(context, "有缘再会");
+        topModel.myInfoManage.cancelFollow();
       }
     } else {
       var ans = await DioUser.followUser(userId: userId);
       if (ans == 1) {
         myToast(context, "谢谢");
+        topModel.myInfoManage.addFollow();
       }
     }
   }
