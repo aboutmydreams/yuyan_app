@@ -15,7 +15,7 @@ class AboutYuyan extends StatefulWidget {
 class _AboutYuyanState extends State<AboutYuyan> {
   @override
   Widget build(BuildContext context) {
-    String title = after1019() ? "语雀" : "结构化的知识库";
+    String title = after1019() ? "结构化的知识库" : "语雀";
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: _sliverBuilder,
@@ -35,11 +35,11 @@ class _AboutYuyanState extends State<AboutYuyan> {
                   style: AppStyles.textStyleBC,
                 ),
                 after1019()
-                    ? Text(
+                    ? SizedBox(height: 5)
+                    : Text(
                         "注：语燕没有恶意，在语雀官方App发布后不保证会继续维护。\n",
                         style: AppStyles.textStyleBBB,
-                      )
-                    : SizedBox(height: 5),
+                      ),
                 SizedBox(height: 10),
                 Text(
                   "项目归档的故事",
@@ -160,6 +160,7 @@ class _AboutYuyanState extends State<AboutYuyan> {
                   "反馈系统基于团队讨论区是我见过最有趣的设定之一，所以团队都可以使用想$title 一样的反馈方式，是不是很 cool ！",
                   style: AppStyles.textStyleBC,
                 ),
+                SizedBox(height: 10),
                 FlatButton.icon(
                   onPressed: () {
                     Navigator.pushNamed(context, "/my/suggest");
