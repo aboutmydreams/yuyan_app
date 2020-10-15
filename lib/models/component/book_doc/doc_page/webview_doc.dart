@@ -151,6 +151,21 @@ class _DocPageWebState extends State<DocPageWeb> {
     }
   }
 
+  morePadding() async {
+    int padding = 2;
+    while (padding < 18) {
+      await changePadding(padding);
+      padding += 3;
+    }
+  }
+
+  changePadding(int px) async {
+    await _webController.evaluateJavascript(
+      source:
+          'document.querySelector(".wrap___1A3Di").style.padding="${px}px";',
+    );
+  }
+
   // 点击下方评论
   clickBottom() {
     _pc.open();
@@ -207,10 +222,10 @@ class _DocPageWebState extends State<DocPageWeb> {
           actions: <Widget>[
             PopupMenuButton(
               itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-                menuItem("A", "打开网页版"),
-                menuItem("B", "从浏览器打开"),
+                // menuItem("A", "打开网页版"),
+                // menuItem("B", "从浏览器打开"),
                 menuItem("C", "复制文档链接"),
-                menuItem("D", "举报"),
+                menuItem("D", "举报文档"),
                 menuItem("E", "分享"),
               ],
               onSelected: (String action) {
@@ -246,7 +261,7 @@ class _DocPageWebState extends State<DocPageWeb> {
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                padding: EdgeInsets.fromLTRB(16, 0, 16, 4),
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 4),
                 color: Colors.white,
                 child: InAppWebView(
                   initialUrl: theUrl,
@@ -284,11 +299,10 @@ class _DocPageWebState extends State<DocPageWeb> {
                       (InAppWebViewController controller, String url) async {
                     // 页面加载完成后注入js方法, 获取页面总高度
                     var height = await _webController.evaluateJavascript(
-                      source: """
-                              document.body.scrollHeight;
-                            """,
+                      source: 'document.body.scrollHeight;',
                     );
                     double theWebH = double.parse(height.toString());
+                    await morePadding();
                   },
                   onProgressChanged:
                       (InAppWebViewController controller, int progress) {

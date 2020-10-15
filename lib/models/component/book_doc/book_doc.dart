@@ -45,7 +45,7 @@ class _BookDocPageState extends State<BookDocPage> {
   }
 
   getReallyLogin({int bookId}) async {
-    String redirect =
+    var redirect =
         await DioReq.getRedirect("https://www.yuque.com/go/book/$bookId");
     setState(() {
       reallyLogin = redirect.split("/")[0];

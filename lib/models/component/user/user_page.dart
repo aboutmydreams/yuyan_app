@@ -219,15 +219,15 @@ class _UserPageState extends State<UserPage>
                     PopupMenuButton(
                       itemBuilder: (BuildContext context) =>
                           <PopupMenuItem<String>>[
-                        menuItem("A", "打开网页版"),
+                        // menuItem("A", "打开网页版"),
                         menuItem("B", "举报用户"),
                       ],
                       onSelected: (String action) {
                         // 点击选项的时候
                         switch (action) {
-                          case 'A':
-                            openUrl(context, "https://www.yuque.com/$login");
-                            break;
+                          // case 'A':
+                          //   openUrl(context, "https://www.yuque.com/$login");
+                          //   break;
                           case 'B':
                             fakeReport(context);
                         }

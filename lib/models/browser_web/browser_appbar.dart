@@ -23,7 +23,7 @@ class _BrowserWithBarState extends State<BrowserWithBar> {
   bool isload = true;
   InAppWebViewController _webController;
   String jsCode =
-      'document.querySelector(".headMeta___lTv2t").style.display="none";document.getElementById("header").style.display="none";document.querySelector("header-action").style.display="none";document.getElementById("footer").style.display="none";';
+      'document.getElementById("header").style.display="none";document.getElementById("footer").style.display="none";';
 
   @override
   void initState() {
@@ -36,17 +36,9 @@ class _BrowserWithBarState extends State<BrowserWithBar> {
     super.dispose();
   }
 
-  hideJs() async {
-    print("object");
-    // await _webController.evaluateJavascript(source: code + ";");
-
-    // await _webController.evaluateJavascript(source: jsCode);
-    Timer(Duration(milliseconds: 1300), () {
-      for (String code in jsCode.split(";")) {
-        print(code);
-        _webController.evaluateJavascript(source: code + ";");
-      }
-      hideJs();
+  hideJs() {
+    Timer(Duration(milliseconds: 1000), () async {
+      _webController.evaluateJavascript(source: jsCode);
     });
   }
 
@@ -86,6 +78,7 @@ class _BrowserWithBarState extends State<BrowserWithBar> {
               },
               onLoadStart:
                   (InAppWebViewController controller, String otherUrl) {
+                print(otherUrl);
                 setState(() {
                   this.url = otherUrl;
                 });
@@ -104,11 +97,6 @@ class _BrowserWithBarState extends State<BrowserWithBar> {
               },
               onProgressChanged:
                   (InAppWebViewController controller, int progress) async {
-                // await _webController
-                //     .evaluateJavascript(
-                //         source:
-                //             'document.getElementById("header").style.display="none";')
-                //     .then((value) => print(value));
                 if (progress > 85) {
                   setState(() {
                     this.progress = progress / 100;
