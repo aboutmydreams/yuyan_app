@@ -321,7 +321,10 @@ class _DocPageWebState extends State<DocPageWeb> {
                       width: MediaQuery.of(context).size.width,
                       child: loading(),
                     )
-                  : SizedBox(),
+                  : Opacity(
+                      opacity: 0,
+                      child: Text(""),
+                    ),
             ),
           ],
         ),

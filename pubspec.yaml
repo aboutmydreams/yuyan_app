@@ -77,7 +77,7 @@ dependencies:
   share: ^0.6.4+3
 
   # webView
-  webview_flutter: ^0.3.18+1
+  # webview_flutter: ^0.3.18+1
   flutter_inappwebview:
     ^4.0.0+4
     # git: https://github.com/aboutmydreams/flutter_inappwebview.git
