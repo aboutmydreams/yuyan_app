@@ -222,8 +222,8 @@ class _DocPageWebState extends State<DocPageWeb> {
           actions: <Widget>[
             PopupMenuButton(
               itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-                // menuItem("A", "打开网页版"),
-                // menuItem("B", "从浏览器打开"),
+                menuItem("A", "打开网页版"),
+                menuItem("B", "从浏览器打开"),
                 menuItem("C", "复制文档链接"),
                 menuItem("D", "举报文档"),
                 menuItem("E", "分享"),

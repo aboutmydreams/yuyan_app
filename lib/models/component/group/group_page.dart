@@ -219,7 +219,7 @@ class _GroupPageState extends State<GroupPage>
                       itemBuilder: (BuildContext context) =>
                           <PopupMenuItem<String>>[
                         menuItem("A", "查看所有话题"),
-                        // menuItem("B", "打开网页版"),
+                        menuItem("B", "打开网页版"),
                         menuItem("C", "举报团队"),
                       ],
                       onSelected: (String action) {
