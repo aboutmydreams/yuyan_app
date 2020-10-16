@@ -14,7 +14,7 @@ class VersionManage extends Model {
   String checkUrl =
       "https://service-iw6blmei-1256880247.gz.apigw.tencentcs.com/release/yuyan_v?v=";
   String checkUrl2 =
-      "https://service-kuz2fghy-1256880247.gz.apigw.tencentcs.com/release/yuyan_v2?";
+      "https://service-kuz2fghy-1256880247.gz.apigw.tencentcs.com/release/yuyan_v2?v=";
   bool _isLastest = true;
   bool get isLastest => _isLastest;
   String _message;
