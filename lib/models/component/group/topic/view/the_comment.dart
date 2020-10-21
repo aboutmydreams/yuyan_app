@@ -3,6 +3,7 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 import 'package:yuyan_app/models/tools/get_tag.dart';
+import 'package:yuyan_app/models/tools/report.dart';
 import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_big/html/body_html.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
@@ -52,71 +53,103 @@ class TheComment extends StatelessWidget {
 
 Widget oneComment(BuildContext context, CommentData data) {
   String tag = getTag();
-  return Container(
-    margin: EdgeInsets.only(bottom: 1),
-    padding: EdgeInsets.only(left: 15, top: 32, bottom: 20, right: 15),
-    decoration: BoxDecoration(
-      color: AppColors.background,
-      boxShadow: [
-        BoxShadow(
-          color: Color.fromARGB(20, 0, 0, 0),
-          offset: Offset(1, 1),
-          blurRadius: 2,
-        ),
-      ],
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        InkWell(
-          onTap: () {
-            OpenPage.user(
-              context,
-              tag: tag,
-              login: data.user.login,
-              name: data.user.name,
-              avatarUrl: data.user.avatarUrl,
-              userId: data.id,
-            );
-          },
-          child: Hero(
-            tag: tag,
-            child: userAvatar(data.user.avatarUrl, height: 28),
+  return Material(
+    child: Ink(
+      child: InkWell(
+        highlightColor: Colors.black12,
+        onLongPress: () {
+          showConfirmDialog(context, content: "这条内容违规了吗", confirmCallback: () {
+            fakeReport(context);
+          });
+        },
+        child: Container(
+          padding: EdgeInsets.only(left: 15, top: 28, bottom: 24, right: 15),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black26, width: 0.08),
           ),
-        ),
-        SizedBox(width: 10),
-        Expanded(
-          child: Column(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(
-                // padding: EdgeInsets.only(right: 10),
-                width: MediaQuery.of(context).size.width - 90,
-                child: Row(
+              GestureDetector(
+                child: Hero(
+                  tag: tag,
+                  child: userAvatar(data.user.avatarUrl, height: 28),
+                ),
+                onTap: () {
+                  OpenPage.user(
+                    context,
+                    tag: tag,
+                    login: data.user.login,
+                    name: data.user.name,
+                    avatarUrl: data.user.avatarUrl,
+                    userId: data.userId,
+                  );
+                },
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        data.user.name,
-                        style: AppStyles.textStyleB,
+                    Container(
+                      // padding: EdgeInsets.only(right: 10),
+                      width: MediaQuery.of(context).size.width - 90,
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              data.user.name,
+                              style: AppStyles.textStyleB,
+                            ),
+                          ),
+                          Text(
+                            timeCut(data.updatedAt),
+                            style: AppStyles.textStyleCC,
+                          ),
+                        ],
                       ),
                     ),
-                    Text(
-                      timeCut(data.updatedAt),
-                      style: AppStyles.textStyleCC,
+                    SizedBox(height: 10),
+                    getHtml(
+                      context,
+                      data.bodyHtml,
                     ),
                   ],
                 ),
-              ),
-              SizedBox(height: 10),
-              getHtml(
-                context,
-                data.bodyHtml,
-              ),
+              )
             ],
           ),
-        )
-      ],
+        ),
+      ),
     ),
+  );
+}
+
+void showConfirmDialog(BuildContext context,
+    {String content, Function confirmCallback}) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return new AlertDialog(
+        title: new Text("提示"),
+        content: new Text(content),
+        actions: <Widget>[
+          new FlatButton(
+            onPressed: () {
+              confirmCallback();
+              Navigator.of(context).pop();
+            },
+            child: new Text("确认"),
+          ),
+          new FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: new Text("取消"),
+          ),
+        ],
+      );
+    },
   );
 }

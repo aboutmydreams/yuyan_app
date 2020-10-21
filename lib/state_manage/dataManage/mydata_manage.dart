@@ -49,6 +49,16 @@ class MyInfoManage extends Model {
     return 1;
   }
 
+  void cancelFollow() {
+    _myInfoData.data.followingCount -= 1;
+    notifyListeners();
+  }
+
+  void addFollow() {
+    _myInfoData.data.followingCount += 1;
+    notifyListeners();
+  }
+
   void update() {
     saveUserInfoJson().then((res) {
       getSaveData();

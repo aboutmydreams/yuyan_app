@@ -4,13 +4,17 @@ import 'package:yuyan_app/models/component/user/view/flex_space.dart';
 import 'package:yuyan_app/models/component/user/view/follower_page.dart';
 import 'package:yuyan_app/models/component/user/view/following_page.dart';
 import 'package:yuyan_app/models/component/user/view/groups_page.dart';
+import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_follow_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_info_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_profile_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_repos_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
+import 'package:yuyan_app/models/tools/report.dart';
+import 'package:yuyan_app/models/widgets_small/menu_item.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
+import 'package:yuyan_app/state_manage/toppest.dart';
 
 class UserPage extends StatefulWidget {
   UserPage(
@@ -157,12 +161,14 @@ class _UserPageState extends State<UserPage>
     if (!isFollow) {
       var ans = await DioUser.cancelFollow(userId: userId);
       if (ans == 1) {
-        myToast(context, "有缘再会");
+        myToast(context, "有缘再会👋");
+        topModel.myInfoManage.cancelFollow();
       }
     } else {
       var ans = await DioUser.followUser(userId: userId);
       if (ans == 1) {
-        myToast(context, "谢谢");
+        myToast(context, "谢谢🙏");
+        topModel.myInfoManage.addFollow();
       }
     }
   }
@@ -208,6 +214,23 @@ class _UserPageState extends State<UserPage>
                           isFollow ? Icon(Icons.star) : Icon(Icons.star_border),
                       onPressed: () {
                         changeFollow();
+                      },
+                    ),
+                    PopupMenuButton(
+                      itemBuilder: (BuildContext context) =>
+                          <PopupMenuItem<String>>[
+                        menuItem("A", "打开网页版"),
+                        menuItem("B", "举报用户"),
+                      ],
+                      onSelected: (String action) {
+                        // 点击选项的时候
+                        switch (action) {
+                          case 'A':
+                            openUrl(context, "https://www.yuque.com/$login");
+                            break;
+                          case 'B':
+                            fakeReport(context);
+                        }
                       },
                     ),
                   ],

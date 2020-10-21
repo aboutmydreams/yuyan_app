@@ -101,44 +101,45 @@ Widget oneEvent(BuildContext context, Event event) {
               ),
             ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: (event.description != null) && (event.description != "")
-                ? [
-                    Container(
-                      margin: EdgeInsets.only(left: 14),
-                      child: Text(
-                        "${event.title}",
-                        textAlign: TextAlign.center,
-                        style: AppStyles.textStyleBB,
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: (event.description != null) && (event.description != "")
+                  ? [
+                      Container(
+                        margin: EdgeInsets.only(left: 14),
+                        child: Text(
+                          "${event.title}",
+                          textAlign: TextAlign.center,
+                          style: AppStyles.textStyleBB,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 2),
-                    Container(
-                      width: 180,
-                      margin: EdgeInsets.only(left: 14),
-                      child: Text(
-                        "${event.description}",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppStyles.textStyleCC,
+                      SizedBox(height: 2),
+                      Container(
+                        width: 180,
+                        margin: EdgeInsets.only(left: 14),
+                        child: Text(
+                          "${event.description}",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppStyles.textStyleCC,
+                        ),
+                      )
+                    ]
+                  : [
+                      Container(
+                        margin: EdgeInsets.only(left: 14),
+                        child: Text(
+                          "${event.title}",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppStyles.textStyleBB,
+                        ),
                       ),
-                    )
-                  ]
-                : [
-                    Container(
-                      margin: EdgeInsets.only(left: 14),
-                      child: Text(
-                        "${event.title}",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppStyles.textStyleBB,
-                      ),
-                    ),
-                  ],
+                    ],
+            ),
           ),
-          Spacer(),
           Container(
             width: 50,
             height: 17,

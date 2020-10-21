@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:share/share.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/book_doc/doc_page/view/comment_panel.dart';
 import 'package:yuyan_app/models/component/book_doc/doc_page/view/floating_collapsed.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
@@ -10,6 +11,7 @@ import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/doc_data_v2.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
+import 'package:yuyan_app/models/tools/report.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/menu_item.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
@@ -149,6 +151,21 @@ class _DocPageWebState extends State<DocPageWeb> {
     }
   }
 
+  morePadding() async {
+    int padding = 2;
+    while (padding < 18) {
+      await changePadding(padding);
+      padding += 3;
+    }
+  }
+
+  changePadding(int px) async {
+    await _webController.evaluateJavascript(
+      source:
+          'document.querySelector(".wrap___1A3Di").style.padding="${px}px";',
+    );
+  }
+
   // 点击下方评论
   clickBottom() {
     _pc.open();
@@ -199,6 +216,7 @@ class _DocPageWebState extends State<DocPageWeb> {
       ),
       borderRadius: radius,
       body: Scaffold(
+        backgroundColor: AppColors.background,
         appBar: AppBar(
           title: Text("详情"),
           actions: <Widget>[
@@ -207,7 +225,8 @@ class _DocPageWebState extends State<DocPageWeb> {
                 menuItem("A", "打开网页版"),
                 menuItem("B", "从浏览器打开"),
                 menuItem("C", "复制文档链接"),
-                menuItem("D", "分享"),
+                menuItem("D", "举报文档"),
+                menuItem("E", "分享"),
               ],
               onSelected: (String action) {
                 // 点击选项的时候
@@ -223,6 +242,9 @@ class _DocPageWebState extends State<DocPageWeb> {
                     myToast(context, "已复制剪贴板");
                     break;
                   case 'D':
+                    fakeReport(context);
+                    break;
+                  case 'E':
                     Share.share(
                         '我上分享了语雀文档「${doc != null ? doc.data.title : '文档'}」快来瞧瞧！ $shareUrl');
                     break;
@@ -239,7 +261,7 @@ class _DocPageWebState extends State<DocPageWeb> {
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                padding: EdgeInsets.fromLTRB(16, 0, 16, 4),
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 4),
                 color: Colors.white,
                 child: InAppWebView(
                   initialUrl: theUrl,
@@ -277,11 +299,10 @@ class _DocPageWebState extends State<DocPageWeb> {
                       (InAppWebViewController controller, String url) async {
                     // 页面加载完成后注入js方法, 获取页面总高度
                     var height = await _webController.evaluateJavascript(
-                      source: """
-                              document.body.scrollHeight;
-                            """,
+                      source: 'document.body.scrollHeight;',
                     );
                     double theWebH = double.parse(height.toString());
+                    await morePadding();
                   },
                   onProgressChanged:
                       (InAppWebViewController controller, int progress) {
@@ -314,7 +335,10 @@ class _DocPageWebState extends State<DocPageWeb> {
                       width: MediaQuery.of(context).size.width,
                       child: loading(),
                     )
-                  : SizedBox(),
+                  : Opacity(
+                      opacity: 0,
+                      child: Text(""),
+                    ),
             ),
           ],
         ),

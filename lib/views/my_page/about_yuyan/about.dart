@@ -15,6 +15,7 @@ class AboutYuyan extends StatefulWidget {
 class _AboutYuyanState extends State<AboutYuyan> {
   @override
   Widget build(BuildContext context) {
+    String title = after1019() ? "结构化的知识库" : "语雀";
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: _sliverBuilder,
@@ -25,23 +26,20 @@ class _AboutYuyanState extends State<AboutYuyan> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "# 写在前面",
+                  "# 语燕是什么",
                   style: AppStyles.textStyleA,
                 ),
                 Divider(),
                 Text(
-                  "语燕是什么",
-                  style: AppStyles.textStyleB,
-                ),
-                SizedBox(height: 10),
-                Text(
-                  "一款第三方语雀移动客户端，目标是输出一款「 精美 」「 流畅 」满足语雀用户基础需求的移动端产品。采用了过渡性交 互动画，数据预加载，期待能够验证「未来的交互趋势是充分过渡的」的想法，希望你会喜欢。\n",
+                  "这是历时一年时间开发，一款「 精美 」「 流畅 」满足文档用户基础需求的移动端产品。采用了过渡性交 互动画，数据预加载，期待能够验证「未来的交互趋势是充分过渡的」的想法，希望你会喜欢。\n",
                   style: AppStyles.textStyleBC,
                 ),
-                Text(
-                  "注：语燕没有恶意，在语雀官方App发布后不保证会继续维护。\n",
-                  style: AppStyles.textStyleBBB,
-                ),
+                after1019()
+                    ? SizedBox(height: 5)
+                    : Text(
+                        "注：语燕没有恶意，在语雀官方App发布后不保证会继续维护。\n",
+                        style: AppStyles.textStyleBBB,
+                      ),
                 SizedBox(height: 10),
                 Text(
                   "项目归档的故事",
@@ -49,17 +47,17 @@ class _AboutYuyanState extends State<AboutYuyan> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  "2018年12月，一连串的问题引起了我的深思「 为什么我们做的这么多的项目都死了？」「 为什么我们还要做曾经失败过的产品？」「 那些藏在 Gitlab 中的骨灰就不值得我们反思一下吗？」，当时我们在家园内部自建平台 US（当时话题圈子还没有分类），以及···「 百度网盘 」中整理项目组留下的文档。是的，你没有看错，就是你上传了上千百个文件 也难得从上面下载一个到本地来回味一下的百度网盘。上传很快，下载很慢，就像我们做的项目一样，发起很快，完善很慢，也像团队一般，发展很快，沉淀很慢。\n\n带着「 为团队找到更好的归档工具 」的使命，在12月12日，一个穷且无心逛淘宝的我……喵的 居然写哭了…… 后面就了然了，答案就是我们选择了「 语雀 」\n",
+                  "2018年12月，一连串的问题引起了我的深思「 为什么我们做的这么多的项目都死了？」「 为什么我们还要做曾经失败过的产品？」「 那些藏在 Gitlab 中的骨灰就不值得我们反思一下吗？」，当时我们在家园内部自建平台 US（当时话题圈子还没有分类），以及···「 百度网盘 」中整理项目组留下的文档。是的，你没有看错，就是你上传了上千百个文件 也难得从上面下载一个到本地来回味一下的百度网盘。上传很快，下载很慢，就像我们做的项目一样，发起很快，完善很慢，也像团队一般，发展很快，沉淀很慢。\n\n带着「 为团队找到更好的归档工具 」的使命，在12月12日，一个穷且无心逛淘宝的我……喵的 居然写哭了…… 后面就了然了，答案就是我们选择了「 $title  」\n",
                   style: AppStyles.textStyleBC,
                 ),
                 SizedBox(height: 10),
                 Text(
-                  "园前盼归燕，语末待识君",
+                  after1019() ? "有限的功能，无限的影响" : "园前盼归燕，语末待识君",
                   style: AppStyles.textStyleB,
                 ),
                 SizedBox(height: 10),
                 Text(
-                  "语雀对我们团队的影响很大，越来越多的项目文档、复盘被记录在语雀上了，所有人都知道我们在做什么，做到哪了，有什么收获，尽管如今的在语雀上积累并不多，但是我相信在未来这将是团队交口荐誉的财富，而对于那些已经毕业经历世态炎凉的老家园看来，无论那些项目是死是活都可以被拿出来津津乐道，相信当时的他们或未来的我们会喜欢这种回望经历的感觉。\n\n",
+                  "$title 对我们团队的影响很大，越来越多的项目文档、复盘被记录在$title 上了，所有人都知道我们在做什么，做到哪了，有什么收获，尽管如今的在$title 上积累并不多，但是我相信在未来这将是团队交口荐誉的财富，而对于那些已经毕业经历世态炎凉的老家园看来，无论那些项目是死是活都可以被拿出来津津乐道，相信当时的他们或未来的我们会喜欢这种回望经历的感觉。\n\n",
                   style: AppStyles.textStyleBC,
                 ),
                 Text(
@@ -159,9 +157,10 @@ class _AboutYuyanState extends State<AboutYuyan> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  "反馈系统基于团队讨论区是我见过最有趣的设定之一，所以团队都可以使用想语雀一样的反馈方式，是不是很 cool ！",
+                  "反馈系统基于团队讨论区是我见过最有趣的设定之一，所以团队都可以使用想$title 一样的反馈方式，是不是很 cool ！",
                   style: AppStyles.textStyleBC,
                 ),
+                SizedBox(height: 10),
                 FlatButton.icon(
                   onPressed: () {
                     Navigator.pushNamed(context, "/my/suggest");
@@ -183,7 +182,7 @@ class _AboutYuyanState extends State<AboutYuyan> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  "如你所见，语燕的开发并不是很完整，包括几大类型的知识库，画板，讨论区看板这些都是未完成的部分，以及详细文档页面是在是太太太丑了，有时还会出现一些 html 的代码，那是因为使用了第三方库且没有做足够优化的原因，再加上有许多其他项目需要更进，网课作业也天天被催…… 因此，我们强烈希望有兴趣的设计师/开发者加入项目的开发和维护，技术文档在路上了，不久会公布在项目组的语雀知识库，感恩！ developlove@vip.qq.com",
+                  "如你所见，语燕的设计、开发工作量是庞大的，我们强烈希望有兴趣的设计师/开发者加入我们一起工作，感恩！ 联系开发者: developlove@vip.qq.com",
                   style: AppStyles.textStyleBC,
                 ),
                 SizedBox(height: 120),
@@ -234,4 +233,8 @@ Widget oneProduct(context, {String text, String url}) {
       openUrl(context, url);
     },
   );
+}
+
+bool after1019() {
+  return 1603114201000 > DateTime.now().millisecondsSinceEpoch;
 }

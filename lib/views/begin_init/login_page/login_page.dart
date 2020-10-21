@@ -27,7 +27,26 @@ class _LoginPageState extends State<LoginPage> {
     String url = oauth2.getOauthUrl().toString();
     oauthUrl = url;
     askTokenApi();
+    justHide();
     super.initState();
+  }
+
+  // 隐藏微信登录
+  justHide() {
+    Timer(const Duration(milliseconds: 0), () {
+      Timer(Duration(milliseconds: 400), () {
+        hidethirdLogin();
+        justHide();
+      });
+    });
+  }
+
+  hidethirdLogin() {
+    final future = flutterWebviewPlugin.evalJavascript(
+        'document.querySelector(".third-login").style.display="none";');
+    // future.then((String result) {
+    //   print(result);
+    // });
   }
 
   /// 轮询 asses token api
@@ -36,7 +55,9 @@ class _LoginPageState extends State<LoginPage> {
   askTokenApi() {
     int askTimes = 1;
     int timeoutTimes = 60;
+    // 轮询函数，如果没有正确结果再次调用自己
     askYuque(int a) {
+      // 定时器
       Timer(
         const Duration(milliseconds: 3000),
         () async {
