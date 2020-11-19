@@ -113,7 +113,7 @@ Widget oneComment(BuildContext context, CommentData data) {
                     SizedBox(height: 10),
                     getHtml(
                       context,
-                      data.bodyHtml,
+                      data.bodyAsl,
                     ),
                   ],
                 ),

@@ -240,7 +240,7 @@ class DioUser {
   // 评论列表
   static getComments({int docId}) async {
     var ans = await DioReq.get(
-        "/comments?commentable_id=$docId&commentable_type=Doc");
+        "/comments?commentable_id=$docId&commentable_type=Doc&include_section=true");
     return Comments.fromJson(ans);
   }
 
