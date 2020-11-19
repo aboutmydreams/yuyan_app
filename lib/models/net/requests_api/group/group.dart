@@ -2,19 +2,18 @@ import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 
 import 'data/group_book_data.dart';
-import 'data/group_home_data.dart';
 import 'data/group_member_data.dart';
 import 'data/group_topic_data.dart';
-import 'data/one_topic/topic_comment_data.dart';
 import 'data/one_topic/topic_detail_data.dart';
 
 class DioGroup {
   // 首页数据
-  static getHomeData({int groupId}) async {
-    var res = await DioReq.get("/groups/$groupId/homepage?");
-    GroupHomeJson theData = GroupHomeJson.fromJson(res);
-    return theData;
-  }
+  // 2020年11月19日，语雀不在放具体内容在里面了
+  // static getHomeData({int groupId}) async {
+  //   var res = await DioReq.get("/groups/$groupId/homepage?");
+  //   GroupHomeJson theData = GroupHomeJson.fromJson(res);
+  //   return theData;
+  // }
 
   // 团队知识库数据
   static getBookData({int groupId}) async {

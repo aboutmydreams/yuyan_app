@@ -1,23 +1,18 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/group/all_topic/topic_page.dart';
 import 'package:yuyan_app/models/component/group/topic/add_topic/add_topic.dart';
 import 'package:yuyan_app/models/component/group/view/book_page.dart';
-import 'package:yuyan_app/models/component/group/view/home_page.dart';
 import 'package:yuyan_app/models/component/group/view/member_page.dart';
 import 'package:yuyan_app/models/component/group/view/topic_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_book_data.dart';
-import 'package:yuyan_app/models/net/requests_api/group/data/group_home_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_member_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_topic_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/group.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 import 'package:yuyan_app/models/tools/report.dart';
 import 'package:yuyan_app/models/widgets_small/menu_item.dart';
-import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 
@@ -41,7 +36,6 @@ class _GroupPageState extends State<GroupPage>
   TabController _tabController;
 
   List<String> _tabs = [
-    "首页",
     "知识库",
     "讨论区",
     "成员",
@@ -50,22 +44,20 @@ class _GroupPageState extends State<GroupPage>
   MemberJson memberJson;
   GroupTopicJson topicJson;
   GroupBookJson bookJson;
-  GroupHomeJson homeJson;
 
   @override
   void initState() {
     super.initState();
     getIfMark();
-    getHome();
     getBook();
     getTopic();
     getMember();
-    _tabController =
-        TabController(vsync: this, initialIndex: pageIndex, length: 4)
-          ..addListener(() {
-            print(_tabController.index);
-            changeIndex(_tabController.index);
-          });
+    _tabController = TabController(
+        vsync: this, initialIndex: pageIndex, length: _tabs.length)
+      ..addListener(() {
+        print(_tabController.index);
+        changeIndex(_tabController.index);
+      });
   }
 
   @override
@@ -104,17 +96,6 @@ class _GroupPageState extends State<GroupPage>
     }
   }
 
-  getHome() async {
-    GroupHomeJson home = await DioGroup.getHomeData(groupId: groupdata.id);
-    setState(() {
-      homeJson = home;
-      if (home.data.bookStacks.length > 0) {
-        groupdata.description =
-            home.data.bookStacks[0].books[0].user.description;
-      }
-    });
-  }
-
   getBook() async {
     GroupBookJson book = await DioGroup.getBookData(groupId: groupdata.id);
     setState(() {
@@ -141,8 +122,6 @@ class _GroupPageState extends State<GroupPage>
       case 0:
         break;
       case 1:
-        break;
-      case 2:
         return FloatingActionButton(
           onPressed: () {
             Navigator.push(
@@ -168,7 +147,7 @@ class _GroupPageState extends State<GroupPage>
           },
           child: Icon(Icons.add_comment),
         );
-      case 3:
+      case 2:
         break;
     }
   }
@@ -300,9 +279,6 @@ class _GroupPageState extends State<GroupPage>
           body: TabBarView(
             controller: _tabController,
             children: [
-              GroupHome(
-                homeJson: homeJson,
-              ),
               BookPage(
                 bookJson: bookJson,
               ),

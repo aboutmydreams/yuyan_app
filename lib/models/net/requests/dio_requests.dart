@@ -6,6 +6,7 @@ class DioReq {
   static Dio dio = Dio();
 
   static String baseUrl = "https://www.yuque.com/api";
+  // static String baseUrl = "https://ncuhome.yuque.com/api";
 
   static autoHeader({Map<String, dynamic> headers}) async {
     var token = await getToken();
@@ -46,6 +47,7 @@ class DioReq {
       print("get: $path ${response.statusCode}");
       return response.data;
     } on DioError catch (e) {
+      print(path);
       print(e);
       if (e.type == DioErrorType.RESPONSE) {
         // print(e.response.statusCode); //403 权限不足（token过期）
