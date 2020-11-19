@@ -26,8 +26,6 @@ class _HomePageState extends State<HomePage> {
   bool hideBottom = false;
   List<Widget> pageList = List();
   GlobalKey _bottomNavigationKey = GlobalKey();
-  double _top = 0.0; //距顶部的偏移
-  double _left = 0.0; //距左边的偏移
 
   @override
   void initState() {
@@ -43,8 +41,6 @@ class _HomePageState extends State<HomePage> {
       ))
       ..add(MyPage());
 
-    _top = 0;
-    _left = 0;
     super.initState();
   }
 
@@ -57,7 +53,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: QuickSetPage(),
+      // drawer: QuickSetPage(),
       bottomNavigationBar: ScopedModel<BottomManage>(
           model: topModel.bottomManage,
           child: ScopedModelDescendant<BottomManage>(

@@ -4,9 +4,10 @@ import 'package:yuyan_app/models/tools/get_pref.dart';
 
 class DioReq {
   static Dio dio = Dio();
-
   static String baseUrl = "https://www.yuque.com/api";
   // static String baseUrl = "https://ncuhome.yuque.com/api";
+  bool _forOrganiz = false;
+  bool get forOrganiz => _forOrganiz;
 
   static autoHeader({Map<String, dynamic> headers}) async {
     var token = await getToken();

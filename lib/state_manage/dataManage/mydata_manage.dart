@@ -3,28 +3,35 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_info_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_profile_data.dart';
+import 'package:yuyan_app/models/tools/get_pref.dart';
 import 'package:yuyan_app/models/tools/write_json.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
+import 'package:yuyan_app/state_manage/dataManage/data/my_page/organiz_data.dart';
 
 class MyInfoManage extends Model {
   UserInfoJson _myInfoData = UserInfoJson();
   ProfileData _profileData = ProfileData();
   GroupJson _groupData = GroupJson();
+  OrganizJson _organizData = OrganizJson();
   UserInfoJson get myInfoData => _myInfoData;
   ProfileData get profileData => _profileData;
   GroupJson get groupData => _groupData;
+  OrganizJson get organizData => _organizData;
 
   getSaveData() async {
     var myInfoDoc = await readJson('myInfo');
     var myProfileDoc = await readJson('myProfile');
     var myGroup = await readJson('myGroup');
+    var myOrg = await readJson('organiz');
     UserInfoJson myInfoData = UserInfoJson.fromJson(myInfoDoc);
     ProfileData myProfileData = ProfileData.fromJson(myProfileDoc);
     GroupJson myGroupData = GroupJson.fromJson(myGroup);
+    OrganizJson myOrganizData = OrganizJson.fromJson(myOrg);
 
     _myInfoData = myInfoData;
     _profileData = myProfileData;
     _groupData = myGroupData;
+    _organizData = myOrganizData;
     notifyListeners();
     return 1;
   }
@@ -43,10 +50,31 @@ class MyInfoManage extends Model {
     // 地址、职业的信息根据 id 从 profile 中取得
     var profileData = await DioReq.get("/users/$myId/profile?");
     var groupData = await DioReq.get("/users/$myId/groups?limit=1000&offset=0");
+    var orgData = await DioReq.get(
+        "https://www.yuque.com/api/users/$myId/organizations?");
+
     await writeJson('myInfo', dioData);
     await writeJson('myProfile', profileData);
     await writeJson('myGroup', groupData);
+    await writeJson('organiz', orgData);
     return 1;
+  }
+
+  String _nowOrg;
+  String get nowOrg => _nowOrg;
+
+  getMyNowOrg() async {
+    var _nowOrg = await getPrefStringData("org");
+    _nowOrg ??= null;
+    notifyListeners();
+    return _nowOrg;
+  }
+
+  void changeOrg(String login) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("org", login);
+    _nowOrg = login;
+    notifyListeners();
   }
 
   void cancelFollow() {
