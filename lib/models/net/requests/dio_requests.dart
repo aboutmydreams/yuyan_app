@@ -1,13 +1,19 @@
 import 'package:dio/dio.dart';
 import 'dart:async';
 import 'package:yuyan_app/models/tools/get_pref.dart';
+import 'package:yuyan_app/state_manage/toppest.dart';
 
 class DioReq {
   static Dio dio = Dio();
   static String baseUrl = "https://www.yuque.com/api";
-  // static String baseUrl = "https://ncuhome.yuque.com/api";
-  bool _forOrganiz = false;
-  bool get forOrganiz => _forOrganiz;
+
+  static orgSpace() async {
+    String nowBaseUrl = topModel.myInfoManage.nowOrg != null
+        ? baseUrl.replaceAll(
+            "www.yuque", topModel.myInfoManage.nowOrg + ".yuque")
+        : baseUrl;
+    return nowBaseUrl;
+  }
 
   static autoHeader({Map<String, dynamic> headers}) async {
     var token = await getToken();

@@ -48,7 +48,7 @@ class _BookDocPageState extends State<BookDocPage> {
     var redirect =
         await DioReq.getRedirect("https://www.yuque.com/go/book/$bookId");
     setState(() {
-      reallyLogin = redirect.split("/")[0];
+      reallyLogin = redirect.toString().split("/")[0];
     });
   }
 

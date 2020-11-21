@@ -77,6 +77,12 @@ class MyInfoManage extends Model {
     notifyListeners();
   }
 
+  void cleanOrg() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove("org");
+    notifyListeners();
+  }
+
   void cancelFollow() {
     _myInfoData.data.followingCount -= 1;
     notifyListeners();

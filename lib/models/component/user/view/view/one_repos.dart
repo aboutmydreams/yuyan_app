@@ -35,9 +35,8 @@ Widget oneRepos(BuildContext context, Map data) {
       ),
       child: Row(
         children: <Widget>[
-          SizedBox(width: 20),
           Container(
-            margin: EdgeInsets.only(left: 6),
+            margin: EdgeInsets.only(left: 26),
             child: AppIcon.iconType(data["type"]),
           ),
           Expanded(
