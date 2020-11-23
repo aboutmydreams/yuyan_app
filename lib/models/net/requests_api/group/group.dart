@@ -11,21 +11,24 @@ class DioGroup {
   // 首页数据
   // 2020年11月19日，语雀不在放具体内容在里面了
   static getHomeData({int groupId}) async {
-    var res = await DioReq.get("/groups/$groupId/bookstacks?");
+    var res = await DioReq.get(
+        "https://www.yuque.com/api/groups/$groupId/bookstacks?");
     GroupHomeJson theData = GroupHomeJson.fromJson(res);
     return theData;
   }
 
   // 团队知识库数据
   static getBookData({int groupId}) async {
-    var res = await DioReq.get("/groups/$groupId/books?archived=include&q=");
+    var res = await DioReq.get(
+        "https://www.yuque.com/api/groups/$groupId/books?archived=include&q=");
     GroupBookJson theData = GroupBookJson.fromJson(res);
     return theData;
   }
 
   // 团队成员数据
   static getMemberData({int groupId}) async {
-    var res = await DioReq.get("/groups/$groupId/users?with_count=true");
+    var res = await DioReq.get(
+        "https://www.yuque.com/api/groups/$groupId/users?with_count=true");
     MemberJson theData = MemberJson.fromJson(res);
     return theData;
   }
@@ -34,14 +37,15 @@ class DioGroup {
   static getTopicData(
       {int groupId, int offset: 0, String state: "open"}) async {
     var res = await DioReq.get(
-        "/topics?assignee_id=&group_id=$groupId&kanban_id=&label_ids=&milestone_id=&mode=&offset=$offset&privacy=&q=&state=$state&user_id=");
+        "https://www.yuque.com/api/topics?assignee_id=&group_id=$groupId&kanban_id=&label_ids=&milestone_id=&mode=&offset=$offset&privacy=&q=&state=$state&user_id=");
     GroupTopicJson theData = GroupTopicJson.fromJson(res);
     return theData;
   }
 
   // 获取话题主题
   static getOneTopicData({int groupId, int iid: 1}) async {
-    var res = await DioReq.get("/topics/$iid?group_id=$groupId");
+    var res = await DioReq.get(
+        "https://www.yuque.com/api/topics/$iid?group_id=$groupId");
     TopicDetailJson theData = TopicDetailJson.fromJson(res);
     return theData;
   }
@@ -49,7 +53,7 @@ class DioGroup {
   // 话题评论列表
   static getComments(int commentId) async {
     var ans = await DioReq.get(
-        "/comments?commentable_id=$commentId&commentable_type=Topic");
+        "https://www.yuque.com/api/comments?commentable_id=$commentId&commentable_type=Topic");
     return Comments.fromJson(ans);
   }
 }

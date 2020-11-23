@@ -5,8 +5,10 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/news_data.dart';
+import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/news_manage.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
+import 'package:yuyan_app/views/explore_page/view/org_leading.dart';
 import 'package:yuyan_app/views/news_page/view/news_count.dart';
 import 'package:yuyan_app/views/news_page/view/one_news/one_news.dart';
 
@@ -66,6 +68,10 @@ class _NewsPageState extends State<NewsPage> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
+        leading: ScopedModel<MyInfoManage>(
+          model: topModel.myInfoManage,
+          child: OrgLeading(),
+        ),
         title: Text("全部消息"),
       ),
       body: Stack(

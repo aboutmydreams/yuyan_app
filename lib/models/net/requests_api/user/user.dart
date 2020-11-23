@@ -20,22 +20,23 @@ class DioUser {
 
   // v2 基本信息
   static getUserInfo({int userId}) async {
-    var res = await DioReq.get("/v2/users/$userId");
+    var res = await DioReq.get("https://www.yuque.com/api/v2/users/$userId");
     UserInfoJson theData = UserInfoJson.fromJson(res);
     return theData;
   }
 
   // v2 获取公开知识库 暂时弃用
   static getReposV2({String login}) async {
-    var res = await DioReq.get("/v2/users/$login/repos");
+    var res =
+        await DioReq.get("https://www.yuque.com/api/v2/users/$login/repos");
     UserReposJson theData = UserReposJson.fromJson(res);
     return theData;
   }
 
   // 获取公开知识库
   static getReposData({int userId}) async {
-    var res =
-        await DioReq.get("/groups/$userId/books?archived=include&limit=200");
+    var res = await DioReq.get(
+        "https://www.yuque.com/api/groups/$userId/books?archived=include&limit=200");
     UserReposJson theData = UserReposJson.fromJson(res);
     return theData;
   }

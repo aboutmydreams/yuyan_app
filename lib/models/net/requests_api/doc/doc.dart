@@ -15,13 +15,15 @@ class DioDoc {
 
   // 获取文档内容 使用 v2 接口
   static getDocV2(int bookId, int docId) async {
-    var ans = await DioReq.get("/v2/repos/$bookId/docs/$docId");
+    var ans = await DioReq.get(
+        "https://www.yuque.com/api/v2/repos/$bookId/docs/$docId");
     return DocV2.fromJson(ans);
   }
 
   // 创建文档
   static createDocV2(int bookId) async {
-    var ans = await DioReq.post("/v2/repos/$bookId/docs");
+    var ans =
+        await DioReq.post("https://www.yuque.com/api/v2/repos/$bookId/docs");
     return DocV2.fromJson(ans);
   }
 

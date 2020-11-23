@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yuyan_app/models/widgets_small/show_dialog.dart';
-import 'package:yuyan_app/models/widgets_small/toast.dart';
-import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
-import 'package:yuyan_app/state_manage/dataManage/data/my_page/organiz_data.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/explore_page/search/search_bar.dart';
 import 'package:yuyan_app/views/explore_page/view/org_leading.dart';
@@ -26,7 +24,10 @@ class _ExplorePageState extends State<ExplorePage>
         appBar: AppBar(
           toolbarOpacity: 1.0,
           bottomOpacity: 5.0,
-          leading: OrgLeading(),
+          leading: ScopedModel<MyInfoManage>(
+            model: topModel.myInfoManage,
+            child: OrgLeading(),
+          ),
           actions: <Widget>[
             IconButton(
               icon: Icon(

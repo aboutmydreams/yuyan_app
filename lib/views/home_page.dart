@@ -6,23 +6,23 @@ import 'package:yuyan_app/state_manage/dataManage/attent_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/news_manage.dart';
 import 'package:yuyan_app/state_manage/layout_manage/hide_bottom.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
+import 'package:yuyan_app/views/explore_page/explore_page.dart';
 import 'package:yuyan_app/views/my_page/my_page.dart';
+import 'package:yuyan_app/views/news_page/news_page.dart';
+import 'dashboard/dashboard.dart';
 import 'dart:ui';
 
-import 'dashboard/dashboard.dart';
-import 'dashboard/quick/setting/quick_set.dart';
-import 'explore_page/explore_page.dart';
-import 'news_page/news_page.dart';
-
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+  HomePage({Key key, this.pageKey: 0}) : super(key: key);
+  final int pageKey;
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState(pageKey: pageKey);
 }
 
 class _HomePageState extends State<HomePage> {
-  int _page = 0;
+  _HomePageState({Key key, this.pageKey: 0});
+  int pageKey;
   bool hideBottom = false;
   List<Widget> pageList = List();
   GlobalKey _bottomNavigationKey = GlobalKey();
@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
 
   Color iconColor(int index) {
     Color theColor =
-        _page == index ? topModel.primarySwatchColor : Colors.black87;
+        pageKey == index ? topModel.primarySwatchColor : Colors.black87;
     return theColor;
   }
 
@@ -96,13 +96,13 @@ class _HomePageState extends State<HomePage> {
                 animationDuration: Duration(milliseconds: 300),
                 onTap: (index) {
                   setState(() {
-                    _page = index;
+                    pageKey = index;
                   });
                 },
               ),
             );
           })),
-      body: pageList[_page],
+      body: pageList[pageKey],
     );
   }
 }

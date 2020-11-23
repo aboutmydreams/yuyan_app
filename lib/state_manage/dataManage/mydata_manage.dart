@@ -68,8 +68,12 @@ class MyInfoManage extends Model {
   getMyNowOrg() async {
     var _nowOrg = await getPrefStringData("org");
     _nowOrg ??= "";
-    _nowOrg ??= _myInfoData.data.avatarUrl;
-    _nowOrgImg = await getPrefStringData("org_img");
+    getSaveData().then((e) async {
+      _nowOrgImg = await getPrefStringData("org_img");
+      _nowOrgImg ??= _myInfoData.data.avatarUrl;
+      return 1;
+    });
+
     notifyListeners();
     return _nowOrg;
   }
