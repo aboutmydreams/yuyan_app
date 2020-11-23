@@ -8,9 +8,10 @@ class DioReq {
   static String baseUrl = "https://www.yuque.com/api";
 
   static orgSpace() async {
-    String nowBaseUrl = topModel.myInfoManage.nowOrg != null
-        ? baseUrl.replaceAll(
-            "www.yuque", topModel.myInfoManage.nowOrg + ".yuque")
+    String nowOrg = await topModel.myInfoManage.getMyNowOrg();
+
+    String nowBaseUrl = (nowOrg != null && nowOrg != "")
+        ? baseUrl.replaceAll("www.yuque", nowOrg + ".yuque")
         : baseUrl;
     return nowBaseUrl;
   }
@@ -41,7 +42,8 @@ class DioReq {
 
   static get(String path,
       {Map<String, dynamic> headers, Map<String, dynamic> param}) async {
-    var diopath = path[0] == "/" ? baseUrl + path : path;
+    var nowBaseUrl = await orgSpace();
+    var diopath = path[0] == "/" ? nowBaseUrl + path : path;
     headers ??= await autoHeader(headers: headers);
 
     try {
@@ -54,8 +56,7 @@ class DioReq {
       print("get: $path ${response.statusCode}");
       return response.data;
     } on DioError catch (e) {
-      print(path);
-      print(e);
+      print(path + e.toString());
       if (e.type == DioErrorType.RESPONSE) {
         // print(e.response.statusCode); //403 权限不足（token过期）
         return {"data": 403};
@@ -75,7 +76,8 @@ class DioReq {
       {Map<String, dynamic> headers,
       Map<String, dynamic> data,
       Map<String, dynamic> param}) async {
-    var diopath = path[0] == "/" ? baseUrl + path : path;
+    var nowBaseUrl = await orgSpace();
+    var diopath = path[0] == "/" ? nowBaseUrl + path : path;
     headers ??= await autoHeader(headers: headers);
 
     try {
@@ -89,7 +91,7 @@ class DioReq {
       print("post: $path ${response.statusCode}");
       return response.data;
     } on DioError catch (e) {
-      print(e);
+      print(path + e.toString());
       if (e.type == DioErrorType.RESPONSE) {
         // print(e.response.statusCode); //403 权限不足（token过期）
         return {"data": e.response.statusCode};
@@ -109,7 +111,8 @@ class DioReq {
       {Map<String, dynamic> headers,
       Map<String, dynamic> data,
       Map<String, dynamic> param}) async {
-    var diopath = path[0] == "/" ? baseUrl + path : path;
+    var nowBaseUrl = await orgSpace();
+    var diopath = path[0] == "/" ? nowBaseUrl + path : path;
     headers ??= await autoHeader(headers: headers);
     try {
       Response response = await dio.put(
@@ -141,7 +144,8 @@ class DioReq {
       {Map<String, dynamic> headers,
       Map<String, dynamic> data,
       Map<String, dynamic> param}) async {
-    var diopath = path[0] == "/" ? baseUrl + path : path;
+    var nowBaseUrl = await orgSpace();
+    var diopath = path[0] == "/" ? nowBaseUrl + path : path;
     headers ??= await autoHeader(headers: headers);
     try {
       Options options = Options(
@@ -178,7 +182,8 @@ class DioReq {
       {Map<String, dynamic> headers, Map<String, dynamic> param}) async {
     headers ??= await autoHeader(headers: headers);
 
-    var diopath = path[0] == "/" ? baseUrl + path : path;
+    var nowBaseUrl = await orgSpace();
+    var diopath = path[0] == "/" ? nowBaseUrl + path : path;
     Response res = await dio.get(
       diopath,
       queryParameters: param,

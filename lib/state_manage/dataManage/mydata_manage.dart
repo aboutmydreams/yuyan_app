@@ -61,25 +61,32 @@ class MyInfoManage extends Model {
   }
 
   String _nowOrg;
+  String _nowOrgImg;
   String get nowOrg => _nowOrg;
+  String get nowOrgImg => _nowOrgImg;
 
   getMyNowOrg() async {
     var _nowOrg = await getPrefStringData("org");
-    _nowOrg ??= null;
+    _nowOrg ??= "";
+    _nowOrg ??= _myInfoData.data.avatarUrl;
+    _nowOrgImg = await getPrefStringData("org_img");
     notifyListeners();
     return _nowOrg;
   }
 
-  void changeOrg(String login) async {
+  void changeOrg(Organiz data) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("org", login);
-    _nowOrg = login;
+    prefs.setString("org", data.login);
+    prefs.setString("org_img", data.logo);
+
+    _nowOrg = data.login;
     notifyListeners();
   }
 
   void cleanOrg() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove("org");
+    prefs.setString("org_img", _myInfoData.data.avatarUrl);
     notifyListeners();
   }
 
@@ -96,6 +103,7 @@ class MyInfoManage extends Model {
   void update() {
     saveUserInfoJson().then((res) {
       getSaveData();
+      getMyNowOrg();
     });
   }
 }

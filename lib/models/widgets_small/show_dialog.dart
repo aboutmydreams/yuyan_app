@@ -1,42 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/models/component/appUI.dart';
 
 // 使用参考：https://juejin.cn/post/6844903822028963847
-showWindow(BuildContext context) {
+showWindow(BuildContext context, {String title, List<Widget> children}) {
+  children ??= [];
   showDialog(
       context: context,
       builder: (ctx) {
         return SimpleDialog(
-          title: Text("SimpleDialog"),
-          titlePadding: EdgeInsets.all(10),
-          backgroundColor: Colors.amber,
+          title: Text(
+            title,
+            style: AppStyles.textStyleB,
+          ),
+          titlePadding: EdgeInsets.fromLTRB(16, 20, 0, 0),
+          backgroundColor: AppColors.background,
           elevation: 5,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(6))),
-          children: <Widget>[
-            ListTile(
-              title: Center(
-                child: Text("Item_1"),
+          children: []
+            ..addAll(children)
+            ..add(Center(
+              child: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.close),
               ),
-            ),
-            ListTile(
-              title: Center(
-                child: Text("Item_2"),
-              ),
-            ),
-            ListTile(
-              title: Center(
-                child: Text("Item_3"),
-              ),
-            ),
-            ListTile(
-              title: Center(
-                child: Text("Close"),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
+            )),
         );
       });
 }

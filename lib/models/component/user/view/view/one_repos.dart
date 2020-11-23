@@ -4,6 +4,14 @@ import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 
+// {
+//     "type": data.rRecord.type,
+//     "login": data.rRecord.user.login,
+//     "bookId": data.rRecord.id,
+//     "bookSlug": data.slug,
+//     "description": data.description.replaceAll("<em>", "").replaceAll("</em>", ""),
+//     "name": data.name.replaceAll("<em>", "").replaceAll("</em>", ""),
+// }
 Widget oneRepos(BuildContext context, Map data) {
   return GestureDetector(
     onTap: () {

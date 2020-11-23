@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/widgets_small/show_dialog.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
+import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
+import 'package:yuyan_app/state_manage/dataManage/data/my_page/organiz_data.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/explore_page/search/search_bar.dart';
+import 'package:yuyan_app/views/explore_page/view/org_leading.dart';
 import 'attention/attention_page.dart';
 import 'selection/selection_page.dart';
 
@@ -23,20 +26,7 @@ class _ExplorePageState extends State<ExplorePage>
         appBar: AppBar(
           toolbarOpacity: 1.0,
           bottomOpacity: 5.0,
-          leading: InkWell(
-            child: IconButton(
-              icon: Icon(
-                Icons.search,
-                color: Colors.white,
-              ),
-              tooltip: '在语雀中搜索',
-              onPressed: () {
-                myToast(
-                    context, topModel.myInfoManage.organizData.data[0].name);
-                showWindow(context);
-              },
-            ),
-          ),
+          leading: OrgLeading(),
           actions: <Widget>[
             IconButton(
               icon: Icon(
