@@ -10,7 +10,6 @@ import 'package:yuyan_app/views/explore_page/explore_page.dart';
 import 'package:yuyan_app/views/my_page/my_page.dart';
 import 'package:yuyan_app/views/news_page/news_page.dart';
 import 'dashboard/dashboard.dart';
-import 'dart:ui';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.pageKey: 0}) : super(key: key);

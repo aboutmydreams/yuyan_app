@@ -26,6 +26,7 @@ class _OrgLeadingState extends State<OrgLeading> {
 
   @override
   Widget build(BuildContext context) {
+    // 默认拥有一个个人工作台
     List<Organiz> useOrg = [
       Organiz(
         host: "",
@@ -36,7 +37,7 @@ class _OrgLeadingState extends State<OrgLeading> {
       )
     ];
     useOrg.addAll(organizations);
-    return organizations.length > 0
+    return (organizations.length > 0) && (organizations != null)
         ? InkWell(
             child: IconButton(
               icon: ScopedModelDescendant<MyInfoManage>(
@@ -45,30 +46,50 @@ class _OrgLeadingState extends State<OrgLeading> {
               }),
               tooltip: '切换',
               onPressed: () {
+                // 构建弹窗内的子元素列表
                 List lite(BuildContext context, List<Organiz> data) {
-                  return data
-                      .map((o) => ListTile(
-                            leading: userAvatar(o.logo),
-                            title: Text(o.name),
-                            onTap: () async {
-                              await topModel.myInfoManage.changeOrg(o);
-                              await topModel.update();
-
-                              Timer(Duration(milliseconds: 300), () {
-                                myToast(context, "切换成功");
-                                Navigator.pushNamedAndRemoveUntil(
-                                    context, '/', (route) => route == null);
-                              });
-                            },
-                          ))
-                      .toList();
+                  return data.map((o) => OneLite(org: o)).toList();
                 }
 
-                showWindow(context,
-                    title: "切换工作台", children: lite(context, useOrg));
+                // 切换工作台弹窗
+                showWindow(
+                  context,
+                  title: "切换工作台",
+                  children: lite(context, useOrg),
+                );
               },
             ),
           )
         : Container();
+  }
+}
+
+class OneLite extends StatelessWidget {
+  const OneLite({Key key, this.org}) : super(key: key);
+  final Organiz org;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: userAvatar(org.logo),
+      title: Text(org.name),
+      onTap: () async {
+        String nowOrg = await topModel.myInfoManage.getMyNowOrg();
+        if (org.login == nowOrg) {
+          Timer(Duration(milliseconds: 300), () {
+            myToast(context, "😂");
+            Navigator.pop(context);
+          });
+        } else {
+          await topModel.myInfoManage.changeOrg(org);
+          await topModel.update();
+
+          Timer(Duration(milliseconds: 300), () {
+            myToast(context, "切换成功");
+            Navigator.pop(context);
+          });
+        }
+      },
+    );
   }
 }
