@@ -16,7 +16,8 @@ class DioDoc {
   // 获取文档内容 使用 v2 接口
   static getDocV2({int bookId, int docId, bool onlyUser}) async {
     // 这里不需要 onlyUser: onlyUser, 很奇怪
-    var ans = await DioReq.get("/v2/repos/$bookId/docs/$docId");
+    var ans =
+        await DioReq.get("/v2/repos/$bookId/docs/$docId", onlyUser: onlyUser);
     return DocV2.fromJson(ans);
   }
 

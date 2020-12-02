@@ -70,9 +70,10 @@ class OpenPage {
 
   // 打开文档知识库
   static docBook(BuildContext context,
-      {int bookId, String bookSlug, String login}) {
+      {int bookId, String bookSlug, String login, bool onlyUser}) {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return BookDocPage(bookId: bookId, bookSlug: bookSlug, login: login);
+      return BookDocPage(
+          bookId: bookId, bookSlug: bookSlug, login: login, onlyUser: onlyUser);
     }));
   }
 

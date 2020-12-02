@@ -12,6 +12,7 @@ import 'package:yuyan_app/models/tools/clear_text.dart';
 //     "description": data.description.replaceAll("<em>", "").replaceAll("</em>", ""),
 //     "name": data.name.replaceAll("<em>", "").replaceAll("</em>", ""),
 // }
+
 Widget oneRepos(BuildContext context, Map data) {
   return GestureDetector(
     onTap: () {
@@ -20,6 +21,7 @@ Widget oneRepos(BuildContext context, Map data) {
           context,
           bookId: data["bookId"],
           bookSlug: data["bookSlug"],
+          onlyUser: data["onlyUser"],
         );
       } else {
         String url =

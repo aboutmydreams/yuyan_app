@@ -40,5 +40,6 @@ Map reposMap(UserReposData data) {
         ? data.description.replaceAll("<em>", "").replaceAll("</em>", "")
         : null,
     "name": data.name.replaceAll("<em>", "").replaceAll("</em>", ""),
+    "onlyUser": true,
   };
 }

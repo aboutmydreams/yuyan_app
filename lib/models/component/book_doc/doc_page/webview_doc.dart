@@ -8,7 +8,6 @@ import 'package:yuyan_app/models/component/book_doc/doc_page/view/comment_panel.
 import 'package:yuyan_app/models/component/book_doc/doc_page/view/floating_collapsed.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
-import 'package:yuyan_app/models/net/requests_api/doc/data/doc_data_v2.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 import 'package:yuyan_app/models/tools/report.dart';
@@ -61,13 +60,13 @@ class _DocPageWebState extends State<DocPageWeb> {
   final bool onlyUser;
 
   Comments comments = Comments(data: []);
-  DocV2 doc;
 
   // 浏览量 点赞 收藏
   int hits = 0;
   int likeCount = 0;
   bool ifMark = false;
   bool ifLike = false;
+  String docTitle = "";
 
   // 下方抽屉
   PanelController _pc = PanelController();
@@ -94,21 +93,12 @@ class _DocPageWebState extends State<DocPageWeb> {
     getIfLike();
     getIfMark();
     getDocComment();
-    getDocContextData();
   }
 
   @override
   void dispose() {
     super.dispose();
     _webController = null;
-  }
-
-  getDocContextData() async {
-    DocV2 docData =
-        await DioDoc.getDocV2(bookId: bookId, docId: docId, onlyUser: onlyUser);
-    setState(() {
-      doc = docData;
-    });
   }
 
   getDocComment() async {
@@ -262,7 +252,7 @@ class _DocPageWebState extends State<DocPageWeb> {
                     break;
                   case 'E':
                     Share.share(
-                        '我上分享了语雀文档「${doc != null ? doc.data.title : '文档'}」快来瞧瞧！ $shareUrl');
+                        '我上分享了语雀文档「${docTitle != "" ? docTitle : "文档"}」快来瞧瞧！ $shareUrl');
                     break;
                 }
               },
@@ -314,10 +304,17 @@ class _DocPageWebState extends State<DocPageWeb> {
                   onLoadStop:
                       (InAppWebViewController controller, String url) async {
                     // 页面加载完成后注入js方法, 获取页面总高度
-                    var height = await _webController.evaluateJavascript(
-                      source: 'document.body.scrollHeight;',
+                    // var height = await _webController.evaluateJavascript(
+                    //   source: 'document.body.scrollHeight;',
+                    // );
+                    // double theWebH = double.parse(height.toString());
+
+                    var theDocTitle = await _webController.evaluateJavascript(
+                      source: 'document.title;',
                     );
-                    double theWebH = double.parse(height.toString());
+                    setState(() {
+                      docTitle = theDocTitle;
+                    });
                     await morePadding();
                   },
                   onProgressChanged:

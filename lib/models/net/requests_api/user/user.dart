@@ -11,7 +11,6 @@ import 'data/user_profile_data.dart';
 import 'data/user_repos_data.dart';
 
 class DioUser {
-  static String baseUrl = "https://www.yuque.com/api";
   // 地址、职业的信息根据
   static getProfileData({int userId}) async {
     var res = await DioReq.get("/users/$userId/profile?");
@@ -21,30 +20,33 @@ class DioUser {
 
   // v2 基本信息
   static getUserInfo({int userId}) async {
-    var res = await DioReq.get("https://www.yuque.com/api/v2/users/$userId");
+    var res = await DioReq.get("/v2/users/$userId", onlyUser: true);
     UserInfoJson theData = UserInfoJson.fromJson(res);
     return theData;
   }
 
   // v2 获取公开知识库 暂时弃用
-  static getReposV2({String login}) async {
-    var res =
-        await DioReq.get("https://www.yuque.com/api/v2/users/$login/repos");
-    UserReposJson theData = UserReposJson.fromJson(res);
-    return theData;
-  }
+  // static getReposV2({String login}) async {
+  //   var res =
+  //       await DioReq.get("https://www.yuque.com/api/v2/users/$login/repos");
+  //   UserReposJson theData = UserReposJson.fromJson(res);
+  //   return theData;
+  // }
 
   // 获取公开知识库
-  static getReposData({int userId}) async {
+  static getReposData({int userId, bool onlyUser}) async {
     var res = await DioReq.get(
-        "https://www.yuque.com/api/groups/$userId/books?archived=include&limit=200");
+      "/groups/$userId/books?archived=include&limit=200",
+      onlyUser: true,
+    );
     UserReposJson theData = UserReposJson.fromJson(res);
     return theData;
   }
 
   // 团队信息
   static getGroupData({int userId}) async {
-    var res = await DioReq.get("/users/$userId/groups?limit=1000&offset=0");
+    var res = await DioReq.get("/users/$userId/groups?limit=1000&offset=0",
+        onlyUser: true);
     GroupJson groupData = GroupJson.fromJson(res);
     return groupData;
   }
@@ -55,21 +57,25 @@ class DioUser {
 
   static getIfFollow({int userId}) async {
     var res = await DioReq.get(
-        "/actions/user-owned?action_type=follow&target_ids=$userId&target_type=User");
+      "/actions/user-owned?action_type=follow&target_ids=$userId&target_type=User",
+      onlyUser: true,
+    );
     return res["data"].toString() != '[]';
   }
 
   // 获取关注者信息
   static getFollowerData({int userId, int offset: 0}) async {
     var res = await DioReq.get(
-        "/actions/users?action_type=follow&offset=$offset&target_id=$userId&target_type=User");
+        "/actions/users?action_type=follow&offset=$offset&target_id=$userId&target_type=User",
+        onlyUser: true);
     // 获取关注者中关注了我的 followedList
     List<int> followedList = [];
     List userIdList = res["data"].map((f) => f["id"].toString()).toList();
     if (userIdList.isNotEmpty) {
       String userIdString = userIdList.join('%2C');
       var res2 = await DioReq.get(
-          "/actions/user-owned?action_type=follow&target_ids=$userIdString&target_type=User");
+          "/actions/user-owned?action_type=follow&target_ids=$userIdString&target_type=User",
+          onlyUser: true);
       List dataList = res2["data"];
       followedList = dataList
           .map((onedata) => int.parse(onedata["target_id"].toString()))
@@ -81,7 +87,8 @@ class DioUser {
 
   static getFollowerData2({int userId, int offset: 0}) async {
     var res = await DioReq.get(
-        "/actions/users?action_type=follow&offset=$offset&target_id=$userId&target_type=User");
+        "/actions/users?action_type=follow&offset=$offset&target_id=$userId&target_type=User",
+        onlyUser: true);
     Follows theData = Follows.fromJson(res, []);
     return theData;
   }
@@ -89,7 +96,8 @@ class DioUser {
   // 获取关注了信息
   static getFollowingData({int userId, int offset: 0}) async {
     var res = await DioReq.get(
-        "/actions/targets?action_type=follow&offset=$offset&target_type=User&user_id=$userId");
+        "/actions/targets?action_type=follow&offset=$offset&target_type=User&user_id=$userId",
+        onlyUser: true);
     Follows theData = Follows.fromJson(res, []);
     return theData;
   }
@@ -102,7 +110,8 @@ class DioUser {
         "target_type": "User",
         "target_id": userId
       };
-      Map<String, dynamic> res = await DioReq.post("/actions", data: data);
+      Map<String, dynamic> res =
+          await DioReq.post("/actions", data: data, onlyUser: true);
 
       print(res);
       if (res.containsKey("data")) {
@@ -125,7 +134,8 @@ class DioUser {
         "target_type": "User",
         "target_id": userId
       };
-      Map<String, dynamic> res = await DioReq.delete("/actions", data: data);
+      Map<String, dynamic> res =
+          await DioReq.delete("/actions", data: data, onlyUser: true);
       if (res.toString() == "{}") {
         topModel.myInfoManage.update();
         return 1;
@@ -141,7 +151,8 @@ class DioUser {
   // 我关注的知识库
   static getFollowBook({int offset: 0, int limit: 200}) async {
     Map ans = await DioReq.get(
-        "/mine/follows?limit=$limit&offset=$offset&q=&type=Book");
+        "/mine/follows?limit=$limit&offset=$offset&q=&type=Book",
+        onlyUser: true);
     FollowBookJson theData = FollowBookJson.fromJson(ans);
     return theData;
   }
@@ -152,7 +163,9 @@ class DioUser {
   static ifMark(
       {String targetType: "Doc", int targetId, bool onlyUser: false}) async {
     var ans = await DioReq.get(
-        "/actions?action_type=mark&target_id=$targetId&target_type=$targetType"); // User or Doc
+      "/actions?action_type=mark&target_id=$targetId&target_type=$targetType",
+      onlyUser: onlyUser,
+    ); // User or Doc
     return ans["data"]["actioned"] != null;
   }
 
@@ -211,12 +224,13 @@ class DioUser {
   /// [评论相关]
 
   // 评论操作/comments
-  static addComment(
-      {String comment,
-      int commentId,
-      int parentId,
-      String type: "Doc",
-      bool onlyUser: false}) async {
+  static addComment({
+    String comment,
+    int commentId,
+    int parentId,
+    String type: "Doc",
+    bool onlyUser: false,
+  }) async {
     // type = "Doc" "Topic"
     Map<String, dynamic> data = {
       "commentable_type": type,

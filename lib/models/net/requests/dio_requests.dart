@@ -13,7 +13,7 @@ class DioReq {
     String nowBaseUrl = (nowOrg != null && nowOrg != "")
         ? baseUrl.replaceAll("www.yuque", nowOrg + ".yuque")
         : baseUrl;
-    return nowBaseUrl;
+    return onlyUser ? baseUrl : nowBaseUrl;
   }
 
   static autoHeader({Map<String, dynamic> headers}) async {

@@ -10,50 +10,52 @@ import 'data/one_topic/topic_detail_data.dart';
 class DioGroup {
   // 首页数据
   // 2020年11月19日，语雀不在放具体内容在里面了
-  static getHomeData({int groupId}) async {
-    var res = await DioReq.get(
-        "https://www.yuque.com/api/groups/$groupId/bookstacks?");
+  static getHomeData({int groupId, bool onlyUser}) async {
+    var res =
+        await DioReq.get("/groups/$groupId/bookstacks?", onlyUser: onlyUser);
     GroupHomeJson theData = GroupHomeJson.fromJson(res);
     return theData;
   }
 
   // 团队知识库数据
-  static getBookData({int groupId}) async {
-    var res = await DioReq.get(
-        "https://www.yuque.com/api/groups/$groupId/books?archived=include&q=");
+  static getBookData({int groupId, bool onlyUser}) async {
+    var res = await DioReq.get("/groups/$groupId/books?archived=include&q=",
+        onlyUser: onlyUser);
     GroupBookJson theData = GroupBookJson.fromJson(res);
     return theData;
   }
 
   // 团队成员数据
-  static getMemberData({int groupId}) async {
-    var res = await DioReq.get(
-        "https://www.yuque.com/api/groups/$groupId/users?with_count=true");
+  static getMemberData({int groupId, bool onlyUser}) async {
+    var res = await DioReq.get("/groups/$groupId/users?with_count=true",
+        onlyUser: onlyUser);
     MemberJson theData = MemberJson.fromJson(res);
     return theData;
   }
 
   // 团队话题数据
   static getTopicData(
-      {int groupId, int offset: 0, String state: "open"}) async {
+      {int groupId, int offset: 0, String state: "open", bool onlyUser}) async {
     var res = await DioReq.get(
-        "https://www.yuque.com/api/topics?assignee_id=&group_id=$groupId&kanban_id=&label_ids=&milestone_id=&mode=&offset=$offset&privacy=&q=&state=$state&user_id=");
+        "/topics?assignee_id=&group_id=$groupId&kanban_id=&label_ids=&milestone_id=&mode=&offset=$offset&privacy=&q=&state=$state&user_id=",
+        onlyUser: onlyUser);
     GroupTopicJson theData = GroupTopicJson.fromJson(res);
     return theData;
   }
 
   // 获取话题主题
-  static getOneTopicData({int groupId, int iid: 1}) async {
-    var res = await DioReq.get(
-        "https://www.yuque.com/api/topics/$iid?group_id=$groupId");
+  static getOneTopicData({int groupId, int iid: 1, bool onlyUser}) async {
+    var res =
+        await DioReq.get("/topics/$iid?group_id=$groupId", onlyUser: onlyUser);
     TopicDetailJson theData = TopicDetailJson.fromJson(res);
     return theData;
   }
 
   // 话题评论列表
-  static getComments(int commentId) async {
+  static getComments({int commentId, bool onlyUser}) async {
     var ans = await DioReq.get(
-        "https://www.yuque.com/api/comments?commentable_id=$commentId&commentable_type=Topic");
+        "/comments?commentable_id=$commentId&commentable_type=Topic",
+        onlyUser: onlyUser);
     return Comments.fromJson(ans);
   }
 }
