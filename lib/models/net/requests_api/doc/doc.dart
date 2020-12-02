@@ -1,5 +1,4 @@
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
-import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/contributors_data.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/prev_next_data.dart';
 
@@ -8,22 +7,23 @@ import 'data/doc_data_v2.dart';
 
 class DioDoc {
   // 获取文档内容，作者、时间也在其中
-  static getDoc(int bookId, String slug) async {
-    var ans = await DioReq.get("/docs/$slug?book_id=$bookId");
+  static getDoc({int bookId, String slug, bool onlyUser}) async {
+    var ans =
+        await DioReq.get("/docs/$slug?book_id=$bookId", onlyUser: onlyUser);
     return DocDatas.fromJson(ans);
   }
 
   // 获取文档内容 使用 v2 接口
-  static getDocV2(int bookId, int docId) async {
-    var ans = await DioReq.get(
-        "https://www.yuque.com/api/v2/repos/$bookId/docs/$docId");
+  static getDocV2({int bookId, int docId, bool onlyUser}) async {
+    // 这里不需要 onlyUser: onlyUser, 很奇怪
+    var ans = await DioReq.get("/v2/repos/$bookId/docs/$docId");
     return DocV2.fromJson(ans);
   }
 
   // 创建文档
-  static createDocV2(int bookId) async {
-    var ans =
-        await DioReq.post("https://www.yuque.com/api/v2/repos/$bookId/docs");
+  static createDocV2({int bookId, bool onlyUser}) async {
+    // onlyUser: onlyUser
+    var ans = await DioReq.post("/v2/repos/$bookId/docs");
     return DocV2.fromJson(ans);
   }
 
@@ -32,8 +32,9 @@ class DioDoc {
   // 删除文档
 
   // 获取贡献者列表
-  static getContributors(String slug, int bookId) async {
-    var ans = await DioReq.get("/docs/$slug/contributors?book_id=$bookId");
+  static getContributors({String slug, int bookId, bool onlyUser}) async {
+    var ans = await DioReq.get("/docs/$slug/contributors?book_id=$bookId",
+        onlyUser: onlyUser);
     return Contributors.fromJson(ans);
   }
 
@@ -44,15 +45,16 @@ class DioDoc {
   }
 
   // 获取前后文章
-  static getPrevNext({int docId}) async {
-    var ans = await DioReq.get("/docs/$docId/pager?");
+  static getPrevNext({int docId, bool onlyUser}) async {
+    var ans = await DioReq.get("/docs/$docId/pager?", onlyUser: onlyUser);
     return PrevNext.fromJson(ans);
   }
 
   // 是否点赞，返回是否与点赞数
-  static getAction({int docId}) async {
+  static getAction({int docId, bool onlyUser}) async {
     var ans = await DioReq.get(
-        "/actions?action_type=like&target_id=$docId&target_type=Doc");
+        "/actions?action_type=like&target_id=$docId&target_type=Doc",
+        onlyUser: onlyUser);
     bool like = ans["data"]["actioned"] != null;
     int count = ans["data"]["count"];
     return {"like": like, "count": count};

@@ -11,6 +11,7 @@ import 'data/user_profile_data.dart';
 import 'data/user_repos_data.dart';
 
 class DioUser {
+  static String baseUrl = "https://www.yuque.com/api";
   // 地址、职业的信息根据
   static getProfileData({int userId}) async {
     var res = await DioReq.get("/users/$userId/profile?");
@@ -148,19 +149,21 @@ class DioUser {
   /// [收藏相关]
 
   // 查看是否收藏(文章或团队)
-  static ifMark({String targetType: "Doc", int targetId}) async {
+  static ifMark(
+      {String targetType: "Doc", int targetId, bool onlyUser: false}) async {
     var ans = await DioReq.get(
         "/actions?action_type=mark&target_id=$targetId&target_type=$targetType"); // User or Doc
     return ans["data"]["actioned"] != null;
   }
 
   // 收藏 Doc Book User(其实是group)
-  static mark({String targetType: "Doc", int targetId}) async {
+  static mark(
+      {String targetType: "Doc", int targetId, bool onlyUser: false}) async {
     Map<String, dynamic> data = {
       "target_type": targetType,
       "target_id": targetId
     };
-    Map ans = await DioReq.post("/mine/marks", data: data);
+    Map ans = await DioReq.post("/mine/marks", data: data, onlyUser: onlyUser);
     if (ans["data"].toString() == "{ok: 1}") {
       return 1;
     } else {
@@ -169,12 +172,14 @@ class DioUser {
   }
 
   // 取消收藏 Doc Book User(其实是group)
-  static cancelMark({String targetType: "Doc", int targetId}) async {
+  static cancelMark(
+      {String targetType: "Doc", int targetId, bool onlyUser: false}) async {
     Map<String, dynamic> data = {
       "target_type": targetType,
       "target_id": targetId
     };
-    Map ans = await DioReq.delete("/mine/marks", data: data);
+    Map ans =
+        await DioReq.delete("/mine/marks", data: data, onlyUser: onlyUser);
     if (ans["data"].toString() == "{ok: 1}") {
       return 1;
     } else {
@@ -184,7 +189,8 @@ class DioUser {
 
   /// [话题相关]
   // 添加新的话题
-  static addTopic({String title, String body, int groupId}) async {
+  static addTopic(
+      {String title, String body, int groupId, bool onlyUser: false}) async {
     String uuid = randomString(64);
     Map<String, dynamic> data = {
       "group_id": groupId,
@@ -198,7 +204,7 @@ class DioUser {
       "uuid": uuid
     };
     print(data);
-    var res = await DioReq.post('/topics', data: data);
+    var res = await DioReq.post('/topics', data: data, onlyUser: onlyUser);
     return res.toString().contains("id");
   }
 
@@ -206,7 +212,11 @@ class DioUser {
 
   // 评论操作/comments
   static addComment(
-      {String comment, int commentId, int parentId, String type: "Doc"}) async {
+      {String comment,
+      int commentId,
+      int parentId,
+      String type: "Doc",
+      bool onlyUser: false}) async {
     // type = "Doc" "Topic"
     Map<String, dynamic> data = {
       "commentable_type": type,
@@ -218,12 +228,16 @@ class DioUser {
           "<div class=\"lake-content-editor-core lake-engine\" data-lake-element=\"root\"><p style=\"font-size: 14px; color: rgb(38, 38, 38); line-height: 24px; letter-spacing: 0.05em; outline-style: none; overflow-wrap: break-word; margin: 0px;\">$comment</p></div>",
       "format": "lake"
     };
-    var ans = await DioReq.post("/comments", data: data);
+    var ans = await DioReq.post("/comments", data: data, onlyUser: onlyUser);
     return ans.toString().contains("data");
   }
 
   // 修改评论操作
-  static putComment({String comment, int commentId, String type: "Doc"}) async {
+  static putComment(
+      {String comment,
+      int commentId,
+      String type: "Doc",
+      bool onlyUser: false}) async {
     Map data = {
       "commentable_type": type,
       "commentable_id": commentId,
@@ -234,32 +248,36 @@ class DioUser {
           "<div class=\"lake-content-editor-core lake-engine\" data-lake-element=\"root\"><p style=\"font-size: 14px; color: rgb(38, 38, 38); line-height: 24px; letter-spacing: 0.05em; outline-style: none; overflow-wrap: break-word; margin: 0px;\">$comment</p></div>",
       "format": "lake"
     };
-    Map ans = await DioReq.put("/comments", data: data);
+    Map ans = await DioReq.put("/comments", data: data, onlyUser: onlyUser);
     return ans.containsKey("data");
   }
 
   // 评论列表
-  static getComments({int docId}) async {
+  static getComments({int docId, bool onlyUser: false}) async {
     var ans = await DioReq.get(
-        "/comments?commentable_id=$docId&commentable_type=Doc&include_section=true");
+        "/comments?commentable_id=$docId&commentable_type=Doc&include_section=true",
+        onlyUser: onlyUser);
     return Comments.fromJson(ans);
   }
 
   // 删除评论操作/comments/348963
-  static deleteComment({int commentId}) async {
-    Map ans = await DioReq.delete("/comments/$commentId");
+  static deleteComment({int commentId, bool onlyUser: false}) async {
+    Map ans = await DioReq.delete("/comments/$commentId", onlyUser: onlyUser);
     return ans.containsKey("data");
   }
 
   /// [知识库相关]
   // 是否关注
-  static ifWatch({int bookId, String type: "Book"}) async {
+  static ifWatch(
+      {int bookId, String type: "Book", bool onlyUser: false}) async {
     var ans = await DioReq.get(
-        "/actions?action_type=watch&target_id=$bookId&target_type=$type");
+        "/actions?action_type=watch&target_id=$bookId&target_type=$type",
+        onlyUser: onlyUser);
     return ans["actioned"] == null;
   }
 
-  static watchBook({int bookId, String actionOption: "normal"}) async {
+  static watchBook(
+      {int bookId, String actionOption: "normal", bool onlyUser: false}) async {
     try {
       Map<String, dynamic> data = {
         "action_type": "watch",
@@ -267,7 +285,8 @@ class DioUser {
         "target_id": bookId,
         "action_option": actionOption // normal 关注提醒, notify 消息 邮件推送
       };
-      Map<String, dynamic> res = await DioReq.post("/actions", data: data);
+      Map<String, dynamic> res =
+          await DioReq.post("/actions", data: data, onlyUser: onlyUser);
       if (res.containsKey("data")) {
         return 1;
       } else {
@@ -281,32 +300,33 @@ class DioUser {
 
   /// [点赞相关]
   // 是否点赞
-  static ifLike({int docId, String type: "Doc"}) async {
+  static ifLike({int docId, String type: "Doc", bool onlyUser: false}) async {
     var ans = await DioReq.get(
-        "/actions?action_type=like&target_id=$docId&target_type=$type");
+        "/actions?action_type=like&target_id=$docId&target_type=$type",
+        onlyUser: onlyUser);
     return ans["actioned"] != null;
   }
 
   // 点赞操作
-  static addLike({int docId, String type: "Doc"}) async {
+  static addLike({int docId, String type: "Doc", bool onlyUser: false}) async {
     Map<String, dynamic> data = {
       "action_type": "like",
       "target_type": type,
       "target_id": docId
     };
-    var ans = await DioReq.post("/actions", data: data);
+    var ans = await DioReq.post("/actions", data: data, onlyUser: onlyUser);
     print(ans);
     return ans;
   }
 
   // 取消点赞操作
-  static deleteLike({int docId}) async {
+  static deleteLike({int docId, bool onlyUser: false}) async {
     Map<String, dynamic> data = {
       "action_type": "like",
       "target_type": "Doc",
       "target_id": docId
     };
-    var ans = await DioReq.delete("/actions", data: data);
+    var ans = await DioReq.delete("/actions", data: data, onlyUser: onlyUser);
     return ans == {};
   }
 }

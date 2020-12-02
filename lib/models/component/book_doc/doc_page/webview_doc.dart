@@ -18,7 +18,13 @@ import 'package:yuyan_app/models/widgets_small/toast.dart';
 
 class DocPageWeb extends StatefulWidget {
   DocPageWeb(
-      {Key key, this.login, this.bookSlug, this.url, this.bookId, this.docId})
+      {Key key,
+      this.login,
+      this.bookSlug,
+      this.url,
+      this.bookId,
+      this.docId,
+      this.onlyUser})
       : super(key: key);
 
   final int bookId;
@@ -26,25 +32,33 @@ class DocPageWeb extends StatefulWidget {
   final String url;
   final String login;
   final String bookSlug;
+  final bool onlyUser;
 
   @override
   _DocPageWebState createState() => _DocPageWebState(
-        login: login,
-        bookSlug: bookSlug,
-        url: url,
-        bookId: bookId,
-        docId: docId,
-      );
+      login: login,
+      bookSlug: bookSlug,
+      url: url,
+      bookId: bookId,
+      docId: docId,
+      onlyUser: onlyUser);
 }
 
 class _DocPageWebState extends State<DocPageWeb> {
   _DocPageWebState(
-      {Key key, this.login, this.bookSlug, this.url, this.bookId, this.docId});
+      {Key key,
+      this.login,
+      this.bookSlug,
+      this.url,
+      this.bookId,
+      this.docId,
+      this.onlyUser: false});
   final int bookId;
   final int docId;
   final String login;
   final String url;
   final String bookSlug;
+  final bool onlyUser;
 
   Comments comments = Comments(data: []);
   DocV2 doc;
@@ -90,7 +104,8 @@ class _DocPageWebState extends State<DocPageWeb> {
   }
 
   getDocContextData() async {
-    DocV2 docData = await DioDoc.getDocV2(bookId, docId);
+    DocV2 docData =
+        await DioDoc.getDocV2(bookId: bookId, docId: docId, onlyUser: onlyUser);
     setState(() {
       doc = docData;
     });
@@ -98,16 +113,17 @@ class _DocPageWebState extends State<DocPageWeb> {
 
   getDocComment() async {
     Comments ans = await DioUser.getComments(docId: docId);
-    var theHit = await DioDoc.getHits(docId: docId);
+    // 浏览量暂时UI不展示
+    // var theHit = await DioDoc.getHits(docId: docId);
 
     setState(() {
       comments = ans;
-      hits = theHit;
+      // hits = theHit;
     });
   }
 
   getIfMark() async {
-    var ans = await DioUser.ifMark(targetId: docId);
+    var ans = await DioUser.ifMark(targetId: docId, onlyUser: onlyUser);
     setState(() {
       ifMark = ans;
     });
@@ -118,17 +134,17 @@ class _DocPageWebState extends State<DocPageWeb> {
       setState(() {
         ifMark = !ifMark;
       });
-      var ans = await DioUser.cancelMark(targetId: docId);
+      var ans = await DioUser.cancelMark(targetId: docId, onlyUser: onlyUser);
     } else {
       setState(() {
         ifMark = !ifMark;
       });
-      var ans = await DioUser.mark(targetId: docId);
+      var ans = await DioUser.mark(targetId: docId, onlyUser: onlyUser);
     }
   }
 
   getIfLike() async {
-    Map ifLikeIt = await DioDoc.getAction(docId: docId);
+    Map ifLikeIt = await DioDoc.getAction(docId: docId, onlyUser: onlyUser);
     setState(() {
       ifLike = ifLikeIt["like"];
       likeCount = ifLikeIt["count"];
@@ -162,7 +178,7 @@ class _DocPageWebState extends State<DocPageWeb> {
   changePadding(int px) async {
     await _webController.evaluateJavascript(
       source:
-          'document.querySelector(".wrap___1A3Di").style.padding="${px}px";',
+          'document.querySelector(".ReaderDocEmbed-module_wrap_3G7gr").style.padding="${px}px";',
     );
   }
 

@@ -7,7 +7,7 @@ class DioReq {
   static Dio dio = Dio();
   static String baseUrl = "https://www.yuque.com/api";
 
-  static orgSpace() async {
+  static orgSpace({bool onlyUser: false}) async {
     String nowOrg = await topModel.myInfoManage.getMyNowOrg();
 
     String nowBaseUrl = (nowOrg != null && nowOrg != "")
@@ -41,8 +41,10 @@ class DioReq {
   }
 
   static get(String path,
-      {Map<String, dynamic> headers, Map<String, dynamic> param}) async {
-    var nowBaseUrl = await orgSpace();
+      {Map<String, dynamic> headers,
+      Map<String, dynamic> param,
+      bool onlyUser: false}) async {
+    var nowBaseUrl = await orgSpace(onlyUser: onlyUser);
     var diopath = path[0] == "/" ? nowBaseUrl + path : path;
     headers ??= await autoHeader(headers: headers);
 
@@ -75,8 +77,9 @@ class DioReq {
   static Future post(String path,
       {Map<String, dynamic> headers,
       Map<String, dynamic> data,
-      Map<String, dynamic> param}) async {
-    var nowBaseUrl = await orgSpace();
+      Map<String, dynamic> param,
+      bool onlyUser: false}) async {
+    var nowBaseUrl = await orgSpace(onlyUser: onlyUser);
     var diopath = path[0] == "/" ? nowBaseUrl + path : path;
     headers ??= await autoHeader(headers: headers);
 
@@ -110,8 +113,9 @@ class DioReq {
   static Future put(String path,
       {Map<String, dynamic> headers,
       Map<String, dynamic> data,
-      Map<String, dynamic> param}) async {
-    var nowBaseUrl = await orgSpace();
+      Map<String, dynamic> param,
+      bool onlyUser: false}) async {
+    var nowBaseUrl = await orgSpace(onlyUser: onlyUser);
     var diopath = path[0] == "/" ? nowBaseUrl + path : path;
     headers ??= await autoHeader(headers: headers);
     try {
@@ -143,8 +147,9 @@ class DioReq {
   static Future delete(String path,
       {Map<String, dynamic> headers,
       Map<String, dynamic> data,
-      Map<String, dynamic> param}) async {
-    var nowBaseUrl = await orgSpace();
+      Map<String, dynamic> param,
+      bool onlyUser: false}) async {
+    var nowBaseUrl = await orgSpace(onlyUser: onlyUser);
     var diopath = path[0] == "/" ? nowBaseUrl + path : path;
     headers ??= await autoHeader(headers: headers);
     try {
@@ -178,8 +183,11 @@ class DioReq {
     }
   }
 
-  static getRedirect(String path,
-      {Map<String, dynamic> headers, Map<String, dynamic> param}) async {
+  static getRedirect(
+    String path, {
+    Map<String, dynamic> headers,
+    Map<String, dynamic> param,
+  }) async {
     headers ??= await autoHeader(headers: headers);
 
     var nowBaseUrl = await orgSpace();

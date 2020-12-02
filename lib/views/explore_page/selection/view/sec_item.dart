@@ -20,6 +20,7 @@ Widget secItemUI(BuildContext context, Data data) {
         bookSlug: data.book.slug,
         bookId: data.bookId,
         docId: data.id,
+        onlyUser: true,
       );
     },
     child: Container(
