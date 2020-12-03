@@ -2,6 +2,7 @@ import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/contributors_data.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/prev_next_data.dart';
 
+import 'data/all_doc_book_data.dart';
 import 'data/doc_data.dart';
 import 'data/doc_data_v2.dart';
 
@@ -21,10 +22,19 @@ class DioDoc {
     return DocV2.fromJson(ans);
   }
 
-  // 创建文档
+  // 查看可以创建文档的知识库
+  static getAllDocBook({int bookId, bool onlyUser}) async {
+    // onlyUser: onlyUser
+    var ans = await DioReq.get(
+        "/mine/books?filterByAbility=create_doc&limit=50&offset=0&type=Book&type=Column",
+        onlyUser: onlyUser);
+    return AllDocBookJson.fromJson(ans);
+  }
+
+  // 创建文档 V2
   static createDocV2({int bookId, bool onlyUser}) async {
     // onlyUser: onlyUser
-    var ans = await DioReq.post("/v2/repos/$bookId/docs");
+    var ans = await DioReq.post("/v2/repos/$bookId/docs", onlyUser: onlyUser);
     return DocV2.fromJson(ans);
   }
 
