@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/quick_data.dart';
 import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
+import 'package:yuyan_app/state_manage/dataManage/quick_manage.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/dashboard/quick/quick_view.dart';
 import 'package:yuyan_app/views/dashboard/recent/recent_page.dart';
@@ -16,7 +17,6 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  List<Data> quickDataList = topModel.quickManage.quickData.data;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +52,10 @@ class _DashboardState extends State<Dashboard> {
       // ),
       body: SingleChildScrollView(
         child: Column(children: [
-          quickView(context, quickDataList),
+          ScopedModel<QuickManage>(
+            model: topModel.quickManage,
+            child: QuickView(),
+          ),
           RecentPage(),
         ]),
       ),
