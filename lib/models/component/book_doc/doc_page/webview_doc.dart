@@ -158,11 +158,12 @@ class _DocPageWebState extends State<DocPageWeb> {
   }
 
   morePadding() async {
-    int padding = 2;
-    while (padding < 18) {
-      await changePadding(padding);
-      padding += 3;
-    }
+    changePadding(18);
+    // int padding = 2;
+    // while (padding < 18) {
+    //   await changePadding(padding);
+    //   padding += 3;
+    // }
   }
 
   changePadding(int px) async {
@@ -335,7 +336,9 @@ class _DocPageWebState extends State<DocPageWeb> {
                 onTap: clickBottom,
                 ifLike: ifLike,
                 ifMark: ifMark,
-                commentCount: comments.data.length,
+                // 如果不支持评论 传入null
+                commentCount:
+                    comments.meta != null ? comments.data.length : null,
                 markFunc: changeMark,
                 likeFunc: changeLike,
               ),

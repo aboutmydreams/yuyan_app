@@ -271,7 +271,12 @@ class DioUser {
     var ans = await DioReq.get(
         "/comments?commentable_id=$docId&commentable_type=Doc&include_section=true",
         onlyUser: onlyUser);
-    return Comments.fromJson(ans);
+    if (ans == 404) {
+      // 禁止用户评论
+      return Comments(data: [], meta: null);
+    } else {
+      return Comments.fromJson(ans);
+    }
   }
 
   // 删除评论操作/comments/348963

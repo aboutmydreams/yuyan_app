@@ -9,7 +9,7 @@ class DioReq {
 
   static orgSpace({bool onlyUser: false}) async {
     String nowOrg = await topModel.myInfoManage.getMyNowOrg();
-
+    onlyUser ??= false;
     String nowBaseUrl = (nowOrg != null && nowOrg != "")
         ? baseUrl.replaceAll("www.yuque", nowOrg + ".yuque")
         : baseUrl;
@@ -58,10 +58,10 @@ class DioReq {
       print("get: $path ${response.statusCode}");
       return response.data;
     } on DioError catch (e) {
-      print(path + e.toString());
+      print(path + e.type.toString());
       if (e.type == DioErrorType.RESPONSE) {
-        // print(e.response.statusCode); //403 权限不足（token过期）
-        return {"data": 403};
+        print(e.response.statusCode); //403 权限不足（token过期）
+        return {"data": e.response.statusCode};
       } else if (e.type == DioErrorType.CONNECT_TIMEOUT) {
         return {"data": "连接超时，请检查网络"};
       } else if (e.type == DioErrorType.DEFAULT) {
@@ -153,16 +153,11 @@ class DioReq {
     var diopath = path[0] == "/" ? nowBaseUrl + path : path;
     headers ??= await autoHeader(headers: headers);
     try {
-      Options options = Options(
-        headers: headers,
-        sendTimeout: 10000,
-        receiveTimeout: 10000,
-      );
       Response response = await dio.delete(
         diopath,
         queryParameters: param,
         data: data,
-        options: options,
+        options: autoOptions(headers: headers),
       );
       print("del: $path ${response.statusCode}");
       return response.data;

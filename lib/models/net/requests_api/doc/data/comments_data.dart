@@ -27,7 +27,7 @@ class Comments {
 }
 
 class Meta {
-  Null activeReview;
+  dynamic activeReview;
 
   Meta({this.activeReview});
 
@@ -54,10 +54,10 @@ class CommentData {
   String createdAt;
   String updatedAt;
   int status;
-  Null toUserId;
-  Null type;
-  Null selectionId;
-  Null selectionType;
+  int toUserId;
+  String type;
+  int selectionId;
+  dynamic selectionType;
   String sSerializer;
 
   CommentData(
