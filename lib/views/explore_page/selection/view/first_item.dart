@@ -7,7 +7,7 @@ import 'package:yuyan_app/state_manage/dataManage/data/selection_data.dart';
 
 Widget firstItemUI(BuildContext context, Data data) {
   String imageUrl = data.cover +
-      "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_400%2Ch_220%2Fformat%2Cpng";
+      "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_800%2Ch_440%2Fformat%2Cpng";
   return GestureDetector(
     onTap: () {
       OpenPage.docWeb(
