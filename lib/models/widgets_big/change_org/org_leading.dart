@@ -14,6 +14,7 @@ import 'package:yuyan_app/state_manage/toppest.dart';
 /// 如果原始空间 List 为空，那么就不显示这个组件
 /// 如果原始空间 List 不为空，初始化时在 List 中插入一个个人工作区
 /// 用户点击该组件时弹窗选择空间
+
 class OrgLeading extends StatefulWidget {
   OrgLeading({Key key}) : super(key: key);
 

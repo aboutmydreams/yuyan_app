@@ -8,25 +8,32 @@ showWindow(BuildContext context, {String title, List<Widget> children}) {
       context: context,
       builder: (ctx) {
         return SimpleDialog(
-          title: Text(
-            title,
-            style: AppStyles.textStyleB,
+          contentPadding: EdgeInsets.only(left: 10, right: 10, bottom: 12),
+          title: Row(
+            children: [
+              Text(
+                title,
+                style: AppStyles.textStyleB,
+              ),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Icons.close),
+                  ),
+                ),
+              )
+            ],
           ),
-          titlePadding: EdgeInsets.fromLTRB(16, 20, 0, 0),
+          titlePadding: EdgeInsets.fromLTRB(26, 8, 10, 0),
           backgroundColor: AppColors.background,
           elevation: 5,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(6))),
-          children: []
-            ..addAll(children)
-            ..add(Center(
-              child: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(Icons.close),
-              ),
-            )),
+          children: children,
         );
       });
 }

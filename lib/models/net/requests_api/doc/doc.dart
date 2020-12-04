@@ -23,7 +23,7 @@ class DioDoc {
   }
 
   // 查看可以创建文档的知识库
-  static getAllDocBook({int bookId, bool onlyUser}) async {
+  static getAllDocBook({bool onlyUser}) async {
     // onlyUser: onlyUser
     var ans = await DioReq.get(
         "/mine/books?filterByAbility=create_doc&limit=50&offset=0&type=Book&type=Column",
@@ -31,14 +31,17 @@ class DioDoc {
     return AllDocBookJson.fromJson(ans);
   }
 
-  // 创建文档 V2
+  // 创建文档 V2 直接返回 slug
   static createDocV2({int bookId, bool onlyUser}) async {
-    // onlyUser: onlyUser
     var ans = await DioReq.post("/v2/repos/$bookId/docs", onlyUser: onlyUser);
-    return DocV2.fromJson(ans);
+    if (ans.containsKey("data")) {
+      return ans['data']['slug'].toString();
+    } else {
+      return 0;
+    }
   }
 
-  // 更新文档
+  // 更新文档 v2
 
   // 删除文档
 
