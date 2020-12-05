@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:yuyan_app/models/widgets_small/show_dialog.dart';
+import 'package:yuyan_app/models/widgets_small/show_dialog/show_dialog.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/organiz_data.dart';
@@ -27,40 +27,39 @@ class _OrgLeadingState extends State<OrgLeading> {
 
   @override
   Widget build(BuildContext context) {
-    // 默认拥有一个个人工作台
-    List<Organiz> useOrg = [
-      Organiz(
-        host: "",
-        name: topModel.myInfoManage.myInfoData.data.name,
-        logo: topModel.myInfoManage.myInfoData.data.avatarUrl,
-        login: "",
-        sSerializer: "",
-      )
-    ];
-    useOrg.addAll(organizations);
-    return (organizations.length > 0) && (organizations != null)
-        ? InkWell(
-            child: IconButton(
-              icon: ScopedModelDescendant<MyInfoManage>(
-                  builder: (context, child, model) {
-                return userAvatar(model.nowOrgImg);
-              }),
-              tooltip: '切换',
-              onPressed: () {
-                // 构建弹窗内的子元素列表
-                List lite(BuildContext context, List<Organiz> data) {
-                  return data.map((o) => OneLite(org: o)).toList();
-                }
+    return (organizations != null) && (organizations.length > 0)
+        ? ScopedModelDescendant<MyInfoManage>(builder: (context, child, model) {
+            // 默认拥有一个个人工作台
+            List<Organiz> useOrg = [
+              Organiz(
+                host: "",
+                name: model.myInfoData.data.name,
+                logo: model.myInfoData.data.avatarUrl,
+                login: "",
+                sSerializer: "",
+              )
+            ];
+            useOrg.addAll(organizations);
+            return InkWell(
+              child: IconButton(
+                icon: userAvatar(model.nowOrgImg),
+                tooltip: '切换',
+                onPressed: () {
+                  // 构建弹窗内的子元素列表
+                  List lite(BuildContext context, List<Organiz> data) {
+                    return data.map((o) => OneLite(org: o)).toList();
+                  }
 
-                // 切换工作台弹窗
-                showWindow(
-                  context,
-                  title: "切换工作台",
-                  children: lite(context, useOrg),
-                );
-              },
-            ),
-          )
+                  // 切换工作台弹窗
+                  showWindow(
+                    context,
+                    title: "切换工作台",
+                    children: lite(context, useOrg),
+                  );
+                },
+              ),
+            );
+          })
         : Container();
   }
 }

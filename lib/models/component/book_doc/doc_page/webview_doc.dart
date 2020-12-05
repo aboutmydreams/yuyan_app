@@ -276,6 +276,11 @@ class _DocPageWebState extends State<DocPageWeb> {
                     android: AndroidInAppWebViewOptions(
                       databaseEnabled: true,
                       domStorageEnabled: true,
+                      allowContentAccess: true,
+                      allowFileAccessFromFileURLs: true,
+                      allowUniversalAccessFromFileURLs: true,
+                      forceDark: AndroidForceDark.FORCE_DARK_AUTO,
+                      // layoutAlgorithm:
                     ),
                     ios: IOSInAppWebViewOptions(
                       disallowOverScroll: true,

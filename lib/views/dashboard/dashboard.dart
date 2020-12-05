@@ -4,7 +4,7 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/all_doc_book_data.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
 import 'package:yuyan_app/models/widgets_big/change_org/org_leading.dart';
-import 'package:yuyan_app/models/widgets_small/show_dialog.dart';
+import 'package:yuyan_app/models/widgets_small/show_dialog/show_dialog.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/quick_manage.dart';
@@ -72,7 +72,6 @@ class _DashboardState extends State<Dashboard> {
         },
         child: FloatingActionButton(
           onPressed: () {
-            print(allDocBookJson.data.length);
             showWindow(context,
                 title: "选择一个知识库",
                 children: allDocBookJson == null

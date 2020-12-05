@@ -41,6 +41,7 @@ class MyInfoManage extends Model {
     // 知识库 follow 页面要用
     // 为什么不写在这个 manage 里面是出于在满足一级页面UI的数据基础上减少 init 流量。
     var dioData = await DioReq.get("https://www.yuque.com/api/v2/user");
+    print(dioData);
     int myId = dioData["data"]["id"];
     String login = dioData["data"]["login"];
     SharedPreferences prefs = await SharedPreferences.getInstance();

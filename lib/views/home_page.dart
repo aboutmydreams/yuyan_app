@@ -3,6 +3,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/state_manage/dataManage/attent_manage.dart';
+import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/news_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/recent_manage.dart';
 import 'package:yuyan_app/state_manage/layout_manage/hide_bottom.dart';
@@ -42,7 +43,10 @@ class _HomePageState extends State<HomePage> {
         model: topModel.newsManage,
         child: NewsPage(),
       ))
-      ..add(MyPage());
+      ..add(ScopedModel<MyInfoManage>(
+        model: topModel.myInfoManage,
+        child: MyPage(),
+      ));
 
     super.initState();
   }
