@@ -22,19 +22,14 @@ class NewsPage extends StatefulWidget {
 class _NewsPageState extends State<NewsPage> {
   int count;
   ScrollController _controller;
-  Unread newsCount = topModel.newsManage.newsCount;
   List<Notifications> unreadList = topModel.newsManage.unreadNews.notifications;
   List<Notifications> readedList = topModel.newsManage.readedNews.notifications;
 
   @override
   void initState() {
     super.initState();
-    if (newsCount.list != null) {
-      for (UnreadNewsList news in newsCount.list) {
-        if (news.isSelf == true) {
-          count = news.count;
-        }
-      }
+    if (unreadList != null) {
+      count = unreadList.length;
     }
   }
 
@@ -45,18 +40,12 @@ class _NewsPageState extends State<NewsPage> {
       const Duration(milliseconds: 1500),
       () {
         setState(() {
-          newsCount = topModel.newsManage.newsCount;
           unreadList = topModel.newsManage.unreadNews.notifications;
           readedList = topModel.newsManage.readedNews.notifications;
-          if (newsCount.list != null) {
-            for (UnreadNewsList news in newsCount.list) {
-              if (news.isSelf == true) {
-                count = news.count;
-                myToast(context, "已更新");
-              }
-            }
+          if (unreadList != null) {
+            myToast(context, "已更新");
           } else {
-            count = newsCount.count;
+            myToast(context, "稍后试一试");
           }
         });
       },
