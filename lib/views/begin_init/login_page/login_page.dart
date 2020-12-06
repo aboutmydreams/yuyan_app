@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 import 'package:yuyan_app/models/oauth2/oauth2.dart';
+import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 
@@ -64,7 +65,6 @@ class _LoginPageState extends State<LoginPage> {
           bool isLogin = await oauth2.saveAccessToken();
           if (isLogin) {
             // myOldToast("登录成功");
-
             Timer(const Duration(milliseconds: 3000), () {
               getAllCookies(flutterWebviewPlugin).then((res) {
                 topModel.update();
@@ -73,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
 
             // 3s 后跳转
             Timer(
-              const Duration(milliseconds: 6000),
+              const Duration(milliseconds: 3000),
               () {
                 setState(
                   () {
