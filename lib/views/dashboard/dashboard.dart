@@ -68,7 +68,7 @@ class _DashboardState extends State<Dashboard> {
       ),
       floatingActionButton: GestureDetector(
         onLongPress: () {
-          myToast(context, "text123");
+          myToast(context, "以后长按有惊喜");
         },
         child: FloatingActionButton(
           onPressed: () {
