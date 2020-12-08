@@ -4,6 +4,7 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_info_data.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
+import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 
 class InfoCount extends StatelessWidget {
@@ -11,10 +12,10 @@ class InfoCount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<TopStateModel>(
+    return ScopedModelDescendant<MyInfoManage>(
         builder: (context, child, model) {
-      UserInfoJson myInfo = model.myInfoManage.myInfoData;
-      List<GroupData> groupList = model.myInfoManage.groupData.data;
+      UserInfoJson myInfo = model.myInfoData;
+      List<GroupData> groupList = model.groupData.data;
       int groupLength = groupList.length;
       return Align(
         alignment: Alignment.topCenter,
@@ -39,9 +40,9 @@ class InfoCount extends StatelessWidget {
 }
 
 Widget infoCount(BuildContext context) {
-  return ScopedModelDescendant<TopStateModel>(builder: (context, child, model) {
-    UserInfoJson myInfo = model.myInfoManage.myInfoData;
-    List<GroupData> groupList = model.myInfoManage.groupData.data;
+  return ScopedModelDescendant<MyInfoManage>(builder: (context, child, model) {
+    UserInfoJson myInfo = model.myInfoData;
+    List<GroupData> groupList = model.groupData.data;
     int groupLength = groupList.length;
     return Align(
       alignment: Alignment.topCenter,

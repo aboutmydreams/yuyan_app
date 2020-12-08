@@ -3,20 +3,27 @@ import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:share/share.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/book_doc/doc_page/view/comment_panel.dart';
 import 'package:yuyan_app/models/component/book_doc/doc_page/view/floating_collapsed.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
-import 'package:yuyan_app/models/net/requests_api/doc/data/doc_data_v2.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
+import 'package:yuyan_app/models/tools/report.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/menu_item.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 
 class DocPageWeb extends StatefulWidget {
   DocPageWeb(
-      {Key key, this.login, this.bookSlug, this.url, this.bookId, this.docId})
+      {Key key,
+      this.login,
+      this.bookSlug,
+      this.url,
+      this.bookId,
+      this.docId,
+      this.onlyUser})
       : super(key: key);
 
   final int bookId;
@@ -24,34 +31,42 @@ class DocPageWeb extends StatefulWidget {
   final String url;
   final String login;
   final String bookSlug;
+  final bool onlyUser;
 
   @override
   _DocPageWebState createState() => _DocPageWebState(
-        login: login,
-        bookSlug: bookSlug,
-        url: url,
-        bookId: bookId,
-        docId: docId,
-      );
+      login: login,
+      bookSlug: bookSlug,
+      url: url,
+      bookId: bookId,
+      docId: docId,
+      onlyUser: onlyUser);
 }
 
 class _DocPageWebState extends State<DocPageWeb> {
   _DocPageWebState(
-      {Key key, this.login, this.bookSlug, this.url, this.bookId, this.docId});
+      {Key key,
+      this.login,
+      this.bookSlug,
+      this.url,
+      this.bookId,
+      this.docId,
+      this.onlyUser: false});
   final int bookId;
   final int docId;
   final String login;
   final String url;
   final String bookSlug;
+  final bool onlyUser;
 
   Comments comments = Comments(data: []);
-  DocV2 doc;
 
   // 浏览量 点赞 收藏
   int hits = 0;
   int likeCount = 0;
   bool ifMark = false;
   bool ifLike = false;
+  String docTitle = "";
 
   // 下方抽屉
   PanelController _pc = PanelController();
@@ -78,7 +93,6 @@ class _DocPageWebState extends State<DocPageWeb> {
     getIfLike();
     getIfMark();
     getDocComment();
-    getDocContextData();
   }
 
   @override
@@ -87,25 +101,19 @@ class _DocPageWebState extends State<DocPageWeb> {
     _webController = null;
   }
 
-  getDocContextData() async {
-    DocV2 docData = await DioDoc.getDocV2(bookId, docId);
-    setState(() {
-      doc = docData;
-    });
-  }
-
   getDocComment() async {
     Comments ans = await DioUser.getComments(docId: docId);
-    var theHit = await DioDoc.getHits(docId: docId);
+    // 浏览量暂时UI不展示
+    // var theHit = await DioDoc.getHits(docId: docId);
 
     setState(() {
       comments = ans;
-      hits = theHit;
+      // hits = theHit;
     });
   }
 
   getIfMark() async {
-    var ans = await DioUser.ifMark(targetId: docId);
+    var ans = await DioUser.ifMark(targetId: docId, onlyUser: onlyUser);
     setState(() {
       ifMark = ans;
     });
@@ -116,17 +124,17 @@ class _DocPageWebState extends State<DocPageWeb> {
       setState(() {
         ifMark = !ifMark;
       });
-      var ans = await DioUser.cancelMark(targetId: docId);
+      var ans = await DioUser.cancelMark(targetId: docId, onlyUser: onlyUser);
     } else {
       setState(() {
         ifMark = !ifMark;
       });
-      var ans = await DioUser.mark(targetId: docId);
+      var ans = await DioUser.mark(targetId: docId, onlyUser: onlyUser);
     }
   }
 
   getIfLike() async {
-    Map ifLikeIt = await DioDoc.getAction(docId: docId);
+    Map ifLikeIt = await DioDoc.getAction(docId: docId, onlyUser: onlyUser);
     setState(() {
       ifLike = ifLikeIt["like"];
       likeCount = ifLikeIt["count"];
@@ -147,6 +155,22 @@ class _DocPageWebState extends State<DocPageWeb> {
       });
       var ans = await DioUser.addLike(docId: docId);
     }
+  }
+
+  morePadding() async {
+    changePadding(18);
+    // int padding = 2;
+    // while (padding < 18) {
+    //   await changePadding(padding);
+    //   padding += 3;
+    // }
+  }
+
+  changePadding(int px) async {
+    await _webController.evaluateJavascript(
+      source:
+          'document.querySelector(".ReaderDocEmbed-module_wrap_3G7gr").style.padding="${px}px";',
+    );
   }
 
   // 点击下方评论
@@ -199,6 +223,7 @@ class _DocPageWebState extends State<DocPageWeb> {
       ),
       borderRadius: radius,
       body: Scaffold(
+        backgroundColor: AppColors.background,
         appBar: AppBar(
           title: Text("详情"),
           actions: <Widget>[
@@ -207,7 +232,8 @@ class _DocPageWebState extends State<DocPageWeb> {
                 menuItem("A", "打开网页版"),
                 menuItem("B", "从浏览器打开"),
                 menuItem("C", "复制文档链接"),
-                menuItem("D", "分享"),
+                menuItem("D", "举报文档"),
+                menuItem("E", "分享"),
               ],
               onSelected: (String action) {
                 // 点击选项的时候
@@ -223,8 +249,11 @@ class _DocPageWebState extends State<DocPageWeb> {
                     myToast(context, "已复制剪贴板");
                     break;
                   case 'D':
+                    fakeReport(context);
+                    break;
+                  case 'E':
                     Share.share(
-                        '我上分享了语雀文档「${doc != null ? doc.data.title : '文档'}」快来瞧瞧！ $shareUrl');
+                        '我上分享了语雀文档「${docTitle != "" ? docTitle : "文档"}」快来瞧瞧！ $shareUrl');
                     break;
                 }
               },
@@ -239,7 +268,7 @@ class _DocPageWebState extends State<DocPageWeb> {
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                padding: EdgeInsets.fromLTRB(16, 0, 16, 4),
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 4),
                 color: Colors.white,
                 child: InAppWebView(
                   initialUrl: theUrl,
@@ -247,6 +276,11 @@ class _DocPageWebState extends State<DocPageWeb> {
                     android: AndroidInAppWebViewOptions(
                       databaseEnabled: true,
                       domStorageEnabled: true,
+                      allowContentAccess: true,
+                      allowFileAccessFromFileURLs: true,
+                      allowUniversalAccessFromFileURLs: true,
+                      forceDark: AndroidForceDark.FORCE_DARK_AUTO,
+                      // layoutAlgorithm:
                     ),
                     ios: IOSInAppWebViewOptions(
                       disallowOverScroll: true,
@@ -276,12 +310,18 @@ class _DocPageWebState extends State<DocPageWeb> {
                   onLoadStop:
                       (InAppWebViewController controller, String url) async {
                     // 页面加载完成后注入js方法, 获取页面总高度
-                    var height = await _webController.evaluateJavascript(
-                      source: """
-                              document.body.scrollHeight;
-                            """,
+                    // var height = await _webController.evaluateJavascript(
+                    //   source: 'document.body.scrollHeight;',
+                    // );
+                    // double theWebH = double.parse(height.toString());
+
+                    var theDocTitle = await _webController.evaluateJavascript(
+                      source: 'document.title;',
                     );
-                    double theWebH = double.parse(height.toString());
+                    setState(() {
+                      docTitle = theDocTitle;
+                    });
+                    await morePadding();
                   },
                   onProgressChanged:
                       (InAppWebViewController controller, int progress) {
@@ -301,7 +341,9 @@ class _DocPageWebState extends State<DocPageWeb> {
                 onTap: clickBottom,
                 ifLike: ifLike,
                 ifMark: ifMark,
-                commentCount: comments.data.length,
+                // 如果不支持评论 传入null
+                commentCount:
+                    comments.meta != null ? comments.data.length : null,
                 markFunc: changeMark,
                 likeFunc: changeLike,
               ),
@@ -314,7 +356,10 @@ class _DocPageWebState extends State<DocPageWeb> {
                       width: MediaQuery.of(context).size.width,
                       child: loading(),
                     )
-                  : SizedBox(),
+                  : Opacity(
+                      opacity: 0,
+                      child: Text(""),
+                    ),
             ),
           ],
         ),

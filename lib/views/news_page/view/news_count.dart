@@ -6,7 +6,7 @@ import 'package:yuyan_app/state_manage/toppest.dart';
 
 Widget newsCountView(BuildContext context) {
   return ScopedModelDescendant<NewsManage>(builder: (context, child, model) {
-    int count = model.newsCount.count;
+    int count = model.unreadNews.normalCount;
     return Container(
       height: 38,
       width: MediaQuery.of(context).size.width,

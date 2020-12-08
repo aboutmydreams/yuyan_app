@@ -1,164 +1,27 @@
 class GroupHomeJson {
-  Meta meta;
-  HomeData data;
+  List<Data> data;
 
-  GroupHomeJson({this.meta, this.data});
+  GroupHomeJson({this.data});
 
   GroupHomeJson.fromJson(Map<String, dynamic> json) {
-    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
-    data = json['data'] != null ? new HomeData.fromJson(json['data']) : null;
+    if (json['data'] != null) {
+      data = new List<Data>();
+      json['data'].forEach((v) {
+        data.add(new Data.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.meta != null) {
-      data['meta'] = this.meta.toJson();
-    }
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Meta {
-  Layout layout;
-
-  Meta({this.layout});
-
-  Meta.fromJson(Map<String, dynamic> json) {
-    layout =
-        json['layout'] != null ? new Layout.fromJson(json['layout']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.layout != null) {
-      data['layout'] = this.layout.toJson();
-    }
-    return data;
-  }
-}
-
-class Layout {
-  List<String> header;
-  List<String> content;
-  List<String> aside;
-
-  Layout({this.header, this.content, this.aside});
-
-  Layout.fromJson(Map<String, dynamic> json) {
-    header = json['header'] != null ? json['header'].cast<String>() : [];
-    content = json['content'] != null ? json['content'].cast<String>() : [];
-    aside = json['aside'] != null ? json['aside'].cast<String>() : [];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['header'] = this.header;
-    data['content'] = this.content;
-    data['aside'] = this.aside;
-    return data;
-  }
-}
-
-class HomeData {
-  List<Headlines> headlines;
-  List<BookStacks> bookStacks;
-  List<Members> members;
-
-  HomeData({this.headlines, this.bookStacks, this.members});
-
-  HomeData.fromJson(Map<String, dynamic> json) {
-    if (json['headlines'] != null) {
-      headlines = new List<Headlines>();
-      json['headlines'].forEach((v) {
-        headlines.add(new Headlines.fromJson(v));
-      });
-    }
-    if (json['book_stacks'] != null) {
-      bookStacks = new List<BookStacks>();
-      json['book_stacks'].forEach((v) {
-        bookStacks.add(new BookStacks.fromJson(v));
-      });
-    }
-    if (json['members'] != null) {
-      members = new List<Members>();
-      json['members'].forEach((v) {
-        members.add(new Members.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.headlines != null) {
-      data['headlines'] = this.headlines.map((v) => v.toJson()).toList();
-    }
-    if (this.bookStacks != null) {
-      data['book_stacks'] = this.bookStacks.map((v) => v.toJson()).toList();
-    }
-    if (this.members != null) {
-      data['members'] = this.members.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class Headlines {
-  int id;
-  String createdAt;
-  String updatedAt;
-  int userId;
-  String title;
-  String url;
-  String cover;
-  int rank;
-  String description;
-  String sSerializer;
-
-  Headlines(
-      {this.id,
-      this.createdAt,
-      this.updatedAt,
-      this.userId,
-      this.title,
-      this.url,
-      this.cover,
-      this.rank,
-      this.description,
-      this.sSerializer});
-
-  Headlines.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    userId = json['user_id'];
-    title = json['title'];
-    url = json['url'];
-    cover = json['cover'];
-    rank = json['rank'];
-    description = json['description'];
-    sSerializer = json['_serializer'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['user_id'] = this.userId;
-    data['title'] = this.title;
-    data['url'] = this.url;
-    data['cover'] = this.cover;
-    data['rank'] = this.rank;
-    data['description'] = this.description;
-    data['_serializer'] = this.sSerializer;
-    return data;
-  }
-}
-
-class BookStacks {
+class Data {
   int id;
   String createdAt;
   String updatedAt;
@@ -170,7 +33,7 @@ class BookStacks {
   List<Books> books;
   String sSerializer;
 
-  BookStacks(
+  Data(
       {this.id,
       this.createdAt,
       this.updatedAt,
@@ -182,7 +45,7 @@ class BookStacks {
       this.books,
       this.sSerializer});
 
-  BookStacks.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -242,6 +105,11 @@ class Books {
   int status;
   int stackId;
   int rank;
+  String layout;
+  String docViewport;
+  String docTypography;
+  BookIcon bookIcon;
+  String cover;
   User user;
   dynamic creator;
   String sSerializer;
@@ -270,6 +138,11 @@ class Books {
       this.status,
       this.stackId,
       this.rank,
+      this.layout,
+      this.docViewport,
+      this.docTypography,
+      this.bookIcon,
+      this.cover,
       this.user,
       this.creator,
       this.sSerializer});
@@ -305,6 +178,13 @@ class Books {
     status = json['status'];
     stackId = json['stack_id'];
     rank = json['rank'];
+    layout = json['layout'];
+    docViewport = json['doc_viewport'];
+    docTypography = json['doc_typography'];
+    bookIcon = json['book_icon'] != null
+        ? new BookIcon.fromJson(json['book_icon'])
+        : null;
+    cover = json['cover'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
     creator = json['creator'];
     sSerializer = json['_serializer'];
@@ -339,6 +219,13 @@ class Books {
     data['status'] = this.status;
     data['stack_id'] = this.stackId;
     data['rank'] = this.rank;
+    data['layout'] = this.layout;
+    data['doc_viewport'] = this.docViewport;
+    data['doc_typography'] = this.docTypography;
+    if (this.bookIcon != null) {
+      data['book_icon'] = this.bookIcon.toJson();
+    }
+    data['cover'] = this.cover;
     if (this.user != null) {
       data['user'] = this.user.toJson();
     }
@@ -350,35 +237,45 @@ class Books {
 
 class Abilities {
   bool read;
+  bool update;
 
-  Abilities({this.read});
+  Abilities({this.read, this.update});
 
   Abilities.fromJson(Map<String, dynamic> json) {
     read = json['read'];
+    update = json['update'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['read'] = this.read;
+    data['update'] = this.update;
     return data;
   }
 }
 
 class Summary {
   Meta meta;
-  String image;
-  String name;
-  String filename;
   String contentUpdatedAt;
   String body;
   String bodyAsl;
   String bodyDraft;
   String bodyDraftAsl;
+  String premiumBody;
+  String premiumBodyAsl;
+  String premiumBodyDraft;
+  String premiumBodyDraftAsl;
   bool isSuspect;
+  String fullBody;
+  String fullBodyAsl;
+  String fullBodyDraft;
+  String fullBodyDraftAsl;
+  String editorMeta;
+  String editorMetaDraft;
   int id;
   int spaceId;
   String type;
-  String subType;
+  dynamic subType;
   String slug;
   int bookId;
   int userId;
@@ -404,22 +301,35 @@ class Summary {
   String updatedAt;
   String publishedAt;
   String firstPublishedAt;
-  String selectedAt;
+  dynamic selectedAt;
   dynamic pinnedAt;
-  String editorMeta;
+  dynamic premiumDaysCount;
+  dynamic premiumPrice;
+  dynamic premiumStartedAt;
+  dynamic premiumExpiredAt;
+  String docMeta;
+  String docMetaDraft;
+  String image;
   dynamic deletedAt;
 
   Summary(
       {this.meta,
-      this.image,
-      this.name,
-      this.filename,
       this.contentUpdatedAt,
       this.body,
       this.bodyAsl,
       this.bodyDraft,
       this.bodyDraftAsl,
+      this.premiumBody,
+      this.premiumBodyAsl,
+      this.premiumBodyDraft,
+      this.premiumBodyDraftAsl,
       this.isSuspect,
+      this.fullBody,
+      this.fullBodyAsl,
+      this.fullBodyDraft,
+      this.fullBodyDraftAsl,
+      this.editorMeta,
+      this.editorMetaDraft,
       this.id,
       this.spaceId,
       this.type,
@@ -451,20 +361,33 @@ class Summary {
       this.firstPublishedAt,
       this.selectedAt,
       this.pinnedAt,
-      this.editorMeta,
+      this.premiumDaysCount,
+      this.premiumPrice,
+      this.premiumStartedAt,
+      this.premiumExpiredAt,
+      this.docMeta,
+      this.docMetaDraft,
+      this.image,
       this.deletedAt});
 
   Summary.fromJson(Map<String, dynamic> json) {
     meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
     contentUpdatedAt = json['content_updated_at'];
     body = json['body'];
-    image = json['image'];
-    name = json['name'];
-    filename = json['filename'];
     bodyAsl = json['body_asl'];
     bodyDraft = json['body_draft'];
     bodyDraftAsl = json['body_draft_asl'];
+    premiumBody = json['premium_body'];
+    premiumBodyAsl = json['premium_body_asl'];
+    premiumBodyDraft = json['premium_body_draft'];
+    premiumBodyDraftAsl = json['premium_body_draft_asl'];
     isSuspect = json['isSuspect'];
+    fullBody = json['full_body'];
+    fullBodyAsl = json['full_body_asl'];
+    fullBodyDraft = json['full_body_draft'];
+    fullBodyDraftAsl = json['full_body_draft_asl'];
+    editorMeta = json['editor_meta'];
+    editorMetaDraft = json['editor_meta_draft'];
     id = json['id'];
     spaceId = json['space_id'];
     type = json['type'];
@@ -496,7 +419,13 @@ class Summary {
     firstPublishedAt = json['first_published_at'];
     selectedAt = json['selected_at'];
     pinnedAt = json['pinned_at'];
-    editorMeta = json['editor_meta'];
+    premiumDaysCount = json['premium_days_count'];
+    premiumPrice = json['premium_price'];
+    premiumStartedAt = json['premium_started_at'];
+    premiumExpiredAt = json['premium_expired_at'];
+    docMeta = json['doc_meta'];
+    docMetaDraft = json['doc_meta_draft'];
+    image = json['image'];
     deletedAt = json['deleted_at'];
   }
 
@@ -507,13 +436,20 @@ class Summary {
     }
     data['content_updated_at'] = this.contentUpdatedAt;
     data['body'] = this.body;
-    data['image'] = this.image;
-    data['name'] = this.name;
-    data['filename'] = this.filename;
     data['body_asl'] = this.bodyAsl;
     data['body_draft'] = this.bodyDraft;
     data['body_draft_asl'] = this.bodyDraftAsl;
+    data['premium_body'] = this.premiumBody;
+    data['premium_body_asl'] = this.premiumBodyAsl;
+    data['premium_body_draft'] = this.premiumBodyDraft;
+    data['premium_body_draft_asl'] = this.premiumBodyDraftAsl;
     data['isSuspect'] = this.isSuspect;
+    data['full_body'] = this.fullBody;
+    data['full_body_asl'] = this.fullBodyAsl;
+    data['full_body_draft'] = this.fullBodyDraft;
+    data['full_body_draft_asl'] = this.fullBodyDraftAsl;
+    data['editor_meta'] = this.editorMeta;
+    data['editor_meta_draft'] = this.editorMetaDraft;
     data['id'] = this.id;
     data['space_id'] = this.spaceId;
     data['type'] = this.type;
@@ -545,8 +481,54 @@ class Summary {
     data['first_published_at'] = this.firstPublishedAt;
     data['selected_at'] = this.selectedAt;
     data['pinned_at'] = this.pinnedAt;
-    data['editor_meta'] = this.editorMeta;
+    data['premium_days_count'] = this.premiumDaysCount;
+    data['premium_price'] = this.premiumPrice;
+    data['premium_started_at'] = this.premiumStartedAt;
+    data['premium_expired_at'] = this.premiumExpiredAt;
+    data['doc_meta'] = this.docMeta;
+    data['doc_meta_draft'] = this.docMetaDraft;
     data['deleted_at'] = this.deletedAt;
+    return data;
+  }
+}
+
+class Meta {
+  int showAuthorOption;
+  int showAuthorId;
+
+  Meta({this.showAuthorOption, this.showAuthorId});
+
+  Meta.fromJson(Map<String, dynamic> json) {
+    showAuthorOption = json['show_author_option'];
+    showAuthorId = json['show_author_id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['show_author_option'] = this.showAuthorOption;
+    data['show_author_id'] = this.showAuthorId;
+    return data;
+  }
+}
+
+class BookIcon {
+  String type;
+  String symbol;
+  String color;
+
+  BookIcon({this.type, this.symbol, this.color});
+
+  BookIcon.fromJson(Map<String, dynamic> json) {
+    type = json['type'];
+    symbol = json['symbol'];
+    color = json['color'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['type'] = this.type;
+    data['symbol'] = this.symbol;
+    data['color'] = this.color;
     return data;
   }
 }
@@ -558,18 +540,13 @@ class User {
   String name;
   String description;
   String avatarUrl;
-  int ownerId;
-  int booksCount;
-  int publicBooksCount;
-  int topicsCount;
-  int publicTopicsCount;
-  int membersCount;
   int public;
   dynamic scene;
   String createdAt;
   String updatedAt;
   int organizationId;
   bool isPaid;
+  int memberLevel;
   dynamic organization;
   dynamic owners;
   String sSerializer;
@@ -581,18 +558,13 @@ class User {
       this.name,
       this.description,
       this.avatarUrl,
-      this.ownerId,
-      this.booksCount,
-      this.publicBooksCount,
-      this.topicsCount,
-      this.publicTopicsCount,
-      this.membersCount,
       this.public,
       this.scene,
       this.createdAt,
       this.updatedAt,
       this.organizationId,
       this.isPaid,
+      this.memberLevel,
       this.organization,
       this.owners,
       this.sSerializer});
@@ -604,18 +576,13 @@ class User {
     name = json['name'];
     description = json['description'];
     avatarUrl = json['avatar_url'];
-    ownerId = json['owner_id'];
-    booksCount = json['books_count'];
-    publicBooksCount = json['public_books_count'];
-    topicsCount = json['topics_count'];
-    publicTopicsCount = json['public_topics_count'];
-    membersCount = json['members_count'];
     public = json['public'];
     scene = json['scene'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     organizationId = json['organization_id'];
     isPaid = json['isPaid'];
+    memberLevel = json['member_level'];
     organization = json['organization'];
     owners = json['owners'];
     sSerializer = json['_serializer'];
@@ -629,81 +596,15 @@ class User {
     data['name'] = this.name;
     data['description'] = this.description;
     data['avatar_url'] = this.avatarUrl;
-    data['owner_id'] = this.ownerId;
-    data['books_count'] = this.booksCount;
-    data['public_books_count'] = this.publicBooksCount;
-    data['topics_count'] = this.topicsCount;
-    data['public_topics_count'] = this.publicTopicsCount;
-    data['members_count'] = this.membersCount;
     data['public'] = this.public;
     data['scene'] = this.scene;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     data['organization_id'] = this.organizationId;
     data['isPaid'] = this.isPaid;
+    data['member_level'] = this.memberLevel;
     data['organization'] = this.organization;
     data['owners'] = this.owners;
-    data['_serializer'] = this.sSerializer;
-    return data;
-  }
-}
-
-class Members {
-  int id;
-  int userId;
-  int groupId;
-  int role;
-  int status;
-  dynamic departmentName;
-  String createdAt;
-  String updatedAt;
-  String pinnedAt;
-  dynamic user;
-  dynamic group;
-  String sSerializer;
-
-  Members(
-      {this.id,
-      this.userId,
-      this.groupId,
-      this.role,
-      this.status,
-      this.departmentName,
-      this.createdAt,
-      this.updatedAt,
-      this.pinnedAt,
-      this.user,
-      this.group,
-      this.sSerializer});
-
-  Members.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    userId = json['user_id'];
-    groupId = json['group_id'];
-    role = json['role'];
-    status = json['status'];
-    departmentName = json['department_name'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    pinnedAt = json['pinned_at'];
-    user = json['user'];
-    group = json['group'];
-    sSerializer = json['_serializer'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['group_id'] = this.groupId;
-    data['role'] = this.role;
-    data['status'] = this.status;
-    data['department_name'] = this.departmentName;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['pinned_at'] = this.pinnedAt;
-    data['user'] = this.user;
-    data['group'] = this.group;
     data['_serializer'] = this.sSerializer;
     return data;
   }

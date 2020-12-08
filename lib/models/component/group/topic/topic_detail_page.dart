@@ -8,6 +8,7 @@ import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/one_topic/topic_detail_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/group.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
+import 'package:yuyan_app/models/tools/report.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/menu_item.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
@@ -66,7 +67,7 @@ class _TopicDetailState extends State<TopicDetail> {
   }
 
   getComment() async {
-    Comments res = await DioGroup.getComments(id);
+    Comments res = await DioGroup.getComments(commentId: id);
     setState(() {
       topicComments = res;
     });
@@ -107,6 +108,7 @@ class _TopicDetailState extends State<TopicDetail> {
         focusNode: myFocusNode,
       ),
       body: Scaffold(
+        backgroundColor: AppColors.background,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             _pc.open();
@@ -123,6 +125,7 @@ class _TopicDetailState extends State<TopicDetail> {
               PopupMenuButton(
                 itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
                   menuItem("A", "打开网页版"),
+                  menuItem("B", "举报话题"),
                 ],
                 onSelected: (String action) {
                   // 点击选项的时候
@@ -131,11 +134,12 @@ class _TopicDetailState extends State<TopicDetail> {
                       openUrl(context,
                           "https://www.yuque.com/$groupId/topics/$iid");
                       break;
+                    case 'B':
+                      fakeReport(context);
                   }
                 },
               ),
             ]),
-        backgroundColor: AppColors.backgroundB,
         body: (topicDetail == null) || (topicComments == null)
             ? loading()
             : SingleChildScrollView(

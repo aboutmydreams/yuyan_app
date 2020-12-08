@@ -24,6 +24,9 @@ import 'dev_test/firebase_analytics.dart';
 
 Map<String, WidgetBuilder> routeData = {
   '/': (context) => HomePage(),
+  '/desk': (context) => HomePage(pageKey: 1),
+  '/news': (context) => HomePage(pageKey: 2),
+  '/my': (context) => HomePage(pageKey: 3),
   // '/first': (context) => GalleryExample(),
   // '/first': (context) => AboutYuyan(),
   // '/first': (context) => MyAnalyPage(),
@@ -32,7 +35,6 @@ Map<String, WidgetBuilder> routeData = {
   '/guide': (context) => GuidePage(),
   '/quickset': (context) => QuickSetPage(),
   '/dashboard': (context) => Dashboard(),
-  '/my': (context) => MyPage(),
   '/my/setting': (context) => SettingPage(),
   '/my/group': (context) => MyGroup(),
   '/my/follower': (context) => FollowerPage(),

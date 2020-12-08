@@ -21,7 +21,12 @@ class OpenPage {
   }
 
   static docWeb(BuildContext context,
-      {String login, String bookSlug, String url, int bookId, int docId}) {
+      {String login,
+      String bookSlug,
+      String url,
+      int bookId,
+      int docId,
+      bool onlyUser}) {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return DocPageWeb(
         login: login,
@@ -29,10 +34,9 @@ class OpenPage {
         bookSlug: bookSlug,
         bookId: bookId,
         docId: docId,
+        onlyUser: onlyUser,
       );
     }));
-    // print(
-    // "login: $login,url: $url,bookSlug: $bookSlug,bookId: $bookId,docId: $docId,");
   }
 
   // 打开其他用户的页面
@@ -66,9 +70,10 @@ class OpenPage {
 
   // 打开文档知识库
   static docBook(BuildContext context,
-      {int bookId, String bookSlug, String login}) {
+      {int bookId, String bookSlug, String login, bool onlyUser}) {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return BookDocPage(bookId: bookId, bookSlug: bookSlug, login: login);
+      return BookDocPage(
+          bookId: bookId, bookSlug: bookSlug, login: login, onlyUser: onlyUser);
     }));
   }
 

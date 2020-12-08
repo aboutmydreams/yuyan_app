@@ -18,7 +18,6 @@ class _Guide3State extends State<Guide3> {
   }
 
   goLogin() {
-    print(123);
     print(onPressedTimes);
     setState(() {
       onPressedTimes = onPressedTimes + 1;

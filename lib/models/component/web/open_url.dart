@@ -19,7 +19,10 @@ openUrl(BuildContext context, String url, {title: ""}) {
             color: Colors.black,
           ),
         ),
-        title: Text(title),
+        title: Text(
+          title,
+          style: TextStyle(color: AppColors.accentText),
+        ),
         elevation: 0,
         backgroundColor: AppColors.background,
       ),

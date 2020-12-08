@@ -25,17 +25,12 @@ class _AboutYuyanState extends State<AboutYuyan> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "# 写在前面",
+                  "# 语燕是什么",
                   style: AppStyles.textStyleA,
                 ),
                 Divider(),
                 Text(
-                  "语燕是什么",
-                  style: AppStyles.textStyleB,
-                ),
-                SizedBox(height: 10),
-                Text(
-                  "一款第三方语雀移动客户端，目标是输出一款「 精美 」「 流畅 」满足语雀用户基础需求的移动端产品。采用了过渡性交 互动画，数据预加载，期待能够验证「未来的交互趋势是充分过渡的」的想法，希望你会喜欢。\n",
+                  "这是历时一年时间开发，一款「 精美 」「 流畅 」满足文档用户基础需求的移动端产品。采用了过渡性交 互动画，数据预加载，期待能够验证「未来的交互趋势是充分过渡的」的想法，希望你会喜欢。\n",
                   style: AppStyles.textStyleBC,
                 ),
                 Text(
@@ -127,7 +122,7 @@ class _AboutYuyanState extends State<AboutYuyan> {
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 20),
                 Text(
                   "开源技术",
                   style: AppStyles.textStyleB,
@@ -147,7 +142,7 @@ class _AboutYuyanState extends State<AboutYuyan> {
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 35),
                 Text(
                   "# 其他",
                   style: AppStyles.textStyleA,
@@ -162,6 +157,7 @@ class _AboutYuyanState extends State<AboutYuyan> {
                   "反馈系统基于团队讨论区是我见过最有趣的设定之一，所以团队都可以使用想语雀一样的反馈方式，是不是很 cool ！",
                   style: AppStyles.textStyleBC,
                 ),
+                SizedBox(height: 10),
                 FlatButton.icon(
                   onPressed: () {
                     Navigator.pushNamed(context, "/my/suggest");
@@ -183,7 +179,7 @@ class _AboutYuyanState extends State<AboutYuyan> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  "如你所见，语燕的开发并不是很完整，包括几大类型的知识库，画板，讨论区看板这些都是未完成的部分，以及详细文档页面是在是太太太丑了，有时还会出现一些 html 的代码，那是因为使用了第三方库且没有做足够优化的原因，再加上有许多其他项目需要更进，网课作业也天天被催…… 因此，我们强烈希望有兴趣的设计师/开发者加入项目的开发和维护，技术文档在路上了，不久会公布在项目组的语雀知识库，感恩！ developlove@vip.qq.com",
+                  "如你所见，语燕的设计、开发工作量是庞大的，我们强烈希望有兴趣的设计师/开发者加入我们一起工作，感恩！ 联系开发者: developlove@vip.qq.com",
                   style: AppStyles.textStyleBC,
                 ),
                 SizedBox(height: 120),
@@ -234,4 +230,8 @@ Widget oneProduct(context, {String text, String url}) {
       openUrl(context, url);
     },
   );
+}
+
+bool after1019() {
+  return 1603114201000 > DateTime.now().millisecondsSinceEpoch;
 }

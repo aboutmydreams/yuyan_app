@@ -6,23 +6,23 @@ import 'data/news_data.dart';
 
 class NewsManage extends Model {
   int offset = 0;
-  Unread _newsCount = Unread(count: 0);
+  // Unread _newsCount = Unread(count: 0);
   NewsData _allNews = NewsData(notifications: []);
   NewsData _unreadNews = NewsData(notifications: []);
   NewsData _readedNews = NewsData(notifications: []);
-  Unread get newsCount => _newsCount;
+  // Unread get newsCount => _newsCount;
   NewsData get allNews => _allNews;
   NewsData get unreadNews => _unreadNews;
   NewsData get readedNews => _readedNews;
 
   getSaveData() async {
-    var newsCountData = await readJson('unread_count');
+    // var newsCountData = await readJson('unread_count');
     var unreadData = await readJson('unread_data');
     var readedData = await readJson('readed_data');
-    Unread newsCount = Unread.fromJson(newsCountData);
+    // Unread newsCount = Unread.fromJson(newsCountData);
     NewsData unreadNews = NewsData.fromJson(unreadData);
     NewsData readedNews = NewsData.fromJson(readedData);
-    _newsCount = newsCount;
+    // _newsCount = newsCount;
     _unreadNews = unreadNews;
     _readedNews = readedNews;
 
@@ -59,10 +59,12 @@ class NewsManage extends Model {
       // _newsCount.count = _newsCount.count - 1;
       int longTime = 80 * i;
       Future.delayed(Duration(milliseconds: longTime), () {
-        if (_newsCount.count > 0) {
-          _newsCount.count -= 1;
+        if (unreadNews.normalCount > 0) {
+          // _newsCount.count -= 1;
+          unreadNews.normalCount -= 1;
         } else {
-          _newsCount.count = 0;
+          // _newsCount.count = 0;
+          unreadNews.normalCount = 0;
         }
         _allNews.notifications[i].unread = false;
         notifyListeners();
@@ -71,10 +73,10 @@ class NewsManage extends Model {
   }
 
   saveNewsData() async {
-    var countData = await DioReq.get("/notifications/unread-count");
+    // var countData = await DioReq.get("/notifications/unread-count");
     var unreadData = await DioReq.get("/notifications?offset=0&type=unread");
     var readedData = await DioReq.get("/notifications?offset=0&type=readed");
-    await writeJson('unread_count', countData["data"]);
+    // await writeJson('unread_count', countData["data"]);
     await writeJson('unread_data', unreadData["data"]);
     await writeJson('readed_data', readedData["data"]);
     return 1;

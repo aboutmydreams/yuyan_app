@@ -40,6 +40,7 @@ Widget buildDoc(BuildContext context, Map data) {
       "https://www.yuque.com/${data['login']}/${data['bookSlug']}/${data['docId'].toString()}";
   return GestureDetector(
     onTap: () {
+      bool onlyUser = data["onlyUser"] ?? false;
       if ((data["type"] == "Doc") || (data["type"] == "doc")) {
         OpenPage.docWeb(
           context,
@@ -47,6 +48,7 @@ Widget buildDoc(BuildContext context, Map data) {
           bookId: data["bookId"],
           docId: data["docId"],
           bookSlug: data["bookSlug"],
+          onlyUser: onlyUser,
         );
       } else {
         openUrl(context, url);

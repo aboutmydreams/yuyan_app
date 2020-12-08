@@ -54,7 +54,7 @@ class _DocPageState extends State<DocPage> {
   }
 
   getDocContextData() async {
-    DocV2 docData = await DioDoc.getDocV2(bookId, docId);
+    DocV2 docData = await DioDoc.getDocV2(bookId: bookId, docId: docId);
     setState(() {
       doc = docData;
     });
@@ -159,6 +159,7 @@ class _DocPageState extends State<DocPage> {
       ),
       borderRadius: radius,
       body: Scaffold(
+        backgroundColor: AppColors.background,
         appBar: AppBar(
           title: Text("详情"),
         ),

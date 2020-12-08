@@ -10,7 +10,6 @@ import 'package:yuyan_app/models/widgets_big/html/view/img.dart';
 import 'package:yuyan_app/models/widgets_big/html/view/pre.dart';
 
 Widget getHtml(BuildContext context, String bodyHtml, {EdgeInsets padding}) {
-  // print(bodyHtml.substring(bodyHtml.length - 400));
   return Html(
     data: bodyHtml,
     useRichText: false,

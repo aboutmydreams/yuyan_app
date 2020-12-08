@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_xupdate/flutter_xupdate.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/tools/get_version.dart';
 import 'package:yuyan_app/models/tools/write_json.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
@@ -14,7 +15,7 @@ class VersionManage extends Model {
   String checkUrl =
       "https://service-iw6blmei-1256880247.gz.apigw.tencentcs.com/release/yuyan_v?v=";
   String checkUrl2 =
-      "https://service-kuz2fghy-1256880247.gz.apigw.tencentcs.com/release/yuyan_v2?";
+      "https://service-kuz2fghy-1256880247.gz.apigw.tencentcs.com/release/yuyan_v2?v=";
   bool _isLastest = true;
   bool get isLastest => _isLastest;
   String _message;
@@ -114,9 +115,7 @@ class VersionManage extends Model {
         //这里是自定义json解析
         return customParseJson(json);
       });
-    } else {
-      updateMessage("ios暂不支持XUpdate更新");
-    }
+    } else if ((Platform.isIOS)) {}
   }
 
   void updateMessage(String message) {
@@ -143,7 +142,12 @@ class VersionManage extends Model {
     if (isLastest) {
       myToast(context, "已是最新版本啦~");
     } else {
-      checkUpdateDefault();
+      if ((Platform.isIOS)) {
+        openUrlOuter(
+            "https://apps.apple.com/cn/app/%E8%AF%AD%E7%87%95app/id1502617331");
+      } else {
+        checkUpdateDefault();
+      }
     }
   }
 

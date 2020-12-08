@@ -104,9 +104,8 @@ class _GroupPageState extends State<GroupPage>
     GroupHomeJson home = await DioGroup.getHomeData(groupId: groupdata.id);
     setState(() {
       homeJson = home;
-      if (home.data.bookStacks.length > 0) {
-        groupdata.description =
-            home.data.bookStacks[0].books[0].user.description;
+      if (home.data.length > 0) {
+        groupdata.description = home.data[0].books[0].user.description;
       }
     });
   }

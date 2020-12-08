@@ -25,7 +25,6 @@ class CommentPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
-    print(comments.data.length);
     return Scaffold(
       body: Container(
         margin: EdgeInsets.only(top: 13),

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/widgets_big/change_org/org_leading.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/news_data.dart';
+import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/news_manage.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/news_page/view/news_count.dart';
@@ -20,19 +22,14 @@ class NewsPage extends StatefulWidget {
 class _NewsPageState extends State<NewsPage> {
   int count;
   ScrollController _controller;
-  Unread newsCount = topModel.newsManage.newsCount;
   List<Notifications> unreadList = topModel.newsManage.unreadNews.notifications;
   List<Notifications> readedList = topModel.newsManage.readedNews.notifications;
 
   @override
   void initState() {
     super.initState();
-    if (newsCount.list != null) {
-      for (UnreadNewsList news in newsCount.list) {
-        if (news.isSelf == true) {
-          count = news.count;
-        }
-      }
+    if (unreadList != null) {
+      count = unreadList.length;
     }
   }
 
@@ -43,18 +40,12 @@ class _NewsPageState extends State<NewsPage> {
       const Duration(milliseconds: 1500),
       () {
         setState(() {
-          newsCount = topModel.newsManage.newsCount;
           unreadList = topModel.newsManage.unreadNews.notifications;
           readedList = topModel.newsManage.readedNews.notifications;
-          if (newsCount.list != null) {
-            for (UnreadNewsList news in newsCount.list) {
-              if (news.isSelf == true) {
-                count = news.count;
-                myToast(context, "已更新");
-              }
-            }
+          if (unreadList != null) {
+            myToast(context, "已更新");
           } else {
-            count = newsCount.count;
+            myToast(context, "稍后试一试");
           }
         });
       },
@@ -66,6 +57,10 @@ class _NewsPageState extends State<NewsPage> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
+        leading: ScopedModel<MyInfoManage>(
+          model: topModel.myInfoManage,
+          child: OrgLeading(),
+        ),
         title: Text("全部消息"),
       ),
       body: Stack(

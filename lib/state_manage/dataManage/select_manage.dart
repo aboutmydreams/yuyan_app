@@ -27,14 +27,16 @@ class SelectManage extends Model {
 
   getMoreData() async {
     page += 1;
-    var dioData = await DioReq.get("/explore/selections?limit=1&page=$page");
+    var dioData = await DioReq.get(
+        "https://www.yuque.com/api/explore/selections?limit=1&page=$page");
     SelectionsData selectionsData = SelectionsData.fromJson(dioData);
     _selectData.data.addAll(selectionsData.data);
     notifyListeners();
   }
 
   saveSelectData() async {
-    var dioData = await DioReq.get("/explore/selections?limit=20&page=$page");
+    var dioData = await DioReq.get(
+        "https://www.yuque.com/api/explore/selections?limit=20&page=$page");
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     // print(dioData.runtimeType);
     // prefs.setString("select_doc", dioData.toString());
