@@ -54,7 +54,7 @@ class _DocPageState extends State<DocPage> {
   }
 
   getDocContextData() async {
-    DocV2 docData = await DioDoc.getDocV2(bookId, docId);
+    DocV2 docData = await DioDoc.getDocV2(bookId: bookId, docId: docId);
     setState(() {
       doc = docData;
     });

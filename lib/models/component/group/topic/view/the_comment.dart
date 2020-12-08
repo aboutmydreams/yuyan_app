@@ -6,6 +6,7 @@ import 'package:yuyan_app/models/tools/get_tag.dart';
 import 'package:yuyan_app/models/tools/report.dart';
 import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_big/html/body_html.dart';
+import 'package:yuyan_app/models/widgets_small/show_dialog/show_confirm.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
@@ -113,7 +114,7 @@ Widget oneComment(BuildContext context, CommentData data) {
                     SizedBox(height: 10),
                     getHtml(
                       context,
-                      data.bodyHtml,
+                      data.bodyAsl,
                     ),
                   ],
                 ),
@@ -123,33 +124,5 @@ Widget oneComment(BuildContext context, CommentData data) {
         ),
       ),
     ),
-  );
-}
-
-void showConfirmDialog(BuildContext context,
-    {String content, Function confirmCallback}) {
-  showDialog(
-    context: context,
-    builder: (context) {
-      return new AlertDialog(
-        title: new Text("提示"),
-        content: new Text(content),
-        actions: <Widget>[
-          new FlatButton(
-            onPressed: () {
-              confirmCallback();
-              Navigator.of(context).pop();
-            },
-            child: new Text("确认"),
-          ),
-          new FlatButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: new Text("取消"),
-          ),
-        ],
-      );
-    },
   );
 }

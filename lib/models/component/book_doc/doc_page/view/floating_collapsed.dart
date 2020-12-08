@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/fa_icon.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/widgets_small/toast.dart';
 
 class FloatingCollaps extends StatelessWidget {
   const FloatingCollaps(
@@ -25,7 +26,7 @@ class FloatingCollaps extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: commentCount != null ? onTap : () {},
       child: Container(
         height: 60,
         width: MediaQuery.of(context).size.width,
@@ -49,7 +50,9 @@ class FloatingCollaps extends StatelessWidget {
             ),
             Container(
               child: Text(
-                "  $commentCount 人评论 说点什么吧⋯⋯",
+                commentCount != null
+                    ? "  $commentCount 人评论 说点什么呢⋯⋯"
+                    : "  知识库不支持评论",
                 style: TextStyle(
                   color: AppColors.primaryText,
                   fontFamily: "sans_bold",

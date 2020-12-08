@@ -8,22 +8,25 @@ import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 
 class BookDocPage extends StatefulWidget {
-  BookDocPage({Key key, this.bookId, this.bookSlug, this.login})
+  BookDocPage({Key key, this.bookId, this.bookSlug, this.login, this.onlyUser})
       : super(key: key);
   final int bookId;
   final String bookSlug;
   final String login;
+  final bool onlyUser;
 
   @override
-  _BookDocPageState createState() =>
-      _BookDocPageState(bookId: bookId, bookSlug: bookSlug, login: login);
+  _BookDocPageState createState() => _BookDocPageState(
+      bookId: bookId, bookSlug: bookSlug, login: login, onlyUser: onlyUser);
 }
 
 class _BookDocPageState extends State<BookDocPage> {
-  _BookDocPageState({Key key, this.bookId, this.bookSlug, this.login});
+  _BookDocPageState(
+      {Key key, this.bookId, this.bookSlug, this.login, this.onlyUser});
   final int bookId;
   final String bookSlug;
   final String login;
+  final bool onlyUser;
 
   DocBookJson docBookJson;
   String reallyLogin;
@@ -48,7 +51,7 @@ class _BookDocPageState extends State<BookDocPage> {
     var redirect =
         await DioReq.getRedirect("https://www.yuque.com/go/book/$bookId");
     setState(() {
-      reallyLogin = redirect.split("/")[0];
+      reallyLogin = redirect.toString().split("/")[1];
     });
   }
 
@@ -64,7 +67,8 @@ class _BookDocPageState extends State<BookDocPage> {
       "avatar": data.user.avatarUrl,
       "bookId": data.bookId,
       "bookSlug": bookSlug,
-      "docId": data.id
+      "docId": data.id,
+      "onlyUser": onlyUser
     };
   }
 

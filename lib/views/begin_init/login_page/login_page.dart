@@ -64,7 +64,6 @@ class _LoginPageState extends State<LoginPage> {
           bool isLogin = await oauth2.saveAccessToken();
           if (isLogin) {
             // myOldToast("登录成功");
-
             Timer(const Duration(milliseconds: 3000), () {
               getAllCookies(flutterWebviewPlugin).then((res) {
                 topModel.update();
@@ -73,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
 
             // 3s 后跳转
             Timer(
-              const Duration(milliseconds: 6000),
+              const Duration(milliseconds: 3000),
               () {
                 setState(
                   () {

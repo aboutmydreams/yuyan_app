@@ -8,7 +8,6 @@ import 'package:yuyan_app/models/component/book_doc/doc_page/view/comment_panel.
 import 'package:yuyan_app/models/component/book_doc/doc_page/view/floating_collapsed.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
-import 'package:yuyan_app/models/net/requests_api/doc/data/doc_data_v2.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 import 'package:yuyan_app/models/tools/report.dart';
@@ -18,7 +17,13 @@ import 'package:yuyan_app/models/widgets_small/toast.dart';
 
 class DocPageWeb extends StatefulWidget {
   DocPageWeb(
-      {Key key, this.login, this.bookSlug, this.url, this.bookId, this.docId})
+      {Key key,
+      this.login,
+      this.bookSlug,
+      this.url,
+      this.bookId,
+      this.docId,
+      this.onlyUser})
       : super(key: key);
 
   final int bookId;
@@ -26,34 +31,42 @@ class DocPageWeb extends StatefulWidget {
   final String url;
   final String login;
   final String bookSlug;
+  final bool onlyUser;
 
   @override
   _DocPageWebState createState() => _DocPageWebState(
-        login: login,
-        bookSlug: bookSlug,
-        url: url,
-        bookId: bookId,
-        docId: docId,
-      );
+      login: login,
+      bookSlug: bookSlug,
+      url: url,
+      bookId: bookId,
+      docId: docId,
+      onlyUser: onlyUser);
 }
 
 class _DocPageWebState extends State<DocPageWeb> {
   _DocPageWebState(
-      {Key key, this.login, this.bookSlug, this.url, this.bookId, this.docId});
+      {Key key,
+      this.login,
+      this.bookSlug,
+      this.url,
+      this.bookId,
+      this.docId,
+      this.onlyUser: false});
   final int bookId;
   final int docId;
   final String login;
   final String url;
   final String bookSlug;
+  final bool onlyUser;
 
   Comments comments = Comments(data: []);
-  DocV2 doc;
 
   // 浏览量 点赞 收藏
   int hits = 0;
   int likeCount = 0;
   bool ifMark = false;
   bool ifLike = false;
+  String docTitle = "";
 
   // 下方抽屉
   PanelController _pc = PanelController();
@@ -80,7 +93,6 @@ class _DocPageWebState extends State<DocPageWeb> {
     getIfLike();
     getIfMark();
     getDocComment();
-    getDocContextData();
   }
 
   @override
@@ -89,25 +101,19 @@ class _DocPageWebState extends State<DocPageWeb> {
     _webController = null;
   }
 
-  getDocContextData() async {
-    DocV2 docData = await DioDoc.getDocV2(bookId, docId);
-    setState(() {
-      doc = docData;
-    });
-  }
-
   getDocComment() async {
     Comments ans = await DioUser.getComments(docId: docId);
-    var theHit = await DioDoc.getHits(docId: docId);
+    // 浏览量暂时UI不展示
+    // var theHit = await DioDoc.getHits(docId: docId);
 
     setState(() {
       comments = ans;
-      hits = theHit;
+      // hits = theHit;
     });
   }
 
   getIfMark() async {
-    var ans = await DioUser.ifMark(targetId: docId);
+    var ans = await DioUser.ifMark(targetId: docId, onlyUser: onlyUser);
     setState(() {
       ifMark = ans;
     });
@@ -118,17 +124,17 @@ class _DocPageWebState extends State<DocPageWeb> {
       setState(() {
         ifMark = !ifMark;
       });
-      var ans = await DioUser.cancelMark(targetId: docId);
+      var ans = await DioUser.cancelMark(targetId: docId, onlyUser: onlyUser);
     } else {
       setState(() {
         ifMark = !ifMark;
       });
-      var ans = await DioUser.mark(targetId: docId);
+      var ans = await DioUser.mark(targetId: docId, onlyUser: onlyUser);
     }
   }
 
   getIfLike() async {
-    Map ifLikeIt = await DioDoc.getAction(docId: docId);
+    Map ifLikeIt = await DioDoc.getAction(docId: docId, onlyUser: onlyUser);
     setState(() {
       ifLike = ifLikeIt["like"];
       likeCount = ifLikeIt["count"];
@@ -152,17 +158,18 @@ class _DocPageWebState extends State<DocPageWeb> {
   }
 
   morePadding() async {
-    int padding = 2;
-    while (padding < 18) {
-      await changePadding(padding);
-      padding += 3;
-    }
+    changePadding(18);
+    // int padding = 2;
+    // while (padding < 18) {
+    //   await changePadding(padding);
+    //   padding += 3;
+    // }
   }
 
   changePadding(int px) async {
     await _webController.evaluateJavascript(
       source:
-          'document.querySelector(".wrap___1A3Di").style.padding="${px}px";',
+          'document.querySelector(".ReaderDocEmbed-module_wrap_3G7gr").style.padding="${px}px";',
     );
   }
 
@@ -246,7 +253,7 @@ class _DocPageWebState extends State<DocPageWeb> {
                     break;
                   case 'E':
                     Share.share(
-                        '我上分享了语雀文档「${doc != null ? doc.data.title : '文档'}」快来瞧瞧！ $shareUrl');
+                        '我上分享了语雀文档「${docTitle != "" ? docTitle : "文档"}」快来瞧瞧！ $shareUrl');
                     break;
                 }
               },
@@ -269,6 +276,11 @@ class _DocPageWebState extends State<DocPageWeb> {
                     android: AndroidInAppWebViewOptions(
                       databaseEnabled: true,
                       domStorageEnabled: true,
+                      allowContentAccess: true,
+                      allowFileAccessFromFileURLs: true,
+                      allowUniversalAccessFromFileURLs: true,
+                      forceDark: AndroidForceDark.FORCE_DARK_AUTO,
+                      // layoutAlgorithm:
                     ),
                     ios: IOSInAppWebViewOptions(
                       disallowOverScroll: true,
@@ -298,10 +310,17 @@ class _DocPageWebState extends State<DocPageWeb> {
                   onLoadStop:
                       (InAppWebViewController controller, String url) async {
                     // 页面加载完成后注入js方法, 获取页面总高度
-                    var height = await _webController.evaluateJavascript(
-                      source: 'document.body.scrollHeight;',
+                    // var height = await _webController.evaluateJavascript(
+                    //   source: 'document.body.scrollHeight;',
+                    // );
+                    // double theWebH = double.parse(height.toString());
+
+                    var theDocTitle = await _webController.evaluateJavascript(
+                      source: 'document.title;',
                     );
-                    double theWebH = double.parse(height.toString());
+                    setState(() {
+                      docTitle = theDocTitle;
+                    });
                     await morePadding();
                   },
                   onProgressChanged:
@@ -322,7 +341,9 @@ class _DocPageWebState extends State<DocPageWeb> {
                 onTap: clickBottom,
                 ifLike: ifLike,
                 ifMark: ifMark,
-                commentCount: comments.data.length,
+                // 如果不支持评论 传入null
+                commentCount:
+                    comments.meta != null ? comments.data.length : null,
                 markFunc: changeMark,
                 likeFunc: changeLike,
               ),

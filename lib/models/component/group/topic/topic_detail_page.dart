@@ -67,7 +67,7 @@ class _TopicDetailState extends State<TopicDetail> {
   }
 
   getComment() async {
-    Comments res = await DioGroup.getComments(id);
+    Comments res = await DioGroup.getComments(commentId: id);
     setState(() {
       topicComments = res;
     });

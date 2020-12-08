@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/group/all_topic/topic_page.dart';
@@ -15,9 +13,7 @@ import 'package:yuyan_app/models/net/requests_api/group/data/group_member_data.d
 import 'package:yuyan_app/models/net/requests_api/group/data/group_topic_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/group.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
-import 'package:yuyan_app/models/tools/report.dart';
 import 'package:yuyan_app/models/widgets_small/menu_item.dart';
-import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 
@@ -108,9 +104,8 @@ class _GroupPageState extends State<GroupPage>
     GroupHomeJson home = await DioGroup.getHomeData(groupId: groupdata.id);
     setState(() {
       homeJson = home;
-      if (home.data.bookStacks.length > 0) {
-        groupdata.description =
-            home.data.bookStacks[0].books[0].user.description;
+      if (home.data.length > 0) {
+        groupdata.description = home.data[0].books[0].user.description;
       }
     });
   }
@@ -220,7 +215,6 @@ class _GroupPageState extends State<GroupPage>
                           <PopupMenuItem<String>>[
                         menuItem("A", "查看所有话题"),
                         menuItem("B", "打开网页版"),
-                        menuItem("C", "举报团队"),
                       ],
                       onSelected: (String action) {
                         // 点击选项的时候
@@ -238,9 +232,6 @@ class _GroupPageState extends State<GroupPage>
                             openUrl(context,
                                 "https://www.yuque.com/${groupdata.id}");
                             break;
-
-                          case 'C':
-                            fakeReport(context);
                         }
                       },
                     ),

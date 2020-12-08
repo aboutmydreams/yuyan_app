@@ -11,7 +11,7 @@ Widget secItemUI(BuildContext context, Data data) {
   String imageUrl = data.cover.contains("x-oss-process")
       ? data.cover
       : data.cover +
-          "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_200%2Ch_120%2Fformat%2Cpng";
+          "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_300%2Ch_160%2Fformat%2Cpng";
   return GestureDetector(
     onTap: () {
       OpenPage.docWeb(
@@ -20,6 +20,7 @@ Widget secItemUI(BuildContext context, Data data) {
         bookSlug: data.book.slug,
         bookId: data.bookId,
         docId: data.id,
+        onlyUser: true,
       );
     },
     child: Container(

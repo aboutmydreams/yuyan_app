@@ -15,12 +15,12 @@ class GroupHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return homeJson == null
         ? loading()
-        : homeJson.data.bookStacks.isEmpty
+        : homeJson.data.isEmpty
             ? NothingPage(top: 190, text: "首页空空")
             : SingleChildScrollView(
                 child: Column(
                   children: [SizedBox(height: 155)]
-                    ..addAll(homeJson.data.bookStacks.map((a) {
+                    ..addAll(homeJson.data.map((a) {
                       return oneHome(context, a);
                     }).toList()),
                 ),
@@ -28,7 +28,7 @@ class GroupHome extends StatelessWidget {
   }
 }
 
-Widget oneHome(BuildContext context, BookStacks data) {
+Widget oneHome(BuildContext context, Data data) {
   return Container(
     margin: EdgeInsets.only(top: 10, bottom: 10),
     child: Column(
@@ -128,7 +128,7 @@ Widget oneHomeDoc(
       child: Row(
         children: <Widget>[
           Expanded(
-            child: Text(data.title ?? data.filename),
+            child: Text(data.title ?? data.titleDraft),
           ),
           Text(
             timeCut(data.contentUpdatedAt ?? data.createdAt),

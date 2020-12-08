@@ -1,11 +1,20 @@
 import 'package:dio/dio.dart';
 import 'dart:async';
 import 'package:yuyan_app/models/tools/get_pref.dart';
+import 'package:yuyan_app/state_manage/toppest.dart';
 
 class DioReq {
   static Dio dio = Dio();
-
   static String baseUrl = "https://www.yuque.com/api";
+
+  static orgSpace({bool onlyUser: false}) async {
+    String nowOrg = await topModel.myInfoManage.getMyNowOrg();
+    onlyUser ??= false;
+    String nowBaseUrl = (nowOrg != null && nowOrg != "")
+        ? baseUrl.replaceAll("www.yuque", nowOrg + ".yuque")
+        : baseUrl;
+    return onlyUser ? baseUrl : nowBaseUrl;
+  }
 
   static autoHeader({Map<String, dynamic> headers}) async {
     var token = await getToken();
@@ -32,8 +41,11 @@ class DioReq {
   }
 
   static get(String path,
-      {Map<String, dynamic> headers, Map<String, dynamic> param}) async {
-    var diopath = path[0] == "/" ? baseUrl + path : path;
+      {Map<String, dynamic> headers,
+      Map<String, dynamic> param,
+      bool onlyUser: false}) async {
+    var nowBaseUrl = await orgSpace(onlyUser: onlyUser);
+    var diopath = path[0] == "/" ? nowBaseUrl + path : path;
     headers ??= await autoHeader(headers: headers);
 
     try {
@@ -46,10 +58,10 @@ class DioReq {
       print("get: $path ${response.statusCode}");
       return response.data;
     } on DioError catch (e) {
-      print(e);
+      print(path + e.type.toString());
       if (e.type == DioErrorType.RESPONSE) {
-        // print(e.response.statusCode); //403 权限不足（token过期）
-        return {"data": 403};
+        print(e.response.statusCode); //403 权限不足（token过期）
+        return {"data": e.response.statusCode};
       } else if (e.type == DioErrorType.CONNECT_TIMEOUT) {
         return {"data": "连接超时，请检查网络"};
       } else if (e.type == DioErrorType.DEFAULT) {
@@ -65,8 +77,10 @@ class DioReq {
   static Future post(String path,
       {Map<String, dynamic> headers,
       Map<String, dynamic> data,
-      Map<String, dynamic> param}) async {
-    var diopath = path[0] == "/" ? baseUrl + path : path;
+      Map<String, dynamic> param,
+      bool onlyUser: false}) async {
+    var nowBaseUrl = await orgSpace(onlyUser: onlyUser);
+    var diopath = path[0] == "/" ? nowBaseUrl + path : path;
     headers ??= await autoHeader(headers: headers);
 
     try {
@@ -80,7 +94,7 @@ class DioReq {
       print("post: $path ${response.statusCode}");
       return response.data;
     } on DioError catch (e) {
-      print(e);
+      print(path + e.toString());
       if (e.type == DioErrorType.RESPONSE) {
         // print(e.response.statusCode); //403 权限不足（token过期）
         return {"data": e.response.statusCode};
@@ -99,8 +113,10 @@ class DioReq {
   static Future put(String path,
       {Map<String, dynamic> headers,
       Map<String, dynamic> data,
-      Map<String, dynamic> param}) async {
-    var diopath = path[0] == "/" ? baseUrl + path : path;
+      Map<String, dynamic> param,
+      bool onlyUser: false}) async {
+    var nowBaseUrl = await orgSpace(onlyUser: onlyUser);
+    var diopath = path[0] == "/" ? nowBaseUrl + path : path;
     headers ??= await autoHeader(headers: headers);
     try {
       Response response = await dio.put(
@@ -131,20 +147,17 @@ class DioReq {
   static Future delete(String path,
       {Map<String, dynamic> headers,
       Map<String, dynamic> data,
-      Map<String, dynamic> param}) async {
-    var diopath = path[0] == "/" ? baseUrl + path : path;
+      Map<String, dynamic> param,
+      bool onlyUser: false}) async {
+    var nowBaseUrl = await orgSpace(onlyUser: onlyUser);
+    var diopath = path[0] == "/" ? nowBaseUrl + path : path;
     headers ??= await autoHeader(headers: headers);
     try {
-      Options options = Options(
-        headers: headers,
-        sendTimeout: 10000,
-        receiveTimeout: 10000,
-      );
       Response response = await dio.delete(
         diopath,
         queryParameters: param,
         data: data,
-        options: options,
+        options: autoOptions(headers: headers),
       );
       print("del: $path ${response.statusCode}");
       return response.data;
@@ -165,11 +178,15 @@ class DioReq {
     }
   }
 
-  static getRedirect(String path,
-      {Map<String, dynamic> headers, Map<String, dynamic> param}) async {
+  static getRedirect(
+    String path, {
+    Map<String, dynamic> headers,
+    Map<String, dynamic> param,
+  }) async {
     headers ??= await autoHeader(headers: headers);
 
-    var diopath = path[0] == "/" ? baseUrl + path : path;
+    var nowBaseUrl = await orgSpace();
+    var diopath = path[0] == "/" ? nowBaseUrl + path : path;
     Response res = await dio.get(
       diopath,
       queryParameters: param,

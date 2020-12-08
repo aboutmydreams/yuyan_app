@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
+import 'package:yuyan_app/models/widgets_big/change_org/org_leading.dart';
+import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/explore_page/search/search_bar.dart';
 import 'attention/attention_page.dart';
@@ -21,6 +24,10 @@ class _ExplorePageState extends State<ExplorePage>
         appBar: AppBar(
           toolbarOpacity: 1.0,
           bottomOpacity: 5.0,
+          leading: ScopedModel<MyInfoManage>(
+            model: topModel.myInfoManage,
+            child: OrgLeading(),
+          ),
           actions: <Widget>[
             IconButton(
               icon: Icon(
