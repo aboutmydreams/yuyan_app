@@ -11,7 +11,7 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.20+1.0.20
+version: 1.0.22+1.0.22
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -21,7 +21,8 @@ environment:
 #     git:
 #       url: https://github.com/masewo/chewie.git
 dependency_overrides:
-  firebase_core: 0.4.4
+  flutter_webview_plugin:
+    git: https://github.com/aboutmydreams/flutter_webview_plugin.git
 
 
 dependencies:
@@ -30,14 +31,14 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
+  cupertino_icons: ^1.0.0
   font_awesome_flutter: ^8.7.0
 
   # goodlook bar
   curved_navigation_bar: ^0.3.1
 
   # goodlook guide 液体
-  liquid_swipe: ^1.4.3
+  liquid_swipe: ^1.5.0
 
   # 解析html
   flutter_html: ^0.11.1
@@ -61,14 +62,13 @@ dependencies:
   provider: ^4.0.4
   scoped_model: ^1.0.1
 
-  chewie: ^0.9.10
-
   # 数据分析
-  # firebase_core: 0.4.4+2 # This dependency was added during initial configuration.
-  firebase_analytics: ^5.0.11 # add dependency for Google Analytics for Firebase
+  firebase_core: ^0.5.3 # This dependency was added during initial configuration.
+  firebase_analytics: ^6.3.0 # add dependency for Google Analytics for Firebase
 
+  chewie: ^0.9.10
   # html
-  flutter_widget_from_html: ^0.3.2+1
+  flutter_widget_from_html: ^0.3.3+4
 
   # 缓存
   shared_preferences: ^0.5.8
@@ -83,13 +83,13 @@ dependencies:
     # git: https://github.com/aboutmydreams/flutter_inappwebview.git
 
   # flare
-  flare_flutter: ^1.8.2
+  flare_flutter: ^2.0.6
 
   # request with cookie
   requests: ^3.0.3
 
   # use svg
-  flutter_svg: ^0.18.0
+  flutter_svg: ^0.19.2+1
 
   # 裁剪 我的页面顶部背景
   flutter_custom_clippers: ^1.1.0
@@ -117,9 +117,6 @@ dependencies:
 
   # 滑动tab
   shifting_tabbar: ^0.3.1
-
-  flutter_webview_plugin:
-    git: https://github.com/aboutmydreams/flutter_webview_plugin.git
 
 dev_dependencies:
   flutter_test:

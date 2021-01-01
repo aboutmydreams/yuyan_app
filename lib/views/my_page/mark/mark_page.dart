@@ -133,7 +133,7 @@ Widget oneMark(BuildContext context, MarkData data) {
           ),
           SizedBox(height: 2),
           Text(
-            data.target.description,
+            data.target.description ?? "",
             style: AppStyles.textStyleC,
           )
         ],
