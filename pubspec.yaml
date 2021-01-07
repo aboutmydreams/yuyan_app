@@ -11,7 +11,7 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.22+1.0.22
+version: 1.0.2+1.0.2
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -81,6 +81,7 @@ dependencies:
   flutter_inappwebview:
     ^4.0.0+4
     # git: https://github.com/aboutmydreams/flutter_inappwebview.git
+  # flutter_webview_plugin: ^0.3.11
 
   # flare
   flare_flutter: ^2.0.6
@@ -110,7 +111,7 @@ dependencies:
   sliding_up_panel: ^1.0.1
 
   # 更新apk https://github.com/xuexiangjys/XUpdate
-  flutter_xupdate: ^0.0.3
+  flutter_xupdate: ^1.0.2
 
   # 获取版本号
   package_info: ^0.4.0+16

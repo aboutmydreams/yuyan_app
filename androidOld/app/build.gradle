@@ -31,20 +31,24 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 28
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
     }
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.yuque.vyan"
         minSdkVersion 17
-        targetSdkVersion 30
+        targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        // testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
             abiFilters "arm64-v8a" //abiFilters "armeabi-v7a", "armeabi", "arm64-v8a", "x86"
@@ -59,15 +63,13 @@ android {
             storePassword keystoreProperties['storePassword']
         }
     }
-
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.release
+            // minifyEnabled true // R8 压缩 详情见谷歌开发者公众号
         }
         debug {
-            // signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
         }
     }
 }
@@ -83,3 +85,4 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
+

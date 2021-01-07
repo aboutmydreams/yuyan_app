@@ -1,7 +1,6 @@
 import hashlib
 import os
 
-
 def compare(a: str, b: str) -> int:
     '''比较两个版本的大小，需要按.分割后比较各个部分的大小 b大则1'''
     lena = len(a.split('.'))  # 获取版本字符串的组成部分
