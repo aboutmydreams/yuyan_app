@@ -12,13 +12,18 @@ Widget oneRecent(BuildContext context, RecentData data) {
   return GestureDetector(
     onTap: () {
       if (data.subjectType == "Doc") {
-        OpenPage.docWeb(
-          context,
-          login: data.book.user.login,
-          bookSlug: data.book.slug,
-          bookId: data.book.id,
-          docId: data.targetId,
-        );
+        // 防止收藏的 doc 后期变为私有时无法定位到 book
+        if (data.book == null) {
+          openUrl(context, url);
+        } else {
+          OpenPage.docWeb(
+            context,
+            login: data.book.user.login,
+            bookSlug: data.book.slug,
+            bookId: data.book.id,
+            docId: data.targetId,
+          );
+        }
       } else if (data.subjectType == "Book") {
         // print(data.u);
         OpenPage.docBook(

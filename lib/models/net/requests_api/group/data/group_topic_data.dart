@@ -7,7 +7,7 @@ class GroupTopicJson {
   GroupTopicJson.fromJson(Map<String, dynamic> json) {
     meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
     if (json['data'] != null) {
-      data = new List<OneTopicData>();
+      data = <OneTopicData>[];
       json['data'].forEach((v) {
         data.add(new OneTopicData.fromJson(v));
       });
