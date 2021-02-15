@@ -11,7 +11,7 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.2+1.0.2
+version: 1.0.23+1.0.23
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -23,6 +23,11 @@ environment:
 dependency_overrides:
   flutter_webview_plugin:
     git: https://github.com/aboutmydreams/flutter_webview_plugin.git
+  notus:
+    git: https://github.com/aboutmydreams/notus.git
+  # markdown / 富文本 编辑器
+  zefyr: 
+    git: https://github.com/aboutmydreams/zefyr.git
 
 
 dependencies:
@@ -118,6 +123,17 @@ dependencies:
 
   # 滑动tab
   shifting_tabbar: ^0.3.1
+
+  # 图片选择器
+  image_picker: ^0.6.7+22
+  # multi_image_picker: ^4.7.14
+
+  # lake to markdown
+  html2md: ^0.5.1
+
+  # markdown to quill
+  quill_markdown: ^0.0.3
+
 
 dev_dependencies:
   flutter_test:

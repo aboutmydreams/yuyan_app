@@ -50,6 +50,7 @@ com.google.android.exoplayer2.extractor.ts.Ac3Reader:
     private static final int STATE_READING_SAMPLE
     private static final int HEADER_SIZE
 kotlin.io.FileTreeWalk$FileTreeWalkIterator$SingleFileState
+io.flutter.plugins.flutter_plugin_android_lifecycle.BuildConfig
 kotlin.UIntKt
 org.hamcrest.Description
 com.google.android.gms.internal.measurement.zzhn:
@@ -1384,9 +1385,9 @@ com.google.android.gms.common.internal.DowngradeableSafeParcel:
     protected abstract boolean prepareForClientVersion(int)
     protected boolean shouldDowngrade()
     public void setShouldDowngrade(boolean)
+okhttp3.internal.ws.RealWebSocket$Message
 com.google.firebase.installations.CrossProcessLock:
     private static final java.lang.String TAG
-okhttp3.internal.ws.RealWebSocket$Message
 kotlin.sequences.SequencesKt___SequencesKt$sorted$1
 com.google.android.exoplayer2.extractor.flv.ScriptTagPayloadReader:
     public void seek()
@@ -1452,8 +1453,6 @@ com.xuexiang.flutter_xupdate.RetryUpdateTipDialog:
     public static final java.lang.String KEY_URL
 kotlin.text.StringsKt__IndentKt$getIndentFunction$2
 io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding:
-    public abstract java.lang.Object getLifecycle()
-    public abstract void removeRequestPermissionsResultListener(io.flutter.plugin.common.PluginRegistry$RequestPermissionsResultListener)
     public abstract void removeOnNewIntentListener(io.flutter.plugin.common.PluginRegistry$NewIntentListener)
     public abstract void removeOnUserLeaveHintListener(io.flutter.plugin.common.PluginRegistry$UserLeaveHintListener)
     public abstract void addOnSaveStateListener(io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding$OnSaveInstanceStateListener)
@@ -1717,9 +1716,9 @@ okhttp3.internal.platform.Jdk9Platform:
 com.google.android.gms.common.config.zze
 com.tekartik.sqflite.BuildConfig
 org.junit.Test$None
+okhttp3.mockwebserver.MockWebServer$3
 com.google.android.exoplayer2.text.webvtt.WebvttCue$Builder:
     private static final java.lang.String TAG
-okhttp3.mockwebserver.MockWebServer$3
 com.google.android.exoplayer2.C$AudioFocusGain
 com.google.android.exoplayer2.upstream.DefaultHttpDataSource:
     public void <init>(java.lang.String,com.google.android.exoplayer2.util.Predicate)
@@ -2158,6 +2157,8 @@ kotlin.ranges.ULongProgressionIterator
 org.junit.runners.model.Annotatable
 kotlin.jvm.JvmSuppressWildcards
 com.google.android.exoplayer2.C$ColorTransfer
+io.flutter.plugins.imagepicker.ImagePickerUtils:
+    void <init>()
 com.google.android.exoplayer2.extractor.ts.DtsReader:
     private static final int STATE_FINDING_SYNC
     private static final int STATE_READING_HEADER
@@ -2530,6 +2531,7 @@ com.google.android.gms.common.util.ProcessUtils:
     private void <init>()
 com.google.android.exoplayer2.offline.SegmentDownloader
 com.google.android.gms.common.internal.safeparcel.SafeParcelable$Field
+io.flutter.plugins.flutter_plugin_android_lifecycle.R
 com.google.android.gms.internal.measurement.zzq:
     public void <init>()
 com.google.android.gms.common.GooglePlayServicesRepairableException
@@ -2582,9 +2584,9 @@ com.google.android.gms.common.wrappers.PackageManagerWrapper:
     public java.lang.CharSequence getApplicationLabel(java.lang.String)
 kotlin.collections.FloatIterator
 com.google.android.exoplayer2.C$Projection
+com.google.android.gms.common.internal.safeparcel.SafeParcelable$Class
 okhttp3.OkHttpClient$1:
     public okhttp3.Call newWebSocketCall(okhttp3.OkHttpClient,okhttp3.Request)
-com.google.android.gms.common.internal.safeparcel.SafeParcelable$Class
 com.google.firebase.installations.local.IidStore:
     public void <init>(android.content.SharedPreferences,java.lang.String)
     private static final java.lang.String IID_SHARED_PREFS_NAME
@@ -2674,6 +2676,7 @@ com.google.android.gms.common.util.ClientLibraryUtils:
     public static int getClientVersion(android.content.Context,java.lang.String)
     private static android.content.pm.PackageInfo zzb(android.content.Context,java.lang.String)
     public static boolean isPackageSide()
+io.flutter.plugins.imagepicker.R
 com.google.android.exoplayer2.extractor.ts.SectionReader:
     private static final int SECTION_HEADER_LENGTH
     private static final int DEFAULT_SECTION_BUFFER_LENGTH
@@ -2890,8 +2893,8 @@ okhttp3.internal.http2.Header:
     public static final java.lang.String TARGET_PATH_UTF8
     public static final java.lang.String TARGET_SCHEME_UTF8
     public static final java.lang.String TARGET_AUTHORITY_UTF8
-kotlin.text.RegexKt$fromInt$$inlined$apply$lambda$1
 com.google.android.exoplayer2.upstream.cache.CachedRegionTracker$Region
+kotlin.text.RegexKt$fromInt$$inlined$apply$lambda$1
 com.google.android.exoplayer2.audio.Sonic:
     private static final int MINIMUM_PITCH
     private static final int MAXIMUM_PITCH
@@ -3062,6 +3065,9 @@ com.google.android.exoplayer2.metadata.id3.GeobFrame:
 kotlin.io.FileAlreadyExistsException
 com.google.android.exoplayer2.video.spherical.Projection$Mesh
 kotlin.io.NoSuchFileException
+io.flutter.embedding.engine.plugins.lifecycle.FlutterLifecycleAdapter:
+    public void <init>()
+    private static final java.lang.String TAG
 com.google.android.gms.internal.measurement.zzgl:
     public void add(int,java.lang.Object)
     public java.lang.Object set(int,java.lang.Object)
@@ -3188,9 +3194,9 @@ com.google.android.exoplayer2.source.ads.AdPlaybackState$AdGroup:
     public com.google.android.exoplayer2.source.ads.AdPlaybackState$AdGroup withAdState(int,int)
     public com.google.android.exoplayer2.source.ads.AdPlaybackState$AdGroup withAdDurationsUs(long[])
     public com.google.android.exoplayer2.source.ads.AdPlaybackState$AdGroup withAllAdsSkipped()
+com.google.android.exoplayer2.DefaultLoadControl$Builder
 okhttp3.internal.tls.CertificateChainCleaner:
     public static varargs okhttp3.internal.tls.CertificateChainCleaner get(java.security.cert.X509Certificate[])
-com.google.android.exoplayer2.DefaultLoadControl$Builder
 com.google.android.exoplayer2.source.hls.playlist.DefaultHlsPlaylistTracker$1
 kotlin.comparisons.ComparisonsKt__ComparisonsKt$thenByDescending$1
 android.support.v4.os.IResultReceiver$Stub:
@@ -3311,10 +3317,10 @@ kotlin.text.StringsKt___StringsKt
 com.google.firebase.installations.InstallationTokenResult
 okhttp3.internal.cache.FaultHidingSink
 kotlin.jvm.internal.PropertyReference1Impl
-okhttp3.internal.ws.WebSocketProtocol
 com.google.firebase.internal.DataCollectionConfigStorage:
     private static final java.lang.String FIREBASE_APP_PREFS
     public static final java.lang.String DATA_COLLECTION_DEFAULT_ENABLED
+okhttp3.internal.ws.WebSocketProtocol
 okio.ForwardingSink:
     public final okio.Sink delegate()
 com.google.android.exoplayer2.source.dash.manifest.UrlTemplate:
@@ -3472,6 +3478,7 @@ com.pichillilorenzo.flutter_inappwebview.InAppBrowser.InAppBrowserOptions:
     public synthetic bridge com.pichillilorenzo.flutter_inappwebview.Options parse(java.util.Map)
     public static final java.lang.String LOG_TAG
 org.hamcrest.TypeSafeDiagnosingMatcher
+io.flutter.plugins.imagepicker.BuildConfig
 com.google.android.gms.internal.measurement.zzaa
 com.google.android.exoplayer2.source.smoothstreaming.manifest.SsManifest$StreamElement:
     private static final java.lang.String URL_PLACEHOLDER_START_TIME_1
@@ -3944,10 +3951,10 @@ kotlin.text.CharCategory
 com.google.android.exoplayer2.core.R
 org.junit.runner.FilterFactories
 kotlin.text.RegexKt
-okhttp3.Response$Builder:
-    public okhttp3.Response$Builder removeHeader(java.lang.String)
 com.google.android.exoplayer2.source.dash.manifest.AdaptationSet:
     public static final int ID_UNSET
+okhttp3.Response$Builder:
+    public okhttp3.Response$Builder removeHeader(java.lang.String)
 kotlin.jvm.functions.Function19
 okio.RealBufferedSource:
     public okio.ByteString readByteString()
@@ -4097,8 +4104,6 @@ kotlin.collections.CollectionsKt__IterablesKt$Iterable$1
 org.hamcrest.CoreMatchers
 com.google.android.exoplayer2.source.ClippingMediaSource$ClippingTimeline
 io.flutter.embedding.engine.FlutterEngineConnectionRegistry$FlutterEngineActivityPluginBinding:
-    public java.lang.Object getLifecycle()
-    public void removeRequestPermissionsResultListener(io.flutter.plugin.common.PluginRegistry$RequestPermissionsResultListener)
     public void removeOnNewIntentListener(io.flutter.plugin.common.PluginRegistry$NewIntentListener)
     public void removeOnUserLeaveHintListener(io.flutter.plugin.common.PluginRegistry$UserLeaveHintListener)
     public void addOnSaveStateListener(io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding$OnSaveInstanceStateListener)
@@ -4139,6 +4144,17 @@ kotlin.coroutines.intrinsics.IntrinsicsKt:
     private void <init>()
 kotlin.collections.TypeAliasesKt
 com.zhy.http.okhttp.cookie.CookieJarImpl
+io.flutter.plugins.imagepicker.ImagePickerPlugin:
+    public static void registerWith(io.flutter.plugin.common.PluginRegistry$Registrar)
+    void <init>(io.flutter.plugins.imagepicker.ImagePickerDelegate,android.app.Activity)
+    static final java.lang.String METHOD_CALL_IMAGE
+    static final java.lang.String METHOD_CALL_VIDEO
+    private static final java.lang.String METHOD_CALL_RETRIEVE
+    private static final int CAMERA_DEVICE_FRONT
+    private static final int CAMERA_DEVICE_REAR
+    private static final java.lang.String CHANNEL
+    private static final int SOURCE_CAMERA
+    private static final int SOURCE_GALLERY
 com.xuexiang.xupdate.widget.BaseDialog:
     public void <init>(android.content.Context,android.view.View)
     public void <init>(android.content.Context)
@@ -4251,6 +4267,12 @@ io.flutter.embedding.engine.plugins.shim.ShimPluginRegistry:
 com.google.android.exoplayer2.extractor.mp4.Sniffer:
     private void <init>()
     private static final int SEARCH_LENGTH
+okhttp3.internal.http2.Hpack:
+    private void <init>()
+    private static final int PREFIX_4_BITS
+    private static final int PREFIX_5_BITS
+    private static final int PREFIX_6_BITS
+    private static final int PREFIX_7_BITS
 com.google.android.exoplayer2.source.hls.playlist.HlsPlaylistParser:
     private static final java.lang.String PLAYLIST_HEADER
     private static final java.lang.String TAG_PREFIX
@@ -4288,12 +4310,6 @@ com.google.android.exoplayer2.source.hls.playlist.HlsPlaylistParser:
     private static final java.lang.String BOOLEAN_TRUE
     private static final java.lang.String BOOLEAN_FALSE
     private static final java.lang.String ATTR_CLOSED_CAPTIONS_NONE
-okhttp3.internal.http2.Hpack:
-    private void <init>()
-    private static final int PREFIX_4_BITS
-    private static final int PREFIX_5_BITS
-    private static final int PREFIX_6_BITS
-    private static final int PREFIX_7_BITS
 org.junit.internal.builders.NullBuilder
 kotlin.collections.AbstractMap$values$1$iterator$1
 org.junit.internal.matchers.ThrowableMessageMatcher
@@ -4501,13 +4517,13 @@ org.hamcrest.internal.ArrayIterator
 com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor
 kotlin.text.Regex$findAll$2
 org.junit.runner.notification.SynchronizedRunListener
-okhttp3.Cache$CacheRequestImpl
 com.google.android.gms.tasks.TaskCompletionSource:
     public void <init>(com.google.android.gms.tasks.CancellationToken)
     static synthetic com.google.android.gms.tasks.zzu zza(com.google.android.gms.tasks.TaskCompletionSource)
     public void setResult(java.lang.Object)
     public void setException(java.lang.Exception)
     public boolean trySetException(java.lang.Exception)
+okhttp3.Cache$CacheRequestImpl
 kotlin.coroutines.jvm.internal.RunSuspendKt
 kotlin.text.StringsKt___StringsKt$windowed$1
 com.google.android.gms.common.stats.WakeLockTracker
@@ -4541,6 +4557,23 @@ com.google.android.exoplayer2.text.CaptionStyleCompat
 kotlin.internal.OnlyInputTypes
 com.google.firebase.installations.remote.AutoValue_InstallationResponse:
     public com.google.firebase.installations.remote.InstallationResponse$Builder toBuilder()
+io.flutter.plugins.imagepicker.ImagePickerCache:
+    static final java.lang.String MAP_KEY_PATH
+    static final java.lang.String MAP_KEY_MAX_WIDTH
+    static final java.lang.String MAP_KEY_MAX_HEIGHT
+    static final java.lang.String MAP_KEY_IMAGE_QUALITY
+    private static final java.lang.String MAP_KEY_TYPE
+    private static final java.lang.String MAP_KEY_ERROR_CODE
+    private static final java.lang.String MAP_KEY_ERROR_MESSAGE
+    private static final java.lang.String FLUTTER_IMAGE_PICKER_IMAGE_PATH_KEY
+    private static final java.lang.String SHARED_PREFERENCE_ERROR_CODE_KEY
+    private static final java.lang.String SHARED_PREFERENCE_ERROR_MESSAGE_KEY
+    private static final java.lang.String SHARED_PREFERENCE_MAX_WIDTH_KEY
+    private static final java.lang.String SHARED_PREFERENCE_MAX_HEIGHT_KEY
+    private static final java.lang.String SHARED_PREFERENCE_IMAGE_QUALITY_KEY
+    private static final java.lang.String SHARED_PREFERENCE_TYPE_KEY
+    private static final java.lang.String SHARED_PREFERENCE_PENDING_IMAGE_URI_PATH_KEY
+    static final java.lang.String SHARED_PREFERENCES_NAME
 kotlin.internal.jdk7.JDK7PlatformImplementations
 com.google.android.exoplayer2.drm.DefaultDrmSession:
     public byte[] getOfflineLicenseKeySetId()
@@ -4931,8 +4964,8 @@ com.google.android.gms.measurement.internal.zzgv:
     protected void <init>()
 org.junit.internal.builders.AllDefaultPossibilitiesBuilder
 com.google.android.gms.ads_identifier.R
-com.google.android.exoplayer2.source.SingleSampleMediaSource$EventListener
 com.google.android.exoplayer2.upstream.ByteArrayDataSource
+com.google.android.exoplayer2.source.SingleSampleMediaSource$EventListener
 kotlin.io.FileTreeWalk$FileTreeWalkIterator$WhenMappings
 org.junit.runners.MethodSorters
 com.google.auto.value.AutoValue$CopyAnnotations
@@ -5170,7 +5203,6 @@ io.flutter.embedding.engine.plugins.shim.ShimRegistrar:
     public io.flutter.view.FlutterView view()
     public java.lang.String lookupKeyForAsset(java.lang.String,java.lang.String)
     public io.flutter.plugin.common.PluginRegistry$Registrar publish(java.lang.Object)
-    public io.flutter.plugin.common.PluginRegistry$Registrar addRequestPermissionsResultListener(io.flutter.plugin.common.PluginRegistry$RequestPermissionsResultListener)
     public io.flutter.plugin.common.PluginRegistry$Registrar addNewIntentListener(io.flutter.plugin.common.PluginRegistry$NewIntentListener)
     public io.flutter.plugin.common.PluginRegistry$Registrar addUserLeaveHintListener(io.flutter.plugin.common.PluginRegistry$UserLeaveHintListener)
     public io.flutter.plugin.common.PluginRegistry$Registrar addViewDestroyListener(io.flutter.plugin.common.PluginRegistry$ViewDestroyListener)
@@ -5178,6 +5210,16 @@ io.flutter.embedding.engine.plugins.shim.ShimRegistrar:
 kotlin.jvm.Strictfp
 org.junit.After
 com.google.android.exoplayer2.extractor.mp3.Mp3Extractor$Flags
+io.flutter.plugins.imagepicker.ImagePickerDelegate:
+    io.flutter.plugins.imagepicker.CameraDevice getCameraDevice()
+    static final int REQUEST_CODE_CHOOSE_IMAGE_FROM_GALLERY
+    static final int REQUEST_CODE_TAKE_IMAGE_WITH_CAMERA
+    static final int REQUEST_EXTERNAL_IMAGE_STORAGE_PERMISSION
+    static final int REQUEST_CAMERA_IMAGE_PERMISSION
+    static final int REQUEST_CODE_CHOOSE_VIDEO_FROM_GALLERY
+    static final int REQUEST_CODE_TAKE_VIDEO_WITH_CAMERA
+    static final int REQUEST_EXTERNAL_VIDEO_STORAGE_PERMISSION
+    static final int REQUEST_CAMERA_VIDEO_PERMISSION
 androidx.browser.trusted.TrustedWebActivityDisplayMode:
     public static androidx.browser.trusted.TrustedWebActivityDisplayMode fromBundle(android.os.Bundle)
 com.google.android.exoplayer2.util.SystemClock:
@@ -5898,7 +5940,6 @@ io.flutter.plugin.common.PluginRegistry$Registrar:
     public abstract io.flutter.view.FlutterView view()
     public abstract java.lang.String lookupKeyForAsset(java.lang.String,java.lang.String)
     public abstract io.flutter.plugin.common.PluginRegistry$Registrar publish(java.lang.Object)
-    public abstract io.flutter.plugin.common.PluginRegistry$Registrar addRequestPermissionsResultListener(io.flutter.plugin.common.PluginRegistry$RequestPermissionsResultListener)
     public abstract io.flutter.plugin.common.PluginRegistry$Registrar addNewIntentListener(io.flutter.plugin.common.PluginRegistry$NewIntentListener)
     public abstract io.flutter.plugin.common.PluginRegistry$Registrar addUserLeaveHintListener(io.flutter.plugin.common.PluginRegistry$UserLeaveHintListener)
     public abstract io.flutter.plugin.common.PluginRegistry$Registrar addViewDestroyListener(io.flutter.plugin.common.PluginRegistry$ViewDestroyListener)
@@ -6857,6 +6898,8 @@ com.google.android.gms.common.util.DeviceProperties:
     private static java.lang.Boolean zzgr
     private static java.lang.Boolean zzgt
     private static java.lang.Boolean zzgu
+io.flutter.plugins.flutter_plugin_android_lifecycle.FlutterAndroidLifecyclePlugin:
+    public static void registerWith(io.flutter.plugin.common.PluginRegistry$Registrar)
 com.google.auto.value.extension.memoized.Memoized
 kotlin.text.StringsKt__RegexExtensionsJVMKt
 com.google.android.exoplayer2.drm.FrameworkMediaDrm
@@ -7590,6 +7633,8 @@ com.google.android.exoplayer2.extractor.mkv.MatroskaExtractor:
     public static final com.google.android.exoplayer2.extractor.ExtractorsFactory FACTORY
 com.google.android.gms.internal.measurement.zzfo:
     private final transient int zzc
+io.flutter.plugins.imagepicker.ImagePickerDelegate$3$1:
+    final synthetic io.flutter.plugins.imagepicker.ImagePickerDelegate$3 this$1
 com.google.android.gms.internal.measurement.zzga:
     private static final java.lang.Throwable[] zza
 com.google.android.exoplayer2.source.hls.HlsChunkSource$HlsMediaPlaylistSegmentIterator:
@@ -7618,16 +7663,14 @@ com.pichillilorenzo.flutter_inappwebview.InAppWebView.InAppWebView$17:
     final synthetic com.pichillilorenzo.flutter_inappwebview.InAppWebView.InAppWebView this$0
 com.google.android.gms.internal.measurement.zzgr:
     private static final java.util.Comparator zzd
-io.flutter.embedding.engine.FlutterEngineConnectionRegistry$FlutterEngineActivityPluginBinding:
-    private final io.flutter.embedding.engine.plugins.lifecycle.HiddenLifecycleReference hiddenLifecycleReference
 com.google.android.gms.internal.measurement.zzhd:
     int zzb
     private int zzd
     private boolean zze
-com.google.android.exoplayer2.extractor.ogg.OggExtractor:
-    public static final com.google.android.exoplayer2.extractor.ExtractorsFactory FACTORY
 com.google.android.gms.internal.measurement.zzhg$zza:
     private final int zzc
+com.google.android.exoplayer2.extractor.ogg.OggExtractor:
+    public static final com.google.android.exoplayer2.extractor.ExtractorsFactory FACTORY
 kotlin.coroutines.intrinsics.IntrinsicsKt
 com.google.android.gms.internal.measurement.zzhu:
     private static final java.lang.reflect.Type[] zzbf
@@ -7894,15 +7937,15 @@ kotlin.KotlinVersion:
     public static final kotlin.KotlinVersion$Companion Companion
 kotlin.Result
 io.flutter.plugin.common.PluginRegistry
-com.google.android.exoplayer2.extractor.BinarySearchSeeker$TimestampSeeker$-CC
-io.flutter.plugin.platform.PlatformView$-CC
-com.google.android.exoplayer2.audio.AudioRendererEventListener$-CC
+com.google.android.exoplayer2.audio.AudioListener$-CC
+com.google.android.exoplayer2.video.VideoListener$-CC
 com.google.android.exoplayer2.Player$EventListener$-CC:
     public static void $default$onPlayerStateChanged(com.google.android.exoplayer2.Player$EventListener,boolean,int)
     public static void $default$onPlayerError(com.google.android.exoplayer2.Player$EventListener,com.google.android.exoplayer2.ExoPlaybackException)
-com.google.android.exoplayer2.analytics.AnalyticsListener$-CC
 com.google.android.exoplayer2.video.VideoRendererEventListener$-CC
-com.google.android.exoplayer2.audio.AudioListener$-CC
-com.google.android.exoplayer2.video.VideoListener$-CC
+com.google.android.exoplayer2.extractor.BinarySearchSeeker$TimestampSeeker$-CC
 com.google.android.exoplayer2.drm.DefaultDrmSessionEventListener$-CC
+com.google.android.exoplayer2.analytics.AnalyticsListener$-CC
+com.google.android.exoplayer2.audio.AudioRendererEventListener$-CC
+io.flutter.plugin.platform.PlatformView$-CC
 $r8$backportedMethods$utility$Integer$2$compare

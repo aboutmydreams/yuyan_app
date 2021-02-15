@@ -45,6 +45,11 @@ Widget getHtml(BuildContext context, String bodyHtml, {EdgeInsets padding}) {
                 color: Colors.grey[300],
                 child: Text(node.text),
               );
+            case 'Card':
+              return Container(
+                color: Colors.grey[300],
+                child: Text(node.text),
+              );
             // case 'table':
             //   return SingleChildScrollView(
             //     // scrollDirection: Axis.horizontal,
@@ -167,6 +172,17 @@ Widget getHtml(BuildContext context, String bodyHtml, {EdgeInsets padding}) {
                 child: Text("\n"),
               );
             case 'p':
+              if (node.outerHtml.contains('name="image"')) {
+                String startStr = 'data:%7B%22src%22%3A%22';
+                String endStr = '%22%2C%22originWidth';
+                int imgStart = node.outerHtml.toString().indexOf(startStr);
+                int imgEnd = node.outerHtml.toString().indexOf(endStr);
+                String imgUrl = Uri.decodeComponent(node.outerHtml
+                    .substring(imgStart + startStr.length, imgEnd));
+                print(imgUrl);
+
+                return imgHtml(context, imgUrl);
+              }
               if (!node.outerHtml.contains("img")) {
                 // return HtmlWidget(
                 //   node.outerHtml,
