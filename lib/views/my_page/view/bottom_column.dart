@@ -52,7 +52,7 @@ Widget oneColumn(BuildContext context,
     title: (text == "设置" && !ifBadge)
         ? Badge(
             padding: EdgeInsets.all(3),
-            position: BadgePosition(left: 34),
+            position: BadgePosition(start: 34),
             child: Text(
               '$text',
               textAlign: TextAlign.left,

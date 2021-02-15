@@ -18,7 +18,7 @@ class SettingTile extends StatelessWidget {
       title: (title == "检查更新" && !ifBadge)
           ? Badge(
               padding: EdgeInsets.all(3),
-              position: BadgePosition(left: 60),
+              position: BadgePosition(start: 60),
               child: Text(
                 '$title',
                 textAlign: TextAlign.left,
