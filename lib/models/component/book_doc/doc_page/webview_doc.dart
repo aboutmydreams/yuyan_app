@@ -318,9 +318,14 @@ class _DocPageWebState extends State<DocPageWeb> {
                     var theDocTitle = await _webController.evaluateJavascript(
                       source: 'document.title;',
                     );
+                    // var cookie = await _webController.evaluateJavascript(
+                    //   source: 'document.cookie;',
+                    // );
+                    // print(cookie);
                     setState(() {
                       docTitle = theDocTitle;
                     });
+
                     await morePadding();
                   },
                   onProgressChanged:

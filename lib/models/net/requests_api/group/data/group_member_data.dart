@@ -7,7 +7,7 @@ class MemberJson {
   MemberJson.fromJson(Map<String, dynamic> json) {
     meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
     if (json['data'] != null) {
-      data = new List<MemberData>();
+      data = <MemberData>[];
       json['data'].forEach((v) {
         data.add(new MemberData.fromJson(v));
       });

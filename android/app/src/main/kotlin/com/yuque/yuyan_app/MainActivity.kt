@@ -1,4 +1,4 @@
-package com.yuque.yuyan_app
+package com.yuque.vyan
 
 import io.flutter.embedding.android.FlutterActivity
 

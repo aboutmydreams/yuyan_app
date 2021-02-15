@@ -7,6 +7,7 @@ import 'package:yuyan_app/state_manage/dataManage/recent_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/select_manage.dart';
 import 'package:yuyan_app/state_manage/version_manage/version_manage.dart';
 
+import 'dataManage/note_manage.dart';
 import 'layout_manage/hide_bottom.dart';
 
 class TopStateModel extends ColorManage {
@@ -17,6 +18,7 @@ class TopStateModel extends ColorManage {
   AttentManage attentManage = AttentManage();
   NewsManage newsManage = NewsManage();
   QuickManage quickManage = QuickManage();
+  NoteManage noteManage = NoteManage();
   RecentManage recentManage = RecentManage();
   MyInfoManage myInfoManage = MyInfoManage();
   VersionManage versionManage = VersionManage();
@@ -37,6 +39,8 @@ class TopStateModel extends ColorManage {
     newsManage.update();
     // 我的数据
     myInfoManage.update();
+    // 小记数据
+    noteManage.update();
   }
 }
 

@@ -7,6 +7,7 @@ class DioReq {
   static Dio dio = Dio();
   static String baseUrl = "https://www.yuque.com/api";
 
+  /// 适配空间 api
   static orgSpace({bool onlyUser: false}) async {
     String nowOrg = await topModel.myInfoManage.getMyNowOrg();
     onlyUser ??= false;
@@ -16,6 +17,7 @@ class DioReq {
     return onlyUser ? baseUrl : nowBaseUrl;
   }
 
+  /// 自动生成 header
   static autoHeader({Map<String, dynamic> headers}) async {
     var token = await getToken();
     var ctoken = await getCtoken();
@@ -27,17 +29,40 @@ class DioReq {
       headers["x-csrf-token"] = ctoken.toString();
       headers["X-Auth-Token"] = token.toString();
       return headers;
+    } else if (headers.containsKey('add')) {
+      headers = headers['add'];
+      headers["Content-Type"] = "application/json";
+      headers["Cookie"] = _allCookie;
+      headers["x-csrf-token"] = ctoken.toString();
+      headers["X-Auth-Token"] = token.toString();
     } else {
       return headers;
     }
   }
 
+  /// 默认配置请求参数
   static Options autoOptions({Map<String, dynamic> headers}) {
     return Options(
       headers: headers,
       sendTimeout: 15000,
       receiveTimeout: 15000,
     );
+  }
+
+  /// 处理 DioError 错误
+  static onDioError(DioError e) {
+    print(e.toString());
+    print(e.request.path);
+    if (e.type == DioErrorType.RESPONSE) {
+      // print(e.response.statusCode); //403 权限不足（token过期）
+      return {"data": 403};
+    } else if (e.type == DioErrorType.CONNECT_TIMEOUT) {
+      return {"data": "连接超时，请检查网络"};
+    } else if (e.type == DioErrorType.DEFAULT) {
+      return {"data": "网络错误"};
+    } else {
+      return {"data": "${e.toString()}"};
+    }
   }
 
   static get(String path,
@@ -58,17 +83,7 @@ class DioReq {
       print("get: $path ${response.statusCode}");
       return response.data;
     } on DioError catch (e) {
-      print(path + e.type.toString());
-      if (e.type == DioErrorType.RESPONSE) {
-        print(e.response.statusCode); //403 权限不足（token过期）
-        return {"data": e.response.statusCode};
-      } else if (e.type == DioErrorType.CONNECT_TIMEOUT) {
-        return {"data": "连接超时，请检查网络"};
-      } else if (e.type == DioErrorType.DEFAULT) {
-        return {"data": "网络错误"};
-      } else {
-        return {"data": "${e.toString()}"};
-      }
+      onDioError(e);
     } catch (e) {
       throw Exception('UNPROM${e.toString()}');
     }
@@ -95,16 +110,7 @@ class DioReq {
       return response.data;
     } on DioError catch (e) {
       print(path + e.toString());
-      if (e.type == DioErrorType.RESPONSE) {
-        // print(e.response.statusCode); //403 权限不足（token过期）
-        return {"data": e.response.statusCode};
-      } else if (e.type == DioErrorType.CONNECT_TIMEOUT) {
-        return {"data": "连接超时，请检查网络"};
-      } else if (e.type == DioErrorType.DEFAULT) {
-        return {"data": "网络错误"};
-      } else {
-        return {"data": "${e.toString()}"};
-      }
+      onDioError(e);
     } catch (e) {
       throw Exception('UNPROM${e.toString()}');
     }
@@ -128,17 +134,7 @@ class DioReq {
       print("put: $path ${response.statusCode}");
       return response.data;
     } on DioError catch (e) {
-      print(e);
-      if (e.type == DioErrorType.RESPONSE) {
-        // print(e.response.statusCode); //403 权限不足（token过期）
-        return {"data": 403};
-      } else if (e.type == DioErrorType.CONNECT_TIMEOUT) {
-        return {"data": "连接超时，请检查网络"};
-      } else if (e.type == DioErrorType.DEFAULT) {
-        return {"data": "网络错误"};
-      } else {
-        return {"data": "${e.toString()}"};
-      }
+      onDioError(e);
     } catch (e) {
       throw Exception('UNPROM${{"data": "${e.toString()}"}}');
     }
@@ -162,22 +158,51 @@ class DioReq {
       print("del: $path ${response.statusCode}");
       return response.data;
     } on DioError catch (e) {
-      print(e);
-      if (e.type == DioErrorType.RESPONSE) {
-        // print(e.response.statusCode); //403 权限不足（token过期）
-        return {"data": 403};
-      } else if (e.type == DioErrorType.CONNECT_TIMEOUT) {
-        return {"data": "连接超时，请检查网络"};
-      } else if (e.type == DioErrorType.DEFAULT) {
-        return {"data": "网络错误"};
-      } else {
-        return {"data": "${e.toString()}"};
-      }
+      onDioError(e);
     } catch (e) {
       throw Exception('UNPROM${e.toString()}');
     }
   }
 
+  /// 上传图片
+  static uploadImage(String imagePath, String attachableType, int attachableId,
+      {String type: 'image'}) async {
+    /// attachableType: Doclet: 小记 doc: 文档
+    // var file = File.fromUri(Uri.parse(imagePath));
+    String uploadUrl = baseUrl + "/upload/attach";
+    var name =
+        imagePath.substring(imagePath.lastIndexOf("/") + 1, imagePath.length);
+    var ctoken = await getCtoken();
+
+    Map param = {
+      "attachable_type": attachableType,
+      "attachable_id": attachableId,
+      "type": type,
+      "ctoken": ctoken
+    };
+    var image = await MultipartFile.fromFile(
+      imagePath,
+      filename: name,
+    );
+    FormData formData = FormData.fromMap({"file": image});
+
+    Map headers = await autoHeader();
+    try {
+      Response response = await dio.post(
+        uploadUrl,
+        queryParameters: param,
+        data: formData,
+        options: autoOptions(headers: headers),
+      );
+      return response.data['data']['url'];
+    } on DioError catch (e) {
+      onDioError(e);
+    } catch (e) {
+      throw Exception('UNPROM${e.toString()}');
+    }
+  }
+
+  /// 获取重定向最终路径
   static getRedirect(
     String path, {
     Map<String, dynamic> headers,

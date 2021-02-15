@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   _HomePageState({Key key, this.pageKey: 0});
   int pageKey;
   bool hideBottom = false;
-  List<Widget> pageList = List();
+  List<Widget> pageList = [];
   GlobalKey _bottomNavigationKey = GlobalKey();
 
   @override
@@ -66,7 +66,11 @@ class _HomePageState extends State<HomePage> {
           child: ScopedModelDescendant<BottomManage>(
               builder: (context, child, model) {
             return Opacity(
-              opacity: model.y < 30 ? model.y < 3 ? 0 : model.y / 30 : 1,
+              opacity: model.y < 30
+                  ? model.y < 3
+                      ? 0
+                      : model.y / 30
+                  : 1,
               child: CurvedNavigationBar(
                 key: _bottomNavigationKey,
                 color: Color.fromRGBO(0, 0, 0, 0.06),
