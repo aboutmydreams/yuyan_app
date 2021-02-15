@@ -15,6 +15,11 @@ Future<File> writeJson(String fileName, Map jsonMap) async {
 }
 
 Future<Map> readJson(String fileName) async {
-  var data = jsonDecode(await (await getLocalFile(fileName)).readAsString());
-  return data;
+  try {
+    var data = jsonDecode(await (await getLocalFile(fileName)).readAsString());
+    return data;
+  } catch (e) {
+    print(e.toString());
+    return null;
+  }
 }
