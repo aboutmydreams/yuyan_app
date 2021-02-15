@@ -86,13 +86,18 @@ Widget oneMark(BuildContext context, MarkData data) {
           bookSlug: data.target.slug,
         );
       } else if (data.targetType == "Doc") {
-        OpenPage.docWeb(
-          context,
-          login: data.targetGroup.login,
-          bookSlug: data.targetBook.slug,
-          bookId: data.targetBookId,
-          docId: data.targetId,
-        );
+        // 防止收藏的 doc 后期变为私有时无法定位到 book
+        if (data.targetGroup == null) {
+          openUrl(context, "https://www.yuque.com" + data.sUrl);
+        } else {
+          OpenPage.docWeb(
+            context,
+            login: data.targetGroup.login,
+            bookSlug: data.targetBook.slug,
+            bookId: data.targetBookId,
+            docId: data.targetId,
+          );
+        }
       } else {
         openUrl(context, "https://www.yuque.com${data.sUrl}");
       }
@@ -133,7 +138,7 @@ Widget oneMark(BuildContext context, MarkData data) {
           ),
           SizedBox(height: 2),
           Text(
-            data.target.description,
+            data.target.description ?? "",
             style: AppStyles.textStyleC,
           )
         ],

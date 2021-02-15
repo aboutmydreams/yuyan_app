@@ -5,7 +5,7 @@ class GroupBookJson {
 
   GroupBookJson.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<BookData>();
+      data = <BookData>[];
       json['data'].forEach((v) {
         data.add(new BookData.fromJson(v));
       });

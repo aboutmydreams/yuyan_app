@@ -89,10 +89,12 @@ class Oauth {
         return false;
       }
     } on DioError catch (e) {
-      if (e.type == DioErrorType.RESPONSE) {
-        // e.response.statusCode >= 500 后端炸了
-        print(e.response.statusCode);
-      }
+      // if (e.type == DioErrorType.RESPONSE) {
+      //   // e.response.statusCode >= 500 后端炸了
+      //   print(e.response.statusCode);
+      // }
+      print(e.toString());
+      return false;
     } catch (e) {
       print(e.toString());
       return false;

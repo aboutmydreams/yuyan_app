@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/models/component/edit_markdown/add_doc/edit_page.dart';
+import 'package:yuyan_app/models/component/edit_markdown/add_doc/edit_page_test-dev.2.0.dart';
 import 'package:yuyan_app/models/component/group/group_page.dart';
 import 'package:yuyan_app/models/widgets_big/image_page/test1.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
@@ -7,6 +9,7 @@ import 'package:yuyan_app/views/begin_init/guide_page/guide_page.dart';
 import 'package:yuyan_app/views/begin_init/guide_page/test.dart';
 import 'package:yuyan_app/views/begin_init/login_page/login_page.dart';
 import 'package:yuyan_app/views/dashboard/dashboard.dart';
+import 'package:yuyan_app/views/dashboard/quick/note/note_page.dart';
 import 'package:yuyan_app/views/dashboard/quick/setting/quick_set.dart';
 import 'package:yuyan_app/views/home_page.dart';
 import 'package:yuyan_app/views/my_page/about_yuyan/about.dart';
@@ -19,8 +22,12 @@ import 'package:yuyan_app/views/my_page/my_page.dart';
 import 'package:yuyan_app/views/my_page/repos/my_repos_page.dart';
 import 'package:yuyan_app/views/my_page/setting/setting_page.dart';
 import 'package:yuyan_app/views/my_page/topic/topic_page.dart';
+import 'package:zefyr/zefyr.dart';
 
 import 'dev_test/firebase_analytics.dart';
+
+ZefyrController _controller;
+bool _editing = true;
 
 Map<String, WidgetBuilder> routeData = {
   '/': (context) => HomePage(),
@@ -30,11 +37,13 @@ Map<String, WidgetBuilder> routeData = {
   // '/first': (context) => GalleryExample(),
   // '/first': (context) => AboutYuyan(),
   // '/first': (context) => MyAnalyPage(),
+  '/edit': (context) => FullPageEditorScreen(),
   '/first': (context) => FirstPage(),
   '/login': (context) => LoginPage(),
   '/guide': (context) => GuidePage(),
   '/quickset': (context) => QuickSetPage(),
   '/dashboard': (context) => Dashboard(),
+  '/note': (context) => NotePage(),
   '/my/setting': (context) => SettingPage(),
   '/my/group': (context) => MyGroup(),
   '/my/follower': (context) => FollowerPage(),

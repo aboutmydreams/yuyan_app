@@ -41,5 +41,4 @@ Widget blockquoteHtml(BuildContext context, String outerHtml) {
       ),
     ],
   );
-  ;
 }
