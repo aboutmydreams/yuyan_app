@@ -65,51 +65,53 @@ class _HomePageState extends State<HomePage> {
           model: topModel.bottomManage,
           child: ScopedModelDescendant<BottomManage>(
               builder: (context, child, model) {
-            return Opacity(
-              opacity: model.y < 30
-                  ? model.y < 3
-                      ? 0
-                      : model.y / 30
-                  : 1,
-              child: CurvedNavigationBar(
-                key: _bottomNavigationKey,
-                color: Color.fromRGBO(0, 0, 0, 0.06),
-                backgroundColor: Colors.white,
-                animationCurve: Curves.easeInQuad,
-                height: model.y,
-                items: <Widget>[
-                  Icon(
-                    Icons.insert_emoticon,
-                    size: 34,
-                    color: iconColor(0),
-                  ),
-                  Icon(
-                    Icons.wrap_text,
-                    size: 34,
-                    color: iconColor(1),
-                  ),
-                  Badge(
-                    padding: EdgeInsets.all(0),
-                    badgeColor: Colors.transparent,
-                    elevation: 0,
-                    badgeContent: Icon(
-                      Icons.notifications_none,
+            return SafeArea(
+              child: Opacity(
+                opacity: model.y < 30
+                    ? model.y < 3
+                        ? 0
+                        : model.y / 30
+                    : 1,
+                child: CurvedNavigationBar(
+                  key: _bottomNavigationKey,
+                  color: Color.fromRGBO(0, 0, 0, 0.06),
+                  backgroundColor: Colors.white,
+                  animationCurve: Curves.easeInQuad,
+                  height: model.y,
+                  items: <Widget>[
+                    Icon(
+                      Icons.insert_emoticon,
                       size: 34,
-                      color: iconColor(2),
+                      color: iconColor(0),
                     ),
-                  ),
-                  Icon(
-                    Icons.perm_identity,
-                    size: 34,
-                    color: iconColor(3),
-                  ),
-                ],
-                animationDuration: Duration(milliseconds: 300),
-                onTap: (index) {
-                  setState(() {
-                    pageKey = index;
-                  });
-                },
+                    Icon(
+                      Icons.wrap_text,
+                      size: 34,
+                      color: iconColor(1),
+                    ),
+                    Badge(
+                      padding: EdgeInsets.all(0),
+                      badgeColor: Colors.transparent,
+                      elevation: 0,
+                      badgeContent: Icon(
+                        Icons.notifications_none,
+                        size: 34,
+                        color: iconColor(2),
+                      ),
+                    ),
+                    Icon(
+                      Icons.perm_identity,
+                      size: 34,
+                      color: iconColor(3),
+                    ),
+                  ],
+                  animationDuration: Duration(milliseconds: 300),
+                  onTap: (index) {
+                    setState(() {
+                      pageKey = index;
+                    });
+                  },
+                ),
               ),
             );
           })),
