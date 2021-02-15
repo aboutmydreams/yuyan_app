@@ -133,7 +133,10 @@ dependencies:
   html2md: ^0.5.1
 
   # markdown to quill
-  quill_markdown: ^0.0.3
+  # quill_markdown: ^0.0.3
+
+  # markdown 渲染器
+  flutter_markdown: ^0.5.2
 
 
 dev_dependencies:

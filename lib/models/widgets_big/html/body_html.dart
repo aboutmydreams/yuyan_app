@@ -45,11 +45,7 @@ Widget getHtml(BuildContext context, String bodyHtml, {EdgeInsets padding}) {
                 color: Colors.grey[300],
                 child: Text(node.text),
               );
-            case 'Card':
-              return Container(
-                color: Colors.grey[300],
-                child: Text(node.text),
-              );
+
             // case 'table':
             //   return SingleChildScrollView(
             //     // scrollDirection: Axis.horizontal,
@@ -65,6 +61,7 @@ Widget getHtml(BuildContext context, String bodyHtml, {EdgeInsets padding}) {
             //   );
             case 'ol':
             case 'ul':
+              print(node.outerHtml);
               return HtmlWidget(
                 node.outerHtml,
                 webView: true,
