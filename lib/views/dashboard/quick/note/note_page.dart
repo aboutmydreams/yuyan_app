@@ -61,6 +61,7 @@ class _DashboardState extends State<NotePage> {
       ),
       floatingActionButton: GestureDetector(
         onLongPress: () {
+          Navigator.pushNamed(context, '/edit/note');
           myToast(context, "💕");
         },
         child: FloatingActionButton(

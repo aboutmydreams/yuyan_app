@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:html2md/html2md.dart' as html2md;
-import 'package:quill_markdown/quill_markdown.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/edit_markdown/convert/to_markdown.dart';

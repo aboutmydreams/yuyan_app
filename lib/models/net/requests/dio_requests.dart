@@ -35,6 +35,7 @@ class DioReq {
       headers["Cookie"] = _allCookie;
       headers["x-csrf-token"] = ctoken.toString();
       headers["X-Auth-Token"] = token.toString();
+      return headers;
     } else {
       return headers;
     }
@@ -71,7 +72,7 @@ class DioReq {
       bool onlyUser: false}) async {
     var nowBaseUrl = await orgSpace(onlyUser: onlyUser);
     var diopath = path[0] == "/" ? nowBaseUrl + path : path;
-    headers ??= await autoHeader(headers: headers);
+    headers = await autoHeader(headers: headers);
 
     try {
       Response response = await dio.get(
@@ -96,7 +97,9 @@ class DioReq {
       bool onlyUser: false}) async {
     var nowBaseUrl = await orgSpace(onlyUser: onlyUser);
     var diopath = path[0] == "/" ? nowBaseUrl + path : path;
-    headers ??= await autoHeader(headers: headers);
+    print('bef======$headers');
+    headers = await autoHeader(headers: headers);
+    print('af======$headers');
 
     try {
       Response response = await dio.post(
@@ -123,7 +126,7 @@ class DioReq {
       bool onlyUser: false}) async {
     var nowBaseUrl = await orgSpace(onlyUser: onlyUser);
     var diopath = path[0] == "/" ? nowBaseUrl + path : path;
-    headers ??= await autoHeader(headers: headers);
+    headers = await autoHeader(headers: headers);
     try {
       Response response = await dio.put(
         diopath,
@@ -147,7 +150,7 @@ class DioReq {
       bool onlyUser: false}) async {
     var nowBaseUrl = await orgSpace(onlyUser: onlyUser);
     var diopath = path[0] == "/" ? nowBaseUrl + path : path;
-    headers ??= await autoHeader(headers: headers);
+    headers = await autoHeader(headers: headers);
     try {
       Response response = await dio.delete(
         diopath,
@@ -208,7 +211,7 @@ class DioReq {
     Map<String, dynamic> headers,
     Map<String, dynamic> param,
   }) async {
-    headers ??= await autoHeader(headers: headers);
+    headers = await autoHeader(headers: headers);
 
     var nowBaseUrl = await orgSpace();
     var diopath = path[0] == "/" ? nowBaseUrl + path : path;
