@@ -67,6 +67,14 @@ lake2md(String htmlLake) {
     String endStr = '%22%2C%22originWidth';
     int imgStart = htmlLake.toString().indexOf(startStr);
     int imgEnd = htmlLake.toString().indexOf(endStr);
+    if (imgEnd == -1) {
+      /// 通过 markdown convert to lake 上传的 endStr 有所变化
+      endStr = '%22%2C%22';
+      imgEnd = htmlLake.toString().indexOf(endStr);
+    }
+    print('htmlLake==========$imgStart');
+    print('startStr==========$imgEnd');
+    print('endStr==========$endStr');
     String imgUrl = Uri.decodeComponent(
         htmlLake.substring(imgStart + startStr.length, imgEnd));
     markdown = markdown + '![img]($imgUrl)';
