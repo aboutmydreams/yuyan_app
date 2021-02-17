@@ -9,6 +9,8 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:yuyan_app/models/net/requests/dio_requests.dart';
+import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:zefyr/zefyr.dart';
 
 /// Custom image delegate used by this example to load image from application
@@ -25,13 +27,18 @@ class CustomImageDelegate implements ZefyrImageDelegate<ImageSource> {
     final picker = ImagePicker();
     final file = await picker.getImage(source: source);
     if (file == null) return null;
-    return file.path;
+    var imgUrl = await DioReq.uploadImage(
+      file.path,
+      'Doclet',
+      topModel.noteManage.noteData.meta.mirror.id,
+    );
+    return imgUrl;
   }
 
   @override
   Widget buildImage(BuildContext context, String imgUrl) {
     // We use custom "asset" scheme to distinguish asset images from other files.
-    print(imgUrl);
+    // print(imgUrl);
 
     if (imgUrl.startsWith('http')) {
       // Otherwise assume this is a file stored locally on user's device.
@@ -48,6 +55,7 @@ class CustomImageDelegate implements ZefyrImageDelegate<ImageSource> {
       return Image.asset(imgUrl);
     } else {
       final file = File.fromUri(Uri.parse(imgUrl));
+
       final image = FileImage(file);
       return Image(image: image);
     }
