@@ -59,6 +59,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final double topPadding = MediaQuery.of(context).padding.bottom;
+    // print(topPadding);
     return Scaffold(
       // drawer: QuickSetPage(),
       bottomNavigationBar: ScopedModel<BottomManage>(

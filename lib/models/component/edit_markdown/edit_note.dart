@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:quill_delta/quill_delta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/edit_markdown/convert/to_markdown.dart';
 import 'package:yuyan_app/models/net/requests_api/notes/note.dart';
 import 'package:yuyan_app/models/net/requests_api/util/convert.dart';
@@ -36,12 +37,13 @@ Delta getDelta() {
 class _EditNotePageState extends State<EditNotePage> {
   Delta doc = Delta();
   ZefyrController _controller = ZefyrController(
-      NotusDocument.fromDelta(Delta.fromJson(json.decode(doc1) as List)));
+      NotusDocument.fromDelta(Delta.fromJson(json.decode(doc2) as List)));
 
   final FocusNode _focusNode = FocusNode();
-  bool _editing = false;
+  bool _editing = true;
   StreamSubscription<NotusChange> _sub;
   bool _darkTheme = false;
+  bool isPublishing = false;
 
   @override
   void initState() {
@@ -71,10 +73,16 @@ class _EditNotePageState extends State<EditNotePage> {
 
   publishNote() async {
     /// 发布内容，清空 note 缓存
+    /// 0、显示发布中
     /// 1、获取 Markdown 文档
     /// 2、调用语雀 convert 转为 lake
     /// 3、发布 note，清空 note 缓存
     /// 4、刷新 note 数据
+    /// 5、发布成功，退回上一页面
+
+    setState(() {
+      isPublishing = true;
+    });
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String markdown = notusMarkdown.encode(_controller.document.toDelta());
     int noteId = topModel.noteManage.noteData.meta.mirror.id;
@@ -87,6 +95,9 @@ class _EditNotePageState extends State<EditNotePage> {
         topModel.noteManage.update();
         prefs.remove('save_note');
         myToast(context, '发布成功');
+        setState(() {
+          isPublishing = false;
+        });
         Navigator.pop(context);
       }
     });
@@ -100,41 +111,38 @@ class _EditNotePageState extends State<EditNotePage> {
 
   @override
   Widget build(BuildContext context) {
-    final done = _editing
-        ? IconButton(onPressed: _stopEditing, icon: Icon(Icons.save))
-        : IconButton(onPressed: _startEditing, icon: Icon(Icons.edit));
+    // final done = _editing
+    //     ? IconButton(onPressed: _stopEditing, icon: Icon(Icons.save))
+    //     : IconButton(onPressed: _startEditing, icon: Icon(Icons.edit));
     final result = Scaffold(
       resizeToAvoidBottomPadding: true,
       appBar: AppBar(
-        title: FlatButton.icon(
-          onPressed: () {
-            // _saveDocument(context);
-            final index = _controller.selection.baseOffset;
-            final length = _controller.selection.extentOffset - index;
-            String markdown =
-                notusMarkdown.encode(_controller.document.toDelta());
-            // Delta delta = notusMarkdown.decode(markdown);
-            print(_controller.document.toDelta().toJson());
-            print("index===$index, length===$length");
-            print(_controller.selection.affinity.index);
-            publishNote();
-          },
-          icon: Icon(
-            Icons.add_comment,
-            color: Colors.white,
-          ),
-          label: Text("点我反馈"),
-          // color: AppColors.primary,
-          textColor: Colors.white,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        ),
+        title: Text('小记'),
         actions: [
-          done,
-          PopupMenuButton<_Options>(
-            itemBuilder: buildPopupMenu,
-            onSelected: handlePopupItemSelected,
-          )
+          FlatButton.icon(
+            onPressed: () {
+              // _saveDocument(context);
+
+              // final index = _controller.selection.baseOffset;
+              // final length = _controller.selection.extentOffset - index;
+              // String markdown =
+              //     notusMarkdown.encode(_controller.document.toDelta());
+              // Delta delta = notusMarkdown.decode(markdown);
+              // print(_controller.document.toDelta().toJson());
+              // print("index===$index, length===$length");
+              // print(_controller.selection.affinity.index);
+              publishNote();
+            },
+            icon: Icon(
+              Icons.send_sharp,
+              color: Colors.white,
+            ),
+            label: Text("发布"),
+            // color: AppColors.primary,
+            textColor: Colors.white,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)),
+          ),
         ],
       ),
       body: ZefyrScaffold(
@@ -150,7 +158,10 @@ class _EditNotePageState extends State<EditNotePage> {
     if (_darkTheme) {
       return Theme(data: ThemeData.dark(), child: result);
     }
-    return Theme(data: ThemeData(primarySwatch: Colors.cyan), child: result);
+    return Theme(
+      data: ThemeData(primarySwatch: AppColors.primary),
+      child: result,
+    );
   }
 
   void handlePopupItemSelected(value) {
