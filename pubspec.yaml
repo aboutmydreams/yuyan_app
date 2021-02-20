@@ -12,7 +12,7 @@ description: A new Flutter project.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.0.23+1.0.23
+version: 1.1.1+1.1.1
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -163,9 +163,9 @@ flutter:
     - assets/images/logo.png
     - assets/images/paddy.svg
     - assets/images/first.jpg
-    - assets/images/guide/guide1.jpg
-    - assets/images/guide/guide2.jpg
-    - assets/images/guide/guide3.jpg
+    - assets/images/guide/guide1.png
+    - assets/images/guide/guide2.png
+    - assets/images/guide/guide3.png
     - assets/images/explore/book.png
     - assets/images/explore/fellower.png
     - assets/images/dashboard/link.png

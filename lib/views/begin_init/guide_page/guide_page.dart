@@ -37,6 +37,10 @@ class GuidePage extends StatelessWidget {
         enableLoop: false,
         positionSlideIcon: 0.5,
         waveType: WaveType.liquidReveal,
+        slideIconWidget: Icon(
+          Icons.arrow_back_ios,
+          color: Colors.cyan,
+        ),
         // onPageChangeCallback: (page) => pageChangeCallback(context, page),
         // currentUpdateTypeCallback: (updateType) =>
         //     updateTypeCallback(updateType),

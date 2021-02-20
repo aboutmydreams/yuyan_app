@@ -9,12 +9,24 @@ class Guide1 extends StatelessWidget {
       children: [
         Positioned(
           child: Container(
-            color: Colors.pink,
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: Image.asset(
-              'assets/images/guide/guide1.jpg',
-              fit: BoxFit.cover,
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(54, 63, 58, 1),
+            ),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+            ),
+          ),
+        ),
+        Positioned(
+          child: Center(
+            child: Container(
+              margin: EdgeInsets.only(bottom: 120),
+              width: MediaQuery.of(context).size.width * 0.6,
+              child: Image.asset(
+                'assets/images/guide/guide1.png',
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),

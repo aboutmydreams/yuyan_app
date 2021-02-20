@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:quill_delta/quill_delta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/edit_markdown/convert/to_markdown.dart';
 import 'package:yuyan_app/models/net/requests_api/notes/note.dart';
 import 'package:yuyan_app/models/net/requests_api/util/convert.dart';
@@ -12,7 +11,6 @@ import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:zefyr/zefyr.dart';
-// import 'package:notus/convert.dart';
 import 'view/images.dart';
 
 class EditNotePage extends StatefulWidget {
@@ -169,7 +167,7 @@ class _EditNotePageState extends State<EditNotePage> {
       return Theme(data: ThemeData.dark(), child: result);
     }
     return Theme(
-      data: ThemeData(primarySwatch: AppColors.primary),
+      data: ThemeData(primarySwatch: topModel.primarySwatchColor),
       child: result,
     );
   }

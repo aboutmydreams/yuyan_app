@@ -38,14 +38,49 @@ class _Guide3State extends State<Guide3> {
       child: Stack(
         children: <Widget>[
           Positioned(
-            top: 0,
-            bottom: 0,
             child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Image.asset(
-                'assets/images/guide/guide3.jpg',
-                fit: BoxFit.cover,
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(235, 169, 209, 1),
+              ),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+              ),
+            ),
+          ),
+          Positioned(
+            child: Center(
+              child: Container(
+                margin: EdgeInsets.only(bottom: 120),
+                width: MediaQuery.of(context).size.width * 0.6,
+                child: Image.asset(
+                  'assets/images/guide/guide3.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: EdgeInsets.only(right: 40, bottom: 90),
+                child: Text(
+                  "一起-飞往-梦想".split("").join("\n"),
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: EdgeInsets.only(right: 60, bottom: 90),
+                child: Text(
+                  "||·2021".split("").join("\n"),
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
           ),

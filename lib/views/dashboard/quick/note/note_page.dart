@@ -45,21 +45,21 @@ class _DashboardState extends State<NotePage> {
         bottomOpacity: 5.0,
         elevation: 1,
         title: Text("小记"),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
-            tooltip: '搜索小记',
-            onPressed: () {
-              showSearch(
-                context: context,
-                delegate: SearchBarDelegate(aboutMe: true),
-              );
-            },
-          )
-        ],
+        // actions: <Widget>[
+        //   IconButton(
+        //     icon: Icon(
+        //       Icons.search,
+        //       color: Colors.white,
+        //     ),
+        //     tooltip: '搜索小记',
+        //     onPressed: () {
+        //       showSearch(
+        //         context: context,
+        //         delegate: SearchBarDelegate(aboutMe: true),
+        //       );
+        //     },
+        //   )
+        // ],
       ),
       floatingActionButton: GestureDetector(
         onLongPress: () {
