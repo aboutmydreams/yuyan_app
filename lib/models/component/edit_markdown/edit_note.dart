@@ -8,6 +8,7 @@ import 'package:yuyan_app/models/component/edit_markdown/convert/to_markdown.dar
 import 'package:yuyan_app/models/net/requests_api/notes/note.dart';
 import 'package:yuyan_app/models/net/requests_api/util/convert.dart';
 import 'package:yuyan_app/models/tools/get_pref.dart';
+import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:zefyr/zefyr.dart';
@@ -94,11 +95,13 @@ class _EditNotePageState extends State<EditNotePage> {
       if (ans.toString().contains('id')) {
         topModel.noteManage.update();
         prefs.remove('save_note');
-        myToast(context, '发布成功');
-        setState(() {
-          isPublishing = false;
+        Timer(Duration(milliseconds: 400), () {
+          myToast(context, '发布成功');
+          setState(() {
+            isPublishing = false;
+          });
+          Navigator.pop(context);
         });
-        Navigator.pop(context);
       }
     });
   }
@@ -115,46 +118,53 @@ class _EditNotePageState extends State<EditNotePage> {
     //     ? IconButton(onPressed: _stopEditing, icon: Icon(Icons.save))
     //     : IconButton(onPressed: _startEditing, icon: Icon(Icons.edit));
     final result = Scaffold(
-      resizeToAvoidBottomPadding: true,
-      appBar: AppBar(
-        title: Text('小记'),
-        actions: [
-          FlatButton.icon(
-            onPressed: () {
-              // _saveDocument(context);
+        resizeToAvoidBottomPadding: true,
+        appBar: AppBar(
+          title: Text('小记'),
+          actions: [
+            FlatButton.icon(
+              onPressed: () {
+                // _saveDocument(context);
 
-              // final index = _controller.selection.baseOffset;
-              // final length = _controller.selection.extentOffset - index;
-              // String markdown =
-              //     notusMarkdown.encode(_controller.document.toDelta());
-              // Delta delta = notusMarkdown.decode(markdown);
-              // print(_controller.document.toDelta().toJson());
-              // print("index===$index, length===$length");
-              // print(_controller.selection.affinity.index);
-              publishNote();
-            },
-            icon: Icon(
-              Icons.send_sharp,
-              color: Colors.white,
+                // final index = _controller.selection.baseOffset;
+                // final length = _controller.selection.extentOffset - index;
+                // String markdown =
+                //     notusMarkdown.encode(_controller.document.toDelta());
+                // Delta delta = notusMarkdown.decode(markdown);
+                // print(_controller.document.toDelta().toJson());
+                // print("index===$index, length===$length");
+                // print(_controller.selection.affinity.index);
+                publishNote();
+              },
+              icon: Icon(
+                Icons.send_sharp,
+                color: Colors.white,
+              ),
+              label: Text("发布"),
+              // color: AppColors.primary,
+              textColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
             ),
-            label: Text("发布"),
-            // color: AppColors.primary,
-            textColor: Colors.white,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
-          ),
-        ],
-      ),
-      body: ZefyrScaffold(
-        child: ZefyrEditor(
-          controller: _controller,
-          focusNode: _focusNode,
-          mode: _editing ? ZefyrMode.edit : ZefyrMode.select,
-          imageDelegate: CustomImageDelegate(),
-          keyboardAppearance: _darkTheme ? Brightness.dark : Brightness.light,
+          ],
         ),
-      ),
-    );
+        body: Stack(
+          children: [
+            ZefyrScaffold(
+              child: ZefyrEditor(
+                controller: _controller,
+                focusNode: _focusNode,
+                mode: _editing ? ZefyrMode.edit : ZefyrMode.select,
+                imageDelegate: CustomImageDelegate(),
+                keyboardAppearance:
+                    _darkTheme ? Brightness.dark : Brightness.light,
+              ),
+            ),
+            Positioned(
+              child: isPublishing ? loading() : SizedBox(height: 10),
+            ),
+          ],
+        ));
     if (_darkTheme) {
       return Theme(data: ThemeData.dark(), child: result);
     }
