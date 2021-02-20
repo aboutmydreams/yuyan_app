@@ -58,4 +58,10 @@ class DioGroup {
         onlyUser: onlyUser);
     return Comments.fromJson(ans);
   }
+
+  // 判断是否有讨论区
+  static getIfHavaTopic({int groupId, bool onlyUser}) async {
+    var ans = await DioReq.get('/groups/$groupId/homepage?include_data=true');
+    return ans.toString().contains('讨论区');
+  }
 }
