@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/tools/analytics.dart';
 import 'package:yuyan_app/models/widgets_big/change_org/org_leading.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
@@ -54,6 +55,7 @@ class _NewsPageState extends State<NewsPage> {
 
   @override
   Widget build(BuildContext context) {
+    analytics.logEvent(name: 'news_page');
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(

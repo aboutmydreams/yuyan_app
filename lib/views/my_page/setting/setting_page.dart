@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:yuyan_app/models/tools/analytics.dart';
 import 'package:yuyan_app/models/widgets_small/show_dialog/show_confirm.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/begin_init/login_page/login_page.dart';
@@ -21,6 +22,7 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     print(topModel.versionManage.isLastest);
+    analytics.logEvent(name: 'setting');
     return Scaffold(
       appBar: AppBar(
         title: Text("设置"),

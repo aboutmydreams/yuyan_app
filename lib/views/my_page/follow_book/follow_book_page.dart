@@ -4,6 +4,7 @@ import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/my_follow_book_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
+import 'package:yuyan_app/models/tools/analytics.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
@@ -37,6 +38,7 @@ class _FollowBookPageState extends State<FollowBookPage> {
 
   @override
   Widget build(BuildContext context) {
+    analytics.logEvent(name: 'follow_book');
     return Scaffold(
       appBar: AppBar(
         title: Text("我关注的知识库"),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/all_doc_book_data.dart';
+import 'package:yuyan_app/models/tools/analytics.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/state_manage/dataManage/note_manage.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
@@ -36,6 +37,7 @@ class _DashboardState extends State<NotePage> {
 
   @override
   Widget build(BuildContext context) {
+    analytics.logEvent(name: 'note');
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(

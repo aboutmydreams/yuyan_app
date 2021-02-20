@@ -3,6 +3,7 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_follow_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
+import 'package:yuyan_app/models/tools/analytics.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/tools/get_pref.dart';
 import 'package:yuyan_app/models/tools/get_tag.dart';
@@ -46,6 +47,7 @@ class _FollowerPageState extends State<FollowerPage> {
 
   @override
   Widget build(BuildContext context) {
+    analytics.logEvent(name: 'follower');
     return Scaffold(
       appBar: AppBar(
         title: Text("关注我的"),

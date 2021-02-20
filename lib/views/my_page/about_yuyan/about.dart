@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/user/view/view/one_group.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
+import 'package:yuyan_app/models/tools/analytics.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 
 class AboutYuyan extends StatefulWidget {
@@ -15,6 +16,7 @@ class AboutYuyan extends StatefulWidget {
 class _AboutYuyanState extends State<AboutYuyan> {
   @override
   Widget build(BuildContext context) {
+    analytics.logEvent(name: 'about_yuyan');
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: _sliverBuilder,
