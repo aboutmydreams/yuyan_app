@@ -59,7 +59,7 @@ class DioGroup {
     return Comments.fromJson(ans);
   }
 
-  // 判断是否有讨论区
+  // 判断是否有讨论区 不准确，有些团队并不会放在自定义首页当中
   static getIfHavaTopic({int groupId, bool onlyUser}) async {
     var ans = await DioReq.get('/groups/$groupId/homepage?include_data=true');
     return ans.toString().contains('讨论区');
