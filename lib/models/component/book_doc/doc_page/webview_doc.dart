@@ -249,19 +249,21 @@ class _DocPageWebState extends State<DocPageWeb> {
         child: Scaffold(
           backgroundColor: AppColors.background,
           appBar: AppBar(
-            title: Container(
-              height: 44,
-              margin: EdgeInsets.only(right: 3),
-              child: userEvent(
-                context,
-                login: docDatas.data.user.login,
-                userImg: docDatas.data.user.avatarUrl,
-                name: docDatas.data.user.name,
-                userId: docDatas.data.user.id,
-                event: timeCut(docDatas.data.updatedAt),
-                // time: timeCut(data.when),
-              ),
-            ),
+            title: docDatas != null
+                ? Container(
+                    height: 44,
+                    margin: EdgeInsets.only(right: 3),
+                    child: docUserEvent(
+                      context,
+                      login: docDatas.data.user.login,
+                      userImg: docDatas.data.user.avatarUrl,
+                      name: docDatas.data.user.name,
+                      userId: docDatas.data.user.id,
+                      event: timeCut(docDatas.data.updatedAt),
+                      // time: timeCut(data.when),
+                    ),
+                  )
+                : Text(''),
             actions: <Widget>[
               PopupMenuButton(
                 itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
