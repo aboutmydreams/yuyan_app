@@ -185,7 +185,10 @@ Widget getHtml(BuildContext context, String bodyHtml, {EdgeInsets padding}) {
                 //   node.outerHtml,
                 //   bodyPadding: EdgeInsets.only(bottom: 3),
                 // );
-                return Text(node.text);
+                return Text(
+                  node.text,
+                  style: AppStyles.textStyleBC,
+                );
               }
               break;
             case 'h1':

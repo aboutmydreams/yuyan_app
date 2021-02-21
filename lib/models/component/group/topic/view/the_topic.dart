@@ -3,6 +3,7 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/one_topic/topic_detail_data.dart';
 import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_big/html/body_html.dart';
+import 'package:yuyan_app/models/widgets_big/markdown/lake_md.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 class TheTopic extends StatelessWidget {
@@ -20,7 +21,7 @@ class TheTopic extends StatelessWidget {
         children: <Widget>[
           // 文档标题
           Container(
-            margin: EdgeInsets.only(bottom: 10),
+            margin: EdgeInsets.only(bottom: 20),
             child: Text(
               topicDetail.data.title,
               style: AppStyles.textStyleA,
@@ -38,7 +39,7 @@ class TheTopic extends StatelessWidget {
               Spacer(),
               Text(
                 timeCut(topicDetail.data.updatedAt),
-                style: AppStyles.textStyleCC,
+                style: AppStyles.textStyleC,
               ),
             ],
           ),
@@ -46,7 +47,8 @@ class TheTopic extends StatelessWidget {
           SizedBox(height: 18),
 
           // 文档内容
-          getHtml(context, topicDetail.data.bodyHtml)
+          // getHtml(context, topicDetail.data.bodyHtml)
+
           // HtmlWidget(
           //   topicDetail.data.bodyHtml,
           //   bodyPadding: EdgeInsets.all(16),
@@ -55,6 +57,7 @@ class TheTopic extends StatelessWidget {
           //     openUrl(context, url);
           //   },
           // )
+          myLakeView(context, topicDetail.data.bodyHtml),
         ],
       ),
     );
