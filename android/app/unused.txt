@@ -11145,15 +11145,15 @@ kotlin.KotlinVersion:
     public static final kotlin.KotlinVersion$Companion Companion
 kotlin.Result
 io.flutter.plugin.common.PluginRegistry
-com.google.android.exoplayer2.analytics.AnalyticsListener$-CC
-com.google.android.exoplayer2.audio.AudioRendererEventListener$-CC
-com.google.android.exoplayer2.audio.AudioListener$-CC
-io.flutter.plugin.platform.PlatformView$-CC
+com.google.android.exoplayer2.drm.DefaultDrmSessionEventListener$-CC
 com.google.android.exoplayer2.extractor.BinarySearchSeeker$TimestampSeeker$-CC
+io.flutter.plugin.platform.PlatformView$-CC
+com.google.android.exoplayer2.audio.AudioRendererEventListener$-CC
 com.google.android.exoplayer2.video.VideoRendererEventListener$-CC
 com.google.android.exoplayer2.Player$EventListener$-CC:
     public static void $default$onPlayerStateChanged(com.google.android.exoplayer2.Player$EventListener,boolean,int)
     public static void $default$onPlayerError(com.google.android.exoplayer2.Player$EventListener,com.google.android.exoplayer2.ExoPlaybackException)
-com.google.android.exoplayer2.drm.DefaultDrmSessionEventListener$-CC
 com.google.android.exoplayer2.video.VideoListener$-CC
+com.google.android.exoplayer2.analytics.AnalyticsListener$-CC
+com.google.android.exoplayer2.audio.AudioListener$-CC
 $r8$backportedMethods$utility$Integer$2$compare
