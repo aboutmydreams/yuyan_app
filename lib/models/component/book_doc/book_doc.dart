@@ -30,13 +30,14 @@ class _BookDocPageState extends State<BookDocPage> {
 
   DocBookJson docBookJson;
   String reallyLogin;
+  String reallyBookSlug;
 
   @override
   void initState() {
     super.initState();
     getTocData(bookId: bookId);
-    if (login == null) {
-      getReallyLogin(bookId: bookId);
+    if ((login == null) || (bookSlug == null)) {
+      getReallyUrl(bookId: bookId);
     }
   }
 
@@ -47,11 +48,13 @@ class _BookDocPageState extends State<BookDocPage> {
     });
   }
 
-  getReallyLogin({int bookId}) async {
+  getReallyUrl({int bookId}) async {
     var redirect =
         await DioReq.getRedirect("https://www.yuque.com/go/book/$bookId");
+    print(redirect);
     setState(() {
       reallyLogin = redirect.toString().split("/")[1];
+      reallyBookSlug = redirect.toString().split("/")[2];
     });
   }
 
@@ -64,9 +67,9 @@ class _BookDocPageState extends State<BookDocPage> {
       "description": data.description,
       "user": data.user.name,
       "login": login ?? reallyLogin ?? data.user.login,
+      "bookSlug": bookSlug ?? reallyBookSlug,
       "avatar": data.user.avatarUrl,
       "bookId": data.bookId,
-      "bookSlug": bookSlug,
       "docId": data.id,
       "onlyUser": onlyUser
     };
