@@ -111,9 +111,9 @@ class _Guide3State extends State<Guide3> {
             bottom: MediaQuery.of(context).size.height * 0.21,
             child: Container(
               margin: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.width * 0.23),
-              width: MediaQuery.of(context).size.width * 0.54,
-              height: 60,
+                  left: MediaQuery.of(context).size.width * 0.25),
+              width: MediaQuery.of(context).size.width * 0.50,
+              height: 50,
               decoration: BoxDecoration(
                 color: Colors.yellow.withOpacity(0.8),
                 borderRadius: BorderRadius.all(Radius.circular(30)),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/models/widgets_small/cool_text.dart';
 
 class Guide1 extends StatelessWidget {
   const Guide1({Key key}) : super(key: key);
@@ -51,7 +52,7 @@ class Guide1 extends StatelessWidget {
             alignment: Alignment.bottomRight,
             child: Padding(
               padding: EdgeInsets.only(right: 40, bottom: 90),
-              child: Text(
+              child: CoolText(
                 "此夜曲中闻折柳，".split("").join("\n"),
                 style: TextStyle(
                   color: Colors.white,
@@ -66,9 +67,10 @@ class Guide1 extends StatelessWidget {
             alignment: Alignment.bottomRight,
             child: Padding(
               padding: EdgeInsets.only(right: 60, bottom: 90),
-              child: Text(
+              child: CoolText(
                 "何人不起故园情。".split("").join("\n"),
                 style: TextStyle(color: Colors.white),
+                delay: 400,
               ),
             ),
           ),
