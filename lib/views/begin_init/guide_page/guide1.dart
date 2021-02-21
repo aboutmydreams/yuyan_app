@@ -32,12 +32,31 @@ class Guide1 extends StatelessWidget {
         ),
         Positioned(
           child: Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: EdgeInsets.only(left: 40, top: 90),
+              child: Text(
+                "思绪".split("").join("\n"),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontFamily: "Silom",
+                ),
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          child: Align(
             alignment: Alignment.bottomRight,
             child: Padding(
               padding: EdgeInsets.only(right: 40, bottom: 90),
               child: Text(
                 "此夜曲中闻折柳，".split("").join("\n"),
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: "Silom",
+                ),
               ),
             ),
           ),
