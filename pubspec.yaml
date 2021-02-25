@@ -11,7 +11,8 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.23+1.0.23
+
+version: 1.1.1+1.1.1
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -119,7 +120,7 @@ dependencies:
   flutter_xupdate: ^1.0.2
 
   # 获取版本号
-  package_info: ^0.4.0+16
+  package_info: ^0.4.3+2
 
   # 滑动tab
   shifting_tabbar: ^0.3.1
@@ -132,7 +133,10 @@ dependencies:
   html2md: ^0.5.1
 
   # markdown to quill
-  quill_markdown: ^0.0.3
+  # quill_markdown: ^0.0.3
+
+  # markdown 渲染器
+  flutter_markdown: ^0.5.2
 
 
 dev_dependencies:
@@ -159,9 +163,9 @@ flutter:
     - assets/images/logo.png
     - assets/images/paddy.svg
     - assets/images/first.jpg
-    - assets/images/guide/guide1.jpg
-    - assets/images/guide/guide2.jpg
-    - assets/images/guide/guide3.jpg
+    - assets/images/guide/guide1.png
+    - assets/images/guide/guide2.png
+    - assets/images/guide/guide3.png
     - assets/images/explore/book.png
     - assets/images/explore/fellower.png
     - assets/images/dashboard/link.png

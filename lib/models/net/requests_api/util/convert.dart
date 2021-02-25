@@ -9,7 +9,7 @@ class DioUtil {
     /// [referer] like this 'https://www.yuque.com/dashboard/notes'
     var url = "/docs/convert";
     var ctoken = await getCtoken();
-    Map postData = {
+    Map<String, dynamic> postData = {
       'from': 'markdown',
       'to': 'lake',
       'content': markdown,
@@ -20,6 +20,6 @@ class DioUtil {
       'add': {'referer': referer}
     });
     // return ConvertJson.fromJson(ans);
-    return ans['data'];
+    return ans['data']['content'];
   }
 }

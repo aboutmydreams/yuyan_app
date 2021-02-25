@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/all_doc_book_data.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
+import 'package:yuyan_app/models/tools/analytics.dart';
 import 'package:yuyan_app/models/widgets_big/change_org/org_leading.dart';
 import 'package:yuyan_app/models/widgets_small/show_dialog/show_dialog.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
@@ -39,6 +42,7 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    analytics.logEvent(name: 'dashboard');
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -68,21 +72,24 @@ class _DashboardState extends State<Dashboard> {
       ),
       floatingActionButton: GestureDetector(
         onLongPress: () {
-          myToast(context, "以后长按有惊喜");
+          showWindow(context,
+              title: "选择一个知识库",
+              children: allDocBookJson == null
+                  ? null
+                  : allDocBookJson.data.isEmpty
+                      ? [Text("暂无知识库", style: AppStyles.textStyleBB)]
+                      : allDocBookJson.data
+                          .map((onebook) => SelectView(
+                                book: onebook,
+                              ))
+                          .toList());
+          Timer(Duration(milliseconds: 400), () {
+            myToast(context, "感谢你的期待 💕");
+          });
         },
         child: FloatingActionButton(
           onPressed: () {
-            showWindow(context,
-                title: "选择一个知识库",
-                children: allDocBookJson == null
-                    ? null
-                    : allDocBookJson.data.isEmpty
-                        ? [Text("暂无知识库", style: AppStyles.textStyleBB)]
-                        : allDocBookJson.data
-                            .map((onebook) => SelectView(
-                                  book: onebook,
-                                ))
-                            .toList());
+            Navigator.pushNamed(context, '/edit/note');
           },
           child: Icon(Icons.edit),
         ),

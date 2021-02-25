@@ -6,6 +6,7 @@ import 'package:yuyan_app/models/tools/get_tag.dart';
 import 'package:yuyan_app/models/tools/report.dart';
 import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_big/html/body_html.dart';
+import 'package:yuyan_app/models/widgets_big/markdown/lake_md.dart';
 import 'package:yuyan_app/models/widgets_small/show_dialog/show_confirm.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
@@ -112,7 +113,7 @@ Widget oneComment(BuildContext context, CommentData data) {
                       ),
                     ),
                     SizedBox(height: 10),
-                    getHtml(
+                    myLakeView(
                       context,
                       data.bodyAsl,
                     ),

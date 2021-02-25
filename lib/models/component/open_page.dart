@@ -73,7 +73,11 @@ class OpenPage {
       {int bookId, String bookSlug, String login, bool onlyUser}) {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
       return BookDocPage(
-          bookId: bookId, bookSlug: bookSlug, login: login, onlyUser: onlyUser);
+        bookId: bookId,
+        bookSlug: bookSlug,
+        login: login,
+        onlyUser: onlyUser,
+      );
     }));
   }
 

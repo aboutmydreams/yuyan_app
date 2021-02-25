@@ -37,3 +37,4 @@ def get_md5_01(file_path: str) -> str:
 
 print(get_md5_01("./build/app/outputs/apk/release/app-release.apk"))
 # print(get_md5_01("./build/app/outputs/flutter-apk/app-arm64-v8a-release.apk"))
+

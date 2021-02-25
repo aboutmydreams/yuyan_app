@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/models/tools/analytics.dart';
 import 'package:yuyan_app/routes/top_route.dart';
@@ -10,6 +12,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await topModel1.getMyColor();
   await topModel1.getMyTheme();
+  if (Platform.isAndroid) {
+    /// https://www.geek-share.com/detail/2799306029.html
+    /// 以下两行 设置android状态栏为透明的沉浸。写在组件渲染之后，是为了在渲染后进行set赋值，覆盖状态栏，写在渲染之前MaterialApp组件会覆盖掉这个值。
+    SystemUiOverlayStyle systemUiOverlayStyle =
+        SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+  }
   runApp(MyApp(
     model: topModel1,
   ));

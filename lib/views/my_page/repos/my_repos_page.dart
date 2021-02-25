@@ -4,6 +4,7 @@ import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_repos_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
+import 'package:yuyan_app/models/tools/analytics.dart';
 import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/tools/get_pref.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
@@ -39,6 +40,7 @@ class _MyReposPageState extends State<MyReposPage> {
 
   @override
   Widget build(BuildContext context) {
+    analytics.logEvent(name: 'my_repos');
     return Scaffold(
       appBar: AppBar(
         title: Text("我的知识库"),

@@ -23,11 +23,11 @@ Widget oneQuick(BuildContext context, Data data) {
           ),
         );
       } else if (data.type == "Book") {
+        print(data.targetId);
+        print(data.url);
         OpenPage.docBook(
           context,
           bookId: data.targetId,
-          bookSlug: data.url.split("/").last,
-          login: data.url.split("/")[1],
         );
       } else {
         String url =

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yuyan_app/models/component/edit_markdown/add_doc/edit_page.dart';
+import 'package:yuyan_app/models/component/edit_markdown/edit_note.dart';
+import 'package:yuyan_app/models/component/edit_markdown/edit_page.dart';
 import 'package:yuyan_app/models/component/edit_markdown/add_doc/edit_page_test-dev.2.0.dart';
 import 'package:yuyan_app/models/component/group/group_page.dart';
 import 'package:yuyan_app/models/widgets_big/image_page/test1.dart';
@@ -38,6 +39,7 @@ Map<String, WidgetBuilder> routeData = {
   // '/first': (context) => AboutYuyan(),
   // '/first': (context) => MyAnalyPage(),
   '/edit': (context) => FullPageEditorScreen(),
+  '/edit/note': (context) => EditNotePage(),
   '/first': (context) => FirstPage(),
   '/login': (context) => LoginPage(),
   '/guide': (context) => GuidePage(),

@@ -11,8 +11,9 @@ Widget userEvent(BuildContext context,
     int userId,
     String name,
     String event,
-    String time}) {
-  String tag = getTag();
+    String time,
+    String tag}) {
+  tag ??= getTag();
   return Row(
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
@@ -36,7 +37,15 @@ Widget userEvent(BuildContext context,
           margin: EdgeInsets.only(left: 14, bottom: 1),
           child: GestureDetector(
             onTap: () {
-              openUrl(context, "https://www.yuque.com/$login");
+              // openUrl(context, "https://www.yuque.com/$login");
+              OpenPage.user(
+                context,
+                login: login,
+                name: name,
+                avatarUrl: userImg,
+                userId: userId,
+                tag: tag,
+              );
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -75,5 +84,61 @@ Widget userEvent(BuildContext context,
               ),
             ),
     ],
+  );
+}
+
+Widget docUserEvent(BuildContext context,
+    {String userImg,
+    String login,
+    int userId,
+    String name,
+    String event,
+    String time,
+    String tag}) {
+  tag ??= getTag();
+  return GestureDetector(
+    onTap: () {
+      OpenPage.user(
+        context,
+        login: login,
+        name: name,
+        avatarUrl: userImg,
+        userId: userId,
+        tag: tag,
+      );
+    },
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        userAvatar(userImg),
+        // child: Hero(tag: tag, child: userAvatar(userImg)),
+
+        Expanded(
+          flex: 1,
+          child: Container(
+            height: 44,
+            margin: EdgeInsets.only(left: 14, bottom: 1),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "$name",
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
+                  style: AppStyles.textStyleBB,
+                ),
+                SizedBox(height: 2),
+                Text(
+                  "$event",
+                  textAlign: TextAlign.center,
+                  style: AppStyles.textStyleCC,
+                )
+              ],
+            ),
+          ),
+        ),
+      ],
+    ),
   );
 }

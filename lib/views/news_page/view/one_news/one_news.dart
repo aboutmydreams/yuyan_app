@@ -192,7 +192,8 @@ Map<String, String> newsType = {
   "reopen_topic": "重新开启了话题",
   "user_member_will_expire": "会员即将到期",
   "system": "系统通知",
-  "apply_collaborator": "申请文档协作"
+  "apply_collaborator": "申请文档协作",
+  "remove_from_a_group": "移出了团队"
 };
 
 // 处理了一堆复杂的数据orz
