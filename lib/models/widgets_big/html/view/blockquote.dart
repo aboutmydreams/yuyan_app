@@ -12,18 +12,18 @@ Widget blockquoteHtml(BuildContext context, String outerHtml) {
           child: HtmlWidget(
             outerHtml,
             textStyle: AppStyles.textStyleC,
-            builderCallback: (nn, ee) {
-              if (ee.localName == 'code') {
-                return lazySet(null, buildOp: BuildOp(
-                  onPieces: (meta, pieces) {
-                    final text = ' ';
-                    return pieces..first?.block?.addText(text);
-                  },
-                ));
-              }
-
-              return nn;
-            },
+            // builderCallback: (nn, ee) {
+            //   if (ee.localName == 'code') {
+            //     return lazySet(null, buildOp: BuildOp(
+            //       onPieces: (meta, pieces) {
+            //         final text = ' ';
+            //         return pieces..first?.block?.addText(text);
+            //       },
+            //     ));
+            //   }
+            //
+            //   return nn;
+            // },
             onTapUrl: (url) {
               openUrl(context, url);
             },

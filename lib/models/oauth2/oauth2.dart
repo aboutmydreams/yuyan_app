@@ -33,11 +33,68 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// To do
 /// 请求参数错误
 
-class Oauth {
+class OAuth2 {
+  final String _baseUrl = "https://www.yuque.com/oauth2/authorize?";
+  final String clientId = "eeqJ55wPXkjEJZujqEQh";
+  final String clientSecret = "cUqsOf2mnphsHKEpsJLHWXrsu8oPwtnBxPStbD9f";
+
   /// 随机 code 之后获取 token 需要用到
-  String codeString = randomString(40);
-  String clientId = "eeqJ55wPXkjEJZujqEQh";
-  String clientSecret = "cUqsOf2mnphsHKEpsJLHWXrsu8oPwtnBxPStbD9f";
+  final String codeString = randomString(40);
+
+  String getOauthWebUrl() {
+    Map<String, String> param = {
+      "client_id": clientId,
+      "response_type": "code",
+      "scope": "group,repo,doc,topic,artboard",
+      "redirect_uri": "yuyan://login",
+    };
+    final query = param.keys.map((key) => '$key=${param[key]}').join('&');
+    return _baseUrl + query;
+  }
+
+  challengeAccessToken(String code) async {
+    Dio dio = Dio();
+
+    Options options = Options(
+      validateStatus: (status) {
+        return status < 500;
+      },
+      sendTimeout: 3000,
+      receiveTimeout: 6000,
+    );
+
+    Map<String, String> codeData = {
+      "client_id": clientId,
+      "client_secret": clientSecret,
+      "code": code,
+      "grant_type": "authorization_code"
+    };
+    try {
+      Response response = await dio.post("https://www.yuque.com/oauth2/token",
+          options: options, data: codeData);
+      Map tokenData = json.decode(json.encode(response.data));
+      if (tokenData.keys.toList().indexOf("access_token") != -1) {
+        // 将 access_token 存入缓存
+        String accessToken = tokenData["access_token"];
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("access_token", accessToken);
+        print(accessToken);
+        return true;
+      } else if (tokenData.keys.toList().indexOf("error") != -1) {
+        return false;
+      }
+    } on DioError catch (e) {
+      // if (e.type == DioErrorType.RESPONSE) {
+      //   // e.response.statusCode >= 500 后端炸了
+      //   print(e.response.statusCode);
+      // }
+      print(e.toString());
+      return false;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
 
   /// 获取授权 url
   String getOauthUrl() {
