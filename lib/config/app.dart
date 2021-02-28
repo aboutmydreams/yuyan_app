@@ -1,7 +1,7 @@
 import 'package:yuyan_app/config/net/token.dart';
 
 class App {
-  static TokenHolder token = TokenHolder();
+  static TokenProvider token = TokenProvider();
 
   static init() async {
     await token.ready;

@@ -7,7 +7,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/models/tools/analytics.dart';
-import 'package:yuyan_app/routes/top_route.dart';
+import 'file:///D:/Documents/GitHub/flutter/yuyan_app/lib/config/route_manager.dart';
 import 'package:yuyan_app/state_manage/layout_manage/hide_bottom.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 
@@ -56,7 +56,7 @@ class MyMaterialApp extends StatelessWidget {
           title: '语燕',
           initialRoute: '/first',
           debugShowCheckedModeBanner: false, // 去除debug标志
-          routes: routeData,
+          getPages: MyRoute.pages,
           theme: model.themeData,
           navigatorObservers: <NavigatorObserver>[observer], //加入路由统计
           // home: MyHomePage(),

@@ -51,7 +51,7 @@ class TokenJson {
       };
 }
 
-class TokenHolder extends BaseSaveJson<TokenJson> {
+class TokenProvider extends BaseSaveJson<TokenJson> {
   bool get isLogin => data.accessToken != null && data.session != null;
 
   @override
