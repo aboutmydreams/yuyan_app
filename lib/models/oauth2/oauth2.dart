@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:yuyan_app/config/app.dart';
+import 'package:yuyan_app/config/net/token.dart';
 import 'random_string/random_string.dart';
 import 'sha1/sha1.dart';
 import 'sort_map/sort_map.dart';
@@ -79,6 +81,8 @@ class OAuth2 {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString("access_token", accessToken);
         print(accessToken);
+
+        App.token.data = TokenJson.fromJson(tokenData);
         return true;
       } else if (tokenData.keys.toList().indexOf("error") != -1) {
         return false;

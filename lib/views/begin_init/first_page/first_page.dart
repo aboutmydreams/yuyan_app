@@ -1,16 +1,17 @@
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'dart:async';
 
 import 'package:yuyan_app/state_manage/account/if_login.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 
-class FirstPage extends StatefulWidget {
-  _FirstPageState createState() => _FirstPageState();
+class SplashPage extends StatefulWidget {
+  _SplashPageState createState() => _SplashPageState();
 }
 
-class _FirstPageState extends State<FirstPage> {
+class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
 
@@ -24,25 +25,33 @@ class _FirstPageState extends State<FirstPage> {
       });
     });
 
-    // 定时器
-    Timer timer = new Timer(
-      const Duration(milliseconds: 2500),
-      () {
-        try {
-          ifLogin().then((haveUserLogin) {
-            print("==islogin???==");
-            print(haveUserLogin);
-            if (haveUserLogin) {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, "/", (route) => route == null);
-            } else {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, "/guide", (route) => route == null);
-            }
-          });
-        } catch (e) {}
-      },
-    );
+    // // 定时器
+    // Timer timer = new Timer(
+    //   const Duration(milliseconds: 2500),
+    //   () {
+    //     try {
+    //       ifLogin().then((haveUserLogin) {
+    //         print("==islogin???==");
+    //         print(haveUserLogin);
+    //         if (haveUserLogin) {
+    //           Navigator.pushNamedAndRemoveUntil(
+    //               context, "/", (route) => route == null);
+    //         } else {
+    //           Navigator.pushNamedAndRemoveUntil(
+    //               context, "/guide", (route) => route == null);
+    //         }
+    //       });
+    //     } catch (e) {}
+    //   },
+    // );
+
+    Future.delayed(Duration(milliseconds: 500), () {
+      if (App.token.isLogin) {
+        Get.offAllNamed("/");
+      } else {
+        Get.offAllNamed("/guide");
+      }
+    });
   }
 
   @override

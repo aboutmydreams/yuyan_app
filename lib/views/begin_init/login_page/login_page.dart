@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 import 'package:yuyan_app/models/oauth2/oauth2.dart';
 import 'package:yuyan_app/models/tools/analytics.dart';
@@ -133,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
       cookieData[key] = val;
     }
 
-    // 判断是否有认证 Cooki
+    // 判断是否有认证 Cookie
     var hasValidSession = cookieResult.contains("_yuque_session") &&
         cookieResult.contains("ctoken");
 
@@ -141,6 +142,9 @@ class _LoginPageState extends State<LoginPage> {
 
     if (!await oauth2.challengeAccessToken(code))
       throw 'challenge access token failed';
+
+    App.token.data.loadCookies(cookieResult);
+    App.token.updateData(App.token.data);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString("_yuque_session", cookieData["_yuque_session"]);

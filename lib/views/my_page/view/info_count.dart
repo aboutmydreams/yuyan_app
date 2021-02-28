@@ -5,7 +5,6 @@ import 'package:yuyan_app/models/net/requests_api/user/data/user_info_data.dart'
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
-import 'package:yuyan_app/state_manage/toppest.dart';
 
 class InfoCount extends StatelessWidget {
   const InfoCount({Key key}) : super(key: key);

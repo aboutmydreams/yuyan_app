@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/edit_markdown/edit_note.dart';
 import 'package:yuyan_app/models/component/edit_markdown/edit_page.dart';
-import 'package:yuyan_app/models/component/edit_markdown/add_doc/edit_page_test-dev.2.0.dart';
 import 'package:yuyan_app/models/component/group/group_page.dart';
-import 'package:yuyan_app/models/widgets_big/image_page/test1.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 import 'package:yuyan_app/views/begin_init/first_page/first_page.dart';
 import 'package:yuyan_app/views/begin_init/guide_page/guide_page.dart';
-import 'package:yuyan_app/views/begin_init/guide_page/test.dart';
 import 'package:yuyan_app/views/begin_init/login_page/login_page.dart';
 import 'package:yuyan_app/views/dashboard/dashboard.dart';
 import 'package:yuyan_app/views/dashboard/quick/note/note_page.dart';
@@ -19,13 +16,11 @@ import 'package:yuyan_app/views/my_page/follower/follower_page.dart';
 import 'package:yuyan_app/views/my_page/following/following_page.dart';
 import 'package:yuyan_app/views/my_page/group/my_group_page.dart';
 import 'package:yuyan_app/views/my_page/mark/mark_page.dart';
-import 'package:yuyan_app/views/my_page/my_page.dart';
 import 'package:yuyan_app/views/my_page/repos/my_repos_page.dart';
 import 'package:yuyan_app/views/my_page/setting/setting_page.dart';
 import 'package:yuyan_app/views/my_page/topic/topic_page.dart';
 import 'package:zefyr/zefyr.dart';
 
-import 'dev_test/firebase_analytics.dart';
 
 ZefyrController _controller;
 bool _editing = true;
@@ -40,7 +35,7 @@ Map<String, WidgetBuilder> routeData = {
   // '/first': (context) => MyAnalyPage(),
   '/edit': (context) => FullPageEditorScreen(),
   '/edit/note': (context) => EditNotePage(),
-  '/first': (context) => FirstPage(),
+  '/first': (context) => SplashPage(),
   '/login': (context) => LoginPage(),
   '/guide': (context) => GuidePage(),
   '/quickset': (context) => QuickSetPage(),
