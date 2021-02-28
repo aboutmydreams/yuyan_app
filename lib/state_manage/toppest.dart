@@ -12,7 +12,6 @@ import 'layout_manage/hide_bottom.dart';
 
 class TopStateModel extends ColorManage {
   // ColorManage colorManage = ColorManage();
-  BottomManage bottomManage = BottomManage();
 
   SelectManage selectManage = SelectManage();
   AttentManage attentManage = AttentManage();

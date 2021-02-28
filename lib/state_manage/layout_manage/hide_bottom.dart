@@ -1,6 +1,7 @@
+import 'package:get/get.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class BottomManage extends Model {
+class BottomManagerController extends GetxController {
   int _hideBottomBar = 0;
   int get hideBottomBar => _hideBottomBar;
 
@@ -20,7 +21,8 @@ class BottomManage extends Model {
 
   void changeHide() {
     // _hideBottomBar = !_hideBottomBar;
-    notifyListeners();
+    // notifyListeners();
+    notifyChildrens();
   }
 
   void initd() {
@@ -140,6 +142,7 @@ class BottomManage extends Model {
       }
     }
 
-    notifyListeners();
+    // notifyListeners();
+    update();
   }
 }

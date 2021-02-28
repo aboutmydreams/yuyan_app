@@ -1,18 +1,21 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/models/tools/analytics.dart';
 import 'package:yuyan_app/routes/top_route.dart';
+import 'package:yuyan_app/state_manage/layout_manage/hide_bottom.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 
 TopStateModel topModel1 = topModel;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  //所有的init不能throw错误，否则App无法正常启动
   await StorageManager.init();
   await topModel1.getMyColor();
   await topModel1.getMyTheme();
@@ -57,6 +60,10 @@ class MyMaterialApp extends StatelessWidget {
           theme: model.themeData,
           navigatorObservers: <NavigatorObserver>[observer], //加入路由统计
           // home: MyHomePage(),
+          initialBinding: BindingsBuilder(() {
+            // Get.lazyPut(() => BottomManagerController(), fenix: true);
+            Get.put(BottomManagerController());
+          }),
         );
       },
     );

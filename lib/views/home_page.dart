@@ -1,6 +1,8 @@
 import 'package:badges/badges.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/state_manage/dataManage/attent_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
@@ -57,64 +59,66 @@ class _HomePageState extends State<HomePage> {
     return theColor;
   }
 
+  _buildBottomNav() {
+    return GetBuilder<BottomManagerController>(
+      builder: (model) {
+        return Opacity(
+          opacity: model.y < 30
+              ? model.y < 3
+                  ? 0
+                  : model.y / 30
+              : 1,
+          child: CurvedNavigationBar(
+            key: _bottomNavigationKey,
+            color: Color.fromRGBO(0, 0, 0, 0.06),
+            backgroundColor: Colors.white,
+            animationCurve: Curves.easeInQuad,
+            height: model.y,
+            items: <Widget>[
+              Icon(
+                Icons.insert_emoticon,
+                size: 34,
+                color: iconColor(0),
+              ),
+              Icon(
+                Icons.wrap_text,
+                size: 34,
+                color: iconColor(1),
+              ),
+              Badge(
+                padding: EdgeInsets.all(0),
+                badgeColor: Colors.transparent,
+                elevation: 0,
+                badgeContent: Icon(
+                  Icons.notifications_none,
+                  size: 34,
+                  color: iconColor(2),
+                ),
+              ),
+              Icon(
+                Icons.perm_identity,
+                size: 34,
+                color: iconColor(3),
+              ),
+            ],
+            animationDuration: Duration(milliseconds: 300),
+            onTap: (index) {
+              setState(() {
+                pageKey = index;
+              });
+            },
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final double topPadding = MediaQuery.of(context).padding.bottom;
     print(topPadding);
     return Scaffold(
-      // drawer: QuickSetPage(),
-      bottomNavigationBar: ScopedModel<BottomManage>(
-          model: topModel.bottomManage,
-          child: ScopedModelDescendant<BottomManage>(
-              builder: (context, child, model) {
-            return Opacity(
-              opacity: model.y < 30
-                  ? model.y < 3
-                      ? 0
-                      : model.y / 30
-                  : 1,
-              child: CurvedNavigationBar(
-                key: _bottomNavigationKey,
-                color: Color.fromRGBO(0, 0, 0, 0.06),
-                backgroundColor: Colors.white,
-                animationCurve: Curves.easeInQuad,
-                height: model.y,
-                items: <Widget>[
-                  Icon(
-                    Icons.insert_emoticon,
-                    size: 34,
-                    color: iconColor(0),
-                  ),
-                  Icon(
-                    Icons.wrap_text,
-                    size: 34,
-                    color: iconColor(1),
-                  ),
-                  Badge(
-                    padding: EdgeInsets.all(0),
-                    badgeColor: Colors.transparent,
-                    elevation: 0,
-                    badgeContent: Icon(
-                      Icons.notifications_none,
-                      size: 34,
-                      color: iconColor(2),
-                    ),
-                  ),
-                  Icon(
-                    Icons.perm_identity,
-                    size: 34,
-                    color: iconColor(3),
-                  ),
-                ],
-                animationDuration: Duration(milliseconds: 300),
-                onTap: (index) {
-                  setState(() {
-                    pageKey = index;
-                  });
-                },
-              ),
-            );
-          })),
+      bottomNavigationBar: _buildBottomNav(),
       body: pageList[pageKey],
     );
   }
