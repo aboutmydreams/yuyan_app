@@ -62,7 +62,7 @@ class MyMaterialApp extends StatelessWidget {
           // home: MyHomePage(),
           initialBinding: BindingsBuilder(() {
             // Get.lazyPut(() => BottomManagerController(), fenix: true);
-            Get.put(BottomManagerController());
+            Get.put(BottomNavigatorController());
           }),
         );
       },

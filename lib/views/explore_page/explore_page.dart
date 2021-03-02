@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/models/tools/analytics.dart';
 import 'package:yuyan_app/models/widgets_big/change_org/org_leading.dart';
 import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
-import 'package:yuyan_app/state_manage/layout_manage/hide_bottom.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/explore_page/search/search_bar.dart';
 import 'attention/attention_page.dart';
@@ -17,6 +15,7 @@ class ExplorePage extends StatefulWidget {
 class _ExplorePageState extends State<ExplorePage>
     with AutomaticKeepAliveClientMixin {
   bool get wantKeepAlive => true;
+
 
   @override
   Widget build(BuildContext context) {
@@ -62,13 +61,8 @@ class _ExplorePageState extends State<ExplorePage>
         ),
         body: TabBarView(
           children: <Widget>[
-            GestureDetector(
-              onPanDown: (DragDownDetails details) {
-                Get.find<BottomManagerController>().initd();
-              },
-              child: Container(
-                child: AttentionPage(),
-              ),
+            Container(
+              child: AttentionPage(),
             ),
             Container(
               child: SelectionPage(),

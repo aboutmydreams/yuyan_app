@@ -1,8 +1,8 @@
 import 'package:badges/badges.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/state_manage/dataManage/attent_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
@@ -60,20 +60,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   _buildBottomNav() {
-    return GetBuilder<BottomManagerController>(
-      builder: (model) {
+    var controller = Get.find<BottomNavigatorController>();
+    return AnimatedBuilder(
+      animation: controller.animation,
+      builder: (context, child) {
         return Opacity(
-          opacity: model.y < 30
-              ? model.y < 3
-                  ? 0
-                  : model.y / 30
-              : 1,
+          opacity: controller.height / 56,
           child: CurvedNavigationBar(
             key: _bottomNavigationKey,
             color: Color.fromRGBO(0, 0, 0, 0.06),
             backgroundColor: Colors.white,
             animationCurve: Curves.easeInQuad,
-            height: model.y,
+            height: controller.height,
             items: <Widget>[
               Icon(
                 Icons.insert_emoticon,

@@ -29,14 +29,16 @@ class _AttentionPageState extends State<AttentionPage>
   void initState() {
     super.initState();
     _controller = ScrollController();
-    _controller.addListener(() {
-      if (_controller.position.pixels == _controller.position.maxScrollExtent) {
-        getMoreData();
-      }
+    final controller = Get.find<BottomNavigatorController>();
+    controller.addScrollListener(_controller);
+    // _controller.addListener(() {
+      // if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+      //   getMoreData();
+      // }
       // print(_controller.position.pixels);
-      var bottomManager = Get.find<BottomManagerController>();
-      bottomManager.addPixels(_controller.position.pixels);
-    });
+      // bottomManager.addPixels(_controller.position.pixels);
+      // controller.onScroll(_controller);
+    // });
   }
 
   getMoreData() async {
