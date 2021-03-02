@@ -27,7 +27,7 @@ dependency_overrides:
   notus:
     git: https://github.com/aboutmydreams/notus.git
   # markdown / 富文本 编辑器
-  zefyr: 
+  zefyr:
     git: https://github.com/aboutmydreams/zefyr.git
 
 
@@ -82,6 +82,7 @@ dependencies:
   # 缓存
   shared_preferences: ^0.5.8
   json_store: 1.2.0
+  get_storage:
 
   # 分享
   share: ^0.6.4+3
@@ -89,7 +90,7 @@ dependencies:
   # webView
   webview_flutter: 1.0.7
   flutter_inappwebview: 4.0.0+4
-    # git: https://github.com/aboutmydreams/flutter_inappwebview.git
+  # git: https://github.com/aboutmydreams/flutter_inappwebview.git
   # flutter_webview_plugin: ^0.3.11
 
   # flare

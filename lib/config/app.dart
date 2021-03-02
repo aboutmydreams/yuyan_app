@@ -6,7 +6,6 @@ class App {
   static PackageInfo version;
 
   static init() async {
-    await token.ready;
     version = await PackageInfo.fromPlatform();
   }
 }

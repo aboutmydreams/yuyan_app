@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:json_store/json_store.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -16,7 +16,7 @@ class StorageManager {
 
   // 离线可以使用的数据
   // static LocalStorage localStorage;
-  static JsonStore jsonStore;
+  static GetStorage getStorage;
 
   //初始化，同步操作会阻塞，尽量减少储存量
   static init() async {
@@ -24,7 +24,8 @@ class StorageManager {
     sharedPreferences = await SharedPreferences.getInstance();
     // localStorage = LocalStorage('LocalStorage');
     // await localStorage.ready;
-    jsonStore = JsonStore();
+    await GetStorage.init();
+    getStorage = GetStorage();
   }
 }
 
@@ -32,7 +33,11 @@ abstract class BaseSavableJson<T> extends GetxController {
   String get key;
 
   T _data;
+
   T get data => _data;
+
+  bool get isNull => data == null;
+
   set data(T newData) {
     _data = newData;
     saveJson();
@@ -40,15 +45,15 @@ abstract class BaseSavableJson<T> extends GetxController {
   }
 
   loadJson();
+
   saveJson();
+
   updateData(T newData) => data = newData;
 
-  T convert(Map json);
+  T convert(json);
 }
 
 abstract class BaseSaveJson<T> extends BaseSavableJson<T> {
-  Future<bool> ready;
-
   BaseSaveJson() {
     loadJson();
   }
@@ -56,39 +61,35 @@ abstract class BaseSaveJson<T> extends BaseSavableJson<T> {
   @override
   loadJson() {
     var now = DateTime.now();
-    var load = StorageManager.jsonStore.getItem(key);
-    ready = Future<bool>(() async {
-      var value = await load;
-      var data2 = convert(value ?? {});
-      data = data2;
-      var now2 = DateTime.now();
-      debugPrint(
-          '[${now2.difference(now).inMilliseconds} us] load data(${value.length}) with key $key');
-      return true;
-    });
-    load.catchError((err) {
-      debugPrint('load $key error: $err');
-    });
+    var value = StorageManager.getStorage.read(key);
+    if (value == null) {
+      //not loaded
+      debugPrint('warn: load null data from key: $key');
+    } else if (value is T) {
+      data = value;
+    } else {
+      if (value is List) {
+        data = convert(value);
+      } else {
+        data = convert(value);
+      }
+    }
+    var now2 = DateTime.now();
+    debugPrint(
+        '[${now2.difference(now).inMilliseconds} us] load ${value.runtimeType}, key: $key');
   }
 
   @override
   saveJson() {
     var now = DateTime.now();
-    Map json;
-    dynamic data = _data;
-    try {
-      json = data.toJson();
-    } on NoSuchMethodError catch (_) {
-      json = data;
-    }
-    var save = StorageManager.jsonStore.setItem(key, json);
+    var save = StorageManager.getStorage.write(key, data);
     save.catchError((err) {
-      debugPrint('try to save ${data.runtimeType} with key $key: $err');
+      debugPrint('error: try to save $key: ${data.runtimeType} : $err');
     });
     save.then((_) {
       var now2 = DateTime.now();
       debugPrint(
-          '[${now2.difference(now).inMicroseconds} us] save ${data.runtimeType} with key $key');
+          '[${now2.difference(now).inMicroseconds} us] success save ${data.runtimeType}, key: $key');
     });
   }
 }

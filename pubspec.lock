@@ -347,6 +347,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.25.6"
+  get_storage:
+    dependency: "direct main"
+    description:
+      name: get_storage
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.4.0"
   hex:
     dependency: transitive
     description:

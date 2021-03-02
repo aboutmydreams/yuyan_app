@@ -28,7 +28,6 @@ class TokenJson {
     List<String> cookiesList = cookie.split(";");
     Map<String, String> cookieData = {};
     for (var cookie in cookiesList) {
-
       var arr = cookie.split("=");
       var key = arr[0].trim(), val = arr[1].trim();
       cookieData[key] = val;
@@ -52,13 +51,14 @@ class TokenJson {
 }
 
 class TokenProvider extends BaseSaveJson<TokenJson> {
-  bool get isLogin => data.accessToken != null && data.session != null;
+  bool get isLogin =>
+      !isNull && data.accessToken != null && data.session != null;
 
   @override
   String get key => 'token';
 
   @override
-  TokenJson convert(Map json) {
+  TokenJson convert(json) {
     return TokenJson.fromJson(json);
   }
 }
@@ -74,10 +74,8 @@ mixin TokenMixin on BaseHttp {
   init() {
     debugPrint('token mixin init called');
 
-    token.ready.then((_) {
-      debugPrint("token mixin ready");
-      setToken(token.data);
-    });
+    debugPrint("token mixin ready");
+    setToken(token.data);
 
     token.addListener(() {
       debugPrint("token listener triggered");
