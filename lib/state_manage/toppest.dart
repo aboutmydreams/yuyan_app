@@ -1,4 +1,4 @@
-import 'package:yuyan_app/state_manage/account/color_manage.dart';
+import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/state_manage/dataManage/attent_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/news_manage.dart';
@@ -8,11 +8,8 @@ import 'package:yuyan_app/state_manage/dataManage/select_manage.dart';
 import 'package:yuyan_app/state_manage/version_manage/version_manage.dart';
 
 import 'dataManage/note_manage.dart';
-import 'layout_manage/hide_bottom.dart';
 
-class TopStateModel extends ColorManage {
-  // ColorManage colorManage = ColorManage();
-
+class TopStateModel extends Model {
   SelectManage selectManage = SelectManage();
   AttentManage attentManage = AttentManage();
   NewsManage newsManage = NewsManage();

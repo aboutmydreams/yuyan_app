@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/controller/theme_controller.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_follow_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
-import 'package:yuyan_app/state_manage/toppest.dart';
 
-class FollowButtom extends StatefulWidget {
-  FollowButtom({Key key, this.data}) : super(key: key);
+class FollowButton extends StatefulWidget {
+  FollowButton({Key key, this.data}) : super(key: key);
 
   final FollowsData data;
 
   @override
-  _FollowButtomState createState() => _FollowButtomState(data: data);
+  _FollowButtonState createState() => _FollowButtonState(key: key, data: data);
 }
 
-class _FollowButtomState extends State<FollowButtom> {
-  _FollowButtomState({Key key, this.data});
+class _FollowButtonState extends State<FollowButton> {
+  _FollowButtonState({Key key, this.data});
+
   final FollowsData data;
 
   bool followed;
@@ -46,7 +47,7 @@ class _FollowButtomState extends State<FollowButtom> {
       height: 35,
       margin: EdgeInsets.only(right: 16),
       decoration: BoxDecoration(
-        color: topModel.primarySwatchColor.withOpacity(0.8),
+        color: ThemeController.to.primarySwatchColor.withOpacity(0.8),
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
       child: FlatButton(

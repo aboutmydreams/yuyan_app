@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:yuyan_app/controller/theme_controller.dart';
 import 'package:yuyan_app/state_manage/dataManage/attent_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/news_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/recent_manage.dart';
-import 'package:yuyan_app/state_manage/layout_manage/hide_bottom.dart';
+import 'file:///D:/Documents/Github/flutter/yuyan_app/lib/controller/bottom_nav_controller.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/explore_page/explore_page.dart';
 import 'package:yuyan_app/views/my_page/my_page.dart';
@@ -20,11 +21,12 @@ class HomePage extends StatefulWidget {
   final int pageKey;
 
   @override
-  _HomePageState createState() => _HomePageState(pageKey: pageKey);
+  _HomePageState createState() => _HomePageState(key: key, pageKey: pageKey);
 }
 
 class _HomePageState extends State<HomePage> {
   _HomePageState({Key key, this.pageKey: 0});
+
   int pageKey;
   bool hideBottom = false;
   List<Widget> pageList = [];
@@ -54,8 +56,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Color iconColor(int index) {
+    var theme = ThemeController.to;
     Color theColor =
-        pageKey == index ? topModel.primarySwatchColor : Colors.black87;
+        pageKey == index ? theme.primarySwatchColor : Colors.black87;
     return theColor;
   }
 

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:quill_delta/quill_delta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yuyan_app/controller/theme_controller.dart';
 import 'package:yuyan_app/models/component/edit_markdown/convert/to_markdown.dart';
 import 'package:yuyan_app/models/net/requests_api/notes/note.dart';
 import 'package:yuyan_app/models/net/requests_api/util/convert.dart';
@@ -29,6 +30,7 @@ final doc1 =
     r'xibility in mind. It provides clean interface for distraction-free editing. Think Medium.com-like experience.\nMarkdown inspired semantics"},{"insert":"\n","attributes":{"heading":2}},{"insert":"Ever needed to have a heading line inside of a quote block, like this:\nI’m a Markdown heading"},{"insert":"\n","attributes":{"block":"quote","heading":3}},{"insert":"And I’m a regular paragraph"},{"insert":"\n","attributes":{"block":"quote"}},{"insert":"Code blocks"},{"insert":"\n","attributes":{"headin'
     r'g":2}},{"insert":"Of course:\nimport ‘package:flutter/material.dart’;"},{"insert":"\n","attributes":{"block":"code"}},{"insert":"import ‘package:zefyr/zefyr.dart’;"},{"insert":"\n\n","attributes":{"block":"code"}},{"insert":"void main() {"},{"insert":"\n","attributes":{"block":"code"}},{"insert":" runApp(MyZefyrApp());"},{"insert":"\n","attributes":{"block":"code"}},{"insert":"}"},{"insert":"\n","attributes":{"block":"code"}},{"insert":"\n\n\n"}]';
 final doc2 = r'[{"insert":"\n"}]';
+
 Delta getDelta() {
   return Delta.fromJson(json.decode(doc1) as List);
 }
@@ -167,7 +169,7 @@ class _EditNotePageState extends State<EditNotePage> {
       return Theme(data: ThemeData.dark(), child: result);
     }
     return Theme(
-      data: ThemeData(primarySwatch: topModel.primarySwatchColor),
+      data: ThemeData(primarySwatch: ThemeController.to.primarySwatchColor),
       child: result,
     );
   }

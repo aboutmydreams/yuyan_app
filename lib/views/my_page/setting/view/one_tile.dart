@@ -1,7 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/controller/theme_controller.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/state_manage/toppest.dart';
 
 class SettingTile extends StatelessWidget {
   const SettingTile(
@@ -12,6 +12,7 @@ class SettingTile extends StatelessWidget {
   final IconData icon;
   final Function onTap;
   final bool ifBadge;
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -32,7 +33,7 @@ class SettingTile extends StatelessWidget {
             ),
       leading: Icon(
         icon,
-        color: topModel.primarySwatchColor,
+        color: ThemeController.to.primarySwatchColor,
       ),
       onTap: onTap,
     );

@@ -6,7 +6,7 @@ import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/state_manage/dataManage/attent_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/attent_data.dart';
-import 'package:yuyan_app/state_manage/layout_manage/hide_bottom.dart';
+import 'file:///D:/Documents/Github/flutter/yuyan_app/lib/controller/bottom_nav_controller.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/explore_page/attention/view/to_artboard.dart';
 import 'package:yuyan_app/views/explore_page/attention/view/to_book.dart';

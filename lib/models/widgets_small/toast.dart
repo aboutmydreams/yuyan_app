@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:yuyan_app/state_manage/toppest.dart';
+import 'package:yuyan_app/controller/theme_controller.dart';
 
 class Toast {
   static OverlayEntry _overlayEntry; // toast靠它加到屏幕上
@@ -81,7 +81,7 @@ myToast(BuildContext context, String text) {
     context,
     child: Container(
       decoration: BoxDecoration(
-        color: topModel.primarySwatchColor,
+        color: ThemeController.to.primarySwatchColor,
         boxShadow: [
           BoxShadow(
             color: Color.fromARGB(55, 0, 0, 0),
