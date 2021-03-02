@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:yuyan_app/controller/theme_controller.dart';
+import 'package:yuyan_app/controller/version_controller.dart';
 import 'package:yuyan_app/models/tools/analytics.dart';
 import 'package:yuyan_app/models/widgets_small/show_dialog/show_confirm.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
@@ -17,12 +19,13 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   checkVersion() {
     if ((Platform.isIOS)) {}
-    topModel.versionManage.checkVersion(context);
+    Get.find<VersionController>().checkVersion(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    print(topModel.versionManage.isLastest);
+    var version = Get.find<VersionController>();
+    debugPrint('version check: latest: ${version.isLatest}');
     analytics.logEvent(name: 'setting');
     return Scaffold(
       appBar: AppBar(
@@ -37,12 +40,14 @@ class _SettingPageState extends State<SettingPage> {
             icon: Icons.insert_emoticon,
             onTap: ThemeController.to.changeThemeColor,
           ),
-          SettingTile(
-            title: '检查更新',
-            icon: Icons.vertical_align_top,
-            onTap: checkVersion,
-            ifBadge: topModel.versionManage.isLastest,
-          ),
+          Obx(() {
+            return SettingTile(
+              title: '检查更新',
+              icon: Icons.vertical_align_top,
+              onTap: checkVersion,
+              ifBadge: version.isLatest,
+            );
+          }),
           SettingTile(
             title: '退出登录',
             icon: Icons.power_settings_new,

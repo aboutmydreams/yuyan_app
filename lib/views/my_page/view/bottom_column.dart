@@ -1,5 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:yuyan_app/controller/version_controller.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
@@ -25,13 +27,15 @@ Widget threeWidget(BuildContext context) {
             imgName: "suggest", text: "意见与反馈", routeName: "/my/suggest"),
         oneColumn(context,
             imgName: "about", text: "关于语燕", routeName: "/my/about"),
-        oneColumn(
-          context,
-          imgName: "setting",
-          text: "设置",
-          routeName: "/my/setting",
-          ifBadge: topModel.versionManage.isLastest,
-        ),
+        Obx(() {
+          return oneColumn(
+            context,
+            imgName: "setting",
+            text: "设置",
+            routeName: "/my/setting",
+            ifBadge: Get.find<VersionController>().isLatest,
+          );
+        }),
       ],
     ),
   );
