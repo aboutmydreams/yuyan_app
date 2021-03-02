@@ -116,7 +116,7 @@ class _EditNotePageState extends State<EditNotePage> {
     //     ? IconButton(onPressed: _stopEditing, icon: Icon(Icons.save))
     //     : IconButton(onPressed: _startEditing, icon: Icon(Icons.edit));
     final result = Scaffold(
-        resizeToAvoidBottomPadding: true,
+        // resizeToAvoidBottomPadding: true,
         appBar: AppBar(
           title: Text('小记'),
           actions: [

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/state_manage/dataManage/attent_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/attent_data.dart';
+import 'package:yuyan_app/state_manage/layout_manage/hide_bottom.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/explore_page/attention/view/to_artboard.dart';
 import 'package:yuyan_app/views/explore_page/attention/view/to_book.dart';
@@ -27,13 +29,16 @@ class _AttentionPageState extends State<AttentionPage>
   void initState() {
     super.initState();
     _controller = ScrollController();
-    _controller.addListener(() {
-      if (_controller.position.pixels == _controller.position.maxScrollExtent) {
-        getMoreData();
-      }
+    final controller = Get.find<BottomNavigatorController>();
+    controller.addScrollListener(_controller);
+    // _controller.addListener(() {
+      // if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+      //   getMoreData();
+      // }
       // print(_controller.position.pixels);
-      topModel.bottomManage.addPixels(_controller.position.pixels);
-    });
+      // bottomManager.addPixels(_controller.position.pixels);
+      // controller.onScroll(_controller);
+    // });
   }
 
   getMoreData() async {

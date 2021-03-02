@@ -9,7 +9,7 @@ Widget preHtml(BuildContext context, String outerHtml) {
     color: Colors.grey[200],
     child: HtmlWidget(
       outerHtml,
-      bodyPadding: EdgeInsets.all(16),
+      // bodyPadding: EdgeInsets.all(16),
       webView: true,
       onTapUrl: (url) {
         openUrl(context, url);
