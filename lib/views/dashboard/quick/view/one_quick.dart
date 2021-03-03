@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
-import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/quick_data.dart';
+import 'package:yuyan_app/util/clear_text.dart';
 
 Widget oneQuick(BuildContext context, Data data) {
   String imageUrl = data.icon.toString().contains("http")

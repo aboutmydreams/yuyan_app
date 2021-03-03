@@ -7,10 +7,10 @@ import 'package:yuyan_app/controller/theme_controller.dart';
 import 'package:yuyan_app/models/component/edit_markdown/convert/to_markdown.dart';
 import 'package:yuyan_app/models/net/requests_api/notes/note.dart';
 import 'package:yuyan_app/models/net/requests_api/util/convert.dart';
-import 'package:yuyan_app/models/tools/get_pref.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
+import 'package:yuyan_app/util/get_pref.dart';
 import 'package:zefyr/zefyr.dart';
 import 'view/images.dart';
 

@@ -67,7 +67,7 @@ class RecentData {
     id = json['id'];
     organizationId = json['organization_id'];
     userId = json['user_id'];
-    action = json['action'];
+    action = json['action.json'];
     subjectType = json['subject_type'];
     targetType = json['target_type'];
     targetId = json['target_id'];
@@ -91,7 +91,7 @@ class RecentData {
     data['id'] = this.id;
     data['organization_id'] = this.organizationId;
     data['user_id'] = this.userId;
-    data['action'] = this.action;
+    data['action.json'] = this.action;
     data['subject_type'] = this.subjectType;
     data['target_type'] = this.targetType;
     data['target_id'] = this.targetId;

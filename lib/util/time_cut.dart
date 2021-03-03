@@ -13,3 +13,9 @@ String timeCut(String time) {
                   : "一瞬间前";
   return passTime;
 }
+
+extension StringEx on String {
+  String parseAndCutTime() {
+    return timeCut(this);
+  }
+}

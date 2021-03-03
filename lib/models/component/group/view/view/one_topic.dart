@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_topic_data.dart';
-import 'package:yuyan_app/models/tools/clear_text.dart';
-import 'package:yuyan_app/models/tools/time_cut.dart';
+import 'package:yuyan_app/util/clear_text.dart';
+import 'package:yuyan_app/util/time_cut.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 Widget oneTopic(BuildContext context, OneTopicData data) {

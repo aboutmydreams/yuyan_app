@@ -4,11 +4,11 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/my_topic_data.dart';
-import 'package:yuyan_app/models/tools/analytics.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
+import 'package:yuyan_app/util/analytics.dart';
 
 class TopicPage extends StatefulWidget {
   TopicPage({Key key}) : super(key: key);
@@ -22,6 +22,7 @@ class _TopicPageState extends State<TopicPage> {
   int offset2 = 0;
   List<TopicData> dataList;
   List<TopicData> dataList2;
+
   // ScrollController _controller;
 
   @override

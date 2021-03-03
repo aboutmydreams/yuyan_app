@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/config/net/base.dart';
@@ -28,7 +27,7 @@ class ApiResponse {
 
 class ApiInterceptor extends InterceptorsWrapper {
   @override
-  Future<Response<ApiResponse>> onResponse(Response response) async {
+  Future<Response> onResponse(Response response) async {
     var resp = ApiResponse.fromJson(response.data);
     if (resp.isError()) {
       throw ApiError(
@@ -64,9 +63,13 @@ class ApiError implements Exception {
 }
 
 class BaseApi extends BaseHttp with TokenMixin {
-  final baseUrl = "https://www.yuque.com/api";
+  final baseUrl;
   final userAgent =
       "Mozilla/5.0 AppleWebKit/537.36 Chrome/88.0.4324.181 Mobile Safari/537.36 Yuyan";
+
+  BaseApi({
+    this.baseUrl = "https://www.yuque.com/api",
+  });
 
   @override
   void init() {

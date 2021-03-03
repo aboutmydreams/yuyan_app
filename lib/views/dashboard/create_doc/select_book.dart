@@ -3,8 +3,8 @@ import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/all_doc_book_data.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
-import 'package:yuyan_app/models/tools/analytics.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
+import 'package:yuyan_app/util/analytics.dart';
 
 class SelectView extends StatelessWidget {
   const SelectView({Key key, this.book}) : super(key: key);

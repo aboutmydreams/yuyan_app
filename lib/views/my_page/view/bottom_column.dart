@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:yuyan_app/controller/version_controller.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
-import 'package:yuyan_app/state_manage/toppest.dart';
 
 Widget threeWidget(BuildContext context) {
   return Container(

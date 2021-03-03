@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/oauth2/random_string/random_string.dart';
-import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_small/user_event.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/attent_data.dart';
+import 'package:yuyan_app/util/time_cut.dart';
 
-Widget toArtboard(BuildContext context, Data data) {
+Widget toArtboard(BuildContext context, AttendData data) {
   return Container(
     padding: EdgeInsets.only(top: 14, bottom: 20),
     decoration: BoxDecoration(

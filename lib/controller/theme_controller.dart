@@ -6,7 +6,7 @@ class ThemeController extends GetxController {
   final _indexKey = "primarySwatchColor";
 
   static ThemeController get to => Get.find();
-  static List<MaterialColor> _colorList = [
+  static List<MaterialColor> _definedColors = [
     // Colors.yellow,
     // Colors.orange,
 
@@ -50,8 +50,8 @@ class ThemeController extends GetxController {
   }
 
   loadColorIndex() {
-    _colorIndex = StorageManager.sharedPreferences.getInt(_indexKey);
-    _primarySwatchColor = _colorList[_colorIndex];
+    _colorIndex = StorageManager.sharedPreferences.getInt(_indexKey) ?? 0;
+    _primarySwatchColor = _definedColors[_colorIndex];
   }
 
   updateThemeData() {
@@ -66,8 +66,8 @@ class ThemeController extends GetxController {
   }
 
   changeThemeColor() {
-    _colorIndex = (_colorIndex + 1) % _colorList.length;
-    _primarySwatchColor = _colorList[_colorIndex];
+    _colorIndex = (_colorIndex + 1) % _definedColors.length;
+    _primarySwatchColor = _definedColors[_colorIndex];
     updateThemeData();
     saveColorIndex();
     Get.changeTheme(themeData);

@@ -4,12 +4,12 @@ import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/my_mark_data.dart';
-import 'package:yuyan_app/models/tools/analytics.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
+import 'package:yuyan_app/util/analytics.dart';
 
 class MarkPage extends StatefulWidget {
   MarkPage({Key key}) : super(key: key);

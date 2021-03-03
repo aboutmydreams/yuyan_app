@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/doc_data_v2.dart';
-import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
+import 'package:yuyan_app/util/time_cut.dart';
 
 Widget docTitle(String text) {
   return Container(

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
-import 'package:yuyan_app/models/tools/clear_text.dart';
-import 'package:yuyan_app/models/tools/get_tag.dart';
-import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/news_data.dart';
+import 'package:yuyan_app/util/clear_text.dart';
+import 'package:yuyan_app/util/get_tag.dart';
+import 'package:yuyan_app/util/time_cut.dart';
 
 class OneNewsContainer extends StatelessWidget {
   OneNewsContainer({Key key, @required this.data, this.unread: true})
@@ -205,12 +205,16 @@ String clearSub(Notifications data) {
       : data.thirdSubject != null
           ? data.subject != null
               ? data.subject.title
-              : data.thirdSubject.name != null ? data.thirdSubject.name : null
+              : data.thirdSubject.name != null
+                  ? data.thirdSubject.name
+                  : null
           : null;
   var thTitle = data.thirdSubject != null
       ? data.thirdSubject.name != null
           ? data.thirdSubject.name
-          : data.subject != null ? data.subject.title : null
+          : data.subject != null
+              ? data.subject.title
+              : null
       : null;
 
   var title =

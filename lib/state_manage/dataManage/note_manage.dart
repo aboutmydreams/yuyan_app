@@ -1,10 +1,11 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/models/net/requests_api/notes/data/note_data.dart';
 import 'package:yuyan_app/models/net/requests_api/notes/note.dart';
-import 'package:yuyan_app/models/tools/write_json.dart';
+import 'package:yuyan_app/util/write_json.dart';
 
 class NoteManage extends Model {
   NoteJson _noteData = NoteJson();
+
   NoteJson get noteData => _noteData;
 
   getSaveData() async {

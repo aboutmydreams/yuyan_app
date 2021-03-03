@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
-import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_small/user_event.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/attent_data.dart';
+import 'package:yuyan_app/util/time_cut.dart';
 
-Widget toDoc(BuildContext context, Data data) {
+Widget toDoc(BuildContext context, AttendData data) {
   return GestureDetector(
     onTap: () {
       // openUrl(context, data.event[0].url);

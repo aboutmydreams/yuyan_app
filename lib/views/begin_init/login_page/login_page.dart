@@ -4,11 +4,10 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/config/app.dart';
-import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 import 'package:yuyan_app/models/oauth2/oauth2.dart';
-import 'package:yuyan_app/models/tools/analytics.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
+import 'package:yuyan_app/util/analytics.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -152,13 +151,13 @@ class _LoginPageState extends State<LoginPage> {
     await prefs.setString("all_cookies", cookieResult);
 
     // 关注语燕项目文档和语雀的天空推送
-    await DioUser.watchBook(bookId: 624070, actionOption: "notify");
-    await DioUser.watchBook(bookId: 103555);
+    // await DioUser.watchBook(bookId: 624070, actionOption: "notify");
+    // await DioUser.watchBook(bookId: 103555);
     // 👀👀开发者
     // await DioUser.followUser(userId: 164272);
 
-    topModel.update();
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => route == null);
+    topModel.update();
   }
 
   @override

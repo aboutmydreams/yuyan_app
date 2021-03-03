@@ -36,7 +36,7 @@ abstract class BaseSavableJson<T> extends GetxController {
 
   T get data => _data;
 
-  bool get isNull => data == null;
+  bool get isNullOrEmpty => GetUtils.isNullOrBlank(data);
 
   set data(T newData) {
     _data = newData;
@@ -68,11 +68,7 @@ abstract class BaseSaveJson<T> extends BaseSavableJson<T> {
     } else if (value is T) {
       data = value;
     } else {
-      if (value is List) {
-        data = convert(value);
-      } else {
-        data = convert(value);
-      }
+      data = convert(value);
     }
     var now2 = DateTime.now();
     debugPrint(
@@ -93,3 +89,5 @@ abstract class BaseSaveJson<T> extends BaseSavableJson<T> {
     });
   }
 }
+
+abstract class BaseSaveListJson<T> extends BaseSaveJson<List<T>> {}

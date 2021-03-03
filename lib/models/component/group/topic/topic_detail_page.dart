@@ -8,7 +8,7 @@ import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/one_topic/topic_detail_data.dart';
 import 'package:yuyan_app/models/net/requests_api/group/group.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
-import 'package:yuyan_app/models/tools/report.dart';
+import 'package:yuyan_app/util/report.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/menu_item.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
@@ -28,6 +28,7 @@ class TopicDetail extends StatefulWidget {
 
 class _TopicDetailState extends State<TopicDetail> {
   _TopicDetailState({Key key, this.groupId, this.iid, this.id});
+
   int groupId;
   int iid;
   int id;
