@@ -6,7 +6,6 @@ import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/state_manage/dataManage/note_manage.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/dashboard/quick/note/view/note_list.dart';
-import 'package:yuyan_app/views/explore_page/search/search_bar.dart';
 
 class NotePage extends StatefulWidget {
   NotePage({Key key}) : super(key: key);

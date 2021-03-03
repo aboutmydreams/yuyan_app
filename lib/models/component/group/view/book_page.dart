@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/user/view/view/one_repos.dart';
-import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_book_data.dart';
-import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';

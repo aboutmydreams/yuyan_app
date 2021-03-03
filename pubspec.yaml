@@ -27,7 +27,7 @@ dependency_overrides:
   notus:
     git: https://github.com/aboutmydreams/notus.git
   # markdown / 富文本 编辑器
-  zefyr: 
+  zefyr:
     git: https://github.com/aboutmydreams/zefyr.git
 
 
@@ -53,7 +53,8 @@ dependencies:
   crypto: ^2.1.3
 
   # 网络请求
-  dio: ^3.0.7
+  dio: 3.0.10
+  pretty_json: 1.1.0
 
   # 弱提示
   # fluttertoast: ^3.1.3
@@ -67,26 +68,29 @@ dependencies:
   # 状态管理
   provider: ^4.0.4
   scoped_model: ^1.0.1
+  get: 3.25.6
 
   # 数据分析
   firebase_core: ^0.5.3 # This dependency was added during initial configuration.
   firebase_analytics: ^6.3.0 # add dependency for Google Analytics for Firebase
 
   chewie: ^0.9.10
+
   # html
-  flutter_widget_from_html: ^0.3.3+4
+  flutter_widget_from_html: ^0.5.2+1
 
   # 缓存
   shared_preferences: ^0.5.8
+  json_store: 1.2.0
+  get_storage:
 
   # 分享
   share: ^0.6.4+3
 
   # webView
-  # webview_flutter: ^0.3.18+1
-  flutter_inappwebview:
-    ^4.0.0+4
-    # git: https://github.com/aboutmydreams/flutter_inappwebview.git
+  webview_flutter: 1.0.7
+  flutter_inappwebview: 4.0.0+4
+  # git: https://github.com/aboutmydreams/flutter_inappwebview.git
   # flutter_webview_plugin: ^0.3.11
 
   # flare
@@ -96,7 +100,7 @@ dependencies:
   requests: ^3.0.3
 
   # use svg
-  flutter_svg: ^0.19.2+1
+  flutter_svg: ^0.19.1
 
   # 裁剪 我的页面顶部背景
   flutter_custom_clippers: ^1.1.0

@@ -3,52 +3,45 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_xupdate/flutter_xupdate.dart';
-import 'package:scoped_model/scoped_model.dart';
+import 'package:get/get.dart' hide Response;
+import 'package:yuyan_app/config/app.dart';
+import 'package:yuyan_app/model/version/app_info.dart';
+import 'package:yuyan_app/model/version/update_data.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
-import 'package:yuyan_app/models/tools/get_version.dart';
-import 'package:yuyan_app/models/tools/write_json.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
-import 'package:yuyan_app/state_manage/version_manage/data/app_info.dart';
-import 'package:yuyan_app/state_manage/version_manage/data/update_data.dart';
 
-class VersionManage extends Model {
-  String checkUrl =
+class VersionController extends GetxController {
+  final String checkUrl =
       "https://service-iw6blmei-1256880247.gz.apigw.tencentcs.com/release/yuyan_v?v=";
-  String checkUrl2 =
+  final String checkUrl2 =
       "https://service-kuz2fghy-1256880247.gz.apigw.tencentcs.com/release/yuyan_v2?v=";
-  bool _isLastest = true;
-  bool get isLastest => _isLastest;
+  var _isLatest = true.obs;
+
+  bool get isLatest => _isLatest.value;
   String _message;
-  String _version;
-  String get appversion => _version;
+  String _version = App.version.version;
+
+  String get appVersion => _version;
+
   String get getMessage => _message;
   UpdateJson _updateJson;
+
   UpdateJson get updateJson => _updateJson;
 
-  getSaveData() async {
-    var versionData = await readJson('version');
-    UpdateJson updateData = UpdateJson.fromJson(versionData);
-    _updateJson = updateData;
-    notifyListeners();
-    // return quickData;
+  onInit() {
+    super.onInit();
+
+    initXUpdate();
+    fetchLatest();
   }
 
-  saveVersionData() async {
-    var version = await getVersion();
-    _version = version;
+  fetchLatest() async {
     try {
       Response response = await Dio().get(checkUrl2 + _version);
-      await writeJson('version', response.data);
-      print(response.data);
-      if (response.data["UpdateStatus"] == 1) {
-        _isLastest = false;
-      }
-      notifyListeners();
-      return 1;
+      var info = UpdateJson.fromJson(response.data);
+      _isLatest.value = info.updateStatus == 0;
     } catch (e) {
       _message = e.toString();
-      notifyListeners();
-      return 0;
     }
   }
 
@@ -81,24 +74,6 @@ class VersionManage extends Model {
         print(error);
       });
 
-      //  FlutterXUpdate.setErrorHandler(
-      //      onUpdateError: (Map<String, dynamic> message) async {
-      //    print(message);
-      //    //下载失败
-      //    if (message["code"] == 4000) {
-      //      FlutterXUpdate.showRetryUpdateTipDialog(
-      //          retryContent: "Github被墙无法继续下载，是否考虑切换蒲公英下载？",
-      //          retryUrl: "https://www.pgyer.com/flutter_learn");
-      //    }
-      //    _message = "$message";
-      //    notifyListeners();
-      //  });
-
-      //  FlutterXUpdate.setCustomParseHandler(onUpdateParse: (String json) async {
-      //    //这里是自定义json解析
-      //    return customParseJson(json);
-      //  });
-
       FlutterXUpdate.setUpdateHandler(
           onUpdateError: (Map<String, dynamic> message) async {
         print(message);
@@ -110,7 +85,7 @@ class VersionManage extends Model {
           );
         }
         _message = "$message";
-        notifyListeners();
+        update();
       }, onUpdateParse: (String json) async {
         //这里是自定义json解析
         return customParseJson(json);
@@ -120,7 +95,7 @@ class VersionManage extends Model {
 
   void updateMessage(String message) {
     _message = "$message";
-    notifyListeners();
+    update();
   }
 
   ///将自定义的json内容解析为UpdateEntity实体类
@@ -139,7 +114,7 @@ class VersionManage extends Model {
   }
 
   checkVersion(BuildContext context) {
-    if (isLastest) {
+    if (isLatest) {
       myToast(context, "已是最新版本啦~");
     } else {
       if ((Platform.isIOS)) {
@@ -153,12 +128,5 @@ class VersionManage extends Model {
 
   void checkUpdateDefault() {
     FlutterXUpdate.checkUpdate(url: checkUrl2 + _version);
-  }
-
-  void initAll() {
-    saveVersionData().then((res) {
-      getSaveData();
-      initXUpdate();
-    });
   }
 }

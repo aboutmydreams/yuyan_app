@@ -16,6 +16,7 @@ class _ExplorePageState extends State<ExplorePage>
     with AutomaticKeepAliveClientMixin {
   bool get wantKeepAlive => true;
 
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -60,13 +61,8 @@ class _ExplorePageState extends State<ExplorePage>
         ),
         body: TabBarView(
           children: <Widget>[
-            GestureDetector(
-              onPanDown: (DragDownDetails details) {
-                topModel.bottomManage.initd();
-              },
-              child: Container(
-                child: AttentionPage(),
-              ),
+            Container(
+              child: AttentionPage(),
             ),
             Container(
               child: SelectionPage(),

@@ -144,7 +144,7 @@ Widget oneFollow(BuildContext context, FollowsData data) {
                   ),
           ),
           Spacer(),
-          FollowButtom(data: data)
+          FollowButton(data: data)
         ],
       ),
     ),

@@ -1,19 +1,14 @@
-import 'package:yuyan_app/state_manage/account/color_manage.dart';
+import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/state_manage/dataManage/attent_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/news_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/quick_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/recent_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/select_manage.dart';
-import 'package:yuyan_app/state_manage/version_manage/version_manage.dart';
 
 import 'dataManage/note_manage.dart';
-import 'layout_manage/hide_bottom.dart';
 
-class TopStateModel extends ColorManage {
-  // ColorManage colorManage = ColorManage();
-  BottomManage bottomManage = BottomManage();
-
+class TopStateModel extends Model {
   SelectManage selectManage = SelectManage();
   AttentManage attentManage = AttentManage();
   NewsManage newsManage = NewsManage();
@@ -21,12 +16,9 @@ class TopStateModel extends ColorManage {
   NoteManage noteManage = NoteManage();
   RecentManage recentManage = RecentManage();
   MyInfoManage myInfoManage = MyInfoManage();
-  VersionManage versionManage = VersionManage();
 
   /// 初始化数据
   void update() {
-    // 检查更新
-    versionManage.initAll();
     // 关注数据
     attentManage.update();
     // 精选数据

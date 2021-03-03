@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yuyan_app/state_manage/toppest.dart';
+import 'package:yuyan_app/controller/theme_controller.dart';
 
 // 白天主题
 class AppColors {
@@ -15,7 +15,7 @@ class AppColors {
   // 主要文字段落灰色 纯黑的45%
   static Color primaryText = Colors.black45;
 
-  static Color primary = topModel.primarySwatchColor;
+  static Color get primary => ThemeController.to.primarySwatchColor;
 
   // 页面背景
   static Color background = Colors.white;

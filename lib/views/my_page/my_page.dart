@@ -46,6 +46,8 @@ class _MyPageState extends State<MyPage> {
       SizedBox(height: 300)
     ];
     getVersion();
+
+    var theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -58,16 +60,16 @@ class _MyPageState extends State<MyPage> {
               child: ScopedModelDescendant<TopStateModel>(
                 builder: (context, child, model) {
                   print("model.primarySwatchColor=====");
-                  print(model.primarySwatchColor);
+                  print(theme.primaryColor);
                   return Container(
                     height: MediaQuery.of(context).size.height * 0.33,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      color: model.primarySwatchColor,
+                      color: theme.primaryColor,
                       gradient: LinearGradient(
                         colors: [
-                          model.primarySwatchColor,
-                          model.primarySwatchColor.withAlpha(60)
+                          theme.primaryColor,
+                          theme.primaryColor.withAlpha(60)
                         ],
                         begin: FractionalOffset(0, 0),
                         end: FractionalOffset(0, 1),
@@ -85,18 +87,18 @@ class _MyPageState extends State<MyPage> {
               ),
             ),
           ),
-
           Positioned(
             top: 0,
             child: Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height - 56,
               child: ListView.builder(
-                  // controller: _controller,
-                  itemCount: widgetList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return widgetList[index];
-                  }),
+                // controller: _controller,
+                itemCount: widgetList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return widgetList[index];
+                },
+              ),
             ),
           )
         ],
