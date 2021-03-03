@@ -3,14 +3,14 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_follow_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
-import 'package:yuyan_app/models/tools/analytics.dart';
-import 'package:yuyan_app/models/tools/clear_text.dart';
-import 'package:yuyan_app/models/tools/get_pref.dart';
-import 'package:yuyan_app/models/tools/get_tag.dart';
 import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
+import 'package:yuyan_app/util/analytics.dart';
+import 'package:yuyan_app/util/clear_text.dart';
+import 'package:yuyan_app/util/get_pref.dart';
+import 'package:yuyan_app/util/get_tag.dart';
 import 'one_buttom.dart';
 
 class FollowerPage extends StatefulWidget {

@@ -1,11 +1,12 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
-import 'package:yuyan_app/models/tools/write_json.dart';
+import 'package:yuyan_app/util/write_json.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/recent_data.dart';
 
 class RecentManage extends Model {
   int offset = 0;
   RecentJson _recentData = RecentJson(data: []);
+
   RecentJson get recentData => _recentData;
 
   getSaveData() async {

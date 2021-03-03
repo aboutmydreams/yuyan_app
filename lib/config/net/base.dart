@@ -37,7 +37,13 @@ class PrintInterceptor extends InterceptorsWrapper {
     var debug = getRequestDebug(resp.request);
     debug += '\nresponse--> ${resp.statusCode} ${resp.statusMessage}';
     if (resp.data is Map) {
-      debug += '\n\tdata-->\n${prettyJson(resp.data)}\n';
+      var data = resp.data['data'];
+      if (data != null && data is List) {
+        var item = data.length > 1 ? [data.first] : data;
+        debug += '\n\tdata-->\n${prettyJson(item)}\n';
+      } else {
+        debug += '\n\tdata-->\n${prettyJson(resp.data)}\n';
+      }
     } else if (resp.data is List) {
       var data = (resp.data as List);
       var json = data.length >= 1 ? [data.first] : data;

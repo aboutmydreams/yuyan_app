@@ -1,11 +1,12 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
-import 'package:yuyan_app/models/tools/write_json.dart';
+import 'package:yuyan_app/util//write_json.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/selection_data.dart';
 
 class SelectManage extends Model {
   int page = 1;
   SelectionsData _selectData = SelectionsData(data: []);
+
   SelectionsData get selectData => _selectData;
 
   getSaveData() async {

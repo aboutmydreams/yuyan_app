@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/one_topic/topic_detail_data.dart';
-import 'package:yuyan_app/models/tools/time_cut.dart';
+import 'package:yuyan_app/util/time_cut.dart';
 import 'package:yuyan_app/models/widgets_big/markdown/lake_md.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 

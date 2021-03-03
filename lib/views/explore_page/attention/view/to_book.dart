@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
-import 'package:yuyan_app/models/tools/time_cut.dart';
 import 'package:yuyan_app/models/widgets_small/user_event.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/attent_data.dart';
+import 'package:yuyan_app/util/time_cut.dart';
 
-Widget toBook(BuildContext context, Data data) {
+Widget toBook(BuildContext context, AttendData data) {
   return Container(
     padding: EdgeInsets.only(top: 14, bottom: 20),
     decoration: BoxDecoration(

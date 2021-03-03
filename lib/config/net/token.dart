@@ -52,7 +52,7 @@ class TokenJson {
 
 class TokenProvider extends BaseSaveJson<TokenJson> {
   bool get isLogin =>
-      !isNull && data.accessToken != null && data.session != null;
+      !isNullOrEmpty && data.accessToken != null && data.session != null;
 
   @override
   String get key => 'token';

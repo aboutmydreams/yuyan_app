@@ -1,4 +1,4 @@
-import 'package:yuyan_app/models/tools/get_pref.dart';
+import 'package:yuyan_app/util/get_pref.dart';
 
 // 判断是否登录
 Future<bool> ifLogin() async {

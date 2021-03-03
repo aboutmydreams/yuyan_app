@@ -485,7 +485,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "6ced0bcd357d1ad61c69f32f9363de760afce159"
+      resolved-ref: "64ea3bd3abf53cf657aade6f16c94dd7be512533"
       url: "https://github.com/aboutmydreams/notus.git"
     source: git
     version: "0.1.5"
@@ -636,6 +636,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.3.3"
+  pull_to_refresh:
+    dependency: "direct main"
+    description:
+      name: pull_to_refresh
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.6.3"
   quill_delta:
     dependency: transitive
     description:
@@ -940,7 +947,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: c1bbf3438958aadfea24b71b379725b01a72bd6c
+      resolved-ref: "0ec223d93b61ec41cadefdb84e455b09ddec4013"
       url: "https://github.com/aboutmydreams/zefyr.git"
     source: git
     version: "0.12.0"

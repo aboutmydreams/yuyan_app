@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:yuyan_app/models/component/user/view/view/one_group.dart';
-import 'package:yuyan_app/models/tools/analytics.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
+import 'package:yuyan_app/util/analytics.dart';
 
 class MyGroup extends StatelessWidget {
   const MyGroup({Key key}) : super(key: key);

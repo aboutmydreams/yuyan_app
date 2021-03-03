@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:yuyan_app/models/tools/analytics.dart';
-import 'package:yuyan_app/models/tools/get_version.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
+import 'package:yuyan_app/util/analytics.dart';
+import 'package:yuyan_app/util/get_version.dart';
 import 'package:yuyan_app/views/my_page/view/bottom_column.dart';
 import 'package:yuyan_app/views/my_page/view/user_info.dart';
 

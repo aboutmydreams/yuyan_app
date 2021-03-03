@@ -1,18 +1,22 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
-import 'package:yuyan_app/models/tools/write_json.dart';
+import 'package:yuyan_app/util/write_json.dart';
 
 import 'data/news_data.dart';
 
 class NewsManage extends Model {
   int offset = 0;
+
   // Unread _newsCount = Unread(count: 0);
   NewsData _allNews = NewsData(notifications: []);
   NewsData _unreadNews = NewsData(notifications: []);
   NewsData _readedNews = NewsData(notifications: []);
+
   // Unread get newsCount => _newsCount;
   NewsData get allNews => _allNews;
+
   NewsData get unreadNews => _unreadNews;
+
   NewsData get readedNews => _readedNews;
 
   getSaveData() async {

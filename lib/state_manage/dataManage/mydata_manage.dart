@@ -3,10 +3,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_info_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_profile_data.dart';
-import 'package:yuyan_app/models/tools/get_pref.dart';
-import 'package:yuyan_app/models/tools/write_json.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/organiz_data.dart';
+import 'package:yuyan_app/util/get_pref.dart';
+import 'package:yuyan_app/util/write_json.dart';
 
 class MyInfoManage extends Model {
   UserInfoJson _myInfoData = UserInfoJson();

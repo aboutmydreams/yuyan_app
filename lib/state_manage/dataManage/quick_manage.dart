@@ -2,7 +2,7 @@
 
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
-import 'package:yuyan_app/models/tools/write_json.dart';
+import 'package:yuyan_app/util/write_json.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/quick_data.dart';
 
 class QuickManage extends Model {

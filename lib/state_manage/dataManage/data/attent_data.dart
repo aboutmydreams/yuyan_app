@@ -1,14 +1,14 @@
 class AttentData {
-  List<Data> data;
+  List<AttendData> data;
   int offset;
 
   AttentData({this.data, this.offset});
 
   AttentData.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<Data>();
+      data = new List<AttendData>();
       json['data'].forEach((v) {
-        data.add(new Data.fromJson(v));
+        data.add(new AttendData.fromJson(v));
       });
     }
     offset = json['offset'];
@@ -24,7 +24,7 @@ class AttentData {
   }
 }
 
-class Data {
+class AttendData {
   String who;
   int userId;
   String login;
@@ -34,7 +34,7 @@ class Data {
   String subjectType;
   List<Event> event;
 
-  Data(
+  AttendData(
       {this.who,
       this.userId,
       this.login,
@@ -44,7 +44,7 @@ class Data {
       this.subjectType,
       this.event});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  AttendData.fromJson(Map<String, dynamic> json) {
     who = json['who'];
     userId = json['user_id'];
     login = json['login'];

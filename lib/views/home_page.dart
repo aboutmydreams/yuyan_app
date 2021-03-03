@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:yuyan_app/controller/bottom_nav_controller.dart';
 import 'package:yuyan_app/controller/theme_controller.dart';
-import 'package:yuyan_app/state_manage/dataManage/attent_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/news_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/recent_manage.dart';
-import 'file:///D:/Documents/Github/flutter/yuyan_app/lib/controller/bottom_nav_controller.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/explore_page/explore_page.dart';
 import 'package:yuyan_app/views/my_page/my_page.dart';
@@ -34,23 +33,21 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    pageList
-      ..add(ScopedModel<AttentManage>(
-        model: topModel.attentManage,
-        child: ExplorePage(),
-      ))
-      ..add(ScopedModel<RecentManage>(
+    pageList = [
+      ExplorePage(),
+      ScopedModel<RecentManage>(
         model: topModel.recentManage,
         child: Dashboard(),
-      ))
-      ..add(ScopedModel<NewsManage>(
+      ),
+      ScopedModel<NewsManage>(
         model: topModel.newsManage,
         child: NewsPage(),
-      ))
-      ..add(ScopedModel<MyInfoManage>(
+      ),
+      ScopedModel<MyInfoManage>(
         model: topModel.myInfoManage,
         child: MyPage(),
-      ));
+      ),
+    ];
 
     super.initState();
   }

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
-import 'package:yuyan_app/models/tools/clear_text.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/selection_data.dart';
+import 'package:yuyan_app/util/clear_text.dart';
 
 Widget secItemUI(BuildContext context, Data data) {
   String imageUrl = data.cover.contains("x-oss-process")
