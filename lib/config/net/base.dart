@@ -36,21 +36,22 @@ class PrintInterceptor extends InterceptorsWrapper {
     //debug
     var debug = getRequestDebug(resp.request);
     debug += '\nresponse--> ${resp.statusCode} ${resp.statusMessage}';
-    if (resp.data is Map) {
-      var data = resp.data['data'];
-      if (data != null && data is List) {
-        var item = data.length > 1 ? [data.first] : data;
-        debug += '\n\tdata-->\n${prettyJson(item)}\n';
-      } else {
-        debug += '\n\tdata-->\n${prettyJson(resp.data)}\n';
-      }
-    } else if (resp.data is List) {
-      var data = (resp.data as List);
-      var json = data.length >= 1 ? [data.first] : data;
-      debug += '\n\tdata-->\n${prettyJson(json)}\n';
-    } else {
-      debug += '\n\tdata-->\n${resp.data}\n';
-    }
+    // if (resp.data is Map) {
+    //   var data = resp.data['data'];
+    //   if (data != null && data is List) {
+    //     var item = data.length > 1 ? [data.first] : data;
+    //     debug += '\n\tdata-->\n${prettyJson(item)}\n';
+    //   } else {
+    //     debug += '\n\tdata-->\n${prettyJson(resp.data)}\n';
+    //   }
+    // } else if (resp.data is List) {
+    //   var data = (resp.data as List);
+    //   var json = data.length >= 1 ? [data.first] : data;
+    //   debug += '\n\tdata-->\n${prettyJson(json)}\n';
+    // } else {
+    //   debug += '\n\tdata-->\n${resp.data}\n';
+    // }
+    debug += '\n\tdata-->\n${'${resp.data}'.length}\n';
     if (resp.isRedirect != null && resp.isRedirect) {
       debug += '\n\tredirects-->\n${prettyJson(resp.redirects)}\n';
     }

@@ -22,4 +22,34 @@ class Util {
                     : "一瞬间前";
     return passTime;
   }
+
+  static ossImg(String imgUrl) {
+    final String suffix =
+        "?x-oss-process=image%2Fresize%2Cm_fill%2Cw_120%2Ch_120%2Fformat%2Cpng";
+    // 如果不包含某些关键词 则使用压缩模式
+    if (imgUrl == null) {
+      return null;
+    }
+    if (imgUrl.contains("dingtalk") ||
+        imgUrl.contains("aliyuncs") ||
+        imgUrl.contains("alipay") ||
+        imgUrl.contains("assets/") ||
+        imgUrl.contains("x-oss-process")) {
+      return imgUrl;
+    } else {
+      return imgUrl + suffix;
+    }
+  }
+
+  static String clearText(String text, int maxn) {
+    // RegExp exp = new RegExp(r'<[^>]+>'); // html
+    RegExp emojiReg = RegExp(
+        r"\ud83c[\udf00-\udfff] | \ud83d[\udc00-\ude4f] | \ud83d[\ude80-\udeff]"); // emoji
+    String retext = text.replaceAll(emojiReg, '');
+    retext = retext.replaceAll("\n", "");
+    if (retext.length > maxn) {
+      retext = retext.substring(0, maxn - 2) + "..";
+    }
+    return retext;
+  }
 }

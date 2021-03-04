@@ -45,6 +45,7 @@ dependencies:
 
   # goodlook guide 液体
   liquid_swipe: ^1.5.0
+  flutter_swiper: 1.1.6
 
   # 解析html
   flutter_html: ^0.11.1

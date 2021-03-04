@@ -35,3 +35,13 @@ class NothingPage extends StatelessWidget {
     );
   }
 }
+
+class ViewEmptyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return NothingPage(
+      top: 100,
+      text: 'Empty Result',
+    );
+  }
+}

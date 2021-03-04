@@ -14,3 +14,19 @@ Widget loading() {
   );
   // CircularProgressIndicator(),
 }
+
+class ViewLoadingWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        width: 90,
+        height: 90,
+        child: FlareActor(
+          "assets/flares/progress.flr",
+          animation: "active",
+        ),
+      ),
+    );
+  }
+}

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
+import 'package:yuyan_app/models/widgets_small/loading.dart';
+import 'package:yuyan_app/models/widgets_small/nothing.dart';
 
 enum ViewState {
   idle, //加载完毕，闲置状态
@@ -105,7 +107,7 @@ abstract class FetchRefreshController<T extends BaseSavableJson>
 
   onRefresh() async {
     try {
-      if (value.isBlank) {
+      if (!this.isNull) {
         setLoading();
       } else {
         setRefreshing();
@@ -121,6 +123,7 @@ abstract class FetchRefreshController<T extends BaseSavableJson>
       }
       refreshController.refreshCompleted();
       refreshController.resetNoData();
+      refreshController.loadComplete();
     } catch (e) {
       setError(e);
       refreshController.refreshFailed();
@@ -134,7 +137,9 @@ abstract class FetchRefreshController<T extends BaseSavableJson>
       }
       var data = await fetchMoreData();
       if (data != null && !GetUtils.isBlank(data)) {
-        (value.data as List).addAll(data);
+        if (value.data is List) {
+          (value.data as List).addAll(data);
+        }
         setIdle();
         refreshController.loadComplete();
       } else {
@@ -144,8 +149,9 @@ abstract class FetchRefreshController<T extends BaseSavableJson>
         refreshController.loadNoData();
       }
     } catch (e) {
-      setError(e);
+      // setError(e);
       refreshController.loadFailed();
+      debugPrint(e.toString());
     }
   }
 
@@ -164,15 +170,9 @@ abstract class FetchRefreshController<T extends BaseSavableJson>
       case ViewState.idle:
         return builder(value);
       case ViewState.empty:
-        return onEmpty ??
-            Center(
-              child: Text('empty'),
-            );
+        return onEmpty ?? ViewEmptyWidget();
       case ViewState.loading:
-        return onLoading ??
-            Center(
-              child: RefreshProgressIndicator(),
-            );
+        return onLoading ?? ViewLoadingWidget();
       case ViewState.error:
         if (onError != null) {
           return onError(error);

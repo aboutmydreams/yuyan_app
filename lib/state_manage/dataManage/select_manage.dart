@@ -1,4 +1,9 @@
 import 'package:scoped_model/scoped_model.dart';
+import 'package:yuyan_app/config/service/yuque_service.dart';
+import 'package:yuyan_app/config/storage_manager.dart';
+import 'package:yuyan_app/config/viewstate/view_state.dart';
+import 'package:yuyan_app/model/document/doc.dart';
+import 'package:yuyan_app/model/serializer/serializer.dart';
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/util//write_json.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/selection_data.dart';
@@ -49,5 +54,71 @@ class SelectManage extends Model {
     saveSelectData().then((res) {
       getSaveData();
     });
+  }
+}
+
+class DiscoverSelectionProvider extends BaseSaveListJson<DocSeri> {
+  @override
+  List<DocSeri> convert(json) {
+    return (json as List).map((e) => DocSeri.fromJson(e)).toList();
+  }
+
+  @override
+  String get key => 'discover_selection';
+}
+
+class ExploreSelectionController
+    extends FetchRefreshController<DiscoverSelectionProvider> {
+  ExploreSelectionController()
+      : super(
+          initData: DiscoverSelectionProvider(),
+          initialRefresh: true,
+        );
+
+  @override
+  Future fetchMoreData() {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future refreshData() {
+    return ApiRepository.getExploreSelections();
+  }
+}
+
+class DiscoverRecommendProvider extends BaseSaveListJson<Serializer> {
+  @override
+  String get key => 'discover_recommend';
+
+  @override
+  List<Serializer> convert(json) {
+    return (json as List).map((e) => Serializer.fromJson(e)).toList();
+  }
+}
+
+class ExploreRecommendController
+    extends FetchRefreshController<DiscoverRecommendProvider> {
+  ExploreRecommendController()
+      : super(
+          initialRefresh: true,
+          initData: DiscoverRecommendProvider(),
+          state: ViewState.loading,
+        );
+
+  int _page = 0;
+
+  @override
+  Future fetchMoreData() async {
+    var data =
+        await ApiRepository.getExploreRecommends(page: _page, isDoc: true);
+    _page++;
+    return data;
+  }
+
+  @override
+  Future refreshData() async {
+    var data = await ApiRepository.getExploreRecommends();
+    _page = 0;
+    return data;
   }
 }

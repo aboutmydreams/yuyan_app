@@ -94,8 +94,6 @@ class _AttendItem extends StatelessWidget {
       case 'Doc':
         return _ToDocWidget(item: item);
       case 'Artboard':
-        throw 'artboard unimplement exception';
-        // return toArtboard(context, attentDatas[index]);
         return ListTile(
           title: Text('Artboard event'),
         );
