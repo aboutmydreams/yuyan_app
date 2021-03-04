@@ -59,6 +59,7 @@ mixin ControllerStateMixin on GetxController {
 
 abstract class FetchRefreshController<T extends BaseSavableJson>
     extends GetxController with ControllerStateMixin {
+  final _initialRefresh;
   RefreshController refreshController;
 
   T _value;
@@ -76,9 +77,30 @@ abstract class FetchRefreshController<T extends BaseSavableJson>
     bool initialRefresh = false,
     ViewState state = ViewState.idle,
     T initData,
-  }) : _value = initData {
+  })  : _value = initData,
+        _initialRefresh = initialRefresh {
     initState(state);
-    refreshController = RefreshController(initialRefresh: initialRefresh);
+    refreshController = RefreshController();
+  }
+
+  @override
+  onInit() {
+    super.onInit();
+
+    if (_initialRefresh) {
+      onRefresh();
+    }
+    debugPrint('${this.runtimeType} => onInit');
+  }
+
+  @override
+  onReady() {
+    debugPrint('${this.runtimeType} => onReady');
+  }
+
+  @override
+  onClose() {
+    debugPrint('${this.runtimeType} => onClose');
   }
 
   onRefresh() async {

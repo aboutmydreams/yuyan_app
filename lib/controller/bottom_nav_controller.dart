@@ -1,10 +1,13 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 
 class BottomNavigatorController extends GetxController
     with SingleGetTickerProviderMixin {
+  var navIndex = 0.obs;
+
   AnimationController _animateController;
   Duration _duration = Duration(milliseconds: 300);
 
@@ -15,6 +18,17 @@ class BottomNavigatorController extends GetxController
       );
 
   double get height => _animateController.value;
+
+  bool onUpdateNotification(ScrollUpdateNotification notification) {
+    if (notification.metrics.pixels > 500) {
+      if (notification.scrollDelta > 5) {
+        _animateController.reverse();
+      } else if (notification.scrollDelta < 5) {
+        _animateController.forward();
+      }
+    }
+    return false;
+  }
 
   addScrollListener(ScrollController controller) {
     var listener = () {

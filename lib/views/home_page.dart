@@ -24,9 +24,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  _HomePageState({Key key, this.pageKey: 0});
+  _HomePageState({Key key, int pageKey: 0});
 
-  int pageKey;
   bool hideBottom = false;
   List<Widget> pageList = [];
   GlobalKey _bottomNavigationKey = GlobalKey();
@@ -52,15 +51,14 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  Color iconColor(int index) {
+  Color iconColor(bool selected) {
     var theme = ThemeController.to;
-    Color theColor =
-        pageKey == index ? theme.primarySwatchColor : Colors.black87;
+    Color theColor = selected ? theme.primarySwatchColor : Colors.black87;
     return theColor;
   }
 
-  _buildBottomNav() {
-    var controller = Get.find<BottomNavigatorController>();
+  _buildBottomNav(BottomNavigatorController controller) {
+    var currIndex = controller.navIndex.value;
     return AnimatedBuilder(
       animation: controller.animation,
       builder: (context, child) {
@@ -76,12 +74,12 @@ class _HomePageState extends State<HomePage> {
               Icon(
                 Icons.insert_emoticon,
                 size: 34,
-                color: iconColor(0),
+                color: iconColor(0 == currIndex),
               ),
               Icon(
                 Icons.wrap_text,
                 size: 34,
-                color: iconColor(1),
+                color: iconColor(1 == currIndex),
               ),
               Badge(
                 padding: EdgeInsets.all(0),
@@ -90,20 +88,18 @@ class _HomePageState extends State<HomePage> {
                 badgeContent: Icon(
                   Icons.notifications_none,
                   size: 34,
-                  color: iconColor(2),
+                  color: iconColor(2 == currIndex),
                 ),
               ),
               Icon(
                 Icons.perm_identity,
                 size: 34,
-                color: iconColor(3),
+                color: iconColor(3 == currIndex),
               ),
             ],
             animationDuration: Duration(milliseconds: 300),
             onTap: (index) {
-              setState(() {
-                pageKey = index;
-              });
+              controller.navIndex.value = index;
             },
           ),
         );
@@ -113,11 +109,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final double topPadding = MediaQuery.of(context).padding.bottom;
-    print(topPadding);
+    // final double topPadding = MediaQuery.of(context).padding.bottom;
+    // print(topPadding);
+    var controller = Get.find<BottomNavigatorController>();
     return Scaffold(
-      bottomNavigationBar: _buildBottomNav(),
-      body: pageList[pageKey],
+      bottomNavigationBar: Obx(() => _buildBottomNav(controller)),
+      body: NotificationListener<ScrollUpdateNotification>(
+        child: Obx(() => pageList[controller.navIndex.value]),
+        onNotification: controller.onUpdateNotification,
+      ),
     );
   }
 }

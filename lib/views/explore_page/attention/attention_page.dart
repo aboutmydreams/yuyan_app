@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/controller/attend_controller.dart';
-import 'package:yuyan_app/controller/bottom_nav_controller.dart';
 import 'package:yuyan_app/model/serializer/events/book_event_seri.dart';
 import 'package:yuyan_app/model/serializer/events/doc_event_seri.dart';
 import 'package:yuyan_app/model/serializer/events/event_seri.dart';
@@ -13,47 +12,38 @@ import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/util/util.dart';
 
-class AttentionPage extends StatefulWidget {
-  AttentionPage({Key key}) : super(key: key);
+class AttentionPage extends StatelessWidget {
+  // bool get wantKeepAlive => true; //非常重要
 
-  @override
-  _AttentionPageState createState() => _AttentionPageState();
-}
+  // ScrollController _controller;
 
-class _AttentionPageState extends State<AttentionPage>
-    with AutomaticKeepAliveClientMixin {
-  bool get wantKeepAlive => true; //非常重要
+  // @override
+  // void initState() {
+  //   super.initState();
 
-  ScrollController _controller;
+  // _controller = ScrollController();
+  // final controller = Get.find<BottomNavigatorController>();
+  // controller.addScrollListener(_controller);
+  // _controller.addListener(() {
+  // if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+  //   getMoreData();
+  // }
+  // print(_controller.position.pixels);
+  // bottomManager.addPixels(_controller.position.pixels);
+  // controller.onScroll(_controller);
+  // });
+  // }
 
-  @override
-  void initState() {
-    super.initState();
-    Get.lazyPut(() => AttendController());
-
-    _controller = ScrollController();
-    final controller = Get.find<BottomNavigatorController>();
-    controller.addScrollListener(_controller);
-    // _controller.addListener(() {
-    // if (_controller.position.pixels == _controller.position.maxScrollExtent) {
-    //   getMoreData();
-    // }
-    // print(_controller.position.pixels);
-    // bottomManager.addPixels(_controller.position.pixels);
-    // controller.onScroll(_controller);
-    // });
-  }
-
-  @override
-  void dispose() {
-    //为了避免内存泄露，需要调用_controller.dispose
-    _controller.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   //为了避免内存泄露，需要调用_controller.dispose
+  //   _controller.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+    // super.build(context);
     return Scaffold(
       backgroundColor: AppColors.background,
       body: GetBuilder<AttendController>(
@@ -67,7 +57,6 @@ class _AttentionPageState extends State<AttentionPage>
               (state) {
                 var data = state.data;
                 return ListView.builder(
-                  controller: _controller,
                   itemCount: data.length,
                   itemBuilder: (BuildContext context, int index) {
                     return _AttendItem(data[index]);
