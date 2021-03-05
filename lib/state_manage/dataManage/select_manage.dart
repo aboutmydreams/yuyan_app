@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/config/service/yuque_service.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
@@ -105,20 +106,26 @@ class ExploreRecommendController
           state: ViewState.loading,
         );
 
-  int _page = 0;
+  int _page = 1;
+
+  @override
+  onRefresh() {
+    super.onRefresh();
+    Get.find<ExploreSelectionController>().onRefresh();
+  }
 
   @override
   Future fetchMoreData() async {
+    _page++;
     var data =
         await ApiRepository.getExploreRecommends(page: _page, isDoc: true);
-    _page++;
     return data;
   }
 
   @override
   Future refreshData() async {
     var data = await ApiRepository.getExploreRecommends();
-    _page = 0;
+    _page = 1;
     return data;
   }
 }

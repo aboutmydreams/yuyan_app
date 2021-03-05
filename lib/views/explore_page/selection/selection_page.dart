@@ -31,11 +31,11 @@ class SelectionPage extends StatelessWidget {
                   itemBuilder: (context, index) {
                     if (index.isEqual(0)) {
                       return GetBuilder<ExploreSelectionController>(
-                        builder: (controller) {
-                          return controller.builder(
-                            (state) => _ExploreBannerWidget(data: state.data),
-                          );
-                        },
+                        builder: (_) => _.builder(
+                          (state) => _ExploreBannerWidget(
+                            data: state.data,
+                          ),
+                        ),
                       );
                     }
                     return _RecommendItemWidget(item: data[index - 1]);
@@ -74,7 +74,38 @@ class _RecommendItemWidget extends StatelessWidget {
   }
 
   buildDoc(DocSeri data) {
-    String imageUrl = Util.ossImg(data.cover);
+    bool hasCover = data.cover != null;
+    Widget coverWidget;
+    Widget descWidget;
+    if (hasCover) {
+      coverWidget = ClipRRect(
+        borderRadius: BorderRadius.circular(8.0),
+        child: Container(
+          width: 147,
+          height: 91,
+          child: CachedNetworkImage(
+            imageUrl: data.cover,
+            placeholder: (context, url) => Container(
+              width: 147,
+              height: 91,
+              color: AppColors.background,
+            ), // Colors.white10,
+            errorWidget: (context, url, error) => Icon(Icons.error),
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
+    } else {
+      descWidget = Padding(
+        padding: const EdgeInsets.only(top: 4),
+        child: Text(
+          data.description ?? data.customDescription ?? '',
+          maxLines: 3,
+          style: AppStyles.textStyleCC,
+        ),
+      );
+    }
+    // String imageUrl = data.cover;
     return GestureDetector(
       onTap: () {
         // OpenPage.docWeb(
@@ -92,26 +123,7 @@ class _RecommendItemWidget extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Align(
-              alignment: Alignment.topLeft,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Container(
-                  width: 147,
-                  height: 91,
-                  child: CachedNetworkImage(
-                    imageUrl: imageUrl ?? "",
-                    placeholder: (context, url) => Container(
-                      width: 147,
-                      height: 91,
-                      color: AppColors.background,
-                    ), // Colors.white10,
-                    errorWidget: (context, url, error) => Icon(Icons.error),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ),
+            if (hasCover) coverWidget,
             Expanded(
               child: Container(
                 margin: EdgeInsets.only(left: 12),
@@ -120,12 +132,13 @@ class _RecommendItemWidget extends StatelessWidget {
                   children: [
                     Text(
                       data.title,
-                      maxLines: 2,
+                      maxLines: hasCover ? 4 : 1,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
                       style: AppStyles.textStyleBB,
                     ),
-                    Expanded(child: SizedBox()),
+                    if (!hasCover) descWidget,
+                    Spacer(),
                     Container(
                       margin: EdgeInsets.only(bottom: 11, right: 8),
                       child: Row(
@@ -155,7 +168,7 @@ class _RecommendItemWidget extends StatelessWidget {
                           SizedBox(width: 7),
                           Container(
                             child: Text(
-                              Util.clearText(data.user.name, 12),
+                              Util.clearText(data.user.name, 8),
                               textAlign: TextAlign.center,
                               overflow: TextOverflow.ellipsis,
                               style: AppStyles.textStyleCC,
@@ -203,7 +216,7 @@ class _RecommendItemWidget extends StatelessWidget {
   }
 }
 
-class _ExploreBannerWidget extends StatelessWidget {
+class _ExploreBannerWidget extends StatefulWidget {
   final List<DocSeri> data;
 
   _ExploreBannerWidget({
@@ -212,16 +225,23 @@ class _ExploreBannerWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  __ExploreBannerWidgetState createState() => __ExploreBannerWidgetState();
+}
+
+class __ExploreBannerWidgetState extends State<_ExploreBannerWidget>
+    with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return NotificationListener(
       onNotification: (_) => true,
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
         height: 220,
         child: Swiper(
-          itemCount: data.length,
+          itemCount: widget.data.length,
           itemBuilder: (context, index) {
-            var item = data[index];
+            var item = widget.data[index];
             return buildItem(item);
           },
           controller: SwiperController(),
@@ -232,7 +252,8 @@ class _ExploreBannerWidget extends StatelessWidget {
   }
 
   Widget buildItem(DocSeri data) {
-    var imageUrl = Util.ossImg(data.cover);
+    var imageUrl = data.cover;
+    // Util.ossImg(data.cover);
     return GestureDetector(
       onTap: () {
         // OpenPage.docWeb(
@@ -281,4 +302,7 @@ class _ExploreBannerWidget extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

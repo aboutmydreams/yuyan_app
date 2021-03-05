@@ -11,8 +11,8 @@ class AppBinding extends Bindings {
     Get.put(ThemeController());
     Get.put(BottomNavigatorController());
     Get.put(AttendController());
-    Get.put(ExploreRecommendController());
     Get.put(ExploreSelectionController());
+    Get.put(ExploreRecommendController());
 
     Get.lazyPut(() => VersionController());
   }
