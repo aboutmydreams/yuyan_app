@@ -1,27 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:yuyan_app/controller/quick_link_controller.dart';
+import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
-import 'package:yuyan_app/state_manage/dataManage/data/quick_data.dart';
-import 'package:yuyan_app/state_manage/toppest.dart';
 
 class QuickSetPage extends StatelessWidget {
   const QuickSetPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<Data> quickDataList = topModel.quickManage.quickData.data;
+    // List<Data> quickDataList = topModel.quickManage.quickData.data;
 
     return Scaffold(
       appBar: AppBar(
         title: Text("快捷入口"),
       ),
       body: Container(
-        child: ListView.builder(
-          itemCount: quickDataList.length,
-          itemBuilder: (BuildContext context, int index) {
-            return oneSetQuick(context, quickDataList[index]);
-          },
+        child: GetBuilder<QuickLinkController>(
+          builder: (c) => c.builder(
+            (state) {
+              var data = state.data;
+              return ListView.builder(
+                itemCount: data.length,
+                itemBuilder: (_, index) {
+                  return _QuickSetItemWidget(data: data[index]);
+                },
+              );
+            },
+          ),
         ),
       ),
       // 未来添加设置快捷功能
@@ -41,48 +49,59 @@ class QuickSetPage extends StatelessWidget {
   }
 }
 
-Widget oneSetQuick(BuildContext context, Data data) {
-  String imageUrl = data.icon.toString().contains("http")
-      ? data.icon
-      : iconType[data.type] ?? "assets/images/dashboard/book.png";
-  return GestureDetector(
-    onTap: () {
-      var url =
-          data.type != "Normal" ? "https://www.yuque.com" + data.url : data.url;
-      openUrl(context, url);
-    },
-    child: Container(
-      height: 70,
-      margin: EdgeInsets.only(top: 2, bottom: 9, left: 10, right: 10),
-      decoration: BoxDecoration(
-        color: AppColors.background,
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromARGB(25, 0, 0, 0),
-            offset: Offset(1, 2),
-            blurRadius: 4,
-          ),
-        ],
-        borderRadius: BorderRadius.all(Radius.circular(9.5)),
-      ),
-      child: Row(
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.all(10),
-            child: userAvatar(imageUrl, height: 50),
-          ),
-          Text(
-            data.title,
-            style: AppStyles.textStyleB,
-          )
-        ],
-      ),
-    ),
-  );
-}
+class _QuickSetItemWidget extends StatelessWidget {
+  final QuickLinkSeri data;
 
-Map<String, String> iconType = {
-  "Normal": "assets/images/dashboard/link.png",
-  "Design": "assets/images/dashboard/design.png",
-  "Book": "assets/images/dashboard/book.png"
-};
+  _QuickSetItemWidget({
+    Key key,
+    this.data,
+  }) : super(key: key);
+
+  final Map<String, String> iconType = {
+    "Normal": "assets/images/dashboard/link.png",
+    "Design": "assets/images/dashboard/design.png",
+    "Book": "assets/images/dashboard/book.png"
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    String imageUrl = data.icon.toString().contains("http")
+        ? data.icon
+        : iconType[data.type] ?? "assets/images/dashboard/book.png";
+    return GestureDetector(
+      onTap: () {
+        var url = data.type != "Normal"
+            ? "https://www.yuque.com" + data.url
+            : data.url;
+        openUrl(context, url);
+      },
+      child: Container(
+        height: 70,
+        margin: EdgeInsets.only(top: 2, bottom: 9, left: 10, right: 10),
+        decoration: BoxDecoration(
+          color: AppColors.background,
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromARGB(25, 0, 0, 0),
+              offset: Offset(1, 2),
+              blurRadius: 4,
+            ),
+          ],
+          borderRadius: BorderRadius.all(Radius.circular(9.5)),
+        ),
+        child: Row(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.all(10),
+              child: userAvatar(imageUrl, height: 50),
+            ),
+            Text(
+              data.title,
+              style: AppStyles.textStyleB,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}

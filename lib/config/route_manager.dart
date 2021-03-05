@@ -65,7 +65,10 @@ class MyRoute {
     GetPage(name: RouteName.edit, page: () => FullPageEditorScreen()),
     GetPage(name: RouteName.editNote, page: () => EditNotePage()),
     GetPage(name: RouteName.quickSet, page: () => QuickSetPage()),
-    GetPage(name: RouteName.dashboard, page: () => Dashboard()),
+    GetPage(
+      name: RouteName.dashboard,
+      page: () => Dashboard(),
+    ),
     GetPage(name: RouteName.note, page: () => NotePage()),
     GetPage(name: RouteName.mySetting, page: () => SettingPage()),
     GetPage(name: RouteName.myGroup, page: () => MyGroup()),

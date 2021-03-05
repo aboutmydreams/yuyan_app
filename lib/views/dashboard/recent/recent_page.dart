@@ -42,7 +42,8 @@ Map<String, String> subjectType = {
   "Sheet": "表格文档",
   "Column": "博客专栏",
   "Group": "团队",
-  "Design": "画板"
+  "Design": "画板",
+  "Mind": "思维导图",
 };
 
 class _UserRecentItemWidget extends StatelessWidget {

@@ -9,7 +9,6 @@ import 'package:yuyan_app/models/widgets_big/change_org/org_leading.dart';
 import 'package:yuyan_app/models/widgets_small/show_dialog/show_dialog.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
-import 'package:yuyan_app/state_manage/dataManage/quick_manage.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/util/analytics.dart';
 import 'package:yuyan_app/views/dashboard/create_doc/select_book.dart';
@@ -96,10 +95,7 @@ class _DashboardState extends State<Dashboard> {
       ),
       body: SingleChildScrollView(
         child: Column(children: [
-          ScopedModel<QuickManage>(
-            model: topModel.quickManage,
-            child: QuickView(),
-          ),
+          QuickView(),
           RecentPage(),
         ]),
       ),

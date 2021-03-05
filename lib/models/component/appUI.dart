@@ -165,6 +165,12 @@ class AppIcon {
         color: Colors.deepOrange,
         size: size,
       ),
+      //TODO add `Mind` type
+      "Mind": Icon(
+        Icons.description_sharp,
+        color: Colors.deepOrange,
+        size: size,
+      ),
     };
     return iconDic[iconName];
   }

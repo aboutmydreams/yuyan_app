@@ -8,8 +8,9 @@ abstract class BaseHttp extends DioForNative {
     //log
     interceptors.add(PrintInterceptor());
 
-    options.connectTimeout = 1000 * 10;
-    options.receiveTimeout = 1000 * 10;
+    options.sendTimeout = 1000 * 5;
+    options.connectTimeout = 1000 * 5;
+    options.receiveTimeout = 1000 * 5;
     init();
   }
 

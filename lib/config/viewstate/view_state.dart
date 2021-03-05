@@ -49,7 +49,7 @@ mixin ControllerStateMixin on GetxController {
 
   setRefreshing() => state = ViewState.refreshing;
 
-  setError(ViewStatusError error) {
+  setError(error) {
     //TODO setError
   }
 
@@ -107,7 +107,7 @@ abstract class FetchRefreshController<T extends BaseSavableJson>
 
   onRefresh() async {
     try {
-      if (!this.isNull) {
+      if (this.isNull) {
         setLoading();
       } else {
         setRefreshing();
