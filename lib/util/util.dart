@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:yuyan_app/models/oauth2/random_string/random_string.dart';
 
 class Util {
@@ -52,7 +54,7 @@ class Util {
   static String stringClip(String str, int max, {bool ellipsis = false}) {
     var length = str.runes.length;
     if (length > max) {
-      var result = runeSubstring(str, 0, max);//.substring(0, max);
+      var result = runeSubstring(str, 0, max); //.substring(0, max);
       if (ellipsis) {
         result += '...';
       }
@@ -64,6 +66,19 @@ class Util {
   //#35798 see https://github.com/dart-lang/sdk/issues/35798
   static String runeSubstring(String input, int start, int end) {
     return String.fromCharCodes(input.runes.toList().sublist(start, end));
+  }
+
+  static Widget animationTypeBuild({int type = 1, Widget child}) {
+    switch (type) {
+      case 1:
+        return FadeInAnimation(child: child);
+      case 2:
+        return SlideAnimation(child: child);
+      case 3:
+        return ScaleAnimation(child: child);
+      default:
+        return FlipAnimation(child: child);
+    }
   }
 }
 

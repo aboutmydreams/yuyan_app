@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:yuyan_app/controller/binding/app_binding.dart';
 import 'package:yuyan_app/models/component/edit_markdown/edit_note.dart';
 import 'package:yuyan_app/models/component/edit_markdown/edit_page.dart';
 import 'package:yuyan_app/models/component/group/group_page.dart';
@@ -50,7 +51,11 @@ class RouteName {
 
 class MyRoute {
   static List<GetPage> pages = [
-    GetPage(name: RouteName.home, page: () => HomePage()),
+    GetPage(
+      name: RouteName.home,
+      page: () => HomePage(),
+      binding: HomePageBinding(),
+    ),
     GetPage(name: RouteName.splash, page: () => SplashPage()),
     GetPage(name: RouteName.guide, page: () => GuidePage()),
     GetPage(name: RouteName.login, page: () => LoginPage()),

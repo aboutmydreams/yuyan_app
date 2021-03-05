@@ -4,10 +4,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:yuyan_app/controller/explore_controller.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/serializer/serializer.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/state_manage/dataManage/select_manage.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 

@@ -8,7 +8,6 @@ import 'package:yuyan_app/controller/bottom_nav_controller.dart';
 import 'package:yuyan_app/controller/theme_controller.dart';
 import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
 import 'package:yuyan_app/state_manage/dataManage/news_manage.dart';
-import 'package:yuyan_app/state_manage/dataManage/recent_manage.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/explore_page/explore_page.dart';
 import 'package:yuyan_app/views/my_page/my_page.dart';
@@ -34,10 +33,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     pageList = [
       ExplorePage(),
-      ScopedModel<RecentManage>(
-        model: topModel.recentManage,
-        child: Dashboard(),
-      ),
+      Dashboard(),
       ScopedModel<NewsManage>(
         model: topModel.newsManage,
         child: NewsPage(),

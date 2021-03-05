@@ -1,19 +1,27 @@
 import 'package:get/get.dart';
 import 'package:yuyan_app/controller/attend_controller.dart';
 import 'package:yuyan_app/controller/bottom_nav_controller.dart';
+import 'package:yuyan_app/controller/explore_controller.dart';
+import 'package:yuyan_app/controller/recent_controller.dart';
 import 'package:yuyan_app/controller/theme_controller.dart';
 import 'package:yuyan_app/controller/version_controller.dart';
-import 'package:yuyan_app/state_manage/dataManage/select_manage.dart';
 
 class AppBinding extends Bindings {
   @override
   void dependencies() {
     Get.put(ThemeController());
     Get.put(BottomNavigatorController());
+
+    Get.lazyPut(() => VersionController());
+  }
+}
+
+class HomePageBinding extends Bindings {
+  @override
+  void dependencies() {
     Get.put(AttendController());
     Get.put(ExploreSelectionController());
     Get.put(ExploreRecommendController());
-
-    Get.lazyPut(() => VersionController());
+    Get.put(RecentController());
   }
 }
