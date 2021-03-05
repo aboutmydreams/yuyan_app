@@ -168,7 +168,7 @@ class _RecommendItemWidget extends StatelessWidget {
                           SizedBox(width: 7),
                           Container(
                             child: Text(
-                              Util.clearText(data.user.name, 8),
+                              data.user.name.clip(6,ellipsis: true),
                               textAlign: TextAlign.center,
                               overflow: TextOverflow.ellipsis,
                               style: AppStyles.textStyleCC,

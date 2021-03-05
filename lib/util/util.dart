@@ -41,15 +41,34 @@ class Util {
     }
   }
 
-  static String clearText(String text, int maxn) {
-    // RegExp exp = new RegExp(r'<[^>]+>'); // html
-    RegExp emojiReg = RegExp(
-        r"\ud83c[\udf00-\udfff] | \ud83d[\udc00-\ude4f] | \ud83d[\ude80-\udeff]"); // emoji
-    String retext = text.replaceAll(emojiReg, '');
-    retext = retext.replaceAll("\n", "");
-    if (retext.length > maxn) {
-      retext = retext.substring(0, maxn - 2) + "..";
+  // static String clearText(String text) {
+  //   // RegExp exp = new RegExp(r'<[^>]+>'); // html
+  //   RegExp emojiReg = RegExp(
+  //       r"\ud83c[\udf00-\udfff] | \ud83d[\udc00-\ude4f] | \ud83d[\ude80-\udeff]"); // emoji
+  //   String ret = text.replaceAll(emojiReg, '').replaceAll('\n', '');
+  //   return ret;
+  // }
+
+  static String stringClip(String str, int max, {bool ellipsis = false}) {
+    var length = str.runes.length;
+    if (length > max) {
+      var result = runeSubstring(str, 0, max);//.substring(0, max);
+      if (ellipsis) {
+        result += '...';
+      }
+      return result;
     }
-    return retext;
+    return str;
+  }
+
+  //#35798 see https://github.com/dart-lang/sdk/issues/35798
+  static String runeSubstring(String input, int start, int end) {
+    return String.fromCharCodes(input.runes.toList().sublist(start, end));
+  }
+}
+
+extension StringEx on String {
+  String clip(int max, {bool ellipsis = false}) {
+    return Util.stringClip(this, max, ellipsis: ellipsis);
   }
 }
