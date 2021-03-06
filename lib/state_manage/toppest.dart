@@ -8,7 +8,7 @@ class TopStateModel extends Model {
   // SelectManage selectManage = SelectManage();
 
   // AttentManage attentManage = AttentManage();
-  NewsManage newsManage = NewsManage();
+  // NewsManage newsManage = NewsManage();
   // QuickManage quickManage = QuickManage();
   NoteManage noteManage = NoteManage();
   // RecentManage recentManage = RecentManage();
@@ -25,7 +25,7 @@ class TopStateModel extends Model {
     // 最近数据
     // recentManage.update();
     // 消息数据
-    newsManage.update();
+    // newsManage.update();
     // 我的数据
     myInfoManage.update();
     // 小记数据

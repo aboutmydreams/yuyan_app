@@ -7,7 +7,7 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/util/analytics.dart';
-import 'package:yuyan_app/views/news_page/view/one_news/one_news.dart';
+import 'package:yuyan_app/views/news_page/view/one_news.dart';
 import 'package:yuyan_app/views/widget/notification_absorb.dart';
 import 'package:yuyan_app/views/widget/org_space_widget.dart';
 

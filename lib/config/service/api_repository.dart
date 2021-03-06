@@ -1,7 +1,9 @@
+import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/net/api.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/model/dashboard/user_recent_seri.dart';
 import 'package:yuyan_app/model/document/doc.dart';
+import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/document/organization_lite.dart';
 import 'package:yuyan_app/model/document/user_profile.dart';
 import 'package:yuyan_app/model/events/event_seri.dart';
@@ -100,9 +102,17 @@ class ApiRepository {
   }
 
   static Future<UserProfileSeri> getUserProfile({int userId}) async {
-    assert(userId != null);
-    var res = await api.get("/users/$userId/profile?");
+    userId ??= App.user.data.id;
+    var res = await api.get("/users/$userId/profile");
     var asp = (res.data as ApiResponse);
     return UserProfileSeri.fromJson(asp.data);
+  }
+
+  static Future<List<GroupSeri>> getGroupList({int userId}) async {
+    userId ??= App.user.data.id;
+    var res = await api.get("/users/$userId/groups");
+    var asp = (res.data as ApiResponse);
+    var list = (asp.data as List).map((e) => GroupSeri.fromJson(e)).toList();
+    return list;
   }
 }

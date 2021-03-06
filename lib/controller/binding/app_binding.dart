@@ -29,5 +29,6 @@ class HomePageBinding extends Bindings {
     Get.put(RecentController());
 
     Get.put(UserController());
+    Get.put(GroupController());
   }
 }

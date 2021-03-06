@@ -1,5 +1,5 @@
 import 'package:yuyan_app/model/document/book.dart';
-import 'file:///D:/Documents/Github/flutter/yuyan_app/lib/model/document/comment.dart';
+import 'package:yuyan_app/model/document/comment.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/group_user.dart';
 import 'package:yuyan_app/model/document/topic.dart';

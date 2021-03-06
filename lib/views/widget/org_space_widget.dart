@@ -10,6 +10,7 @@ import 'package:yuyan_app/controller/notification_controller.dart';
 import 'package:yuyan_app/controller/quick_link_controller.dart';
 import 'package:yuyan_app/controller/recent_controller.dart';
 import 'package:yuyan_app/model/document/organization_lite.dart';
+import 'package:yuyan_app/model/events/user_lite_seri.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/util/util.dart';
