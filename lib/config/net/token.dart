@@ -69,16 +69,16 @@ class TokenProvider extends BaseSaveJson<TokenJson> {
 //  Cookie: _yuque_session={};yuque_ctoken={};lang=zh-cn
 //  x-csrf-token: yuque_ctoken
 mixin TokenMixin on BaseHttp {
-  var token = App.token;
+  var token = App.tokenProvider;
 
   init() {
-    debugPrint('token mixin init called');
+    super.init();
+    debugPrint('init TokenMixin');
 
-    debugPrint("token mixin ready");
     setToken(token.data);
 
     token.addListener(() {
-      debugPrint("token listener triggered");
+      debugPrint("!!!! change of token !!!!");
       setToken(token.data);
     });
   }
@@ -87,5 +87,28 @@ mixin TokenMixin on BaseHttp {
     options.headers['X-Auth-Token'] = token.accessToken;
     options.headers['Cookie'] = token.getCookie();
     options.headers['x-csrf-token'] = token.cToken;
+  }
+}
+
+mixin OrganizationMixin on BaseHttp {
+  var orgProvider = App.orgSpaceProvider;
+  final baseOrgUrl = "https://www.yuque.com/api";
+
+  init() {
+    super.init();
+    debugPrint('init OrganizationMixin');
+    orgProvider.addListener(() {
+      debugPrint('!!!! change of organization !!!!!');
+      setOrgSpace(orgProvider.data?.login);
+    });
+  }
+
+  setOrgSpace(String space) {
+    debugPrint("change namespace: $space");
+    if (space == null) {
+      options.baseUrl = baseOrgUrl;
+    } else {
+      options.baseUrl = baseOrgUrl.replaceFirst("www", space);
+    }
   }
 }

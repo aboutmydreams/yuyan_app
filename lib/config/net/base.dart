@@ -14,7 +14,7 @@ abstract class BaseHttp extends DioForNative {
     init();
   }
 
-  void init();
+  void init() {}
 }
 
 class PrintInterceptor extends InterceptorsWrapper {

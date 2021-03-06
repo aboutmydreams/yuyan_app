@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:get/get.dart';
+import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/oauth2/random_string/random_string.dart';
 
 class Util {
@@ -79,6 +81,41 @@ class Util {
       default:
         return FlipAnimation(child: child);
     }
+  }
+
+  // 使用参考：https://juejin.cn/post/6844903822028963847
+  static showWindow({String title, @required Widget child}) {
+    Get.dialog(
+      SimpleDialog(
+        contentPadding: EdgeInsets.only(left: 10, right: 10, bottom: 12),
+        title: Row(
+          children: [
+            Text(
+              title ?? 'Dialog',
+              style: AppStyles.textStyleB,
+            ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: Icon(Icons.close),
+                ),
+              ),
+            )
+          ],
+        ),
+        titlePadding: EdgeInsets.fromLTRB(26, 8, 10, 0),
+        backgroundColor: AppColors.background,
+        elevation: 5,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+        children: [
+          child,
+        ],
+      ),
+    );
   }
 }
 

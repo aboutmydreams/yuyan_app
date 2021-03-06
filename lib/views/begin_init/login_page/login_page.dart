@@ -142,8 +142,8 @@ class _LoginPageState extends State<LoginPage> {
     if (!await oauth2.challengeAccessToken(code))
       throw 'challenge access token failed';
 
-    App.token.data.loadCookies(cookieResult);
-    App.token.updateData(App.token.data);
+    App.tokenProvider.data.loadCookies(cookieResult);
+    App.tokenProvider.updateData(App.tokenProvider.data);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString("_yuque_session", cookieData["_yuque_session"]);

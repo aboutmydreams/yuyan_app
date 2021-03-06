@@ -22,12 +22,12 @@ class _MyPageState extends State<MyPage> {
     // TODO: implement initState
     super.initState();
     _controller = ScrollController();
-    _controller.addListener(() {
-      print(_controller.position.pixels);
-      if (_controller.position.pixels == _controller.position.maxScrollExtent) {
-        // getMoreData();
-      }
-    });
+    // _controller.addListener(() {
+    //   print(_controller.position.pixels);
+    //   if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+    //     // getMoreData();
+    //   }
+    // });
   }
 
   @override

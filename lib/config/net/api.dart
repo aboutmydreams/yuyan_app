@@ -62,7 +62,7 @@ class ApiError implements Exception {
   }
 }
 
-class BaseApi extends BaseHttp with TokenMixin {
+class BaseApi extends BaseHttp with TokenMixin, OrganizationMixin {
   final baseUrl;
   final userAgent =
       "Mozilla/5.0 AppleWebKit/537.36 Chrome/88.0.4324.181 Mobile Safari/537.36 Yuyan";

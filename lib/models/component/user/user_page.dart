@@ -17,16 +17,17 @@ import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.
 import 'package:yuyan_app/state_manage/toppest.dart';
 
 class UserPage extends StatefulWidget {
-  UserPage(
-      {Key key,
-      this.login,
-      this.name,
-      this.userId,
-      this.avatarUrl,
-      this.description,
-      this.tag,
-      this.pageIndex})
-      : super(key: key);
+  UserPage({
+    Key key,
+    this.login,
+    this.name,
+    this.userId,
+    this.avatarUrl,
+    this.description,
+    this.tag,
+    this.pageIndex,
+  }) : super(key: key);
+
   final String login;
   final int userId;
   final String name;
@@ -49,15 +50,16 @@ class UserPage extends StatefulWidget {
 
 class _UserPageState extends State<UserPage>
     with SingleTickerProviderStateMixin {
-  _UserPageState(
-      {Key key,
-      this.login,
-      this.name,
-      this.userId,
-      this.avatarUrl,
-      this.description,
-      this.tag,
-      this.pageIndex});
+  _UserPageState({
+    Key key,
+    this.login,
+    this.name,
+    this.userId,
+    this.avatarUrl,
+    this.description,
+    this.tag,
+    this.pageIndex,
+  });
 
   String login;
   int userId;

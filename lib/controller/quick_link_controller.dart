@@ -1,6 +1,6 @@
 // https://www.yuque.com/api/quick_links
 
-import 'package:yuyan_app/config/service/yuque_service.dart';
+import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';

@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:yuyan_app/models/widgets_big/change_org/org_leading.dart';
 import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/util/analytics.dart';
 import 'package:yuyan_app/views/explore_page/search/search_bar.dart';
+import 'package:yuyan_app/views/widget/org_space_widget.dart';
 import 'attention/attention_page.dart';
 import 'selection/selection_page.dart';
 
 class ExplorePage extends StatefulWidget {
+  final Key key;
+
+  ExplorePage({this.key}) : super(key: key);
+
   _ExplorePageState createState() => _ExplorePageState();
 }
 
 class _ExplorePageState extends State<ExplorePage>
     with AutomaticKeepAliveClientMixin {
   bool get wantKeepAlive => true;
-
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class _ExplorePageState extends State<ExplorePage>
           bottomOpacity: 5.0,
           leading: ScopedModel<MyInfoManage>(
             model: topModel.myInfoManage,
-            child: OrgLeading(),
+            child: OrgSpaceLeadingWidget(),
           ),
           actions: <Widget>[
             IconButton(

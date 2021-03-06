@@ -51,6 +51,15 @@ mixin ControllerStateMixin on GetxController {
 
   setError(error) {
     //TODO setError
+    Get.snackbar(
+      'error',
+      error.toString(),
+      snackPosition: SnackPosition.BOTTOM,
+    );
+
+    debugPrint('''!!!!!!!!!!!!!! ERROR !!!!!!!!!!!!!!!!!
+$error
+!!!!!!!!!💔💔!💔💔!💔💔!💔💔!💔💔!!!!!!!!!!''');
   }
 
   @protected
@@ -78,7 +87,7 @@ abstract class FetchRefreshController<T extends BaseSavableJson>
   FetchRefreshController({
     bool initialRefresh = false,
     ViewState state = ViewState.idle,
-    T initData,
+    @required T initData,
   })  : _value = initData,
         _initialRefresh = initialRefresh {
     initState(state);
@@ -113,13 +122,11 @@ abstract class FetchRefreshController<T extends BaseSavableJson>
         setRefreshing();
       }
       var data = await refreshData();
+      value.data = data;
       if (data != null && !GetUtils.isBlank(data)) {
-        value.data = data;
         setIdle();
       } else {
-        if (state == ViewState.loading) {
-          setEmpty();
-        }
+        setEmpty();
       }
       refreshController.refreshCompleted();
       refreshController.resetNoData();
@@ -155,7 +162,7 @@ abstract class FetchRefreshController<T extends BaseSavableJson>
     }
   }
 
-  Future fetchMoreData();
+  Future fetchMoreData() => null;
 
   Future refreshData();
 

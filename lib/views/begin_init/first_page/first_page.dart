@@ -16,7 +16,7 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
 
     // 定时器
-    Timer initTime = new Timer(const Duration(milliseconds: 0), () {
+    Timer(const Duration(milliseconds: 0), () {
       ifLogin().then((res) {
         if (res) {
           // 初始化数据
@@ -46,7 +46,7 @@ class _SplashPageState extends State<SplashPage> {
     // );
 
     Future.delayed(Duration(milliseconds: 500), () {
-      if (App.token.isLogin) {
+      if (App.tokenProvider.isLogin) {
         Get.offAllNamed("/");
       } else {
         Get.offAllNamed("/guide");

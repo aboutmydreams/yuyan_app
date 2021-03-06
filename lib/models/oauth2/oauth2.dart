@@ -82,7 +82,7 @@ class OAuth2 {
         prefs.setString("access_token", accessToken);
         print(accessToken);
 
-        App.token.data = TokenJson.fromJson(tokenData);
+        App.tokenProvider.data = TokenJson.fromJson(tokenData);
         return true;
       } else if (tokenData.keys.toList().indexOf("error") != -1) {
         return false;

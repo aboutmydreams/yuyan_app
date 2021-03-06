@@ -40,8 +40,8 @@ abstract class BaseSavableJson<T> extends GetxController {
 
   set data(T newData) {
     _data = newData;
+    update();
     saveJson();
-    notifyChildrens();
   }
 
   loadJson();
@@ -66,9 +66,9 @@ abstract class BaseSaveJson<T> extends BaseSavableJson<T> {
       //not loaded
       debugPrint('warn: load null data from key: $key');
     } else if (value is T) {
-      data = value;
+      _data = value;
     } else {
-      data = convert(value);
+      _data = convert(value);
     }
     var now2 = DateTime.now();
     debugPrint(

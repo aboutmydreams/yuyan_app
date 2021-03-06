@@ -5,7 +5,6 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/all_doc_book_data.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
-import 'package:yuyan_app/models/widgets_big/change_org/org_leading.dart';
 import 'package:yuyan_app/models/widgets_small/show_dialog/show_dialog.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
@@ -15,6 +14,7 @@ import 'package:yuyan_app/views/dashboard/create_doc/select_book.dart';
 import 'package:yuyan_app/views/dashboard/quick/quick_view.dart';
 import 'package:yuyan_app/views/dashboard/recent/recent_page.dart';
 import 'package:yuyan_app/views/explore_page/search/search_bar.dart';
+import 'package:yuyan_app/views/widget/org_space_widget.dart';
 
 class Dashboard extends StatefulWidget {
   Dashboard({Key key}) : super(key: key);
@@ -51,7 +51,7 @@ class _DashboardState extends State<Dashboard> {
         title: Text("书桌"),
         leading: ScopedModel<MyInfoManage>(
           model: topModel.myInfoManage,
-          child: OrgLeading(),
+          child: OrgSpaceLeadingWidget(),
         ),
         actions: <Widget>[
           IconButton(
