@@ -1,11 +1,13 @@
 import 'package:yuyan_app/model/document/book.dart';
+import 'file:///D:/Documents/Github/flutter/yuyan_app/lib/model/document/comment.dart';
 import 'package:yuyan_app/model/document/doc.dart';
+import 'package:yuyan_app/model/document/group_user.dart';
+import 'package:yuyan_app/model/document/topic.dart';
 import 'package:yuyan_app/model/document/user.dart';
-
-import 'events/book_event_seri.dart';
-import 'events/doc_event_seri.dart';
-import 'events/event_seri.dart';
-import 'events/user_lite_seri.dart';
+import 'package:yuyan_app/model/events/book_event_seri.dart';
+import 'package:yuyan_app/model/events/doc_event_seri.dart';
+import 'package:yuyan_app/model/events/event_seri.dart';
+import 'package:yuyan_app/model/events/user_lite_seri.dart';
 
 class Serializer {
   String _serializer;
@@ -20,6 +22,10 @@ class Serializer {
   Map _data;
 
   Map get raw => _data;
+
+  Serializer({String serializer, Map json})
+      : _serializer = serializer,
+        _data = json;
 
   Serializer.fromJson(json) {
     if (json == null) return;
@@ -36,12 +42,18 @@ class Serializer {
       'web.doc': () => DocSeri.fromJson(_data),
       'web.book': () => BookSeri.fromJson(_data),
       'web.user': () => UserSeri.fromJson(_data),
+      'web.group_user': () => GroupUserSeri.fromJson(_data),
+      'web.comment': () => CommentSeri.fromJson(_data),
+      'web.topic': () => TopicSeri.fromJson(_data),
     };
   }
 
   T serialize<T>() {
     if (_serializer == null) {
       return null;
+    }
+    if (!_serializer.startsWith('web')) {
+      _serializer = 'web.' + _serializer.toLowerCase();
     }
     var func = _doSerializer()[_serializer];
     return func?.call() as T;

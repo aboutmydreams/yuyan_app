@@ -1,7 +1,7 @@
 import 'package:yuyan_app/config/service/yuque_service.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
-import 'package:yuyan_app/model/serializer/events/event_seri.dart';
+import 'package:yuyan_app/model/events/event_seri.dart';
 
 // // 几种动态
 // Map<String, String> eventType = {

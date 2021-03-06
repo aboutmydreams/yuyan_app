@@ -2,7 +2,7 @@ import 'package:yuyan_app/config/net/api.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/model/dashboard/user_recent_seri.dart';
 import 'package:yuyan_app/model/document/doc.dart';
-import 'package:yuyan_app/model/serializer/events/event_seri.dart';
+import 'package:yuyan_app/model/events/event_seri.dart';
 import 'package:yuyan_app/model/serializer/serializer.dart';
 
 class ApiRepository {
