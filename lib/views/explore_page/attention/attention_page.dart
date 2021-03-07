@@ -50,9 +50,9 @@ class AttentionPage extends StatelessWidget {
         builder: (c) {
           return SmartRefresher(
             controller: c.refreshController,
-            onRefresh: c.onRefresh,
+            onRefresh: c.onRefreshCallback,
             enablePullUp: true,
-            onLoading: c.onLoadMore,
+            onLoading: c.onLoadMoreCallback,
             child: c.builder(
               (state) {
                 var data = state.data;

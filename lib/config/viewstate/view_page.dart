@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:yuyan_app/config/viewstate/view_fetch_controller.dart';
+import 'package:yuyan_app/config/viewstate/view_controller.dart';
 
-abstract class FetchRefreshListViewPage<T extends FetchRefreshController>
+abstract class FetchRefreshListViewPage<T extends FetchSavableController>
     extends GetView<T> {
   final String title;
   final Key key;
@@ -28,7 +28,7 @@ abstract class FetchRefreshListViewPage<T extends FetchRefreshController>
           (state) => AnimationLimiter(
             child: SmartRefresher(
               controller: controller.refreshController,
-              onRefresh: controller.onRefresh,
+              onRefresh: controller.onRefreshCallback,
               child: buildChild(),
             ),
           ),

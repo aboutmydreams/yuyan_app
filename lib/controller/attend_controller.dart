@@ -1,6 +1,6 @@
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
-import 'package:yuyan_app/config/viewstate/view_fetch_controller.dart';
+import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/model/events/event_seri.dart';
 
@@ -16,7 +16,7 @@ class AttendDataProvider extends BaseSaveListJson<EventSeri> {
   }
 }
 
-class AttendController extends FetchRefreshController<AttendDataProvider> {
+class AttendController extends FetchSavableController<AttendDataProvider> {
   static Map<String, String> eventType = {
     "update_doc": "更新了文档",
     "like_doc": "打赏了稻谷",
@@ -47,8 +47,8 @@ class AttendController extends FetchRefreshController<AttendDataProvider> {
   }
 
   @override
-  Future refreshData() => _doFetch(refresh: true);
+  Future fetchData() => _doFetch(refresh: true);
 
   @override
-  Future fetchMoreData() => _doFetch(refresh: false);
+  Future fetchMore() => _doFetch(refresh: false);
 }

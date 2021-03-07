@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smart_color/smart_color.dart';
-import 'package:yuyan_app/controller/global/user_controller.dart';
+import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/model/topic/labels.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
 import 'package:yuyan_app/models/component/appUI.dart';

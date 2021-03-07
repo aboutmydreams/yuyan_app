@@ -3,7 +3,7 @@ import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/controller/attend_controller.dart';
 import 'package:yuyan_app/controller/bottom_nav_controller.dart';
 import 'package:yuyan_app/controller/explore_controller.dart';
-import 'package:yuyan_app/controller/global/user_controller.dart';
+import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/controller/recent_controller.dart';
 import 'package:yuyan_app/controller/theme_controller.dart';
 import 'package:yuyan_app/controller/version_controller.dart';
@@ -28,7 +28,7 @@ class HomePageBinding extends Bindings {
     Get.put(ExploreRecommendController());
     Get.put(RecentController());
 
-    Get.put(UserController());
+    Get.put(MyUserController());
     Get.lazyPut(() => MyGroupController());
     Get.lazyPut(() => MyBookController());
     Get.lazyPut(() => MyFollowingController());

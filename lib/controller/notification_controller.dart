@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
-import 'package:yuyan_app/config/viewstate/view_fetch_controller.dart';
+import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/model/notification/notification_item.dart';
 
@@ -29,7 +29,7 @@ class NotificationSystemProvider extends NotificationProvider {
 }
 
 abstract class NotificationController
-    extends FetchRefreshController<NotificationProvider> {
+    extends FetchSavableController<NotificationProvider> {
   final String notificationType;
 
   NotificationController({
@@ -42,14 +42,14 @@ abstract class NotificationController
         );
 
   @override
-  Future fetchMoreData() {
+  Future fetchMore() {
     int offset = value.data?.length ?? 0;
     return ApiRepository.getNotificationList(
         type: notificationType, offset: offset);
   }
 
   @override
-  Future refreshData() {
+  Future fetchData() {
     return ApiRepository.getNotificationList(type: notificationType);
   }
 }

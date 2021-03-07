@@ -48,7 +48,7 @@ abstract class BaseSavableJson<T> extends GetxController {
 
   saveJson();
 
-  updateData(T newData) => data = newData;
+  updateData([T newData]) => data = newData ?? data;
 
   T convert(json);
 }

@@ -23,8 +23,8 @@ class SelectionPage extends StatelessWidget {
               var data = state.data;
               return SmartRefresher(
                 controller: controller.refreshController,
-                onRefresh: controller.onRefresh,
-                onLoading: controller.onLoadMore,
+                onRefresh: controller.onRefreshCallback,
+                onLoading: controller.onLoadMoreCallback,
                 enablePullUp: true,
                 child: ListView.builder(
                   itemCount: data.length + 1,

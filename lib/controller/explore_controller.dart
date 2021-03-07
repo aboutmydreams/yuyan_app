@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
-import 'package:yuyan_app/config/viewstate/view_fetch_controller.dart';
+import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/serializer/serializer.dart';
@@ -66,7 +66,7 @@ class DiscoverSelectionProvider extends BaseSaveListJson<DocSeri> {
 }
 
 class ExploreSelectionController
-    extends FetchRefreshController<DiscoverSelectionProvider> {
+    extends FetchSavableController<DiscoverSelectionProvider> {
   ExploreSelectionController()
       : super(
           initData: DiscoverSelectionProvider(),
@@ -74,12 +74,12 @@ class ExploreSelectionController
         );
 
   @override
-  Future fetchMoreData() {
+  Future fetchMore() {
     throw UnimplementedError();
   }
 
   @override
-  Future refreshData() {
+  Future fetchData() {
     return ApiRepository.getExploreSelections();
   }
 }
@@ -95,7 +95,7 @@ class DiscoverRecommendProvider extends BaseSaveListJson<Serializer> {
 }
 
 class ExploreRecommendController
-    extends FetchRefreshController<DiscoverRecommendProvider> {
+    extends FetchSavableController<DiscoverRecommendProvider> {
   ExploreRecommendController()
       : super(
           initialRefresh: true,
@@ -106,13 +106,13 @@ class ExploreRecommendController
   int _page = 1;
 
   @override
-  onRefresh() {
-    super.onRefresh();
-    Get.find<ExploreSelectionController>().onRefresh();
+  onRefreshCallback() {
+    super.onRefreshCallback();
+    Get.find<ExploreSelectionController>().onRefreshCallback();
   }
 
   @override
-  Future fetchMoreData() async {
+  Future fetchMore() async {
     _page++;
     var data =
         await ApiRepository.getExploreRecommends(page: _page, isDoc: true);
@@ -120,7 +120,7 @@ class ExploreRecommendController
   }
 
   @override
-  Future refreshData() async {
+  Future fetchData() async {
     var data = await ApiRepository.getExploreRecommends();
     _page = 1;
     return data;

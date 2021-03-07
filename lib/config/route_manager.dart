@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:yuyan_app/controller/binding/app_binding.dart';
-import 'package:yuyan_app/controller/global/user_controller.dart';
+import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/models/component/edit_markdown/edit_note.dart';
 import 'package:yuyan_app/models/component/edit_markdown/edit_page.dart';
 import 'package:yuyan_app/models/component/group/group_page.dart';
@@ -112,7 +112,10 @@ class MyRoute {
       name: RouteName.myTopic,
       page: () => MyTopicPage(),
     ),
-    GetPage(name: RouteName.myAbout, page: () => AboutYuyan()),
+    GetPage(
+      name: RouteName.myAbout,
+      page: () => AboutYuyan(),
+    ),
     GetPage(
       name: RouteName.mySuggest,
       page: () {

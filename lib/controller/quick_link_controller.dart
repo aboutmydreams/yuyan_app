@@ -2,7 +2,7 @@
 
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
-import 'package:yuyan_app/config/viewstate/view_fetch_controller.dart';
+import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 
@@ -17,7 +17,7 @@ class QuickLinkDataProvider extends BaseSaveListJson<QuickLinkSeri> {
 }
 
 class QuickLinkController
-    extends FetchRefreshController<QuickLinkDataProvider> {
+    extends FetchSavableController<QuickLinkDataProvider> {
   QuickLinkController()
       : super(
           initData: QuickLinkDataProvider(),
@@ -26,12 +26,12 @@ class QuickLinkController
         );
 
   @override
-  Future fetchMoreData() {
+  Future fetchMore() {
     throw UnimplementedError();
   }
 
   @override
-  Future refreshData() {
+  Future fetchData() {
     return ApiRepository.getUserQuickLinkList();
   }
 }

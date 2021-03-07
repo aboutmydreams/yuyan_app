@@ -15,6 +15,34 @@ import 'package:yuyan_app/models/widgets_small/menu_item.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 
+class UserPage2 extends StatefulWidget {
+  @override
+  _UserPage2State createState() => _UserPage2State();
+}
+
+class _UserPage2State extends State<UserPage2> {
+  @override
+  void initState() {
+    super.initState();
+
+    //books
+
+    //groups
+
+    //following
+
+    //follower
+
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
 class UserPage extends StatefulWidget {
   UserPage({
     Key key,

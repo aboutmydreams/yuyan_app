@@ -1,6 +1,6 @@
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
-import 'package:yuyan_app/config/viewstate/view_fetch_controller.dart';
+import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/model/dashboard/user_recent_seri.dart';
 
 // class RecentManage extends Model {
@@ -50,7 +50,7 @@ class RecentDataProvider extends BaseSaveListJson<UserRecentSeri> {
   String get key => 'user_recent';
 }
 
-class RecentController extends FetchRefreshController<RecentDataProvider> {
+class RecentController extends FetchSavableController<RecentDataProvider> {
   RecentController()
       : super(
           initialRefresh: true,
@@ -62,14 +62,14 @@ class RecentController extends FetchRefreshController<RecentDataProvider> {
   Future<List> _fetch() => ApiRepository.getUserRecentList(offset: offset);
 
   @override
-  Future fetchMoreData() async {
+  Future fetchMore() async {
     var list = await _fetch();
     offset += list.length;
     return list;
   }
 
   @override
-  Future refreshData() {
+  Future fetchData() {
     offset = 0;
     return _fetch();
   }

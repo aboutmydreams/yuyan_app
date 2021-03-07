@@ -61,6 +61,13 @@ $error
 !!!!!!!!!💔💔!💔💔!💔💔!💔💔!💔💔!!!!!!!!!!''');
   }
 
+  /// 错误发生时调用，状态变成 [ViewState.error]
+  onError() {}
+
+  /// 数据加载失败时触发，一般情况就是弹出 [toast] 进行提示
+  /// 注意，这里的状态并没有变成 [ViewState.error]
+  onFetchError(error) {}
+
   @protected
   initState(ViewState initState) {
     _state = initState;
@@ -87,6 +94,8 @@ $error
         return Center(
           child: Text('error: $error}'),
         );
+      default:
+      //当状态为空的情况
     }
     return SizedBox.shrink();
   }

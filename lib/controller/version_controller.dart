@@ -17,7 +17,7 @@ class VersionController extends GetxController {
       "https://service-kuz2fghy-1256880247.gz.apigw.tencentcs.com/release/yuyan_v2?v=";
   var _isLatest = true.obs;
 
-  bool get isLatest => _isLatest.value;
+  bool get isLatest => _isLatest?.value ?? false;
   String _message;
   String _version = App.version.version;
 

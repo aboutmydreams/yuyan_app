@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:yuyan_app/config/viewstate/view_page.dart';
-import 'package:yuyan_app/controller/global/user_controller.dart';
+import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/views/widget/group_row_widget.dart';
 
 class MyGroupPage extends FetchRefreshListViewPage<MyGroupController> {

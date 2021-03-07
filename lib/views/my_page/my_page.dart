@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
-import 'package:yuyan_app/controller/global/user_controller.dart';
+import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/controller/version_controller.dart';
 import 'package:yuyan_app/views/my_page/view/user_info.dart';
 import 'package:yuyan_app/views/widget/animation_widget.dart';
@@ -96,7 +96,7 @@ class _MyPageState extends State<MyPage> {
                     right: 24,
                     bottom: 20,
                   ),
-                  child: GetBuilder<UserController>(
+                  child: GetBuilder<MyUserController>(
                     builder: (c) => c.builder(
                       (state) => MyInfoCardWidget(info: state.data),
                     ),

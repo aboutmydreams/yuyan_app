@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/controller/attend_controller.dart';
 import 'package:yuyan_app/controller/global/organization_controller.dart';
-import 'package:yuyan_app/controller/global/user_controller.dart';
+import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/controller/notification_controller.dart';
 import 'package:yuyan_app/controller/quick_link_controller.dart';
 import 'package:yuyan_app/controller/recent_controller.dart';
@@ -26,7 +26,7 @@ class OrgSpaceLeadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var user = App.user.data;
-    return GetBuilder<UserController>(
+    return GetBuilder<MyUserController>(
       builder: (c) => c.builder((state) {
         return InkWell(
           child: IconButton(
@@ -84,7 +84,7 @@ class _OrgSpaceItemWidget extends StatelessWidget {
     try {
       var controller = Get.find<T>() as dynamic;
       try {
-        controller.onRefresh();
+        controller.onRefreshCallback();
         debugPrint('do refresh on ${T.runtimeType}');
       } on NoSuchMethodError catch (e) {
         debugPrint('do refresh: $e');
