@@ -31,7 +31,7 @@ class HomePageBinding extends Bindings {
     Get.put(UserController());
     Get.lazyPut(() => MyGroupController());
     Get.lazyPut(() => MyBookController());
-    Get.lazyPut(() => MyFollowerController());
+    Get.lazyPut(() => MyFollowingController());
     Get.lazyPut(() => MyFollowerController());
   }
 }

@@ -73,7 +73,11 @@ class MyRoute {
     GetPage(name: RouteName.note, page: () => NotePage()),
     GetPage(name: RouteName.mySetting, page: () => SettingPage()),
     GetPage(name: RouteName.myGroup, page: () => MyGroupPage()),
-    GetPage(name: RouteName.myFollower, page: () => FollowerPage()),
+    GetPage(
+      name: RouteName.myFollower,
+      page: () => MyFollowerPage(),
+      binding: BindingsBuilder(()=>Get.lazyPut(() => MyFollowerController())),
+    ),
     GetPage(
       name: RouteName.myFollowing,
       page: () => MyFollowingPage(),

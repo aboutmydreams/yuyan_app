@@ -12,8 +12,19 @@ class FollowUserController extends GetxController with ControllerStateMixin {
 
   FollowUserController({
     this.userId,
-    bool isFollow = false,
-  }) : _followed = isFollow;
+    bool isFollow,
+  }) : _followed = isFollow {
+    if (_followed == null) {
+      initState(ViewState.loading);
+      init();
+    }
+  }
+
+  init() async {
+    safeHandler(() async {
+      _followed = await ApiRepository.getIfFollow(userId: userId);
+    });
+  }
 
   Future<bool> follow() {
     return ApiRepository.followUser(userId: userId);

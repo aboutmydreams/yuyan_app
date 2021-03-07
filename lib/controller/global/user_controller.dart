@@ -93,6 +93,13 @@ class MyFollowerProvider extends BaseSaveListJson<UserSeri> {
 }
 
 class MyFollowerController extends FetchRefreshController<MyFollowerProvider> {
+  MyFollowerController()
+      : super(
+          initData: MyFollowerProvider(),
+          initialRefresh: true,
+          state: ViewState.loading,
+        );
+
   @override
   Future refreshData() {
     return ApiRepository.getFollowerList(userId: App.user.data.id);

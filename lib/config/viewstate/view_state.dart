@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 
@@ -88,5 +89,17 @@ $error
         );
     }
     return SizedBox.shrink();
+  }
+
+  safeHandler(Function callback, {bool initLoading = false}) async {
+    try {
+      if (initLoading) {
+        setLoading();
+      }
+      await callback?.call();
+      setIdle();
+    } catch (e) {
+      setError(e);
+    }
   }
 }
