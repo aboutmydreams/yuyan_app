@@ -3,12 +3,12 @@ import 'package:yuyan_app/model/document/comment.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/doc_lite.dart';
 import 'package:yuyan_app/model/document/group_user.dart';
-import 'package:yuyan_app/model/document/topic.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/events/book_event_seri.dart';
 import 'package:yuyan_app/model/events/doc_event_seri.dart';
 import 'package:yuyan_app/model/events/event_seri.dart';
 import 'package:yuyan_app/model/events/user_lite_seri.dart';
+import 'package:yuyan_app/model/topic/topic.dart';
 
 class Serializer {
   String _serializer;

@@ -1,16 +1,14 @@
 import 'package:yuyan_app/model/document/group.dart';
-import 'package:yuyan_app/model/document/meta/meta.dart';
+import 'package:yuyan_app/model/document/user.dart';
+
+import 'assignee.dart';
+import 'labels.dart';
 
 class TopicSeri {
-  String bodyAsl;
-  MetaSeri meta;
   int id;
   int spaceId;
   int iid;
   String title;
-  dynamic cover;
-  dynamic description;
-  dynamic body;
   String format;
   int userId;
   int groupId;
@@ -24,18 +22,18 @@ class TopicSeri {
   dynamic closedAt;
   String createdAt;
   String updatedAt;
+  UserSeri user;
   GroupSeri group;
+  AssigneeSeri assignee;
+  dynamic milestone;
+  List<LabelSeri> labels;
+  String serializer;
 
   TopicSeri({
-    this.bodyAsl,
-    this.meta,
     this.id,
     this.spaceId,
     this.iid,
     this.title,
-    this.cover,
-    this.description,
-    this.body,
     this.format,
     this.userId,
     this.groupId,
@@ -49,19 +47,19 @@ class TopicSeri {
     this.closedAt,
     this.createdAt,
     this.updatedAt,
+    this.user,
     this.group,
+    this.assignee,
+    this.milestone,
+    this.labels,
+    this.serializer,
   });
 
   TopicSeri.fromJson(dynamic json) {
-    bodyAsl = json["body_asl"];
-    meta = json["meta"] != null ? MetaSeri.fromJson(json["meta"]) : null;
     id = json["id"];
     spaceId = json["space_id"];
     iid = json["iid"];
     title = json["title"];
-    cover = json["cover"];
-    description = json["description"];
-    body = json["body"];
     format = json["format"];
     userId = json["user_id"];
     groupId = json["group_id"];
@@ -75,22 +73,28 @@ class TopicSeri {
     closedAt = json["closed_at"];
     createdAt = json["created_at"];
     updatedAt = json["updated_at"];
+
+    user = json["user"] != null ? UserSeri.fromJson(json["user"]) : null;
     group = json["group"] != null ? GroupSeri.fromJson(json["group"]) : null;
+    assignee = json["assignee"] != null
+        ? AssigneeSeri.fromJson(json["assignee"])
+        : null;
+    milestone = json["milestone"];
+    if (json["labels"] != null) {
+      labels = [];
+      json["labels"].forEach((v) {
+        labels.add(LabelSeri.fromJson(v));
+      });
+    }
+    serializer = json["_serializer"];
   }
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
-    map["body_asl"] = bodyAsl;
-    if (meta != null) {
-      map["meta"] = meta.toJson();
-    }
     map["id"] = id;
     map["space_id"] = spaceId;
     map["iid"] = iid;
     map["title"] = title;
-    map["cover"] = cover;
-    map["description"] = description;
-    map["body"] = body;
     map["format"] = format;
     map["user_id"] = userId;
     map["group_id"] = groupId;
@@ -104,9 +108,20 @@ class TopicSeri {
     map["closed_at"] = closedAt;
     map["created_at"] = createdAt;
     map["updated_at"] = updatedAt;
+    if (user != null) {
+      map["user"] = user.toJson();
+    }
     if (group != null) {
       map["group"] = group.toJson();
     }
+    if (assignee != null) {
+      map["assignee"] = assignee.toJson();
+    }
+    map["milestone"] = milestone;
+    if (labels != null) {
+      map["labels"] = labels.map((v) => v.toJson()).toList();
+    }
+    map["_serializer"] = serializer;
     return map;
   }
 }

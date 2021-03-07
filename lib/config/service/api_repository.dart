@@ -14,6 +14,7 @@ import 'package:yuyan_app/model/events/event_seri.dart';
 import 'package:yuyan_app/model/notification/notification.dart';
 import 'package:yuyan_app/model/notification/notification_item.dart';
 import 'package:yuyan_app/model/serializer/serializer.dart';
+import 'package:yuyan_app/model/topic/topic.dart';
 
 class ApiRepository {
   static BaseApi api = BaseApi();
@@ -271,6 +272,26 @@ class ApiRepository {
     });
     var asp = res.data as ApiResponse;
     var list = (asp.data as List).map((e) => ActionSeri.fromJson(e)).toList();
+    return list;
+  }
+
+  static Future<List<TopicSeri>> getMyTopics({
+    String type = 'participated', // created, participated, assigned, commented
+    String state = 'open', // open, closed
+    int limit = 100,
+    int offset = 0,
+  }) async {
+    var res = await api.get(
+      '/mine/topics',
+      queryParameters: {
+        'limit': limit,
+        'offset': offset,
+        'state': state,
+        'type': type,
+      },
+    );
+    var asp = res.data as ApiResponse;
+    var list = (asp.data as List).map((e) => TopicSeri.fromJson(e)).toList();
     return list;
   }
 }

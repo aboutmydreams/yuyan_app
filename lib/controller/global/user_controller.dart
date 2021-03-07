@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/service/api2_repository.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
@@ -8,6 +9,7 @@ import 'package:yuyan_app/model/document/action.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/document/user.dart';
+import 'package:yuyan_app/model/topic/topic.dart';
 import 'package:yuyan_app/model/v2/user_detail.dart';
 
 class UserProvider extends BaseSaveJson<UserDetailSeri> {
@@ -177,5 +179,39 @@ class MyFollowBookController
   @override
   Future refreshData() {
     return ApiRepository.getFollowBookList();
+  }
+}
+
+class MyTopicProvider extends BaseSaveListJson<TopicSeri> {
+  final String saveKey;
+
+  MyTopicProvider(this.saveKey);
+
+  @override
+  List<TopicSeri> convert(json) {
+    return (json as List).map((e) => TopicSeri.fromJson(e)).toList();
+  }
+
+  @override
+  String get key => saveKey;
+}
+
+class MyTopicController extends FetchRefreshController<MyTopicProvider> {
+  final String topicState;
+
+  MyTopicController({
+    @required this.topicState,
+  }) : super(
+          initData: MyTopicProvider('my_user_topic_$topicState'),
+          initialRefresh: true,
+          state: ViewState.loading,
+        );
+
+  @override
+  Future refreshData() {
+    return ApiRepository.getMyTopics(
+      type: 'participated',
+      state: topicState,
+    );
   }
 }

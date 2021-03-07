@@ -20,7 +20,7 @@ import 'package:yuyan_app/views/my_page/my/my_book_page.dart';
 import 'package:yuyan_app/views/my_page/my/my_group_page.dart';
 import 'package:yuyan_app/views/my_page/my/my_mark_page.dart';
 import 'package:yuyan_app/views/my_page/setting/setting_page.dart';
-import 'package:yuyan_app/views/my_page/topic/topic_page.dart';
+import 'file:///D:/Documents/Github/flutter/yuyan_app/lib/views/my_page/my/my_topic_page.dart';
 
 // ZefyrController _controller;
 // bool _editing = true;
@@ -108,7 +108,10 @@ class MyRoute {
         () => Get.lazyPut(() => MyMarkController()),
       ),
     ),
-    GetPage(name: RouteName.myTopic, page: () => TopicPage()),
+    GetPage(
+      name: RouteName.myTopic,
+      page: () => MyTopicPage(),
+    ),
     GetPage(name: RouteName.myAbout, page: () => AboutYuyan()),
     GetPage(
       name: RouteName.mySuggest,
