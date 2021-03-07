@@ -44,7 +44,7 @@ class _FollowButtonWidgetState extends State<FollowButtonWidget> {
             child: c.stageBuilder(
               onIdle: Center(
                 child: Text(
-                  "${c.followed ? '取消关注' : '关注'}",
+                  "${(c.followed ?? false) ? '取消关注' : '关注'}",
                   style: TextStyle(color: Theme.of(context).canvasColor),
                 ),
               ),
