@@ -76,7 +76,9 @@ class MyRoute {
     GetPage(
       name: RouteName.myFollower,
       page: () => MyFollowerPage(),
-      binding: BindingsBuilder(() => Get.lazyPut(() => MyFollowerController())),
+      binding: BindingsBuilder(
+        () => Get.lazyPut(() => MyFollowerController()),
+      ),
     ),
     GetPage(
       name: RouteName.myFollowing,
@@ -85,8 +87,20 @@ class MyRoute {
         () => Get.lazyPut(() => MyFollowingController()),
       ),
     ),
-    GetPage(name: RouteName.myFollowBook, page: () => FollowBookPage()),
-    GetPage(name: RouteName.myRepos, page: () => MyBooksPage()),
+    GetPage(
+      name: RouteName.myFollowBook,
+      page: () => MyFollowBookPage(),
+      binding: BindingsBuilder(
+        () => Get.lazyPut(() => MyFollowBookController()),
+      ),
+    ),
+    GetPage(
+      name: RouteName.myRepos,
+      page: () => MyBooksPage(),
+      binding: BindingsBuilder(
+        () => Get.lazyPut(() => MyBookController()),
+      ),
+    ),
     GetPage(
       name: RouteName.myMark,
       page: () => MyMarkPage(),

@@ -154,3 +154,28 @@ class MyMarkController extends FetchRefreshController<MyMarkProvider> {
     return ApiRepository.getMarkList();
   }
 }
+
+class MyFollowBookProvider extends BaseSaveListJson<ActionSeri> {
+  @override
+  List<ActionSeri> convert(json) {
+    return (json as List).map((e) => ActionSeri.fromJson(e)).toList();
+  }
+
+  @override
+  String get key => 'user_follow_book';
+}
+
+class MyFollowBookController
+    extends FetchRefreshController<MyFollowBookProvider> {
+  MyFollowBookController()
+      : super(
+          initData: MyFollowBookProvider(),
+          initialRefresh: true,
+          state: ViewState.loading,
+        );
+
+  @override
+  Future refreshData() {
+    return ApiRepository.getFollowBookList();
+  }
+}

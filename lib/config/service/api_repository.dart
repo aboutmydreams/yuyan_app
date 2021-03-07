@@ -198,7 +198,10 @@ class ApiRepository {
   }
 
   //我的关注知识库
-  static Future getWatchedBooks({int limit, int offset}) async {
+  static Future<List<ActionSeri>> getFollowBookList({
+    int limit = 100,
+    int offset = 0,
+  }) async {
     var res = await api.get(
       "/mine/follows",
       queryParameters: {
@@ -207,6 +210,9 @@ class ApiRepository {
         "type": "Book",
       },
     );
+    var asp = res.data as ApiResponse;
+    var list = (asp.data as List).map((e) => ActionSeri.fromJson(e)).toList();
+    return list;
   }
 
   static Future getMyBooks({int limit, int offset}) async {
