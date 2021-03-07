@@ -1,6 +1,5 @@
 import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
-import 'package:yuyan_app/state_manage/dataManage/news_manage.dart';
 
 import 'dataManage/note_manage.dart';
 

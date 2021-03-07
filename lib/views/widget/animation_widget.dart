@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:yuyan_app/models/widgets_small/list_animation.dart';
 import 'package:yuyan_app/util/util.dart';
 
 class AnimationListWidget extends StatelessWidget {

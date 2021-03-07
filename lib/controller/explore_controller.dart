@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
+import 'package:yuyan_app/config/viewstate/view_fetch_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/serializer/serializer.dart';

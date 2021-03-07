@@ -117,7 +117,7 @@ class MyInfoNumberWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var groupNumer = Get.find<GroupController>().value.data?.length ?? 0;
+    var groupNumer = Get.find<MyGroupController>().value.data?.length ?? 0;
     return Align(
       alignment: Alignment.topCenter,
       child: Container(
@@ -127,7 +127,7 @@ class MyInfoNumberWidget extends StatelessWidget {
           children: [
             InfoNumberItemWidget(
               title: "团队",
-              number: Get.find<GroupController>().value.data?.length ?? 0,
+              number: Get.find<MyGroupController>().value.data?.length ?? 0,
               namedRoute: RouteName.myGroup,
             ),
             InfoNumberItemWidget(

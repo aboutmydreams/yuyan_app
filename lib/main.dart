@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -32,20 +33,27 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("build again!");
+    final botToastBuilder = BotToastInit();
     return GetMaterialApp(
       title: '语燕',
       initialRoute: RouteName.splash,
       debugShowCheckedModeBanner: false,
       // 去除debug标志
       getPages: MyRoute.pages,
-      navigatorObservers: <NavigatorObserver>[observer],
+      navigatorObservers: <NavigatorObserver>[
+        observer,
+        BotToastNavigatorObserver(),
+      ],
       //加入路由统计
       // home: MyHomePage(),
       initialBinding: AppBinding(),
       builder: (context, child) {
-        return ScopedModel<TopStateModel>(
-          model: topModel1,
-          child: child,
+        return botToastBuilder(
+          context,
+          ScopedModel<TopStateModel>(
+            model: topModel1,
+            child: child,
+          ),
         );
       },
     );

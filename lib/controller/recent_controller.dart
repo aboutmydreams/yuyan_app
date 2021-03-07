@@ -1,6 +1,6 @@
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
-import 'package:yuyan_app/config/viewstate/view_state.dart';
+import 'package:yuyan_app/config/viewstate/view_fetch_controller.dart';
 import 'package:yuyan_app/model/dashboard/user_recent_seri.dart';
 
 // class RecentManage extends Model {

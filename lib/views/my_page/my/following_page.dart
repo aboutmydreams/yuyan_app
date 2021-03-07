@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/config/viewstate/view_page.dart';
+import 'package:yuyan_app/controller/global/user_controller.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_follow_data.dart';
@@ -11,7 +13,34 @@ import 'package:yuyan_app/util/analytics.dart';
 import 'package:yuyan_app/util/clear_text.dart';
 import 'package:yuyan_app/util/get_pref.dart';
 import 'package:yuyan_app/util/get_tag.dart';
-import 'package:yuyan_app/views/my_page/follower/one_buttom.dart';
+import 'package:yuyan_app/views/widget/animation_widget.dart';
+import 'package:yuyan_app/views/widget/follow_row_widget.dart';
+
+import 'one_buttom.dart';
+
+class MyFollowingPage extends FetchRefreshListViewPage<MyFollowingController> {
+  MyFollowingPage() : super(title: '我的关注');
+
+  @override
+  Widget buildChild() {
+    var data = controller.value.data;
+    return AnimationListWidget(
+      itemCount: data.length,
+      itemBuilder: (_, i) {
+        return FollowRowItemWidget(
+          isFollow: true,
+          user: data[i],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget buildEmpty() => NothingPage(
+        top: 50,
+        text: "暂无关注~",
+      );
+}
 
 class FollowingPage extends StatefulWidget {
   FollowingPage({Key key}) : super(key: key);

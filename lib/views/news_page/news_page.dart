@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/controller/notification_controller.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
-import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/util/analytics.dart';
 import 'package:yuyan_app/views/news_page/view/one_news.dart';
 import 'package:yuyan_app/views/widget/notification_absorb.dart';
@@ -92,10 +89,7 @@ class _NotificationPageState extends State<NotificationPage>
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        leading: ScopedModel<MyInfoManage>(
-          model: topModel.myInfoManage,
-          child: OrgSpaceLeadingWidget(),
-        ),
+        leading: OrgSpaceLeadingWidget(),
         title: Text("全部消息"),
         bottom: TabBar(
           controller: tabController,

@@ -3,11 +3,8 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/controller/bottom_nav_controller.dart';
 import 'package:yuyan_app/controller/theme_controller.dart';
-import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
-import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/views/explore_page/explore_page.dart';
 import 'package:yuyan_app/views/my_page/my_page.dart';
 import 'package:yuyan_app/views/news_page/news_page.dart';
@@ -34,10 +31,7 @@ class _HomePageState extends State<HomePage> {
       ExplorePage(),
       Dashboard(),
       NotificationPage(),
-      ScopedModel<MyInfoManage>(
-        model: topModel.myInfoManage,
-        child: MyPage(),
-      ),
+      MyPage(),
     ];
 
     super.initState();

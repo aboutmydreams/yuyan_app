@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:yuyan_app/controller/binding/app_binding.dart';
+import 'package:yuyan_app/controller/global/user_controller.dart';
 import 'package:yuyan_app/models/component/edit_markdown/edit_note.dart';
 import 'package:yuyan_app/models/component/edit_markdown/edit_page.dart';
 import 'package:yuyan_app/models/component/group/group_page.dart';
@@ -12,10 +13,10 @@ import 'package:yuyan_app/views/dashboard/quick/note/note_page.dart';
 import 'package:yuyan_app/views/dashboard/quick/setting/quick_set.dart';
 import 'package:yuyan_app/views/home_page.dart';
 import 'package:yuyan_app/views/my_page/about_yuyan/about.dart';
-import 'package:yuyan_app/views/my_page/follow_book/follow_book_page.dart';
-import 'package:yuyan_app/views/my_page/follower/follower_page.dart';
-import 'package:yuyan_app/views/my_page/following/following_page.dart';
-import 'package:yuyan_app/views/my_page/group/my_group_page.dart';
+import 'file:///D:/Documents/Github/flutter/yuyan_app/lib/views/my_page/my/follow_book_page.dart';
+import 'file:///D:/Documents/Github/flutter/yuyan_app/lib/views/my_page/my/follower_page.dart';
+import 'file:///D:/Documents/Github/flutter/yuyan_app/lib/views/my_page/my/following_page.dart';
+import 'file:///D:/Documents/Github/flutter/yuyan_app/lib/views/my_page/my/my_group_page.dart';
 import 'package:yuyan_app/views/my_page/mark/mark_page.dart';
 import 'package:yuyan_app/views/my_page/repos/my_repos_page.dart';
 import 'package:yuyan_app/views/my_page/setting/setting_page.dart';
@@ -71,9 +72,15 @@ class MyRoute {
     ),
     GetPage(name: RouteName.note, page: () => NotePage()),
     GetPage(name: RouteName.mySetting, page: () => SettingPage()),
-    GetPage(name: RouteName.myGroup, page: () => MyGroup()),
+    GetPage(name: RouteName.myGroup, page: () => MyGroupPage()),
     GetPage(name: RouteName.myFollower, page: () => FollowerPage()),
-    GetPage(name: RouteName.myFollowing, page: () => FollowingPage()),
+    GetPage(
+      name: RouteName.myFollowing,
+      page: () => MyFollowingPage(),
+      binding: BindingsBuilder(
+        () => Get.lazyPut(() => MyFollowingController()),
+      ),
+    ),
     GetPage(name: RouteName.myFollowBook, page: () => FollowBookPage()),
     GetPage(name: RouteName.myRepos, page: () => MyReposPage()),
     GetPage(name: RouteName.myMark, page: () => MarkPage()),

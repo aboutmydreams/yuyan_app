@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'dart:async';
-import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/util/get_pref.dart';
 
 class DioReq {
@@ -9,7 +8,8 @@ class DioReq {
 
   /// 适配空间 api
   static orgSpace({bool onlyUser: false}) async {
-    String nowOrg = await topModel.myInfoManage.getMyNowOrg();
+    // String nowOrg = await topModel.myInfoManage.getMyNowOrg();
+    String nowOrg = "www";
     onlyUser ??= false;
     String nowBaseUrl = (nowOrg != null && nowOrg != "")
         ? baseUrl.replaceAll("www.yuque", nowOrg + ".yuque")

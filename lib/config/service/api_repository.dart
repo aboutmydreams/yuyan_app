@@ -1,10 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/net/api.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/model/dashboard/user_recent_seri.dart';
+import 'package:yuyan_app/model/document/action.dart';
+import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/document/organization_lite.dart';
+import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/document/user_profile.dart';
 import 'package:yuyan_app/model/events/event_seri.dart';
 import 'package:yuyan_app/model/notification/notification.dart';
@@ -114,5 +118,142 @@ class ApiRepository {
     var asp = (res.data as ApiResponse);
     var list = (asp.data as List).map((e) => GroupSeri.fromJson(e)).toList();
     return list;
+  }
+
+  static Future<List<BookSeri>> getBookList({int userId}) async {
+    var res = await api.get(
+      "/groups/$userId/books?archived=include&limit=200",
+    );
+    var asp = res.data as ApiResponse;
+    var list = (asp.data as List).map((e) => BookSeri.fromJson(e)).toList();
+    return list;
+  }
+
+  static Future<bool> getIfFollow({int userId}) async {
+    var res = await api.get(
+      "/actions/user-owned",
+      queryParameters: {
+        "action_type": "follow",
+        "target_ids": userId,
+        "target_type": "User",
+      },
+    );
+    var asp = res.data as ApiResponse;
+    return (asp.data as List).length > 0;
+  }
+
+  static Future<List<UserSeri>> getFollowingList({
+    int userId,
+    int offset = 0,
+  }) async {
+    var res = await api.get(
+      "/actions/targets",
+      queryParameters: {
+        "action_type": "follow",
+        "target_type": "User",
+        "user_id": userId,
+        "offset": offset,
+      },
+    );
+    var asp = res.data as ApiResponse;
+    return (asp.data as List).map((e) => UserSeri.fromJson(e)).toList();
+  }
+
+  static Future<List<UserSeri>> getFollowerList({
+    int userId,
+    int offset = 0,
+  }) async {
+    var res = await api.get(
+      "/actions/users",
+      queryParameters: {
+        "action_type": "follow",
+        "target_type": "User",
+        "target_id": userId,
+        "offset": offset,
+      },
+    );
+    var asp = res.data as ApiResponse;
+    return (asp.data as List).map((e) => UserSeri.fromJson(e)).toList();
+  }
+
+  static Future<bool> followUser({int userId}) async {
+    var res = await api.post("/actions", data: {
+      "action_type": "follow",
+      "target_type": "User",
+      "target_id": userId,
+    });
+    var asp = res.data as ApiResponse;
+    var data = ActionSeri.fromJson(asp.data);
+    return data.targetId == userId;
+  }
+
+  static Future<bool> unfollowUser({int userId}) async {
+    var res = await api.delete("/actions", data: {
+      "action_type": "follow",
+      "target_type": "User",
+      "target_id": userId,
+    });
+    var asp = res.data as ApiResponse;
+    return asp.data == null;
+  }
+
+  //我的关注知识库
+  static Future getWatchedBooks({int limit, int offset}) async {
+    var res = await api.get(
+      "/mine/follows",
+      queryParameters: {
+        "limit": limit,
+        "offset": offset,
+        "type": "Book",
+      },
+    );
+  }
+
+  static Future getMyBooks({int limit, int offset}) async {
+    var res = await api.get(
+      "/mine/follows",
+      queryParameters: {
+        "limit": limit,
+        "offset": offset,
+        "type": "Book",
+      },
+    );
+  }
+
+
+  // 查看是否收藏(文章或团队)
+  static Future getIfMark({
+    @required int targetId,
+    String targetType = "Doc",
+  }) async {
+    var res = await api.get("/actions", queryParameters: {
+      "action_type": "mark",
+      "target_id": targetId,
+      "target_type": targetType,
+    }); // User or Doc
+    var asp = res.data as ApiResponse;
+    throw UnimplementedError();
+  }
+
+  static Future _doActionTarget({
+    @required int userId,
+    //like, watch, follow, watch-comments, watch-topics, mark, read, reaction
+    @required String actionType,
+    //Doc, Book, Artboard, ArtboardGroup, ArtboardComment, Comment, Topic, User, Resource, DocVersion, Quan, Note
+    @required String targetType,
+    int offset,
+    // String method = "GET",
+  }) async {
+    var res = await api.get(
+      '/actions/targets',
+      queryParameters: {
+        "user_id": userId,
+        "action_type": actionType,
+        "target_type": targetType,
+        "offset": offset,
+      },
+    );
+    var asp = res.data as ApiResponse;
+    return asp.data;
   }
 }

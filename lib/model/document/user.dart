@@ -1,4 +1,5 @@
 import 'package:yuyan_app/model/document/doc.dart';
+import 'package:yuyan_app/model/document/user_profile.dart';
 
 class UserSeri {
   int id;
@@ -17,7 +18,7 @@ class UserSeri {
   String updatedAt;
   bool isPaid;
   int memberLevel;
-  dynamic profile;
+  UserProfileSeri profile;
   String serializer;
   List<DocSeri> docs;
 
@@ -60,8 +61,12 @@ class UserSeri {
     updatedAt = json["updated_at"];
     isPaid = json["isPaid"];
     memberLevel = json["member_level"];
-    profile = json["profile"];
+
     serializer = json["_serializer"];
+
+    if (json["profile"] != null) {
+      profile = UserProfileSeri.fromJson(json["profile"]);
+    }
 
     if (json['docs'] != null) {
       docs = (json['docs'] as List).map((e) => DocSeri.fromJson(e)).toList();
