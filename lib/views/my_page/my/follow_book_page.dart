@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/config/viewstate/view_page.dart';
+import 'package:yuyan_app/controller/global/user_controller.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
@@ -20,6 +22,7 @@ class FollowBookPage extends StatefulWidget {
 class _FollowBookPageState extends State<FollowBookPage> {
   int offset = 0;
   List<FollowBookData> dataList = [];
+
   // 之后收藏数量增加 需要上滑加载更多
   // ScrollController _controller;
 

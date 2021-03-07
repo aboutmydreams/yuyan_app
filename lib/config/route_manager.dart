@@ -18,7 +18,7 @@ import 'file:///D:/Documents/Github/flutter/yuyan_app/lib/views/my_page/my/follo
 import 'file:///D:/Documents/Github/flutter/yuyan_app/lib/views/my_page/my/following_page.dart';
 import 'file:///D:/Documents/Github/flutter/yuyan_app/lib/views/my_page/my/my_group_page.dart';
 import 'package:yuyan_app/views/my_page/mark/mark_page.dart';
-import 'package:yuyan_app/views/my_page/repos/my_repos_page.dart';
+import 'file:///D:/Documents/Github/flutter/yuyan_app/lib/views/my_page/my/my_book_page.dart';
 import 'package:yuyan_app/views/my_page/setting/setting_page.dart';
 import 'package:yuyan_app/views/my_page/topic/topic_page.dart';
 
@@ -86,7 +86,7 @@ class MyRoute {
       ),
     ),
     GetPage(name: RouteName.myFollowBook, page: () => FollowBookPage()),
-    GetPage(name: RouteName.myRepos, page: () => MyReposPage()),
+    GetPage(name: RouteName.myRepos, page: () => MyBooksPage()),
     GetPage(name: RouteName.myMark, page: () => MarkPage()),
     GetPage(name: RouteName.myTopic, page: () => TopicPage()),
     GetPage(name: RouteName.myAbout, page: () => AboutYuyan()),
