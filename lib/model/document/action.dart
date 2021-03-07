@@ -1,19 +1,27 @@
+import 'package:yuyan_app/model/document/book.dart';
+import 'package:yuyan_app/model/document/group.dart';
+import 'package:yuyan_app/model/serializer/serializer.dart';
+
 class ActionSeri {
   int id;
   int userId;
-  String actionType;
-  String actionName;
-  String targetType;
-  int targetId;
-  dynamic actionOption;
   String title;
-  dynamic targetBookId;
-  dynamic targetGroupId;
+  String url;
   String createdAt;
   String updatedAt;
-  dynamic targetGroup;
-  dynamic targetBook;
-  String url;
+
+  int targetBookId;
+  int targetGroupId;
+  GroupSeri targetGroup;
+  BookSeri targetBook;
+
+  String actionType;
+  String actionName;
+  int targetId;
+  String targetType;
+  Serializer target;
+
+  dynamic actionOption;
   String serializer;
 
   ActionSeri({
@@ -48,8 +56,16 @@ class ActionSeri {
     targetGroupId = json["target_group_id"];
     createdAt = json["created_at"];
     updatedAt = json["updated_at"];
-    targetGroup = json["target_group"];
-    targetBook = json["target_book"];
+
+    target = Serializer.fromJson(json['target']);
+
+    if (json['target_group'] != null) {
+      targetGroup = GroupSeri.fromJson(json["target_group"]);
+    }
+    if (json['target_book'] != null) {
+      targetBook = BookSeri.fromJson(json["target_book"]);
+    }
+
     url = json["_url"];
     serializer = json["_serializer"];
   }
@@ -68,8 +84,13 @@ class ActionSeri {
     map["target_group_id"] = targetGroupId;
     map["created_at"] = createdAt;
     map["updated_at"] = updatedAt;
-    map["target_group"] = targetGroup;
-    map["target_book"] = targetBook;
+    map['target'] = target?.toJson();
+    if (targetGroup != null) {
+      map["target_group"] = targetGroup.toJson();
+    }
+    if (targetBook != null) {
+      map["target_book"] = targetBook.toJson();
+    }
     map["_url"] = url;
     map["_serializer"] = serializer;
     return map;

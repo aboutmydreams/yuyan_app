@@ -13,12 +13,12 @@ import 'package:yuyan_app/views/dashboard/quick/note/note_page.dart';
 import 'package:yuyan_app/views/dashboard/quick/setting/quick_set.dart';
 import 'package:yuyan_app/views/home_page.dart';
 import 'package:yuyan_app/views/my_page/about_yuyan/about.dart';
-import 'file:///D:/Documents/Github/flutter/yuyan_app/lib/views/my_page/my/follow_book_page.dart';
-import 'file:///D:/Documents/Github/flutter/yuyan_app/lib/views/my_page/my/follower_page.dart';
-import 'file:///D:/Documents/Github/flutter/yuyan_app/lib/views/my_page/my/following_page.dart';
-import 'file:///D:/Documents/Github/flutter/yuyan_app/lib/views/my_page/my/my_group_page.dart';
-import 'package:yuyan_app/views/my_page/mark/mark_page.dart';
-import 'file:///D:/Documents/Github/flutter/yuyan_app/lib/views/my_page/my/my_book_page.dart';
+import 'package:yuyan_app/views/my_page/my/follow_book_page.dart';
+import 'package:yuyan_app/views/my_page/my/follower_page.dart';
+import 'package:yuyan_app/views/my_page/my/following_page.dart';
+import 'package:yuyan_app/views/my_page/my/my_book_page.dart';
+import 'package:yuyan_app/views/my_page/my/my_group_page.dart';
+import 'package:yuyan_app/views/my_page/my/my_mark_page.dart';
 import 'package:yuyan_app/views/my_page/setting/setting_page.dart';
 import 'package:yuyan_app/views/my_page/topic/topic_page.dart';
 
@@ -76,7 +76,7 @@ class MyRoute {
     GetPage(
       name: RouteName.myFollower,
       page: () => MyFollowerPage(),
-      binding: BindingsBuilder(()=>Get.lazyPut(() => MyFollowerController())),
+      binding: BindingsBuilder(() => Get.lazyPut(() => MyFollowerController())),
     ),
     GetPage(
       name: RouteName.myFollowing,
@@ -87,7 +87,13 @@ class MyRoute {
     ),
     GetPage(name: RouteName.myFollowBook, page: () => FollowBookPage()),
     GetPage(name: RouteName.myRepos, page: () => MyBooksPage()),
-    GetPage(name: RouteName.myMark, page: () => MarkPage()),
+    GetPage(
+      name: RouteName.myMark,
+      page: () => MyMarkPage(),
+      binding: BindingsBuilder(
+        () => Get.lazyPut(() => MyMarkController()),
+      ),
+    ),
     GetPage(name: RouteName.myTopic, page: () => TopicPage()),
     GetPage(name: RouteName.myAbout, page: () => AboutYuyan()),
     GetPage(

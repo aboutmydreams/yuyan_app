@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:yuyan_app/config/viewstate/view_page.dart';
-import 'package:yuyan_app/controller/global/user_controller.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
@@ -11,6 +9,8 @@ import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/util/analytics.dart';
 import 'package:yuyan_app/util/clear_text.dart';
+
+
 
 class FollowBookPage extends StatefulWidget {
   FollowBookPage({Key key}) : super(key: key);

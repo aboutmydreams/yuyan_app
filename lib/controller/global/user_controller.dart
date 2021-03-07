@@ -4,6 +4,7 @@ import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/config/viewstate/view_fetch_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
+import 'package:yuyan_app/model/document/action.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/document/user.dart';
@@ -127,5 +128,29 @@ class MyBookController extends FetchRefreshController<MyBookProvider> {
   @override
   Future refreshData() {
     return ApiRepository.getBookList(userId: App.user.data.id);
+  }
+}
+
+class MyMarkProvider extends BaseSaveListJson<ActionSeri> {
+  @override
+  List<ActionSeri> convert(json) {
+    return (json as List).map((e) => ActionSeri.fromJson(e)).toList();
+  }
+
+  @override
+  String get key => 'user_my_mark';
+}
+
+class MyMarkController extends FetchRefreshController<MyMarkProvider> {
+  MyMarkController()
+      : super(
+          initData: MyMarkProvider(),
+          initialRefresh: true,
+          state: ViewState.loading,
+        );
+
+  @override
+  Future refreshData() {
+    return ApiRepository.getMarkList();
   }
 }

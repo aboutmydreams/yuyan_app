@@ -220,7 +220,6 @@ class ApiRepository {
     );
   }
 
-
   // 查看是否收藏(文章或团队)
   static Future getIfMark({
     @required int targetId,
@@ -255,5 +254,17 @@ class ApiRepository {
     );
     var asp = res.data as ApiResponse;
     return asp.data;
+  }
+
+  static Future<List<ActionSeri>> getMarkList(
+      {int offset = 0, int limit = 100}) async {
+    var res = await api.get('/mine/marks', queryParameters: {
+      'type': 'all',
+      'offset': offset,
+      'limit': limit,
+    });
+    var asp = res.data as ApiResponse;
+    var list = (asp.data as List).map((e) => ActionSeri.fromJson(e)).toList();
+    return list;
   }
 }

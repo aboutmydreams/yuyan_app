@@ -33,56 +33,6 @@ class MyBooksPage extends FetchRefreshListViewPage<MyBookController> {
   }
 }
 
-// class MyReposPage extends StatefulWidget {
-//   MyReposPage({Key key}) : super(key: key);
-//
-//   @override
-//   _MyReposPageState createState() => _MyReposPageState();
-// }
-//
-// class _MyReposPageState extends State<MyReposPage> {
-//   int offset = 0;
-//   List<UserReposData> dataList;
-//   int userIdLocal;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     getFollowerData();
-//   }
-//
-//   getFollowerData() async {
-//     var userId = await getUserId();
-//     UserReposJson res = await DioUser.getReposData(userId: userId);
-//     setState(() {
-//       userIdLocal = userId;
-//       dataList = res.data;
-//     });
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     analytics.logEvent(name: 'my_repos');
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text("我的知识库"),
-//       ),
-//       body: dataList == null
-//           ? loading()
-//           : dataList.isEmpty
-//               ? NothingPage(
-//                   top: 50,
-//                   text: "暂无关注~",
-//                 )
-//               : animationList(
-//                   context: context,
-//                   dataList: dataList,
-//                   childBuilder: myOneRepos,
-//                 ),
-//     );
-//   }
-// }
-
 class MyBookItemWidget extends StatelessWidget {
   final BookSeri book;
 
