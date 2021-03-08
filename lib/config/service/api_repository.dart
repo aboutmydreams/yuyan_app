@@ -5,8 +5,11 @@ import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/model/dashboard/user_recent_seri.dart';
 import 'package:yuyan_app/model/document/action.dart';
 import 'package:yuyan_app/model/document/book.dart';
+import 'package:yuyan_app/model/document/book_stack/book_stack.dart';
+import 'package:yuyan_app/model/document/commen/comment_detail.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/group.dart';
+import 'package:yuyan_app/model/document/group_user.dart';
 import 'package:yuyan_app/model/document/organization_lite.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/document/user_profile.dart';
@@ -123,10 +126,27 @@ class ApiRepository {
     return list;
   }
 
-  static Future<List<BookSeri>> getBookList({int userId}) async {
-    var res = await api.get(
-      "/groups/$userId/books?archived=include&limit=200",
-    );
+  static Future<List<GroupUserSeri>> getGroupMemberList({int groupId}) async {
+    var res = await api.get("/groups/$groupId/users?with_count=true");
+    var data = (res.data as ApiResponse).data as List;
+    return data.map((e) => GroupUserSeri.fromJson(e)).toList();
+  }
+
+  static Future<List<BookStackSeri>> getBookStack({int groupId}) async {
+    var res = await api.get("/groups/$groupId/bookstacks");
+    var asp = (res.data as ApiResponse).data;
+    var list = (asp as List).map((e) => BookStackSeri.fromJson(e)).toList();
+    return list;
+  }
+
+  static Future<List<BookSeri>> getBookList({
+    int userId,
+    int limit = 200,
+  }) async {
+    var res = await api.get("/groups/$userId/books", queryParameters: {
+      'archived': 'include',
+      'limit': limit,
+    });
     var asp = res.data as ApiResponse;
     var list = (asp.data as List).map((e) => BookSeri.fromJson(e)).toList();
     return list;
@@ -230,7 +250,7 @@ class ApiRepository {
   }
 
   // 查看是否收藏(文章或团队)
-  static Future getIfMark({
+  static Future<bool> getIfMark({
     @required int targetId,
     String targetType = "Doc",
   }) async {
@@ -240,30 +260,56 @@ class ApiRepository {
       "target_type": targetType,
     }); // User or Doc
     var asp = res.data as ApiResponse;
-    throw UnimplementedError();
+    return asp.data['actioned'] != null;
   }
 
-  static Future _doActionTarget({
-    @required int userId,
-    //like, watch, follow, watch-comments, watch-topics, mark, read, reaction
-    @required String actionType,
-    //Doc, Book, Artboard, ArtboardGroup, ArtboardComment, Comment, Topic, User, Resource, DocVersion, Quan, Note
-    @required String targetType,
-    int offset,
-    // String method = "GET",
+  static Future<bool> mark({
+    @required int targetId,
+    String targetType = "Doc",
   }) async {
-    var res = await api.get(
-      '/actions/targets',
-      queryParameters: {
-        "user_id": userId,
-        "action_type": actionType,
-        "target_type": targetType,
-        "offset": offset,
-      },
-    );
+    var res = await api.post("/mine/marks", data: {
+      // "action_type": "mark",
+      "target_id": targetId,
+      "target_type": targetType,
+    }); // User or Doc
     var asp = res.data as ApiResponse;
-    return asp.data;
+    return asp.data['ok'] == 1;
   }
+
+  static Future<bool> unmark({
+    @required int targetId,
+    String targetType = "Doc",
+  }) async {
+    var res = await api.delete("/mine/marks", data: {
+      // "action_type": "mark",
+      "target_id": targetId,
+      "target_type": targetType,
+    }); // User or Doc
+    var asp = res.data as ApiResponse;
+    return asp.data['ok'] == 1;
+  }
+
+  // static Future _doActionTarget({
+  //   @required int userId,
+  //   //like, watch, follow, watch-comments, watch-topics, mark, read, reaction
+  //   @required String actionType,
+  //   //Doc, Book, Artboard, ArtboardGroup, ArtboardComment, Comment, Topic, User, Resource, DocVersion, Quan, Note
+  //   @required String targetType,
+  //   int offset,
+  //   // String method = "GET",
+  // }) async {
+  //   var res = await api.get(
+  //     '/actions/targets',
+  //     queryParameters: {
+  //       "user_id": userId,
+  //       "action_type": actionType,
+  //       "target_type": targetType,
+  //       "offset": offset,
+  //     },
+  //   );
+  //   var asp = res.data as ApiResponse;
+  //   return asp.data;
+  // }
 
   static Future<List<ActionSeri>> getMarkList(
       {int offset = 0, int limit = 100}) async {
@@ -274,6 +320,46 @@ class ApiRepository {
     });
     var asp = res.data as ApiResponse;
     var list = (asp.data as List).map((e) => ActionSeri.fromJson(e)).toList();
+    return list;
+  }
+
+  static Future<List<CommentDetailSeri>> getCommentsList(
+      {int commentId}) async {
+    var res = await api.get(
+        '/comments?commentable_id=$commentId&commentable_type=Topic',
+        queryParameters: {
+          'commentable_id': commentId,
+          'commentable_type': 'Topic',
+        });
+    var data = (res.data as ApiResponse).data as List;
+    return data.map((e) => CommentDetailSeri.fromJson(e)).toList();
+  }
+
+  static Future<List<TopicSeri>> getTopicList({
+    int groupId,
+    int offset = 0,
+    String state = 'open',
+    int limit = 100,
+  }) async {
+    var res = await api.get(
+      '/topics',
+      queryParameters: {
+        'limit': limit,
+        'offset': offset,
+        'state': state,
+        'assignee_id': '',
+        'group_id': groupId,
+        'kanban_id': '',
+        'label_ids': '',
+        'milestone_id': '',
+        'mode': '',
+        'privacy': '',
+        'q': '',
+        'user_id': '',
+      },
+    );
+    var asp = res.data as ApiResponse;
+    var list = (asp.data as List).map((e) => TopicSeri.fromJson(e)).toList();
     return list;
   }
 

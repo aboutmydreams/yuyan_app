@@ -47,7 +47,7 @@ class UserFlexibleWidget extends StatelessWidget {
               ),
               Spacer(),
               Hero(
-                tag: tag,
+                tag: heroTag,
                 child: UserAvatarWidget(
                   avatar: user.avatarUrl,
                   height: 60,

@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/controller/version_controller.dart';
+import 'package:yuyan_app/model/document/group.dart';
+import 'package:yuyan_app/models/component/group/group_page.dart';
 import 'package:yuyan_app/views/my_page/widget/user_info_card_widget.dart';
 import 'package:yuyan_app/views/widget/animation_widget.dart';
 import 'package:yuyan_app/views/widget/setting_item_widget.dart';
@@ -173,6 +175,16 @@ class SettingListWidget extends StatelessWidget {
             //         "https://cdn.nlark.com/yuque/0/2021/png/2596791/1613398048817-avatar/a3ec3f64-bab4-4760-8bd6-68b9ca64e05b.png",
             //   ),
             // ));
+            final avatarUrl =
+                "https://cdn.nlark.com/yuque/0/2020/png/164272/1581178391840-avatar/dfd33ab4-7115-4fce-b504-faeb9d3ca24d.png";
+            Get.to(GroupPage2(
+              group: GroupSeri(
+                id: 671004,
+                name: "语燕",
+                description: "自缘不睹榴皮字，想像祇园蔓草书",
+                avatarUrl: avatarUrl,
+              ),
+            ));
           },
           child: AbsorbPointer(
             child: SettingItemWidget(

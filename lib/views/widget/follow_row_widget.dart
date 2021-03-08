@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/util/util.dart';
@@ -23,14 +24,7 @@ class FollowRowItemWidget extends StatelessWidget {
     // String tag = Util.genHeroTag();
     return GestureDetector(
       onTap: () {
-        // OpenPage.user(
-        //   context,
-        //   login: data.login,
-        //   tag: tag,
-        //   name: data.name,
-        //   avatarUrl: data.avatarUrl,
-        //   userId: data.id,
-        // );
+        MyRoute.user(user: user.toUserLiteSeri());
       },
       child: Container(
         height: 70,

@@ -1,5 +1,6 @@
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/comment.dart';
+import 'package:yuyan_app/model/document/design.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/doc_lite.dart';
 import 'package:yuyan_app/model/document/group_user.dart';
@@ -47,6 +48,7 @@ class Serializer {
       'web.comment': () => CommentSeri.fromJson(_data),
       'web.topic': () => TopicSeri.fromJson(_data),
       'web.doc_lite': () => DocLiteSeri.fromJson(_data),
+      'web.design': () => DesignSeri.fromJson(_data),
     };
   }
 

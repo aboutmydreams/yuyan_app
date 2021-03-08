@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:yuyan_app/controller/action_controller.dart';
+import 'package:yuyan_app/controller/global/group_controller.dart';
+import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/group/all_topic/topic_page.dart';
 import 'package:yuyan_app/models/component/group/topic/add_topic/add_topic.dart';
@@ -14,8 +18,169 @@ import 'package:yuyan_app/models/net/requests_api/group/data/group_topic_data.da
 import 'package:yuyan_app/models/net/requests_api/group/group.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
 import 'package:yuyan_app/models/widgets_small/menu_item.dart';
+import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
+import 'package:yuyan_app/views/widget/animation_widget.dart';
+import 'package:yuyan_app/views/widget/book_row_widget.dart';
+import 'package:yuyan_app/views/widget/follow_row_widget.dart';
+import 'package:yuyan_app/views/widget/topic_item_widget.dart';
+import 'package:yuyan_app/views/widget/user_flexible_widget.dart';
+
+import 'widget/group_home_widget.dart';
+
+class GroupPage2 extends StatefulWidget {
+  final GroupSeri group;
+
+  const GroupPage2({
+    Key key,
+    this.group,
+  }) : super(key: key);
+
+  @override
+  _GroupPage2State createState() => _GroupPage2State();
+}
+
+class _GroupPage2State extends State<GroupPage2>
+    with SingleTickerProviderStateMixin {
+  final List<String> _tabs = [
+    "首页",
+    "知识库",
+    "讨论区",
+    "成员",
+  ];
+
+  TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _tabController = TabController(
+      length: _tabs.length,
+      vsync: this,
+    );
+
+    var groupId = widget.group.id;
+    Get.put(GroupStackController(groupId));
+    Get.put(GroupMemberController(groupId));
+    Get.put(GroupBookController(groupId));
+    Get.put(GroupTopicController(groupId));
+    Get.put(GroupMarkController(targetId: groupId));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var group = widget.group;
+    return Scaffold(
+      body: NestedScrollView(
+        headerSliverBuilder: (_, inner) => [
+          SliverAppBar(
+            leading: BackButton(),
+            title: Text('${group.name}'),
+            centerTitle: false,
+            pinned: true,
+            floating: false,
+            snap: false,
+            primary: true,
+            expandedHeight: 230.0,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4.0)),
+            stretchTriggerOffset: 10,
+            elevation: 10,
+            forceElevated: inner,
+            actions: <Widget>[
+              GetBuilder<GroupMarkController>(
+                builder: (c) => c.stageBuilder(
+                  onIdle: () => IconButton(
+                    icon: c.value ? Icon(Icons.star) : Icon(Icons.star_border),
+                    onPressed: c.toggle,
+                  ),
+                ),
+              ),
+              PopupMenuButton(
+                itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
+                  menuItem("A", "查看所有话题"),
+                  menuItem("B", "打开网页版"),
+                ],
+                onSelected: (String action) {
+                  // // 点击选项的时候
+                  // switch (action) {
+                  //   case 'A':
+                  //     Navigator.of(context)
+                  //         .push(MaterialPageRoute(builder: (_) {
+                  //       return AllTopicPage(
+                  //         groupId: groupdata.id,
+                  //         openTopicJson: topicJson,
+                  //       );
+                  //     }));
+                  //     break;
+                  //   case 'B':
+                  //     openUrl(context, "https://www.yuque.com/${groupdata.id}");
+                  //     break;
+                  // }
+                },
+              ),
+            ],
+            flexibleSpace: FlexibleSpaceBar(
+              background: UserFlexibleWidget(
+                user: group.toUserLiteSeri(),
+              ),
+            ),
+            bottom: TabBar(
+              indicatorColor: Colors.white54,
+              controller: _tabController,
+              tabs: _tabs.map((String name) => Tab(text: name)).toList(),
+            ),
+          ),
+        ],
+        body: TabBarView(
+          controller: _tabController,
+          children: [
+            GetBuilder<GroupStackController>(
+              builder: (c) => c.stageBuilder(
+                onEmpty: NothingPage(top: 190, text: "首页空空"),
+                onIdle: () => GroupHomeWidget(stack: c.value),
+              ),
+            ),
+            GetBuilder<GroupBookController>(
+              builder: (c) => c.stageBuilder(
+                // onEmpty: null,
+                onIdle: () => AnimationListWidget(
+                  itemCount: c.value.length,
+                  itemBuilder: (_, i) => BookRowItemWidget(
+                    book: c.value[i],
+                  ),
+                ),
+              ),
+            ),
+            GetBuilder<GroupTopicController>(
+              builder: (c) => c.stageBuilder(
+                onIdle: () => AnimationListWidget(
+                  itemCount: c.value.length,
+                  itemBuilder: (_, i) => TopicRowItemWidget2(
+                    topic: c.value[i],
+                  ),
+                ),
+              ),
+            ),
+            GetBuilder<GroupMemberController>(
+              builder: (c) => c.stageBuilder(
+                onIdle: () => AnimationListWidget(
+                  itemCount: c.value.length,
+                  itemBuilder: (_, i) => FollowRowItemWidget(
+                    user: c.value[i].user,
+                    hideButton: false,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class GroupPage extends StatefulWidget {
   GroupPage({Key key, this.groupdata, this.pageIndex}) : super(key: key);
@@ -30,6 +195,7 @@ class GroupPage extends StatefulWidget {
 class _GroupPageState extends State<GroupPage>
     with SingleTickerProviderStateMixin {
   _GroupPageState({Key key, this.groupdata, this.pageIndex});
+
   GroupData groupdata;
 
   int pageIndex;

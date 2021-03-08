@@ -1,3 +1,5 @@
+import 'package:yuyan_app/model/events/user_lite_seri.dart';
+
 class GroupSeri {
   String workId;
   String avatarUrl;
@@ -185,5 +187,18 @@ class GroupSeri {
     map["grains_sum"] = grainsSum;
     map["deleted_at"] = deletedAt;
     return map;
+  }
+
+  UserLiteSeri toUserLiteSeri() {
+    return UserLiteSeri(
+      id: id,
+      type: type,
+      login: login,
+      name: name,
+      avatar: avatar,
+      isPaid: isPaid,
+      avatarUrl: avatarUrl,
+      description: description,
+    );
   }
 }

@@ -50,3 +50,51 @@ class FollowUserController extends FetchValueController<bool> {
     return ApiRepository.getIfFollow(userId: userId);
   }
 }
+
+class GroupMarkController extends FetchValueController<bool> {
+  final int targetId;
+
+  GroupMarkController({
+    this.targetId,
+    bool isFollow,
+  }) : super(
+          initialFetch: isFollow == null,
+          initValue: isFollow,
+          initialState: isFollow == null ? ViewState.loading : ViewState.idle,
+        );
+
+  Future<bool> follow() {
+    return ApiRepository.mark(targetId: targetId, targetType: 'User');
+  }
+
+  Future<bool> unfollow() {
+    return ApiRepository.unmark(targetId: targetId, targetType: 'User');
+  }
+
+  toggle() async {
+    try {
+      setLoading();
+      bool res = false;
+      if (this.value) {
+        res = await unfollow();
+      } else {
+        res = await follow();
+      }
+      if (res) {
+        this.value = !value;
+        BotToast.showText(text: this.value ? '成功' : '取消成功');
+      } else {
+        BotToast.showText(text: '操作失败');
+      }
+      setIdle();
+    } catch (e) {
+      BotToast.showText(text: '错误: $e');
+      setIdle();
+    }
+  }
+
+  @override
+  Future<bool> fetch() {
+    return ApiRepository.getIfMark(targetId: targetId, targetType: 'User');
+  }
+}

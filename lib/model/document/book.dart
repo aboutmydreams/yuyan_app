@@ -1,3 +1,5 @@
+import 'book_stack/summary.dart';
+import 'meta/ability.dart';
 import 'user.dart';
 
 class BookSeri {
@@ -18,6 +20,22 @@ class BookSeri {
   UserSeri user;
   dynamic creator;
   String serializer;
+
+  ///book_stack添加
+  int itemsCount;
+  int likesCount;
+  int watchesCount;
+  int creatorId;
+  MetaAbilitySeri abilities;
+  dynamic pinnedAt;
+  dynamic archivedAt;
+  List<SummarySeri> summary;
+  int status;
+  dynamic stackId;
+  dynamic rank;
+  String cover;
+  dynamic original;
+  int organizationId;
 
   BookSeri({
     this.id,
@@ -57,6 +75,29 @@ class BookSeri {
     user = json["user"] != null ? UserSeri.fromJson(json["user"]) : null;
     creator = json["creator"];
     serializer = json["_serializer"];
+
+    ///由book_stack添加
+    itemsCount = json["items_count"];
+    likesCount = json["likes_count"];
+    watchesCount = json["watches_count"];
+    creatorId = json["creator_id"];
+    abilities = json["abilities"] != null
+        ? MetaAbilitySeri.fromJson(json["abilities"])
+        : null;
+    pinnedAt = json["pinned_at"];
+    archivedAt = json["archived_at"];
+    if (json["summary"] != null) {
+      summary = [];
+      json["summary"].forEach((v) {
+        summary.add(SummarySeri.fromJson(v));
+      });
+    }
+    status = json["status"];
+    stackId = json["stack_id"];
+    rank = json["rank"];
+    cover = json["cover"];
+    original = json["original"];
+    organizationId = json["organization_id"];
   }
 
   Map<String, dynamic> toJson() {
@@ -80,6 +121,26 @@ class BookSeri {
     }
     map["creator"] = creator;
     map["_serializer"] = serializer;
+
+    ///由book_stack添加
+    map["items_count"] = itemsCount;
+    map["likes_count"] = likesCount;
+    map["watches_count"] = watchesCount;
+    map["creator_id"] = creatorId;
+    if (abilities != null) {
+      map["abilities"] = abilities.toJson();
+    }
+    map["pinned_at"] = pinnedAt;
+    map["archived_at"] = archivedAt;
+    if (summary != null) {
+      map["summary"] = summary.map((v) => v.toJson()).toList();
+    }
+    map["status"] = status;
+    map["stack_id"] = stackId;
+    map["rank"] = rank;
+    map["cover"] = cover;
+    map["original"] = original;
+    map["organization_id"] = organizationId;
     return map;
   }
 }

@@ -7,15 +7,19 @@ import 'package:yuyan_app/config/viewstate/view_controller.dart';
 class FetchRefreshListViewBuilder<T extends FetchListValueController>
     extends StatelessWidget {
   final Function(T) builder;
+  final String tag;
 
   const FetchRefreshListViewBuilder({
     Key key,
     this.builder,
+    this.tag,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<T>(
+      tag: tag,
+      autoRemove: false,
       builder: (c) => SmartRefresher(
         controller: c.refreshController,
         onRefresh: () => c.onRefresh(),

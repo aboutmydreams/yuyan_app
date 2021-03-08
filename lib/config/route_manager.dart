@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:yuyan_app/controller/binding/app_binding.dart';
 import 'package:yuyan_app/controller/global/my_controller.dart';
+import 'package:yuyan_app/model/events/user_lite_seri.dart';
 import 'package:yuyan_app/models/component/edit_markdown/edit_note.dart';
 import 'package:yuyan_app/models/component/edit_markdown/edit_page.dart';
 import 'package:yuyan_app/models/component/group/group_page.dart';
@@ -19,8 +20,9 @@ import 'package:yuyan_app/views/my_page/my/following_page.dart';
 import 'package:yuyan_app/views/my_page/my/my_book_page.dart';
 import 'package:yuyan_app/views/my_page/my/my_group_page.dart';
 import 'package:yuyan_app/views/my_page/my/my_mark_page.dart';
+import 'package:yuyan_app/views/my_page/my/my_topic_page.dart';
 import 'package:yuyan_app/views/my_page/setting/setting_page.dart';
-import 'file:///D:/Documents/Github/flutter/yuyan_app/lib/views/my_page/my/my_topic_page.dart';
+import 'package:yuyan_app/views/user_page/user_page.dart';
 
 // ZefyrController _controller;
 // bool _editing = true;
@@ -50,7 +52,93 @@ class RouteName {
   static String mySuggest = '/my/suggest';
 }
 
+// 打开文档
+// static doc(BuildContext context, {int bookId, int docId}) {
+//   Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+//     return DocPage(
+//       bookId: bookId,
+//       docId: docId,
+//     );
+//   }));
+// }
+//
+// static docWeb(BuildContext context,
+//     {String login,
+//       String bookSlug,
+//       String url,
+//       int bookId,
+//       int docId,
+//       bool onlyUser}) {
+//   Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+//     return DocPageWeb(
+//       login: login,
+//       url: url,
+//       bookSlug: bookSlug,
+//       bookId: bookId,
+//       docId: docId,
+//       onlyUser: onlyUser,
+//     );
+//   }));
+// }
+//
+//
+//   // 打开团队页面
+//   static group(BuildContext context, {GroupData groupdata, int pageIndex: 0}) {
+//     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+//       return GroupPage(groupdata: groupdata, pageIndex: pageIndex);
+//     }));
+//   }
+//
+//   // 打开文档知识库
+//   static docBook(BuildContext context,
+//       {int bookId, String bookSlug, String login, bool onlyUser}) {
+//     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+//       return BookDocPage(
+//         bookId: bookId,
+//         bookSlug: bookSlug,
+//         login: login,
+//         onlyUser: onlyUser,
+//       );
+//     }));
+//   }
+//
+//   // 打开画板知识库
+//
+//   // 打开话题知识库
+//
+//   // 打开话题
+//   static topic(BuildContext context, {int id, int iid, int groupId}) {
+//     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+//       return TopicDetail(id: id, iid: iid, groupId: groupId);
+//     }));
+//   }
+//
+//   // 打开搜索
+//   static search(BuildContext context,
+//       {String text, bool aboutMe, int pageIndex}) {
+//     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+//       return SearchResultPage(
+//           text: text, aboutMe: aboutMe, pageIndex: pageIndex);
+//     }));
+//   }
+// }
+//
+
 class MyRoute {
+  // 打开其他用户的页面
+  static user({
+    UserLiteSeri user,
+    String heroTag,
+  }) {
+    Get.to(
+      UserPage(
+        user: user,
+        heroTag: heroTag,
+      ),
+      preventDuplicates: false,
+    );
+  }
+
   static List<GetPage> pages = [
     GetPage(
       name: RouteName.home,
