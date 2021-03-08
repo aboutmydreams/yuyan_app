@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/util/util.dart';
 
 class BookRowItemWidget extends StatelessWidget {

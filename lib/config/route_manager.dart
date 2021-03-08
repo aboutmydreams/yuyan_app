@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/controller/binding/app_binding.dart';
 import 'package:yuyan_app/controller/global/my_controller.dart';
+import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/events/user_lite_seri.dart';
 import 'package:yuyan_app/models/component/edit_markdown/edit_note.dart';
 import 'package:yuyan_app/models/component/edit_markdown/edit_page.dart';
@@ -83,11 +85,7 @@ class RouteName {
 //
 //
 //   // 打开团队页面
-//   static group(BuildContext context, {GroupData groupdata, int pageIndex: 0}) {
-//     Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-//       return GroupPage(groupdata: groupdata, pageIndex: pageIndex);
-//     }));
-//   }
+
 //
 //   // 打开文档知识库
 //   static docBook(BuildContext context,
@@ -127,7 +125,7 @@ class RouteName {
 class MyRoute {
   // 打开其他用户的页面
   static user({
-    UserLiteSeri user,
+    @required UserLiteSeri user,
     String heroTag,
   }) {
     Get.to(
@@ -135,6 +133,16 @@ class MyRoute {
         user: user,
         heroTag: heroTag,
       ),
+      preventDuplicates: false,
+    );
+  }
+
+  static group({
+    @required GroupSeri group,
+    int pageIndex = 0,
+  }) {
+    Get.to(
+      GroupPage2(group: group),
       preventDuplicates: false,
     );
   }

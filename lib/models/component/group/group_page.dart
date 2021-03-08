@@ -62,16 +62,19 @@ class _GroupPage2State extends State<GroupPage2>
     );
 
     var groupId = widget.group.id;
-    Get.put(GroupStackController(groupId));
-    Get.put(GroupMemberController(groupId));
-    Get.put(GroupBookController(groupId));
-    Get.put(GroupTopicController(groupId));
-    Get.put(GroupMarkController(targetId: groupId));
+    var tag = '$groupId';
+    Get.put(GroupStackController(groupId), tag: tag);
+    Get.put(GroupMemberController(groupId), tag: tag);
+    Get.put(GroupBookController(groupId), tag: tag);
+    Get.put(GroupTopicController(groupId), tag: tag);
+    Get.put(GroupMarkController(targetId: groupId), tag: tag);
   }
 
   @override
   Widget build(BuildContext context) {
     var group = widget.group;
+    var groupId = group.id;
+    var tag = '$groupId';
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (_, inner) => [
@@ -91,6 +94,7 @@ class _GroupPage2State extends State<GroupPage2>
             forceElevated: inner,
             actions: <Widget>[
               GetBuilder<GroupMarkController>(
+                tag: tag,
                 builder: (c) => c.stageBuilder(
                   onIdle: () => IconButton(
                     icon: c.value ? Icon(Icons.star) : Icon(Icons.star_border),
@@ -138,12 +142,14 @@ class _GroupPage2State extends State<GroupPage2>
           controller: _tabController,
           children: [
             GetBuilder<GroupStackController>(
+              tag: tag,
               builder: (c) => c.stageBuilder(
                 onEmpty: NothingPage(top: 190, text: "首页空空"),
                 onIdle: () => GroupHomeWidget(stack: c.value),
               ),
             ),
             GetBuilder<GroupBookController>(
+              tag: tag,
               builder: (c) => c.stageBuilder(
                 // onEmpty: null,
                 onIdle: () => AnimationListWidget(
@@ -155,6 +161,7 @@ class _GroupPage2State extends State<GroupPage2>
               ),
             ),
             GetBuilder<GroupTopicController>(
+              tag: tag,
               builder: (c) => c.stageBuilder(
                 onIdle: () => AnimationListWidget(
                   itemCount: c.value.length,
@@ -165,6 +172,7 @@ class _GroupPage2State extends State<GroupPage2>
               ),
             ),
             GetBuilder<GroupMemberController>(
+              tag: tag,
               builder: (c) => c.stageBuilder(
                 onIdle: () => AnimationListWidget(
                   itemCount: c.value.length,

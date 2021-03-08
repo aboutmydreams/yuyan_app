@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
@@ -23,7 +24,7 @@ class GroupRowItemWidget extends StatelessWidget {
     // data.avatarUrl = imageUrl;
     return GestureDetector(
       onTap: () {
-        // OpenPage.group(context, groupdata: data, pageIndex: index ?? 0);
+        MyRoute.group(group: group);
       },
       child: Container(
         height: 70,
