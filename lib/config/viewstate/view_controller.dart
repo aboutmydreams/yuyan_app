@@ -31,6 +31,11 @@ abstract class FetchValueController<T> extends GetxController
 
   T get value => _value;
 
+  set value(T newValue) {
+    _value = newValue;
+    update();
+  }
+
   bool get valueAvailable => _value != null;
 
   @protected
@@ -215,6 +220,10 @@ abstract class FetchSavableController<T extends BaseSavableJson>
 
   onLoadMoreCallback() async {
     try {
+      if (state == ViewState.empty) {
+        refreshController.loadNoData();
+        return;
+      }
       var data = await fetchMore();
       if (GetUtils.isNullOrBlank(data)) {
         refreshController.loadNoData();
@@ -236,6 +245,7 @@ abstract class FetchSavableController<T extends BaseSavableJson>
     }
   }
 
+  //这个接口在此类无用
   Future<T> fetch() => null;
 
   /// 加载更多数据，适用于接口分页的情况

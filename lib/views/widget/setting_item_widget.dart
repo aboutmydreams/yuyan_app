@@ -46,7 +46,7 @@ class SettingItemWidget extends StatelessWidget {
         child: Icon(Icons.chevron_right),
       ),
       onTap: () {
-        Get.toNamed(namedRoute);
+        if (namedRoute != null) Get.toNamed(namedRoute);
       },
     );
   }

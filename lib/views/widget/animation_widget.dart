@@ -7,12 +7,14 @@ class AnimationListWidget extends StatelessWidget {
   final int itemCount;
   final IndexedWidgetBuilder itemBuilder;
   final int animationType;
+  final ScrollPhysics physics;
 
   AnimationListWidget({
     Key key,
     this.controller,
     this.itemCount,
     this.itemBuilder,
+    this.physics,
     this.animationType = 1,
   }) : super(key: key);
 
@@ -20,6 +22,7 @@ class AnimationListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimationLimiter(
       child: ListView.builder(
+        physics: physics,
         controller: controller,
         itemCount: itemCount,
         itemBuilder: (_, i) {

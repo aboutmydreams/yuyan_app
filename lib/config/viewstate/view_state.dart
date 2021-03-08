@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 
@@ -40,6 +39,8 @@ mixin ControllerStateMixin on GetxController {
     update();
   }
 
+  bool get isEmptyState => state == ViewState.empty;
+
   setIdle() => state = ViewState.idle;
 
   setEmpty() => state = ViewState.empty;
@@ -73,8 +74,8 @@ $error
     _state = initState;
   }
 
-  Widget stageBuilder({
-    Widget onIdle,
+  Widget stageBuilder<T>({
+    WidgetCallback onIdle,
     Widget onLoading,
     Widget onEmpty,
     Widget Function(ViewStatusError error) onError,
@@ -82,7 +83,7 @@ $error
     switch (state) {
       case ViewState.refreshing:
       case ViewState.idle:
-        return onIdle;
+        return onIdle();
       case ViewState.empty:
         return onEmpty ?? ViewEmptyWidget();
       case ViewState.loading:

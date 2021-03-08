@@ -8,17 +8,19 @@ import 'package:yuyan_app/views/widget/user_widget.dart';
 class FollowRowItemWidget extends StatelessWidget {
   final UserSeri user;
   final bool isFollow;
+  final bool hideButton;
 
   const FollowRowItemWidget({
     Key key,
     this.user,
     this.isFollow,
+    this.hideButton = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // user.isfollow = true;
-    String tag = Util.genHeroTag();
+    // String tag = Util.genHeroTag();
     return GestureDetector(
       onTap: () {
         // OpenPage.user(
@@ -76,10 +78,11 @@ class FollowRowItemWidget extends StatelessWidget {
               ),
             ),
             Spacer(),
-            FollowButtonWidget(
-              user: user,
-              initialFollow: isFollow,
-            ),
+            if (!hideButton)
+              FollowButtonWidget(
+                user: user,
+                initialFollow: isFollow,
+              ),
           ],
         ),
       ),

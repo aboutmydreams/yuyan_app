@@ -1,30 +1,19 @@
 import 'package:bot_toast/bot_toast.dart';
-import 'package:get/get.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
+import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
 
-class FollowUserController extends GetxController with ControllerStateMixin {
+class FollowUserController extends FetchValueController<bool> {
   final int userId;
-
-  bool _followed;
-
-  bool get followed => _followed;
 
   FollowUserController({
     this.userId,
     bool isFollow,
-  }) : _followed = isFollow {
-    if (_followed == null) {
-      initState(ViewState.loading);
-      init();
-    }
-  }
-
-  init() async {
-    safeHandler(() async {
-      _followed = await ApiRepository.getIfFollow(userId: userId);
-    });
-  }
+  }) : super(
+          initialFetch: isFollow == null,
+          initValue: isFollow,
+          initialState: isFollow == null ? ViewState.loading : ViewState.idle,
+        );
 
   Future<bool> follow() {
     return ApiRepository.followUser(userId: userId);
@@ -37,19 +26,27 @@ class FollowUserController extends GetxController with ControllerStateMixin {
   toggle() async {
     try {
       setLoading();
-      if (_followed) {
-        await unfollow();
-        _followed = false;
-        BotToast.showText(text: '取消关注成功');
+      bool res = false;
+      if (this.value) {
+        res = await unfollow();
       } else {
-        await follow();
-        _followed = true;
-        BotToast.showText(text: '关注成功');
+        res = await follow();
+      }
+      if (res) {
+        this.value = !value;
+        BotToast.showText(text: this.value ? '关注成功' : '取消关注成功');
+      } else {
+        BotToast.showText(text: '操作失败');
       }
       setIdle();
     } catch (e) {
       BotToast.showText(text: '错误: $e');
       setIdle();
     }
+  }
+
+  @override
+  Future<bool> fetch() {
+    return ApiRepository.getIfFollow(userId: userId);
   }
 }

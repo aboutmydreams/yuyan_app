@@ -1,3 +1,5 @@
+import 'package:yuyan_app/model/events/user_lite_seri.dart';
+
 class UserDetailSeri {
   int id;
   String type;
@@ -73,5 +75,9 @@ class UserDetailSeri {
     map["updated_at"] = updatedAt;
     map["_serializer"] = serializer;
     return map;
+  }
+
+  UserLiteSeri toUserLite() {
+    return UserLiteSeri.fromJson(toJson());
   }
 }

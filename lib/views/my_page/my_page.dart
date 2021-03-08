@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/controller/version_controller.dart';
-import 'package:yuyan_app/views/my_page/view/user_info.dart';
+import 'package:yuyan_app/views/my_page/widget/user_info_card_widget.dart';
 import 'package:yuyan_app/views/widget/animation_widget.dart';
 import 'package:yuyan_app/views/widget/setting_item_widget.dart';
 
@@ -160,6 +160,25 @@ class SettingListWidget extends StatelessWidget {
             imgAsset: "setting",
             namedRoute: RouteName.mySetting,
             badge: c?.isLatest,
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            debugPrint('测试');
+            // Get.to(UserPage(
+            //   user: UserLiteSeri(
+            //     name: "Dreamer2q",
+            //     id: 2596791,
+            //     avatarUrl:
+            //         "https://cdn.nlark.com/yuque/0/2021/png/2596791/1613398048817-avatar/a3ec3f64-bab4-4760-8bd6-68b9ca64e05b.png",
+            //   ),
+            // ));
+          },
+          child: AbsorbPointer(
+            child: SettingItemWidget(
+              title: "测试",
+              imgAsset: "about",
+            ),
           ),
         ),
       ],

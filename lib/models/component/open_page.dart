@@ -3,7 +3,6 @@ import 'package:yuyan_app/models/component/book_doc/book_doc.dart';
 import 'package:yuyan_app/models/component/book_doc/doc_page/webview_doc.dart';
 import 'package:yuyan_app/models/component/group/group_page.dart';
 import 'package:yuyan_app/models/component/group/topic/topic_detail_page.dart';
-import 'package:yuyan_app/models/component/user/user_page.dart';
 import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 import 'package:yuyan_app/views/explore_page/search/search_result/result_page.dart';
 
@@ -48,17 +47,17 @@ class OpenPage {
       String description,
       String tag,
       int pageIndex: 0}) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return UserPage(
-        login: login,
-        name: name,
-        userId: userId,
-        avatarUrl: avatarUrl,
-        description: description,
-        tag: tag,
-        pageIndex: pageIndex,
-      );
-    }));
+    // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+    //   // return UserPage(
+    //   //   login: login,
+    //   //   name: name,
+    //   //   userId: userId,
+    //   //   avatarUrl: avatarUrl,
+    //   //   description: description,
+    //   //   tag: tag,
+    //   //   pageIndex: pageIndex,
+    //   // );
+    // }));
   }
 
   // 打开团队页面

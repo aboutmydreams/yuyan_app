@@ -19,6 +19,8 @@ import 'package:yuyan_app/model/topic/topic.dart';
 class ApiRepository {
   static BaseApi api = BaseApi();
 
+  static int get currentUserId => App.user.data.id;
+
   static Future<List<EventSeri>> getAttendEvents([int offset = 0]) async {
     var resp = await api.get('/events', queryParameters: {
       'offset': offset,
