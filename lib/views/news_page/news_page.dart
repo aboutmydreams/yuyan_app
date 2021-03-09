@@ -94,9 +94,9 @@ class _NotificationPageState extends State<NotificationPage>
         bottom: TabBar(
           controller: tabController,
           tabs: [
-            Tab(text: '未讀消息'),
-            Tab(text: '已讀消息'),
-            Tab(text: '系統消息'),
+            Tab(text: '未读'),
+            Tab(text: '已读'),
+            Tab(text: '系统'),
           ],
         ),
       ),

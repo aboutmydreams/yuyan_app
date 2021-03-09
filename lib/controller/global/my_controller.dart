@@ -8,6 +8,7 @@ import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/model/document/action.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/group.dart';
+import 'package:yuyan_app/model/document/note/note.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
 import 'package:yuyan_app/model/v2/user_detail.dart';
@@ -213,5 +214,29 @@ class MyTopicController extends FetchSavableController<MyTopicProvider> {
       type: 'participated',
       state: topicState,
     );
+  }
+}
+
+class MyNoteProvider extends BaseSaveListJson<NoteSeri> {
+  @override
+  List<NoteSeri> convert(json) {
+    return (json as List).map((e) => NoteSeri.fromJson(e)).toList();
+  }
+
+  @override
+  String get key => 'user_notes';
+}
+
+class MyNoteController extends FetchSavableController<MyNoteProvider> {
+  MyNoteController()
+      : super(
+          initialRefresh: true,
+          initData: MyNoteProvider(),
+          state: ViewState.loading,
+        );
+
+  @override
+  Future fetchData() {
+    return ApiRepository.getMyNoteList();
   }
 }

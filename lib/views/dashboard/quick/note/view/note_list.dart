@@ -41,19 +41,20 @@ Widget oneNote(BuildContext context, Data data) {
   return GestureDetector(
     onTap: () {},
     child: Container(
-        margin: EdgeInsets.only(top: 10, bottom: 2, left: 10, right: 10),
-        padding: EdgeInsets.all(18),
-        decoration: BoxDecoration(
-          color: AppColors.background,
-          boxShadow: [
-            BoxShadow(
-              color: Color.fromARGB(25, 0, 0, 0),
-              offset: Offset(1, 2),
-              blurRadius: 4,
-            ),
-          ],
-          borderRadius: BorderRadius.all(Radius.circular(9.5)),
-        ),
-        child: myLakeView(context, data.description)),
+      margin: EdgeInsets.only(top: 10, bottom: 2, left: 10, right: 10),
+      padding: EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: AppColors.background,
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromARGB(25, 0, 0, 0),
+            offset: Offset(1, 2),
+            blurRadius: 4,
+          ),
+        ],
+        borderRadius: BorderRadius.all(Radius.circular(9.5)),
+      ),
+      child: myLakeView(context, data.description),
+    ),
   );
 }

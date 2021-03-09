@@ -6,10 +6,13 @@ import 'package:yuyan_app/model/dashboard/user_recent_seri.dart';
 import 'package:yuyan_app/model/document/action.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/book_stack/book_stack.dart';
+import 'package:yuyan_app/model/document/card/card_video_info_seri.dart';
 import 'package:yuyan_app/model/document/commen/comment_detail.dart';
 import 'package:yuyan_app/model/document/doc.dart';
+import 'package:yuyan_app/model/document/doc_detail/doc_detail.dart';
 import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/document/group_user.dart';
+import 'package:yuyan_app/model/document/note/note.dart';
 import 'package:yuyan_app/model/document/organization_lite.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/document/user_profile.dart';
@@ -381,5 +384,49 @@ class ApiRepository {
     var asp = res.data as ApiResponse;
     var list = (asp.data as List).map((e) => TopicSeri.fromJson(e)).toList();
     return list;
+  }
+
+  ///语雀小记
+  static Future<List<NoteSeri>> getMyNoteList({
+    String text = '',
+    String type = 'all',
+    int offset = 0,
+  }) async {
+    var res = await api.get(
+      '/notes',
+      queryParameters: {
+        'filter_type': type,
+        'offset': offset,
+        'q': text,
+      },
+    );
+    var asp = (res.data as ApiResponse).data as List;
+    return asp.map((e) => NoteSeri.fromJson(e)).toList();
+  }
+
+  static Future<NoteSeri> getNoteDetail({
+    int noteId,
+  }) async {
+    var res = await api.get('/notes/$noteId');
+    var asp = (res.data as ApiResponse);
+    return NoteSeri.fromJson(asp.data);
+  }
+
+  ///文档
+  static Future<DocDetailSeri> getDocDetail({int bookId, String slug}) async {
+    var res = await api.get('/docs/$slug', queryParameters: {
+      'book_id': bookId,
+    });
+    var asp = (res.data as ApiResponse);
+    return DocDetailSeri.fromJson(asp.data);
+  }
+
+  //视频
+  static Future<CardVideoResSeri> getCardVideo({String videoId}) async {
+    var res = await api.get('/video', queryParameters: {
+      'video_id': videoId,
+      'ctoken': App.tokenProvider.data.cToken,
+    });
+    return CardVideoResSeri.fromJson(res.data.data);
   }
 }

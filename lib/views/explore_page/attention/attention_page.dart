@@ -1,6 +1,8 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/attend_controller.dart';
 import 'package:yuyan_app/model/events/book_event_seri.dart';
 import 'package:yuyan_app/model/events/doc_event_seri.dart';
@@ -13,37 +15,8 @@ import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/util/util.dart';
 
 class AttentionPage extends StatelessWidget {
-  // bool get wantKeepAlive => true; //非常重要
-
-  // ScrollController _controller;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  // _controller = ScrollController();
-  // final controller = Get.find<BottomNavigatorController>();
-  // controller.addScrollListener(_controller);
-  // _controller.addListener(() {
-  // if (_controller.position.pixels == _controller.position.maxScrollExtent) {
-  //   getMoreData();
-  // }
-  // print(_controller.position.pixels);
-  // bottomManager.addPixels(_controller.position.pixels);
-  // controller.onScroll(_controller);
-  // });
-  // }
-
-  // @override
-  // void dispose() {
-  //   //为了避免内存泄露，需要调用_controller.dispose
-  //   _controller.dispose();
-  //   super.dispose();
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // super.build(context);
     return Scaffold(
       backgroundColor: AppColors.background,
       body: GetBuilder<AttendController>(
@@ -96,6 +69,7 @@ class _AttendItem extends StatelessWidget {
       case 'Artboard':
         return ListTile(
           title: Text('Artboard event'),
+          subtitle: Text('如果你看见这个信息，请记得进行反馈谢谢❤'),
         );
       case 'User':
         return _ToUserWidget(item: item);
@@ -105,6 +79,9 @@ class _AttendItem extends StatelessWidget {
         return ListTile(
           title: Text('Unsupported'),
           subtitle: Text('eventType: ${item.eventType}'),
+          onTap: () {
+            BotToast.showText(text: '请连续作者进行反馈！');
+          },
         );
     }
   }
@@ -157,7 +134,8 @@ class _ToUserWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _UserFollowWidget(
-                          user: item.subject.serialize<UserLiteSeri>()),
+                        user: item.subject.serialize<UserLiteSeri>(),
+                      ),
                     ],
                   ),
                 ),
@@ -186,39 +164,20 @@ class _UserLiteWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final tag = Util.genHeroTag();
     final eventDesc = AttendController.eventType[eventType];
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        GestureDetector(
-          onTap: () {
-            // OpenPage.user(
-            //   context,
-            //   login: login,
-            //   name: name,
-            //   avatarUrl: userImg,
-            //   userId: userId,
-            //   tag: tag,
-            // );
-          },
-          child: Hero(tag: tag, child: userAvatar(user.avatarUrl)),
-        ),
-        Expanded(
-          flex: 1,
-          child: Container(
-            height: 44,
-            margin: EdgeInsets.only(left: 14, bottom: 1),
-            child: GestureDetector(
-              onTap: () {
-                // openUrl(context, "https://www.yuque.com/$login");
-                // OpenPage.user(
-                //   context,
-                //   login: login,
-                //   name: name,
-                //   avatarUrl: userImg,
-                //   userId: userId,
-                //   tag: tag,
-                // );
-              },
+    return InkWell(
+      onTap: () => MyRoute.user(user: user, heroTag: tag),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Hero(
+            tag: tag,
+            child: userAvatar(user.avatarUrl),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              height: 44,
+              margin: EdgeInsets.only(left: 14, bottom: 1),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -239,22 +198,22 @@ class _UserLiteWidget extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        if (eventTime != null)
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              Util.timeCut("$eventTime"),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: AppColors.primaryText,
-                fontFamily: "PingFang SC",
-                fontWeight: FontWeight.w400,
-                fontSize: 12,
+          if (eventTime != null)
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                Util.timeCut("$eventTime"),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AppColors.primaryText,
+                  fontFamily: "PingFang SC",
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
+                ),
               ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -283,15 +242,10 @@ class _ToDocWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        // openUrl(context, data.event[0].url);
-        // OpenPage.docWeb(
-        //   context,
-        //   login: data.event[0].url.split("/")[3],
-        //   bookSlug: data.event[0].url.split("/")[4],
-        //   url: data.event[0].url,
-        //   bookId: data.event[0].bookId,
-        //   docId: data.event[0].id,
-        // );
+        MyRoute.docDetail(
+          bookId: sub.bookId,
+          slug: sub.slug,
+        );
       },
       child: Container(
         padding: EdgeInsets.only(top: 14, bottom: 20),
@@ -488,16 +442,7 @@ class _UserFollowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     String tag = Util.genHeroTag();
     return GestureDetector(
-      onTap: () {
-        // OpenPage.user(
-        //   context,
-        //   login: event.url.split("/").last,
-        //   name: event.title,
-        //   avatarUrl: event.avatarUrl,
-        //   userId: event.id,
-        //   tag: tag,
-        // );
-      },
+      onTap: () => MyRoute.user(user: user),
       child: Container(
         height: 66,
         child: Row(

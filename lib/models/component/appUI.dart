@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/controller/theme_controller.dart';
 
@@ -123,55 +124,65 @@ class AppStyles {
 }
 
 class AppIcon {
-  static Icon iconType(String iconName, {double size}) {
+  static Widget iconType(String iconName, {double size}) {
     Map<String, Icon> iconDic = {
-      "Doc": Icon(
+      "doc": Icon(
         Icons.description,
         color: Colors.deepPurpleAccent,
         size: size,
       ),
-      "Book": Icon(
+      "book": Icon(
         Icons.book,
         color: Colors.blue,
         size: size,
       ),
-      "Sheet": Icon(
+      "sheet": Icon(
         Icons.event_note,
         color: Colors.green,
         size: size,
       ),
-      "Thread": Icon(
+      "thread": Icon(
         Icons.speaker_notes,
         color: Colors.blue,
         size: size,
       ),
-      "Group": Icon(
+      "group": Icon(
         Icons.group,
         color: Colors.grey,
         size: size,
       ),
-      "Design": Icon(
+      "design": Icon(
         Icons.collections,
         color: Colors.orangeAccent,
         size: size,
       ),
-      "Resource": Icon(
+      "resource": Icon(
         Icons.create_new_folder,
         color: Colors.deepOrange,
         size: size,
       ),
-      "Column": Icon(
+      "column": Icon(
         Icons.chrome_reader_mode,
         color: Colors.deepOrange,
         size: size,
       ),
       //TODO add `Mind` type
-      "Mind": Icon(
-        Icons.description_sharp,
-        color: Colors.deepOrange,
+      "mind": Icon(
+        Icons.error,
+        color: Colors.red,
         size: size,
       ),
     };
-    return iconDic[iconName];
+    final fallback = IconButton(
+      icon: Icon(
+        Icons.error,
+        size: size,
+      ),
+      color: Colors.red,
+      onPressed: () {
+        BotToast.showText(text: 'iconName: $iconName not mapped to an icon!');
+      },
+    );
+    return iconDic[iconName?.toLowerCase()] ?? fallback;
   }
 }

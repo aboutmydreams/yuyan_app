@@ -117,6 +117,10 @@ class Util {
       ),
     );
   }
+
+  static String getUrlBaseNameWithSplash(String url) {
+    return url.substring(url.lastIndexOf('/'));
+  }
 }
 
 extension StringEx on String {

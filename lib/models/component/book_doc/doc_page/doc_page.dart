@@ -9,7 +9,6 @@ import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/doc_data_v2.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
 import 'package:yuyan_app/models/net/requests_api/user/user.dart';
-import 'package:yuyan_app/models/widgets_big/html/body_html.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 
@@ -182,11 +181,11 @@ class _DocPageState extends State<DocPage> {
                           docAuthor(doc.data),
 
                           // 文档内容
-                          getHtml(
-                            context,
-                            doc.data.bodyHtml,
-                            padding: EdgeInsets.all(16),
-                          ),
+                          // getHtml(
+                          //   context,
+                          //   doc.data.bodyHtml,
+                          //   padding: EdgeInsets.all(16),
+                          // ),
 
                           // 浏览 评论数
                           Container(

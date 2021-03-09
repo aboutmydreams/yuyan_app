@@ -14,6 +14,7 @@ import 'package:yuyan_app/views/begin_init/login_page/login_page.dart';
 import 'package:yuyan_app/views/dashboard/dashboard.dart';
 import 'package:yuyan_app/views/dashboard/quick/note/note_page.dart';
 import 'package:yuyan_app/views/dashboard/quick/setting/quick_set.dart';
+import 'package:yuyan_app/views/document_page/doc_detail_page.dart';
 import 'package:yuyan_app/views/home_page.dart';
 import 'package:yuyan_app/views/my_page/about_yuyan/about.dart';
 import 'package:yuyan_app/views/my_page/my/follow_book_page.dart';
@@ -123,6 +124,19 @@ class RouteName {
 //
 
 class MyRoute {
+  static docDetail({
+    @required int bookId,
+    @required String slug,
+  }) {
+    Get.to(
+      DocDetailPage(
+        bookId: bookId,
+        slug: slug,
+      ),
+      preventDuplicates: false,
+    );
+  }
+
   // 打开其他用户的页面
   static user({
     @required UserLiteSeri user,
@@ -166,7 +180,10 @@ class MyRoute {
       name: RouteName.dashboard,
       page: () => Dashboard(),
     ),
-    GetPage(name: RouteName.note, page: () => NotePage()),
+    GetPage(
+      name: RouteName.note,
+      page: () => QuickNotePage(),
+    ),
     GetPage(name: RouteName.mySetting, page: () => SettingPage()),
     GetPage(name: RouteName.myGroup, page: () => MyGroupPage()),
     GetPage(

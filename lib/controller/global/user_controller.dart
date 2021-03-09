@@ -3,6 +3,7 @@ import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/group.dart';
+import 'package:yuyan_app/model/document/note/note.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/v2/user_detail.dart';
 
@@ -61,3 +62,13 @@ class UserBookController extends FetchListValueController<BookSeri> {
   }
 }
 
+class NoteDetailController extends FetchValueController<NoteSeri> {
+  final int noteId;
+
+  NoteDetailController(this.noteId);
+
+  @override
+  Future<NoteSeri> fetch() {
+    return ApiRepository.getNoteDetail(noteId: noteId);
+  }
+}
