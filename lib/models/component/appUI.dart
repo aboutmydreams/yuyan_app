@@ -172,6 +172,11 @@ class AppIcon {
         color: Colors.red,
         size: size,
       ),
+      "file": Icon(
+        Icons.attach_file,
+        color: Colors.blue,
+        size: size,
+      ),
     };
     final fallback = IconButton(
       icon: Icon(

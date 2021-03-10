@@ -47,7 +47,7 @@ class _DashboardState extends State<Dashboard> {
         elevation: 1,
         title: Text("书桌"),
         leading: OrgSpaceLeadingWidget(),
-        actions: <Widget>[
+        actions: [
           IconButton(
             icon: Icon(
               Icons.search,

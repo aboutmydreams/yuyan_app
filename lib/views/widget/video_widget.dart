@@ -53,8 +53,12 @@ class _VideoPlayWidgetState extends State<VideoPlayWidget> {
               aspectRatio: 4 / 3,
             );
           }
-          return Chewie(
-            controller: controller,
+          return Container(
+            height: Get.width * 0.75,
+            width: Get.width,
+            child: Chewie(
+              controller: controller,
+            ),
           );
         },
       ),

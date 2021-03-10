@@ -26,6 +26,7 @@ import 'package:yuyan_app/views/my_page/my/my_mark_page.dart';
 import 'package:yuyan_app/views/my_page/my/my_topic_page.dart';
 import 'package:yuyan_app/views/my_page/setting/setting_page.dart';
 import 'package:yuyan_app/views/user_page/user_page.dart';
+import 'package:yuyan_app/views/webview_page/webview_page.dart';
 
 // ZefyrController _controller;
 // bool _editing = true;
@@ -124,6 +125,13 @@ class RouteName {
 //
 
 class MyRoute {
+  static webview(String url) {
+    Get.to(
+      WebviewPage(url: url),
+      preventDuplicates: false,
+    );
+  }
+
   static docDetail({
     @required int bookId,
     @required String slug,

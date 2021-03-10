@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/recent_controller.dart';
 import 'package:yuyan_app/model/dashboard/user_recent_seri.dart';
+import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/views/widget/animation_widget.dart';
 import 'package:yuyan_app/util/util.dart';
@@ -62,6 +64,15 @@ class _UserRecentItemWidget extends StatelessWidget {
         data.url[0] == '/' ? "https://www.yuque.com" + data.url : data.url;
     return GestureDetector(
       onTap: () {
+        switch (data.subjectType) {
+          case 'Doc':
+            var doc = data.target.serialize<DocSeri>();
+            MyRoute.docDetail(bookId: doc.bookId, slug: doc.slug);
+            return;
+          case 'Book':
+          default:
+            break;
+        }
         // if (data.subjectType == "Doc") {
         //   // 防止收藏的 doc 后期变为私有时无法定位到 book
         //   if (data.book == null) {
