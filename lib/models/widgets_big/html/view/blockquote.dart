@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:flutter_html/flutter_html.dart';
+
+// import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 
@@ -9,9 +11,9 @@ Widget blockquoteHtml(BuildContext context, String outerHtml) {
       Container(
         child: Transform(
           transform: Matrix4.translationValues(24, 0, 0),
-          child: HtmlWidget(
-            outerHtml,
-            textStyle: AppStyles.textStyleC,
+          child: Html(
+            data: outerHtml,
+            // textStyle: AppStyles.textStyleC,
             // builderCallback: (nn, ee) {
             //   if (ee.localName == 'code') {
             //     return lazySet(null, buildOp: BuildOp(
@@ -24,9 +26,9 @@ Widget blockquoteHtml(BuildContext context, String outerHtml) {
             //
             //   return nn;
             // },
-            onTapUrl: (url) {
-              openUrl(context, url);
-            },
+            // onTapUrl: (url) {
+            //   openUrl(context, url);
+            // },
           ),
         ),
       ),

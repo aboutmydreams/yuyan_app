@@ -22,6 +22,7 @@ environment:
 #     git:
 #       url: https://github.com/masewo/chewie.git
 dependency_overrides:
+  flutter_svg: ^0.19.1
   flutter_webview_plugin:
     git: https://github.com/aboutmydreams/flutter_webview_plugin.git
   notus:
@@ -48,7 +49,7 @@ dependencies:
   flutter_swiper: 1.1.6
 
   # 解析html
-  flutter_html: ^1.2.0
+  flutter_html: ^1.3.0
 
   # sha1 加密
   crypto: ^2.1.3
@@ -64,6 +65,8 @@ dependencies:
   # launcher
   url_launcher: ^5.0.0
 
+  # 有序列表
+  romanice: 1.0.0+1
   # date picker
   #  nepali_date_picker: 4.2.0+1
   #hight light
@@ -97,7 +100,7 @@ dependencies:
   chewie: ^0.12.0
 
   # html
-  flutter_widget_from_html: ^0.5.2+1
+  #  flutter_widget_from_html: ^0.5.2+1
 
   # 缓存
   shared_preferences: ^0.5.8
