@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_highlight/flutter_highlight.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_highlight/theme_map.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/html_parser.dart';
@@ -30,6 +30,7 @@ import 'package:yuyan_app/model/document/lake/lake_card_seri.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
+import 'package:yuyan_app/util/hightlight_view.dart';
 import 'package:yuyan_app/util/svg_provider.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/image_page/image_view_page.dart';
@@ -152,9 +153,594 @@ class LakeRenderWidget extends StatefulWidget {
 class _LakeRenderWidgetState extends State<LakeRenderWidget> {
   final Widget _fallbackWidget = SizedBox.shrink();
 
+  _fallbackRender(_, child, attr, elem) {
+    return _fallbackWidget;
+  }
+
+  final _htmlStyle = {
+    '*': Style(
+      padding: EdgeInsets.zero,
+      margin: EdgeInsets.only(right: 2),
+      letterSpacing: 1.5,
+    ),
+    'li': Style(
+      listStylePosition: ListStylePosition.INSIDE,
+      padding: EdgeInsets.zero,
+    ),
+    'h1': Style(
+      padding: EdgeInsets.only(left: 12, bottom: 6),
+      fontSize: FontSize(30),
+    ),
+    'h2': Style(
+      padding: EdgeInsets.only(left: 12, bottom: 6),
+      fontSize: FontSize(26),
+    ),
+    'h3': Style(
+      padding: EdgeInsets.only(left: 12, bottom: 4),
+      fontSize: FontSize(23),
+    ),
+    'h4': Style(
+      padding: EdgeInsets.only(left: 12, bottom: 3),
+      fontSize: FontSize(20),
+    ),
+    'h5': Style(
+      padding: EdgeInsets.only(left: 12, bottom: 2),
+      fontSize: FontSize(16),
+    ),
+    'h6': Style(
+      padding: EdgeInsets.only(left: 12, bottom: 1),
+      fontSize: FontSize(14),
+    ),
+    'a': Style(
+      textDecoration: TextDecoration.none,
+    ),
+    'img': Style(
+      padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+    ),
+    'blockquote': Style(
+      color: Colors.grey,
+    ),
+  };
+
+  var imgUrl = <String>[];
+
+  _lakeCardRender(RenderContext _, Widget child, Map attr, dom.Element elem) {
+    // var type = attr['type']; //style type
+    var name = attr['name']; //type name
+    var value = attr['value']; //json value
+    if (value == null) {
+      switch (name) {
+        case 'hr':
+          return Divider();
+        default:
+          debugPrint("unhandled card: $name");
+          return ListTile(
+            title: Text('暂时不支持的卡片格式'),
+            subtitle: Text('type: $name'),
+          );
+      }
+    }
+    var raw = Uri.decodeComponent(value);
+    var json = jsonDecode(raw.substring(5));
+    // debugPrint('elem: $elem');
+    attr['value'] = '!value!'; //for less print
+    debugPrint('attr: $attr');
+    switch (name) {
+      case 'thirdparty':
+        return EmbedWebviewPage(
+          url: json['url'],
+        );
+      case 'mention':
+        return GestureDetector(
+          onTap: () {
+            //TODO add open user page by login
+            // MyRoute.user(user: null);
+          },
+          child: Text(
+            '@${json['name']}(${json['login']})',
+            style: TextStyle(
+              color: Colors.blue,
+            ),
+          ),
+        );
+      case 'bookmarklink':
+        var detail = json['detail'];
+        return Card(
+          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+          elevation: 2,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          child: InkWell(
+            onTap: () {
+              MyRoute.webview(json['src']);
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+              width: Get.width,
+              child: Column(
+                children: [
+                  ListTile(
+                    title: Text('${detail['title']}'),
+                    subtitle: Column(
+                      children: [
+                        Text('${detail['desc']}'),
+                        Row(
+                          children: [
+                            CachedNetworkImage(
+                              imageUrl: detail['icon'] ?? '',
+                              width: 16,
+                              height: 16,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 4,
+                                  horizontal: 8,
+                                ),
+                                child: Text(
+                                  '${json['src']}',
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      case 'localdoc':
+        var src = json['src'] as String;
+        src = src.replaceFirst('attachments', 'office');
+        src += "?view=doc_embed";
+        var header = SizedBox(
+          height: 32,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              AppIcon.iconType(json['ext'], size: 20),
+              Text(
+                '${json['name']}'.clip(18, ellipsis: true),
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 14,
+                ),
+              ),
+              Spacer(),
+              InkWell(
+                child: Icon(Icons.visibility),
+                onTap: () => MyRoute.webview(src),
+              ),
+              SizedBox(width: 12),
+            ],
+          ),
+        );
+        if (json['collapsed'] ?? false) {
+          return Container(
+            width: Get.width,
+            margin: EdgeInsets.all(8),
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+            ),
+            child: header,
+          );
+        }
+        return EmbedWebviewPage(
+          url: src,
+          header: header,
+        );
+      case 'diagram':
+        return Container(
+          padding: EdgeInsets.all(8),
+          width: Get.width,
+          height: Get.width,
+          child: PhotoView(
+            imageProvider: SvgNetworkProvider(
+              json['url'],
+              size: Size(Get.width, Get.width),
+              // color: Colors.black,
+            ),
+            backgroundDecoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(
+                color: Colors.grey,
+              ),
+            ),
+          ),
+        );
+      case 'flowchart2':
+        return Container(
+          padding: EdgeInsets.zero,
+          margin: EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.grey.withOpacity(0.6),
+            ),
+          ),
+          width: Get.width,
+          // height: Get.width,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                height: 36,
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Text('流程图'),
+                    ),
+                    Spacer(),
+                    IconButton(
+                      icon: Icon(
+                        Icons.fit_screen,
+                        size: 20,
+                      ),
+                      onPressed: () {
+                        Get.dialog(
+                          Container(
+                            color: Colors.white,
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Spacer(),
+                                      FlatButton(
+                                        onPressed: () {
+                                          Get.back();
+                                        },
+                                        child: Icon(Icons.close_fullscreen),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Get.back();
+                                    },
+                                    child: PhotoView(
+                                      backgroundDecoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                      ),
+                                      // initialScale: 0.1,
+                                      imageProvider: CachedNetworkImageProvider(
+                                        json['src'],
+                                        maxHeight: Get.width.toInt(),
+                                        maxWidth: Get.width.toInt(),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                        // Get.to(
+                        //   Scaffold(
+                        //     body:
+                        //   ),
+                        //   transition: Transition.topLevel,
+                        // );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                height: Get.width,
+                child: PhotoView(
+                  // tightMode: true,
+                  initialScale: 0.8,
+                  imageProvider: CachedNetworkImageProvider(json['src']),
+                  backgroundDecoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      case 'math':
+        // final future = Dio().get(json['src']);
+        return Container(
+          color: Colors.grey.withOpacity(0.1),
+          padding: const EdgeInsets.all(8),
+          width: Get.width,
+          height: Get.width,
+          child: PhotoView.customChild(
+            child: SvgPicture.network(json['src']),
+            childSize: Size(Get.width, Get.width),
+          ),
+        );
+      // return FutureBuilder(
+      //   future: future,
+      //   builder: (_, shot) {
+      //     if (shot.hasError) {
+      //       return Text('Latex: ${shot.error}');
+      //     }
+      //     if (shot.hasData) {
+      //       var str = shot.data.data as String;
+      //       var svg = str.replaceAll('currentColor', 'black');
+      //
+      //       return Container(
+      //         padding: EdgeInsets.all(8),
+      //         width: Get.width,
+      //         height: Get.width,
+      //         child: PhotoView(
+      //           imageProvider: SvgStringProvider(
+      //             svg,
+      //             size: Size(Get.width, Get.width),
+      //           ),
+      //           backgroundDecoration: BoxDecoration(
+      //             color: Colors.white,
+      //             border: Border.all(
+      //               color: Colors.grey,
+      //             ),
+      //           ),
+      //         ),
+      //       );
+      //     }
+      //     return ViewLoadingWidget();
+      //   },
+      // );
+      case 'lockedtext':
+        return Card(
+          margin: EdgeInsets.all(8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Container(
+            width: Get.width,
+            padding: EdgeInsets.all(12),
+            child: Builder(
+              builder: (_) {
+                if (json['locked'] == false) {
+                  return Container(
+                    child: Text(
+                      '${json['originData']}',
+                    ),
+                  );
+                }
+                return Container(
+                  child: Text('请输入密码解密！'),
+                );
+              },
+            ),
+          ),
+        );
+      case 'calendar':
+        return Container(
+          margin: EdgeInsets.all(8),
+          padding: EdgeInsets.all(4),
+          color: Colors.grey.withOpacity(0.1),
+          child: CalendarDatePicker(
+            firstDate: DateTime(1990),
+            lastDate: DateTime(2100),
+            currentDate: DateTime.now(),
+            initialDate: DateTime.now(),
+            onDateChanged: (value) {
+              debugPrint('new datetime: $value');
+            },
+          ),
+        );
+      case 'codeblock':
+        return CodeBlockWidget(
+          json['code'],
+          language: json['mode'] ?? '',
+          padding: EdgeInsets.all(8),
+          theme: themeMap['github'],
+        );
+      case 'file':
+        return Card(
+          child: Container(
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: AppIcon.iconType('file'),
+                ),
+                Text(
+                  '${json['name']}',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+                Spacer(),
+                Text('${json['size']} bytes'),
+                InkWell(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Icon(Icons.download_outlined),
+                  ),
+                  onTap: () {
+                    launch(json['src']);
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      case 'yuqueinline': //语雀链接
+        var link = CardLinkDetailSeri.fromJson(json['detail']);
+        return InkWell(
+          onTap: () {},
+          child: Container(
+            child: Row(
+              children: [
+                AppIcon.iconType(link.type),
+                Text(
+                  link.title ?? '',
+                  style: TextStyle(
+                    color: Colors.blue,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      case 'table':
+        // var htmlTable = json['html'];
+        // dom.Document doc = htmlparser.parse(htmlTable);
+        // //TODO 完善Table的处理, 这里临时进行套娃处理
+        // var tableStyle = doc.attributes['style'] ?? 'width: 1200px;';
+        // var inlineStyle = HtmlUtil.parseInlineStyle(tableStyle);
+        // var width = inlineStyle['width'].first as css.LengthTerm;
+        return Container(
+          // width: HtmlUtil.parseDouble(width.value),
+          //TODO find a method to remove the fix width
+          width: Get.width,
+          padding: EdgeInsets.symmetric(vertical: 8),
+          child: LakeRenderWidget(
+            data: json['html'],
+            shrinkWrap: true,
+          ),
+        );
+      case 'video':
+        return VideoPlayWidget(
+          item: CardVideoSeri.fromJson(json),
+        );
+      case 'label':
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 3, horizontal: 6),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.grey.withOpacity(0.5),
+          ),
+          child: Text(
+            '${json['label']}',
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.green,
+            ),
+          ),
+        );
+      case 'yuque':
+        var card = LakeCardSeri.fromJson(json);
+        switch (card.mode) {
+          case 'embed':
+            return EmbedWebviewPage(
+              onUrlChanged: (url) {
+                MyRoute.webview(url);
+                // MyRoute.docDetail(bookId: null, slug: null);
+              },
+              url: card.url,
+            );
+        }
+        return Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4),
+          ),
+          elevation: 2,
+          child: child,
+        );
+      case 'image':
+        var imageUrl = json['src'];
+        if (json['status'] != 'done') {
+          return _fallbackWidget;
+        }
+        var isSvg = (imageUrl as String).endsWith('.svg');
+        if (!isSvg) imgUrl.add(imageUrl);
+        var width = HtmlUtil.parseDouble(json['width']);
+        var height = HtmlUtil.parseDouble(json['height']);
+        var ratio = width / height;
+        width = width.clamp(0, Get.width);
+        height = width / ratio;
+        return Container(
+          padding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+          child: InkWell(
+            onTap: () {
+              if (!isSvg) {
+                Get.to(
+                  () => ImageViewerPage(
+                    imageUrls: imgUrl,
+                    initUrl: imageUrl,
+                  ),
+                );
+              }
+            },
+            child: isSvg
+                ? SvgPicture.network(
+                    imageUrl,
+                    fit: BoxFit.contain,
+                    width: width,
+                    height: height,
+                  )
+                : CachedNetworkImage(
+                    fit: BoxFit.contain,
+                    imageUrl: imageUrl,
+                    width: width,
+                    height: height,
+                  ),
+          ),
+        );
+      case 'checkbox':
+        debugPrint('checkbox');
+        return Padding(
+          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          child: SizedBox.shrink(
+            child: Checkbox(
+              value: json,
+              onChanged: (v) {
+                debugPrint('checkbox: $v');
+              },
+            ),
+          ),
+        );
+      default:
+        debugPrint('unhandled type: $name');
+        return Container(
+          width: Get.width,
+          margin: const EdgeInsets.all(8),
+          padding: EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.red,
+              width: 2,
+            ),
+          ),
+          child: Column(
+            children: [
+              Text(
+                '暂不支持的卡片: $name',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SelectableText('$json'),
+            ],
+          ),
+        );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    var imgUrl = <String>[];
     // int _colIndex = 0;
     int _rowIndex = 0;
     double _tableWidth = 0;
@@ -163,51 +749,6 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
     List<double> _tableRowHeight = [];
     List<List<bool>> _tableFilled = [];
     List<Widget> _stackChildren = [];
-
-    final _htmlStyle = {
-      '*': Style(
-        padding: EdgeInsets.zero,
-        margin: EdgeInsets.only(right: 2),
-        letterSpacing: 1.5,
-      ),
-      'li': Style(
-        listStylePosition: ListStylePosition.INSIDE,
-        padding: EdgeInsets.zero,
-      ),
-      'h1': Style(
-        padding: EdgeInsets.only(left: 12, bottom: 6),
-        fontSize: FontSize(30),
-      ),
-      'h2': Style(
-        padding: EdgeInsets.only(left: 12, bottom: 6),
-        fontSize: FontSize(26),
-      ),
-      'h3': Style(
-        padding: EdgeInsets.only(left: 12, bottom: 4),
-        fontSize: FontSize(23),
-      ),
-      'h4': Style(
-        padding: EdgeInsets.only(left: 12, bottom: 3),
-        fontSize: FontSize(20),
-      ),
-      'h5': Style(
-        padding: EdgeInsets.only(left: 12, bottom: 2),
-        fontSize: FontSize(16),
-      ),
-      'h6': Style(
-        padding: EdgeInsets.only(left: 12, bottom: 1),
-        fontSize: FontSize(14),
-      ),
-      'a': Style(
-        textDecoration: TextDecoration.none,
-      ),
-      'img': Style(
-        padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-      ),
-      'blockquote': Style(
-        color: Colors.grey,
-      ),
-    };
 
     final Map<String, CustomRender> _customRender = {
       'cursor': (_, child, attr, elem) {
@@ -243,7 +784,6 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
         );
       },
       'li': (_, child, attr, elem) {
-        debugPrint('parent element: ${elem.parent}');
         var isTask = attr['class']?.contains('lake-list-task');
         if (isTask ?? false) {
           return Padding(
@@ -267,9 +807,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
                 child: Text(
                   olMark,
                   textAlign: TextAlign.end,
-                  style: _.style.generateTextStyle().copyWith(
-                        letterSpacing: 0,
-                      ),
+                  style: _.style.generateTextStyle().copyWith(letterSpacing: 0),
                 ),
               ),
               Padding(
@@ -288,7 +826,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
                 margin: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                   shape: index % 2 == 0 ? BoxShape.circle : BoxShape.rectangle,
-                  color: index % 4 >= 2 ? Colors.transparent : Colors.black,
+                  color: index % 4 >= 2 ? Colors.transparent : _.style.color,
                   border:
                       index % 4 >= 2 ? Border.all(color: Colors.black) : null,
                 ),
@@ -331,38 +869,32 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
           }
         }
         FontSize fontSize;
+        if (attr['style'] != null) {
+          HtmlUtil.applyInlineStyle(attr['style'], _.style);
+        }
         if (attr['class'] != null) {
           //handle fontsize
           var font = attr['class'].replaceFirst('lake-fontsize-', '');
           var size = int.tryParse(font) ?? 12;
           if (size > 128) size = 128;
-          fontSize = FontSize(size.toDouble() * 1.5);
+          fontSize = FontSize(size.toDouble());
+          //ps, 由于flutter_html先渲染了child, 导致无法通过修改style来设置字体
+          //但是span里面嵌入的内容可能比较复杂，这里仅仅是为了显示特定字体做出的妥协罢了，无奈
+          return TextSpan(
+            text: elem.text,
+            style: _.style.generateTextStyle().copyWith(
+                  fontSize: fontSize.size,
+                ),
+          );
         }
-        if (attr['style'] != null) {
-          HtmlUtil.applyInlineStyle(attr['style'], _.style);
-        }
-        // return ContainerSpan(
-        //   style: _.style.copyWith(
-        //     fontSize: FontSize.xxLarge,
-        //     height: fontSize != null ? fontSize.size : null,
-        //   ),
-        //   child: child,
-        // );
-        debugPrint('outHtml => ${elem.innerHtml}');
-        return Container(
-          alignment: fontSize != null ? Alignment.center : null,
-          color: _.style.backgroundColor,
-          height: fontSize?.size,
-          width: fontSize?.size,
-          child: child,
-        );
+        return null;
       },
       'p': (_, child, attr, elem) {
         if (elem.nodes.length > 0) {
           var firstElem = elem.nodes.first;
           if (firstElem is dom.Element) {
             if (firstElem.localName == 'br') {
-              debugPrint('span => br');
+              debugPrint('p => br');
               final height = HtmlUtil.calculateTextHeight();
               return Container(
                 height: height,
@@ -395,10 +927,6 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
       },
       'table': (_, child, attr, elem) {
         // 这里的child被抛弃了，它不做渲染结果
-        // var tableStyle = attr['style'] ?? 'width: 1200px;';
-        // var inlineStyle = HtmlUtil.parseInlineStyle(tableStyle);
-        // var width = inlineStyle['width'].first as css.LengthTerm;
-        // _tableWidth = HtmlUtil.parseDouble(width.value);
         _tableWidth = HtmlUtil.getInlineStyleValue(attr['style'], 'width');
         return NotificationAbsorbWidget(
           child: Scrollbar(
@@ -408,12 +936,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
                 width: _tableWidth,
                 height: _tableHeight,
                 margin: EdgeInsets.symmetric(vertical: 8),
-                // decoration: BoxDecoration(
-                //   border: Border.all(color: Colors.red),
-                // ),
-                child: Stack(
-                  children: _stackChildren,
-                ),
+                child: Stack(children: _stackChildren),
               ),
             ),
           ),
@@ -422,14 +945,15 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
       'colgroup': (_, child, attr, elem) {
         debugPrint('colgroup');
         elem.nodes.forEach((node) {
-          var width = HtmlUtil.parseDouble(node.attributes['width']) ?? 200;
+          var width = HtmlUtil.parseDouble(node.attributes['width']) ?? 250;
           _tableWidth += width;
           _tableColWidth.add(width);
           debugPrint('col => width: $width');
         });
         elem.parent.nodes[1].nodes.forEach((node) {
           var height = HtmlUtil.getInlineStyleValue(
-              node.attributes['style'], 'height', 50);
+              node.attributes['style'], 'height', 100);
+          height *= 1.25;
           _tableHeight += height;
           _tableRowHeight.add(height);
           debugPrint('tr => height: $height');
@@ -438,14 +962,16 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
             (_) => List.generate(_tableColWidth.length, (_) => false));
         return _fallbackWidget;
       },
-      'col': (_, child, attr, elem) {
-        return _fallbackWidget;
-      },
-      'tbody': (_, child, attr, elem) {
-        return _fallbackWidget;
-      },
+      'col': _fallbackRender,
+      'tbody': _fallbackRender,
       'tr': (_, child, attr, elem) {
-        // _colIndex = 0;
+        // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        //   debugPrint('tr !!!!!!!!!!!!!!!!!');
+        //   _.buildContext.visitChildElements((element) {
+        //     debugPrint('tr => element => depth ${element.depth} ${element.size}, ${element.widget}');
+        //   });
+        //   debugPrint('tr ||||||||||||||||||');
+        // });
         _rowIndex++;
         return _fallbackWidget;
       },
@@ -480,442 +1006,11 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
           ),
         );
         _stackChildren.add(stackChild);
+        debugPrint('td[add] => size => $widget, $height');
+        // debugPrint('td => size => ${_.buildContext.size}');
         return _fallbackWidget;
       },
-      'card': (_, child, attr, elem) {
-        // var type = attr['type']; //style type
-        var name = attr['name']; //type name
-        var value = attr['value']; //json value
-        if (value == null) {
-          switch (name) {
-            case 'hr':
-              return Divider();
-            default:
-              debugPrint("unhandled card: $name");
-              return ListTile(
-                title: Text('暂时不支持的卡片格式'),
-                subtitle: Text('type: $name'),
-              );
-          }
-        }
-        var raw = Uri.decodeComponent(value);
-        var json = jsonDecode(raw.substring(5));
-        // debugPrint('elem: $elem');
-        attr['value'] = '!value!'; //for less print
-        debugPrint('attr: $attr');
-        switch (name) {
-          case 'thirdparty':
-            return EmbedWebviewPage(
-              url: json['url'],
-            );
-          case 'mention':
-            return GestureDetector(
-              onTap: () {
-                //TODO add open user page by login
-                // MyRoute.user(user: null);
-              },
-              child: Text(
-                '@${json['name']}(${json['login']})',
-                style: TextStyle(
-                  color: Colors.blue,
-                ),
-              ),
-            );
-          case 'bookmarklink':
-            var detail = json['detail'];
-            return Card(
-              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-              elevation: 2,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)),
-              child: InkWell(
-                onTap: () {
-                  MyRoute.webview(json['src']);
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                  width: Get.width,
-                  child: Column(
-                    children: [
-                      ListTile(
-                        title: Text('${detail['title']}'),
-                        subtitle: Column(
-                          children: [
-                            Text('${detail['desc']}'),
-                            Row(
-                              children: [
-                                CachedNetworkImage(
-                                  imageUrl: detail['icon'] ?? '',
-                                  width: 16,
-                                  height: 16,
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 4,
-                                      horizontal: 8,
-                                    ),
-                                    child: Text(
-                                      '${json['src']}',
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          case 'localdoc':
-            var src = json['src'] as String;
-            src = src.replaceFirst('attachments', 'office');
-            src += "?view=doc_embed";
-            var header = SizedBox(
-              height: 32,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  AppIcon.iconType(json['ext'], size: 20),
-                  Text(
-                    '${json['name']}'.clip(18, ellipsis: true),
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 14,
-                    ),
-                  ),
-                  Spacer(),
-                  InkWell(
-                    child: Icon(Icons.visibility),
-                    onTap: () => MyRoute.webview(src),
-                  ),
-                  SizedBox(width: 12),
-                ],
-              ),
-            );
-            if (json['collapsed'] ?? false) {
-              return Container(
-                width: Get.width,
-                margin: EdgeInsets.all(8),
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                ),
-                child: header,
-              );
-            }
-            return EmbedWebviewPage(
-              url: src,
-              header: header,
-            );
-          case 'diagram':
-            return Container(
-              padding: EdgeInsets.all(8),
-              width: Get.width,
-              height: Get.width,
-              child: PhotoView(
-                imageProvider: SvgNetworkProvider(
-                  json['url'],
-                  size: Size(Get.width, Get.width),
-                  // color: Colors.black,
-                ),
-                backgroundDecoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-            );
-          case 'flowchart2':
-            return Container(
-              padding: EdgeInsets.all(8),
-              width: Get.width,
-              height: Get.width,
-              child: PhotoView(
-                imageProvider: CachedNetworkImageProvider(json['src']),
-                backgroundDecoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-            );
-          case 'math':
-            final future = Dio().get(json['src']);
-            return FutureBuilder(
-              future: future,
-              builder: (_, shot) {
-                if (shot.hasError) {
-                  return Text('Latex: ${shot.error}');
-                }
-                if (shot.hasData) {
-                  var str = shot.data.data as String;
-                  var svg = str.replaceAll('currentColor', 'black');
-                  return Container(
-                    padding: EdgeInsets.all(8),
-                    width: Get.width,
-                    height: Get.width,
-                    child: PhotoView(
-                      imageProvider: SvgStringProvider(
-                        svg,
-                        size: Size(Get.width, Get.width),
-                      ),
-                      backgroundDecoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                  );
-                }
-                return ViewLoadingWidget();
-              },
-            );
-          case 'lockedtext':
-            return Card(
-              margin: EdgeInsets.all(8),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Container(
-                width: Get.width,
-                padding: EdgeInsets.all(12),
-                child: Builder(
-                  builder: (_) {
-                    if (json['locked'] == false) {
-                      return Container(
-                        child: Text(
-                          '${json['originData']}',
-                        ),
-                      );
-                    }
-                    return Container(
-                      child: Text('请输入密码解密！'),
-                    );
-                  },
-                ),
-              ),
-            );
-          case 'calendar':
-            return Container(
-              margin: EdgeInsets.all(8),
-              padding: EdgeInsets.all(4),
-              color: Colors.grey.withOpacity(0.1),
-              child: CalendarDatePicker(
-                firstDate: DateTime(1990),
-                lastDate: DateTime(2100),
-                currentDate: DateTime.now(),
-                initialDate: DateTime.now(),
-                onDateChanged: (value) {
-                  debugPrint('new datetime: $value');
-                },
-              ),
-            );
-          case 'codeblock':
-            return Container(
-              width: Get.width * 0.9,
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              margin: EdgeInsets.all(8),
-              child: HighlightView(
-                json['code'],
-                language: json['mode'] ?? '',
-                padding: EdgeInsets.all(8),
-                theme: themeMap['github'],
-              ),
-            );
-          case 'file':
-            return Card(
-              child: Container(
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: AppIcon.iconType('file'),
-                    ),
-                    Text(
-                      '${json['name']}',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ),
-                    Spacer(),
-                    Text('${json['size']} bytes'),
-                    InkWell(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Icon(Icons.download_outlined),
-                      ),
-                      onTap: () {
-                        launch(json['src']);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            );
-          case 'yuqueinline': //语雀链接
-            var link = CardLinkDetailSeri.fromJson(json['detail']);
-            return InkWell(
-              onTap: () {},
-              child: Container(
-                child: Row(
-                  children: [
-                    AppIcon.iconType(link.type),
-                    Text(
-                      link.title ?? '',
-                      style: TextStyle(
-                        color: Colors.blue,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          case 'table':
-            // var htmlTable = json['html'];
-            // dom.Document doc = htmlparser.parse(htmlTable);
-            // //TODO 完善Table的处理, 这里临时进行套娃处理
-            // var tableStyle = doc.attributes['style'] ?? 'width: 1200px;';
-            // var inlineStyle = HtmlUtil.parseInlineStyle(tableStyle);
-            // var width = inlineStyle['width'].first as css.LengthTerm;
-            return Container(
-              // width: HtmlUtil.parseDouble(width.value),
-              //TODO find a method to remove the fix width
-              width: Get.width,
-              padding: EdgeInsets.symmetric(vertical: 8),
-              child: LakeRenderWidget(
-                data: json['html'],
-                shrinkWrap: true,
-              ),
-            );
-          case 'video':
-            return VideoPlayWidget(
-              item: CardVideoSeri.fromJson(json),
-            );
-          case 'label':
-            return Container(
-              padding: EdgeInsets.symmetric(vertical: 3, horizontal: 6),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.grey.withOpacity(0.5),
-              ),
-              child: Text(
-                '${json['label']}',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.green,
-                ),
-              ),
-            );
-          case 'yuque':
-            var card = LakeCardSeri.fromJson(json);
-            switch (card.mode) {
-              case 'embed':
-                return EmbedWebviewPage(
-                  onUrlChanged: (url) {
-                    MyRoute.webview(url);
-                    // MyRoute.docDetail(bookId: null, slug: null);
-                  },
-                  url: card.url,
-                );
-            }
-            return Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4),
-              ),
-              elevation: 2,
-              child: child,
-            );
-          case 'image':
-            var imageUrl = json['src'];
-            if (json['status'] != 'done') {
-              return _fallbackWidget;
-            }
-            var isSvg = (imageUrl as String).endsWith('.svg');
-            if (!isSvg) imgUrl.add(imageUrl);
-            var width = HtmlUtil.parseDouble(json['width']);
-            var height = HtmlUtil.parseDouble(json['height']);
-            var ratio = width / height;
-            width = width.clamp(0, Get.width);
-            height = width / ratio;
-            return Container(
-              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-              child: InkWell(
-                onTap: () {
-                  if (!isSvg) {
-                    Get.to(
-                      () => ImageViewerPage(
-                        imageUrls: imgUrl,
-                        initUrl: imageUrl,
-                      ),
-                    );
-                  }
-                },
-                child: isSvg
-                    ? SvgPicture.network(
-                        imageUrl,
-                        fit: BoxFit.contain,
-                        width: width,
-                        height: height,
-                      )
-                    : CachedNetworkImage(
-                        fit: BoxFit.contain,
-                        imageUrl: imageUrl,
-                        width: width,
-                        height: height,
-                      ),
-              ),
-            );
-          case 'checkbox':
-            debugPrint('checkbox');
-            return Padding(
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              child: SizedBox.shrink(
-                child: Checkbox(
-                  value: json,
-                  onChanged: (v) {
-                    debugPrint('checkbox: $v');
-                  },
-                ),
-              ),
-            );
-          default:
-            debugPrint('unhandled type: $name');
-            return Container(
-              width: Get.width,
-              margin: const EdgeInsets.all(8),
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.red,
-                  width: 2,
-                ),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    '暂不支持的卡片: $name',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SelectableText('$json'),
-                ],
-              ),
-            );
-        }
-      }
+      'card': _lakeCardRender,
     };
 
     return Scrollbar(

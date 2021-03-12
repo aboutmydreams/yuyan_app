@@ -166,7 +166,7 @@ class SettingListWidget extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            debugPrint('测试');
+            // debugPrint('测试');
             // Get.to(UserPage(
             //   user: UserLiteSeri(
             //     name: "Dreamer2q",
