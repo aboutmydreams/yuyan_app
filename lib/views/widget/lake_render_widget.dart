@@ -19,6 +19,7 @@ import 'package:html/parser.dart' as htmlparser;
 import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:romanice/romanice.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/action_controller.dart';
@@ -166,10 +167,13 @@ class LakeRenderWidget extends StatefulWidget {
 
 class _LakeRenderWidgetState extends State<LakeRenderWidget> {
   final Widget _fallbackWidget = SizedBox.shrink();
+
+  AutoScrollController _autoController = AutoScrollController();
   String data;
 
   initState() {
     super.initState();
+
     var tree = htmlparser.parse(widget.data);
     var spans = tree.getElementsByTagName('span');
     spans.forEach((elem) {
@@ -209,27 +213,27 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
       padding: EdgeInsets.zero,
     ),
     'h1': Style(
-      padding: EdgeInsets.only(left: 12, bottom: 6),
+      padding: EdgeInsets.only(left: 6, bottom: 6),
       fontSize: FontSize(30),
     ),
     'h2': Style(
-      padding: EdgeInsets.only(left: 12, bottom: 6),
+      padding: EdgeInsets.only(left: 6, bottom: 6),
       fontSize: FontSize(26),
     ),
     'h3': Style(
-      padding: EdgeInsets.only(left: 12, bottom: 4),
+      padding: EdgeInsets.only(left: 6, bottom: 4),
       fontSize: FontSize(23),
     ),
     'h4': Style(
-      padding: EdgeInsets.only(left: 12, bottom: 3),
+      padding: EdgeInsets.only(left: 6, bottom: 3),
       fontSize: FontSize(20),
     ),
     'h5': Style(
-      padding: EdgeInsets.only(left: 12, bottom: 2),
+      padding: EdgeInsets.only(left: 6, bottom: 2),
       fontSize: FontSize(16),
     ),
     'h6': Style(
-      padding: EdgeInsets.only(left: 12, bottom: 1),
+      padding: EdgeInsets.only(left: 6, bottom: 1),
       fontSize: FontSize(14),
     ),
     'a': Style(
@@ -381,6 +385,19 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
     }
   }
 
+  _addPositionId(RenderContext _, Widget child, Map attr, dom.Element elem) {
+    if (attr['id'] != null) {
+      var index = attr['id'].hashCode;
+      return AutoScrollTag(
+        key: ValueKey(index),
+        controller: _autoController,
+        index: index,
+        child: child,
+      );
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     // int _colIndex = 0;
@@ -393,15 +410,28 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
     List<Widget> _stackChildren = [];
 
     final Map<String, CustomRender> _customRender = {
+      'h1': _addPositionId,
+      'h2': _addPositionId,
+      'h3': _addPositionId,
+      'h4': _addPositionId,
+      'h5': _addPositionId,
+      'h6': _addPositionId,
       'cursor': (_, child, attr, elem) {
         //skip cursor,如果不跳过cursor附近的内容就无法渲染出来
         return child;
       },
       'a': (_, child, attr, elem) {
         debugPrint('$attr');
+        _.buildContext.widget;
         return GestureDetector(
           onTap: () {
-            MyRoute.webview(attr['href']);
+            var href = attr['href'];
+            if (href.startsWith('http')) {
+              MyRoute.webview(attr['href']);
+            } else if (href.startsWith('#')) {
+              debugPrint('${href.substring(1)}');
+              _autoController.scrollToIndex(href.substring(1).hashCode);
+            }
           },
           child: child,
         );
@@ -661,6 +691,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
 
     return Scrollbar(
       child: SingleChildScrollView(
+        controller: _autoController,
         child: Html(
           shrinkWrap: widget.shrinkWrap,
           data: data,

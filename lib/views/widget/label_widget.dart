@@ -26,17 +26,20 @@ class LabelWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var color = _colors[colorIndex % _colors.length];
+    var defaultStyle = DefaultTextStyle.of(context).style;
     Widget child = Container(
-      padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
+      padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 4),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
-        color: _colors[colorIndex % _colors.length],
+        color: color.withOpacity(0.4),
       ),
       child: Text(
         label,
         style: style ??
             TextStyle(
-              color: DefaultTextStyle.of(context).style.color.withOpacity(0.6),
+              color: defaultStyle.color.withOpacity(0.7),
+              fontSize: defaultStyle.fontSize - 1,
             ),
       ),
     );

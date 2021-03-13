@@ -44,6 +44,9 @@ dependencies:
   # goodlook bar
   curved_navigation_bar: ^0.3.1
 
+  # scroll to html tag
+  scroll_to_index: 1.0.6
+
   # goodlook guide 液体
   liquid_swipe: ^1.5.0
   flutter_swiper: 1.1.6
