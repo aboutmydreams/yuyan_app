@@ -81,6 +81,7 @@ class _QuickNotePageState extends State<QuickNotePage> {
       children: [
         LakeRenderWidget(
           data: item.description,
+          docId: item.id,
         ),
         if (item.description.endsWith('<!-- note-viewmore -->'))
           FlatButton(
@@ -110,7 +111,10 @@ class MyNoteDetailPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: GetBuilder<NoteDetailController>(
           builder: (c) => c.stageBuilder(
-            onIdle: () => LakeRenderWidget(data: c.value.doclet.bodyAsl),
+            onIdle: () => LakeRenderWidget(
+              data: c.value.doclet.bodyAsl,
+              docId: c.value.docletId,
+            ),
           ),
         ),
       ),

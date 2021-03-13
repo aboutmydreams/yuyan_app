@@ -1,10 +1,9 @@
-import 'package:flutter/gestures.dart';
+import 'package:bot_toast/bot_toast.dart';
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart' hide Node;
 import 'package:highlight/highlight.dart' show highlight, Node;
-import 'package:yuyan_app/views/begin_init/guide_page/test.dart';
-import 'package:yuyan_app/views/widget/notification_absorb.dart';
 
 /// Highlight Flutter Widget
 class CodeBlockWidget extends StatelessWidget {
@@ -106,25 +105,36 @@ class CodeBlockWidget extends StatelessWidget {
         children: [
           Container(
             height: 24,
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('语言: $language'),
+                Text('$language'),
+                GestureDetector(
+                  onTap: () {
+                    FlutterClipboard.copy(source).then((_) {
+                      BotToast.showText(text: 'copied');
+                    });
+                  },
+                  child: Text('复制'),
+                ),
               ],
             ),
           ),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 6),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Column(
                   children: List.generate(lines, (index) {
                     return Container(
                       width: 36,
-                      padding: EdgeInsets.only(right: 8),
-                      child: Text(
-                        '${index + 1}',
+                      padding: EdgeInsets.only(top: 0.2, bottom: 0.2, right: 4),
+                      child: Text.rich(
+                        TextSpan(text: '${index + 1}'),
                         textAlign: TextAlign.end,
-                        style: TextStyle(
+                        style: _textStyle.copyWith(
                           color: Colors.grey.withOpacity(0.8),
                         ),
                       ),
@@ -137,9 +147,8 @@ class CodeBlockWidget extends StatelessWidget {
                     child: SelectableText.rich(
                       TextSpan(
                         style: _textStyle,
-                        children: _convert(highlight
-                            .parse(source, language: language)
-                            .nodes),
+                        children: _convert(
+                            highlight.parse(source, language: language).nodes),
                       ),
                       scrollPhysics: NeverScrollableScrollPhysics(),
                     ),

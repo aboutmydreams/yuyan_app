@@ -91,6 +91,7 @@ class _DocDetailPageState extends State<DocDetailPage> {
             });
             return LakeRenderWidget(
               data: c.value.content,
+              docId: c.value.id,
             );
           },
         ),

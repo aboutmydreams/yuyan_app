@@ -7,6 +7,7 @@ import 'package:yuyan_app/model/document/action.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/book_stack/book_stack.dart';
 import 'package:yuyan_app/model/document/card/card_video_info_seri.dart';
+import 'package:yuyan_app/model/document/card/vote_detail.dart';
 import 'package:yuyan_app/model/document/commen/comment_detail.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/doc_detail/doc_detail.dart';
@@ -428,5 +429,26 @@ class ApiRepository {
       'ctoken': App.tokenProvider.data.cToken,
     });
     return CardVideoResSeri.fromJson(res.data.data);
+  }
+
+  //投票
+  static Future<VoteDetailSeri> getVoteDetail({
+    int docId,
+    String voteId,
+    List<String> items,
+    String deadline,
+  }) async {
+    var res = await api.get(
+      '/votes',
+      queryParameters: {
+        'doc_id': docId,
+        'vote_id': voteId,
+        'deadline': deadline, //iso标准
+        'items': items.join(','), //列表，逗号分割
+        'ctoken': App.tokenProvider.data.cToken,
+      },
+    );
+    var data = (res.data as ApiResponse);
+    return VoteDetailSeri.fromJson(data.data);
   }
 }

@@ -5,19 +5,19 @@ import 'package:video_player/video_player.dart';
 import 'package:yuyan_app/controller/document/card_controller.dart';
 import 'package:yuyan_app/model/document/card/card_video_seri.dart';
 
-class VideoPlayWidget extends StatefulWidget {
+class LakeVideoPlayWidget extends StatefulWidget {
   final CardVideoSeri item;
 
-  const VideoPlayWidget({
+  const LakeVideoPlayWidget({
     Key key,
     this.item,
   }) : super(key: key);
 
   @override
-  _VideoPlayWidgetState createState() => _VideoPlayWidgetState();
+  _LakeVideoPlayWidgetState createState() => _LakeVideoPlayWidgetState();
 }
 
-class _VideoPlayWidgetState extends State<VideoPlayWidget> {
+class _LakeVideoPlayWidgetState extends State<LakeVideoPlayWidget> {
   ChewieController controller;
 
   @override

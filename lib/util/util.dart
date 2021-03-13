@@ -127,4 +127,8 @@ extension StringEx on String {
   String clip(int max, {bool ellipsis = false}) {
     return Util.stringClip(this, max, ellipsis: ellipsis);
   }
+
+  DateTime toDateTime() {
+    return DateTime.tryParse(this);
+  }
 }

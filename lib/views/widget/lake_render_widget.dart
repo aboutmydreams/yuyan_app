@@ -1,10 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_highlight/theme_map.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/html_parser.dart';
@@ -14,7 +13,6 @@ import 'package:flutter_html/style.dart';
 import 'package:flutter_html/src/css_parser.dart' as cssutil;
 import 'package:csslib/parser.dart' as cssparser;
 import 'package:csslib/visitor.dart' as css;
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as htmlparser;
@@ -22,24 +20,38 @@ import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:romanice/romanice.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:yuyan_app/config/route_manager.dart';
+import 'package:yuyan_app/controller/action_controller.dart';
 import 'package:yuyan_app/model/document/card/card_link_detail.dart';
 import 'package:yuyan_app/model/document/card/card_video_seri.dart';
+import 'package:yuyan_app/model/document/card/vote_item_seri.dart';
+import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/lake/lake_card_seri.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/models/component/open_page.dart';
-import 'package:yuyan_app/models/widgets_small/loading.dart';
-import 'package:yuyan_app/util/hightlight_view.dart';
 import 'package:yuyan_app/util/svg_provider.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/image_page/image_view_page.dart';
-import 'package:yuyan_app/views/my_page/my_page.dart';
 import 'package:yuyan_app/views/webview_page/webview_page.dart';
+import 'package:yuyan_app/views/widget/label_widget.dart';
+import 'package:yuyan_app/views/widget/lake_calendar_widget.dart';
+import 'package:yuyan_app/views/widget/lake_card_widget.dart';
+import 'package:yuyan_app/views/widget/lake_image_widget.dart';
+import 'package:yuyan_app/views/widget/lake_localdoc_widget.dart';
+import 'package:yuyan_app/views/widget/lake_locktext_widget.dart';
+import 'package:yuyan_app/views/widget/lake_mention_widget.dart';
+import 'package:yuyan_app/views/widget/lake_svg_widget.dart';
 import 'package:yuyan_app/views/widget/notification_absorb.dart';
 import 'package:yuyan_app/views/widget/video_widget.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart' as inapp;
 import 'package:webview_flutter/webview_flutter.dart' as view;
+import 'package:yuyan_app/views/widget/vote_card_widget.dart';
+
+import 'lake_task_item_widget.dart';
+import 'lake_yuquecard_widget.dart';
+import 'code_block_widget.dart';
+import 'lake_bookmark_widget.dart';
+import 'lake_filecard_widget.dart';
+import 'lake_inlinelink_widget.dart';
 
 extension ListEx<T extends num> on List<T> {
   T sum() {
@@ -139,9 +151,11 @@ class HtmlUtil {
 class LakeRenderWidget extends StatefulWidget {
   final String data;
   final bool shrinkWrap;
+  final int docId; //docId used for vote card
 
   LakeRenderWidget({
     Key key,
+    this.docId,
     this.data = '<h1>Empty Page</h1>',
     this.shrinkWrap = false,
   }) : super(key: key);
@@ -152,6 +166,33 @@ class LakeRenderWidget extends StatefulWidget {
 
 class _LakeRenderWidgetState extends State<LakeRenderWidget> {
   final Widget _fallbackWidget = SizedBox.shrink();
+  String data;
+
+  initState() {
+    super.initState();
+    var tree = htmlparser.parse(widget.data);
+    var spans = tree.getElementsByTagName('span');
+    spans.forEach((elem) {
+      var attr = elem.attributes;
+      if (elem.attributes['style'] != null) {
+        // HtmlUtil.applyInlineStyle(attr['style'], _.style);
+      }
+      if (attr['class'] != null) {
+        //handle fontsize
+        var font = attr['class'].replaceFirst('lake-fontsize-', '');
+        var size = int.tryParse(font) ?? 12;
+        if (size > 128) size = 128;
+        //ps, 由于flutter_html先渲染了child, 导致无法通过修改style来设置字体
+        //但是span里面嵌入的内容可能比较复杂，这里仅仅是为了显示特定字体做出的妥协罢了，无奈
+        var style = attr['style']?.split(';');
+        if (style == null) style = <String>[];
+        style.add('font-size: $font');
+        attr['style'] = style.join(';');
+      }
+    });
+    data = tree.outerHtml;
+    assert(data != null && data != '');
+  }
 
   _fallbackRender(_, child, attr, elem) {
     return _fallbackWidget;
@@ -226,393 +267,69 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
     attr['value'] = '!value!'; //for less print
     debugPrint('attr: $attr');
     switch (name) {
+      case 'vote':
+        return VoteCardWidget(
+          docId: widget.docId,
+          json: json,
+        );
       case 'thirdparty':
         return EmbedWebviewPage(
           url: json['url'],
         );
       case 'mention':
-        return GestureDetector(
-          onTap: () {
-            //TODO add open user page by login
-            // MyRoute.user(user: null);
-          },
-          child: Text(
-            '@${json['name']}(${json['login']})',
-            style: TextStyle(
-              color: Colors.blue,
-            ),
-          ),
+        return LakeMentionWidget(
+          name: json['name'],
+          login: json['login'],
         );
       case 'bookmarklink':
-        var detail = json['detail'];
-        return Card(
-          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-          elevation: 2,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          child: InkWell(
-            onTap: () {
-              MyRoute.webview(json['src']);
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-              width: Get.width,
-              child: Column(
-                children: [
-                  ListTile(
-                    title: Text('${detail['title']}'),
-                    subtitle: Column(
-                      children: [
-                        Text('${detail['desc']}'),
-                        Row(
-                          children: [
-                            CachedNetworkImage(
-                              imageUrl: detail['icon'] ?? '',
-                              width: 16,
-                              height: 16,
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 4,
-                                  horizontal: 8,
-                                ),
-                                child: Text(
-                                  '${json['src']}',
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
+        return LakeBookmarkWidget(json: json);
       case 'localdoc':
-        var src = json['src'] as String;
-        src = src.replaceFirst('attachments', 'office');
-        src += "?view=doc_embed";
-        var header = SizedBox(
-          height: 32,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              AppIcon.iconType(json['ext'], size: 20),
-              Text(
-                '${json['name']}'.clip(18, ellipsis: true),
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 14,
-                ),
-              ),
-              Spacer(),
-              InkWell(
-                child: Icon(Icons.visibility),
-                onTap: () => MyRoute.webview(src),
-              ),
-              SizedBox(width: 12),
-            ],
-          ),
-        );
-        if (json['collapsed'] ?? false) {
-          return Container(
-            width: Get.width,
-            margin: EdgeInsets.all(8),
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-            ),
-            child: header,
-          );
-        }
-        return EmbedWebviewPage(
-          url: src,
-          header: header,
-        );
+        return LakeLocalDocWidget(json: json);
       case 'diagram':
-        return Container(
-          padding: EdgeInsets.all(8),
-          width: Get.width,
-          height: Get.width,
-          child: PhotoView(
-            imageProvider: SvgNetworkProvider(
-              json['url'],
-              size: Size(Get.width, Get.width),
-              // color: Colors.black,
-            ),
-            backgroundDecoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(
-                color: Colors.grey,
-              ),
-            ),
-          ),
+        return LakeCardWrapWidget(
+          type: 'diagram',
+          child: LakeSvgPicture(url: json['url']),
         );
       case 'flowchart2':
-        return Container(
-          padding: EdgeInsets.zero,
-          margin: EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.grey.withOpacity(0.6),
-            ),
-          ),
-          width: Get.width,
-          // height: Get.width,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                height: 36,
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Text('流程图'),
-                    ),
-                    Spacer(),
-                    IconButton(
-                      icon: Icon(
-                        Icons.fit_screen,
-                        size: 20,
-                      ),
-                      onPressed: () {
-                        Get.dialog(
-                          Container(
-                            color: Colors.white,
-                            child: Column(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Spacer(),
-                                      FlatButton(
-                                        onPressed: () {
-                                          Get.back();
-                                        },
-                                        child: Icon(Icons.close_fullscreen),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Get.back();
-                                    },
-                                    child: PhotoView(
-                                      backgroundDecoration: BoxDecoration(
-                                        color: Colors.transparent,
-                                      ),
-                                      // initialScale: 0.1,
-                                      imageProvider: CachedNetworkImageProvider(
-                                        json['src'],
-                                        maxHeight: Get.width.toInt(),
-                                        maxWidth: Get.width.toInt(),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                        // Get.to(
-                        //   Scaffold(
-                        //     body:
-                        //   ),
-                        //   transition: Transition.topLevel,
-                        // );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                height: Get.width,
-                child: PhotoView(
-                  // tightMode: true,
-                  initialScale: 0.8,
-                  imageProvider: CachedNetworkImageProvider(json['src']),
-                  backgroundDecoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+        return LakeCardWrapWidget(
+          type: 'flowchart2',
+          child: CachedNetworkImage(
+            imageUrl: json['src'],
           ),
         );
       case 'math':
-        // final future = Dio().get(json['src']);
-        return Container(
-          color: Colors.grey.withOpacity(0.1),
-          padding: const EdgeInsets.all(8),
-          width: Get.width,
-          height: Get.width,
-          child: PhotoView.customChild(
-            child: SvgPicture.network(json['src']),
-            childSize: Size(Get.width, Get.width),
+        return LakeCardWrapWidget(
+          margin: null,
+          type: 'math',
+          params: json,
+          child: LakeSvgPicture(url: json['src']),
+        );
+      case 'mindmap':
+        return LakeCardWrapWidget(
+          type: '思维导图',
+          child: CachedNetworkImage(
+            imageUrl: json['src'],
           ),
         );
-      // return FutureBuilder(
-      //   future: future,
-      //   builder: (_, shot) {
-      //     if (shot.hasError) {
-      //       return Text('Latex: ${shot.error}');
-      //     }
-      //     if (shot.hasData) {
-      //       var str = shot.data.data as String;
-      //       var svg = str.replaceAll('currentColor', 'black');
-      //
-      //       return Container(
-      //         padding: EdgeInsets.all(8),
-      //         width: Get.width,
-      //         height: Get.width,
-      //         child: PhotoView(
-      //           imageProvider: SvgStringProvider(
-      //             svg,
-      //             size: Size(Get.width, Get.width),
-      //           ),
-      //           backgroundDecoration: BoxDecoration(
-      //             color: Colors.white,
-      //             border: Border.all(
-      //               color: Colors.grey,
-      //             ),
-      //           ),
-      //         ),
-      //       );
-      //     }
-      //     return ViewLoadingWidget();
-      //   },
-      // );
       case 'lockedtext':
-        return Card(
-          margin: EdgeInsets.all(8),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Container(
-            width: Get.width,
-            padding: EdgeInsets.all(12),
-            child: Builder(
-              builder: (_) {
-                if (json['locked'] == false) {
-                  return Container(
-                    child: Text(
-                      '${json['originData']}',
-                    ),
-                  );
-                }
-                return Container(
-                  child: Text('请输入密码解密！'),
-                );
-              },
-            ),
-          ),
-        );
+        return LakeLockTextWidget(json: json);
       case 'calendar':
-        return Container(
-          margin: EdgeInsets.all(8),
-          padding: EdgeInsets.all(4),
-          color: Colors.grey.withOpacity(0.1),
-          child: CalendarDatePicker(
-            firstDate: DateTime(1990),
-            lastDate: DateTime(2100),
-            currentDate: DateTime.now(),
-            initialDate: DateTime.now(),
-            onDateChanged: (value) {
-              debugPrint('new datetime: $value');
-            },
-          ),
-        );
+        return LakeCalenderWidget(json: json);
       case 'codeblock':
         return CodeBlockWidget(
           json['code'],
-          language: json['mode'] ?? '',
+          language: json['mode'] ?? 'plain',
           padding: EdgeInsets.all(8),
           theme: themeMap['github'],
         );
       case 'file':
-        return Card(
-          child: Container(
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: AppIcon.iconType('file'),
-                ),
-                Text(
-                  '${json['name']}',
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                ),
-                Spacer(),
-                Text('${json['size']} bytes'),
-                InkWell(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Icon(Icons.download_outlined),
-                  ),
-                  onTap: () {
-                    launch(json['src']);
-                  },
-                ),
-              ],
-            ),
-          ),
-        );
+        return LakeFileCardWidget(json: json);
       case 'yuqueinline': //语雀链接
         var link = CardLinkDetailSeri.fromJson(json['detail']);
-        return InkWell(
-          onTap: () {},
-          child: Container(
-            child: Row(
-              children: [
-                AppIcon.iconType(link.type),
-                Text(
-                  link.title ?? '',
-                  style: TextStyle(
-                    color: Colors.blue,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
+        return LakeInlineLinkWidget(link: link);
       case 'table':
-        // var htmlTable = json['html'];
-        // dom.Document doc = htmlparser.parse(htmlTable);
-        // //TODO 完善Table的处理, 这里临时进行套娃处理
-        // var tableStyle = doc.attributes['style'] ?? 'width: 1200px;';
-        // var inlineStyle = HtmlUtil.parseInlineStyle(tableStyle);
-        // var width = inlineStyle['width'].first as css.LengthTerm;
+        //TODO(@dreamer2q): 表格的高度可能没有给出，如何自动适应高度?
         return Container(
-          // width: HtmlUtil.parseDouble(width.value),
-          //TODO find a method to remove the fix width
           width: Get.width,
           padding: EdgeInsets.symmetric(vertical: 8),
           child: LakeRenderWidget(
@@ -621,96 +338,21 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
           ),
         );
       case 'video':
-        return VideoPlayWidget(
+        return LakeVideoPlayWidget(
           item: CardVideoSeri.fromJson(json),
         );
       case 'label':
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 3, horizontal: 6),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.grey.withOpacity(0.5),
-          ),
-          child: Text(
-            '${json['label']}',
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.green,
-            ),
-          ),
+        return LabelWidget(
+          label: json['label'],
+          colorIndex: json['colorIndex'],
         );
       case 'yuque':
         var card = LakeCardSeri.fromJson(json);
-        switch (card.mode) {
-          case 'embed':
-            return EmbedWebviewPage(
-              onUrlChanged: (url) {
-                MyRoute.webview(url);
-                // MyRoute.docDetail(bookId: null, slug: null);
-              },
-              url: card.url,
-            );
-        }
-        return Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4),
-          ),
-          elevation: 2,
-          child: child,
-        );
+        return LakeYuqueCardWidget(card: card);
       case 'image':
-        var imageUrl = json['src'];
-        if (json['status'] != 'done') {
-          return _fallbackWidget;
-        }
-        var isSvg = (imageUrl as String).endsWith('.svg');
-        if (!isSvg) imgUrl.add(imageUrl);
-        var width = HtmlUtil.parseDouble(json['width']);
-        var height = HtmlUtil.parseDouble(json['height']);
-        var ratio = width / height;
-        width = width.clamp(0, Get.width);
-        height = width / ratio;
-        return Container(
-          padding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-          child: InkWell(
-            onTap: () {
-              if (!isSvg) {
-                Get.to(
-                  () => ImageViewerPage(
-                    imageUrls: imgUrl,
-                    initUrl: imageUrl,
-                  ),
-                );
-              }
-            },
-            child: isSvg
-                ? SvgPicture.network(
-                    imageUrl,
-                    fit: BoxFit.contain,
-                    width: width,
-                    height: height,
-                  )
-                : CachedNetworkImage(
-                    fit: BoxFit.contain,
-                    imageUrl: imageUrl,
-                    width: width,
-                    height: height,
-                  ),
-          ),
-        );
+        return LakeImageWidget(json: json, others: imgUrl);
       case 'checkbox':
-        debugPrint('checkbox');
-        return Padding(
-          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-          child: SizedBox.shrink(
-            child: Checkbox(
-              value: json,
-              onChanged: (v) {
-                debugPrint('checkbox: $v');
-              },
-            ),
-          ),
-        );
+        return LakeTaskItemWidget(value: json);
       default:
         debugPrint('unhandled type: $name');
         return Container(
@@ -752,8 +394,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
 
     final Map<String, CustomRender> _customRender = {
       'cursor': (_, child, attr, elem) {
-        //skip cursor
-        //如果不跳过cursor附近的内容就无法渲染出来
+        //skip cursor,如果不跳过cursor附近的内容就无法渲染出来
         return child;
       },
       'a': (_, child, attr, elem) {
@@ -804,9 +445,10 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
               PositionedDirectional(
                 start: 0,
                 width: 24,
+                bottom: 0,
                 child: Text(
                   olMark,
-                  textAlign: TextAlign.end,
+                  textAlign: TextAlign.center,
                   style: _.style.generateTextStyle().copyWith(letterSpacing: 0),
                 ),
               ),
@@ -868,25 +510,25 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
             );
           }
         }
-        FontSize fontSize;
+        // FontSize fontSize;
         if (attr['style'] != null) {
           HtmlUtil.applyInlineStyle(attr['style'], _.style);
         }
-        if (attr['class'] != null) {
-          //handle fontsize
-          var font = attr['class'].replaceFirst('lake-fontsize-', '');
-          var size = int.tryParse(font) ?? 12;
-          if (size > 128) size = 128;
-          fontSize = FontSize(size.toDouble());
-          //ps, 由于flutter_html先渲染了child, 导致无法通过修改style来设置字体
-          //但是span里面嵌入的内容可能比较复杂，这里仅仅是为了显示特定字体做出的妥协罢了，无奈
-          return TextSpan(
-            text: elem.text,
-            style: _.style.generateTextStyle().copyWith(
-                  fontSize: fontSize.size,
-                ),
-          );
-        }
+        // if (attr['class'] != null) {
+        //   //handle fontsize
+        //   var font = attr['class'].replaceFirst('lake-fontsize-', '');
+        //   var size = int.tryParse(font) ?? 12;
+        //   if (size > 128) size = 128;
+        //   fontSize = FontSize(size.toDouble());
+        //   //ps, 由于flutter_html先渲染了child, 导致无法通过修改style来设置字体
+        //   //但是span里面嵌入的内容可能比较复杂，这里仅仅是为了显示特定字体做出的妥协罢了，无奈
+        //   return TextSpan(
+        //     text: elem.text,
+        //     style: _.style.generateTextStyle().copyWith(
+        //           fontSize: fontSize.size,
+        //         ),
+        //   );
+        // }
         return null;
       },
       'p': (_, child, attr, elem) {
@@ -935,6 +577,9 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
               child: Container(
                 width: _tableWidth,
                 height: _tableHeight,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey, width: 0.5),
+                ),
                 margin: EdgeInsets.symmetric(vertical: 8),
                 child: Stack(children: _stackChildren),
               ),
@@ -1000,6 +645,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
             decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.grey,
+                width: 0.5,
               ),
             ),
             child: child,
@@ -1017,7 +663,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
       child: SingleChildScrollView(
         child: Html(
           shrinkWrap: widget.shrinkWrap,
-          data: widget.data,
+          data: data,
           style: _htmlStyle,
           customRender: _customRender,
         ),

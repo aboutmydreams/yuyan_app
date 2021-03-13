@@ -124,7 +124,11 @@ class AppStyles {
 }
 
 class AppIcon {
-  static Widget iconType(String iconName, {double size}) {
+  static Widget iconType(
+    String iconName, {
+    double size,
+    VoidCallback onTap,
+  }) {
     Map<String, Icon> iconDic = {
       "doc": Icon(
         Icons.description,
@@ -177,6 +181,16 @@ class AppIcon {
         color: Colors.blue,
         size: size,
       ),
+      "fullscreen": Icon(
+        Icons.fullscreen,
+        color: Colors.blue,
+        size: size,
+      ),
+      "exit_fullscreen": Icon(
+        Icons.close_fullscreen,
+        color: Colors.blue,
+        size: size,
+      ),
     };
     final fallback = IconButton(
       icon: Icon(
@@ -188,6 +202,12 @@ class AppIcon {
         BotToast.showText(text: 'iconName: $iconName not mapped to an icon!');
       },
     );
-    return iconDic[iconName?.toLowerCase()] ?? fallback;
+    var iconWidget = iconDic[iconName?.toLowerCase()];
+    if (iconWidget == null) return fallback;
+    if (onTap == null) return iconWidget;
+    return InkWell(
+      onTap: onTap,
+      child: iconWidget,
+    );
   }
 }

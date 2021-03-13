@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
+import 'package:yuyan_app/model/document/card/vote_detail.dart';
 
 class FollowUserController extends FetchValueController<bool> {
   final int userId;
@@ -96,5 +97,24 @@ class GroupMarkController extends FetchValueController<bool> {
   @override
   Future<bool> fetch() {
     return ApiRepository.getIfMark(targetId: targetId, targetType: 'User');
+  }
+}
+
+class VoteController extends FetchValueController<VoteDetailSeri> {
+  final int docId;
+  final String voteId;
+  final List<String> items;
+  final String deadline;
+
+  VoteController({this.docId, this.voteId, this.items, this.deadline});
+
+  @override
+  Future<VoteDetailSeri> fetch() {
+    return ApiRepository.getVoteDetail(
+      docId: docId,
+      voteId: voteId,
+      items: items,
+      deadline: deadline,
+    );
   }
 }

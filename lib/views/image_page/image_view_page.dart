@@ -64,6 +64,7 @@ class _ImageViewerPageState extends State<ImageViewerPage> {
                       width: double.infinity,
                       height: double.infinity,
                       mode: ExtendedImageMode.gesture,
+                      filterQuality: FilterQuality.high,
                       onDoubleTap: (state) {
                         var scale = state.gestureDetails.totalScale;
                         if (scale == 1) {
