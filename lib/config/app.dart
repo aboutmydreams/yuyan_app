@@ -1,5 +1,4 @@
 import 'package:package_info/package_info.dart';
-import 'package:webview_flutter/platform_interface.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:yuyan_app/config/net/token.dart';
 import 'package:yuyan_app/controller/global/organization_controller.dart';

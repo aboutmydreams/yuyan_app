@@ -45,7 +45,7 @@ class VoteCardWidget extends StatelessWidget {
           _voteTitle(singleVote, json['title']),
           GetBuilder<VoteController>(
             tag: voteId,
-            builder: (c) => c.stageBuilder(
+            builder: (c) => c.stateBuilder(
               onIdle: () {
                 var data = c.value;
                 var voteInfo = <String, VoteItemSeri>{};

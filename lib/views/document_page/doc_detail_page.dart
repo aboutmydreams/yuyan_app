@@ -83,7 +83,7 @@ class _DocDetailPageState extends State<DocDetailPage> {
         ],
       ),
       body: GetBuilder<DocDetailController>(
-        builder: (c) => c.stageBuilder(
+        builder: (c) => c.stateBuilder(
           onIdle: () {
             Future.delayed(Duration(milliseconds: 100), () {
               webUrl = 'https://www.yuque.com/go/doc/${c.value.id}';

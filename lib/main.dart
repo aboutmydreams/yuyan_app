@@ -48,11 +48,19 @@ class MyApp extends StatelessWidget {
       // home: MyHomePage(),
       initialBinding: AppBinding(),
       builder: (context, child) {
-        return botToastBuilder(
-          context,
-          ScopedModel<TopStateModel>(
-            model: topModel1,
-            child: child,
+        return GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () {
+            if (Get.focusScope.hasPrimaryFocus) {
+              Get.focusScope.unfocus();
+            }
+          },
+          child: botToastBuilder(
+            context,
+            ScopedModel<TopStateModel>(
+              model: topModel1,
+              child: child,
+            ),
           ),
         );
       },

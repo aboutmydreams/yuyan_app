@@ -56,7 +56,7 @@ class _FollowButtonWidgetState extends State<FollowButtonWidget> {
                   onPressed: () async {
                     c.toggle();
                   },
-                  child: c.stageBuilder(
+                  child: c.stateBuilder(
                     onIdle: () => Center(
                       child: Text(
                         "${(c.value ?? false) ? '取消关注' : '关注'}",

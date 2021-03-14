@@ -172,7 +172,6 @@ dependencies:
   # markdown 渲染器
   flutter_markdown: ^0.5.2
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -189,39 +188,15 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/js/doc_height.js
-    - assets/flares/Like.flr
-    - assets/flares/mark.flr
-    - assets/flares/bird.flr
-    - assets/flares/progress.flr
-    - assets/images/logo.png
-    - assets/images/paddy.svg
-    - assets/images/first.jpg
-    - assets/images/guide/guide1.png
-    - assets/images/guide/guide2.png
-    - assets/images/guide/guide3.png
-    - assets/images/explore/book.png
-    - assets/images/explore/fellower.png
-    - assets/images/dashboard/link.png
-    - assets/images/dashboard/link2.png
-    - assets/images/dashboard/design.png
-    - assets/images/dashboard/book.png
-    - assets/images/dashboard/excel.png
-    - assets/images/dashboard/doc.png
-    - assets/images/news/read_all.png
-    - assets/images/my_page/position.png
-    - assets/images/my_page/location.png
-    - assets/images/my_page/member.png
-    - assets/images/my_page/exit.png
-    - assets/images/my_page/follow_book.png
-    - assets/images/my_page/suggest.png
-    - assets/images/my_page/about.png
-    - assets/images/my_page/setting.png
-    - assets/images/my_page/collections.png
-    - assets/images/my_page/topics.png
-    - assets/images/my_page/history.png
-
-  #  - images/a_dot_ham.jpeg
+    - assets/js/
+    - assets/flares/
+    - assets/images/
+    - assets/images/guide/
+    - assets/images/explore/
+    - assets/images/dashboard/
+    - assets/images/news/
+    - assets/images/my_page/
+    - assets/images/card/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

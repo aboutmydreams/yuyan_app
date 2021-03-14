@@ -451,4 +451,18 @@ class ApiRepository {
     var data = (res.data as ApiResponse);
     return VoteDetailSeri.fromJson(data.data);
   }
+
+  static Future<String> decryptText({String pwd, String text}) async {
+    var res = await api.post(
+      '/services/crypto',
+      data: {
+        'pwd': pwd,
+        'text': text,
+        'action': 'decrypt',
+        'ctoken': App.tokenProvider.data.cToken,
+      },
+    );
+    var asp = (res.data as ApiResponse);
+    return asp.data;
+  }
 }

@@ -259,7 +259,7 @@ abstract class FetchSavableController<T extends BaseSavableJson>
     NotifierBuilder<T> builder, {
     Widget onLoading,
     Widget onEmpty,
-    Widget Function(ViewStatusError error) onError,
+    Widget Function(ViewError error) onError,
   }) {
     switch (state) {
       case ViewState.refreshing:

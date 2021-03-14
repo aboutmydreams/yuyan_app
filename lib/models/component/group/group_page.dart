@@ -95,7 +95,7 @@ class _GroupPage2State extends State<GroupPage2>
             actions: <Widget>[
               GetBuilder<GroupMarkController>(
                 tag: tag,
-                builder: (c) => c.stageBuilder(
+                builder: (c) => c.stateBuilder(
                   onIdle: () => IconButton(
                     icon: c.value ? Icon(Icons.star) : Icon(Icons.star_border),
                     onPressed: c.toggle,
@@ -143,14 +143,14 @@ class _GroupPage2State extends State<GroupPage2>
           children: [
             GetBuilder<GroupStackController>(
               tag: tag,
-              builder: (c) => c.stageBuilder(
+              builder: (c) => c.stateBuilder(
                 onEmpty: NothingPage(top: 190, text: "首页空空"),
                 onIdle: () => GroupHomeWidget(stack: c.value),
               ),
             ),
             GetBuilder<GroupBookController>(
               tag: tag,
-              builder: (c) => c.stageBuilder(
+              builder: (c) => c.stateBuilder(
                 // onEmpty: null,
                 onIdle: () => AnimationListWidget(
                   itemCount: c.value.length,
@@ -162,7 +162,7 @@ class _GroupPage2State extends State<GroupPage2>
             ),
             GetBuilder<GroupTopicController>(
               tag: tag,
-              builder: (c) => c.stageBuilder(
+              builder: (c) => c.stateBuilder(
                 onIdle: () => AnimationListWidget(
                   itemCount: c.value.length,
                   itemBuilder: (_, i) => TopicRowItemWidget2(
@@ -173,7 +173,7 @@ class _GroupPage2State extends State<GroupPage2>
             ),
             GetBuilder<GroupMemberController>(
               tag: tag,
-              builder: (c) => c.stageBuilder(
+              builder: (c) => c.stateBuilder(
                 onIdle: () => AnimationListWidget(
                   itemCount: c.value.length,
                   itemBuilder: (_, i) => FollowRowItemWidget(

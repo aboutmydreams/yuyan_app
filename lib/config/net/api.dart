@@ -41,6 +41,18 @@ class ApiInterceptor extends InterceptorsWrapper {
     response.data = resp;
     return response;
   }
+
+  @override
+  Future onError(DioError err) async {
+    var resp = ApiResponse.fromJson(err.response.data);
+    if (resp.isError()) {
+      return ApiError(
+        response: resp,
+        dio: err,
+      );
+    }
+    return err;
+  }
 }
 
 class ApiError implements Exception {

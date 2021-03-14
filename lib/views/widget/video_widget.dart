@@ -40,7 +40,7 @@ class _LakeVideoPlayWidgetState extends State<LakeVideoPlayWidget> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CardVideoController>(
-      builder: (c) => c.stageBuilder(
+      builder: (c) => c.stateBuilder(
         onIdle: () {
           var data = c.value.info;
           var player = VideoPlayerController.network(

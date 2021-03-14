@@ -85,7 +85,7 @@ class _UserPageState extends State<UserPage>
             actions: <Widget>[
               GetBuilder<FollowUserController>(
                 tag: tag,
-                builder: (c) => c.stageBuilder(
+                builder: (c) => c.stateBuilder(
                   onLoading: SizedBox.shrink(),
                   onIdle: () => IconButton(
                     icon: (c.value ?? false)
@@ -130,7 +130,7 @@ class _UserPageState extends State<UserPage>
           children: [
             FetchRefreshListViewBuilder<UserBookController>(
               tag: tag,
-              builder: (c) => c.stageBuilder(
+              builder: (c) => c.stateBuilder(
                 onIdle: () => ListView.builder(
                   itemCount: c.value.length,
                   itemBuilder: (_, i) => BookRowItemWidget(
@@ -141,7 +141,7 @@ class _UserPageState extends State<UserPage>
             ),
             FetchRefreshListViewBuilder<UserGroupController>(
               tag: tag,
-              builder: (c) => c.stageBuilder(
+              builder: (c) => c.stateBuilder(
                 onIdle: () => ListView.builder(
                   itemCount: c.value.length,
                   itemBuilder: (_, i) => GroupRowItemWidget(
@@ -152,7 +152,7 @@ class _UserPageState extends State<UserPage>
             ),
             FetchRefreshListViewBuilder<UserFollowingController>(
               tag: tag,
-              builder: (c) => c.stageBuilder(
+              builder: (c) => c.stateBuilder(
                 onIdle: () => ListView.builder(
                   itemCount: c.value.length,
                   itemBuilder: (_, i) => FollowRowItemWidget(
@@ -164,7 +164,7 @@ class _UserPageState extends State<UserPage>
             ),
             FetchRefreshListViewBuilder<UserFollowerController>(
               tag: tag,
-              builder: (c) => c.stageBuilder(
+              builder: (c) => c.stateBuilder(
                 onIdle: () => ListView.builder(
                   itemCount: c.value.length,
                   itemBuilder: (_, i) => FollowRowItemWidget(

@@ -110,7 +110,7 @@ class MyNoteDetailPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: GetBuilder<NoteDetailController>(
-          builder: (c) => c.stageBuilder(
+          builder: (c) => c.stateBuilder(
             onIdle: () => LakeRenderWidget(
               data: c.value.doclet.bodyAsl,
               docId: c.value.docletId,
