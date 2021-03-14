@@ -89,8 +89,15 @@ class ApiRepository {
     return (asp.data as List).map((e) => UserRecentSeri.fromJson(e)).toList();
   }
 
-  static Future<List<QuickLinkSeri>> getUserQuickLinkList() async {
-    var resp = await api.get('/quick_links');
+  static Future<List<QuickLinkSeri>> getUserQuickLinkList({
+    String refId = 'quick_link',
+  }) async {
+    var resp = await api.get(
+      '/quick_links',
+      queryParameters: {
+        'ref_id': refId,
+      },
+    );
     var asp = resp.data as ApiResponse;
     return (asp.data as List).map((e) => QuickLinkSeri.fromJson(e)).toList();
   }
@@ -420,6 +427,17 @@ class ApiRepository {
     });
     var asp = (res.data as ApiResponse);
     return DocDetailSeri.fromJson(asp.data);
+  }
+
+  static Future<List<DocSeri>> getBookDocList({int bookId}) async {
+    var res = await api.get('/books/$bookId/docs', queryParameters: {
+      'include_contributors': true,
+      'include_hits': true,
+      'limit': 200,
+      'offset': 0,
+    });
+    var asp = (res.data as ApiResponse).data as List;
+    return asp.map((e) => DocSeri.fromJson(e)).toList();
   }
 
   //视频

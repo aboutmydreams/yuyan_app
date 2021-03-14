@@ -10,6 +10,7 @@ class ApiResponse {
   Map meta;
 
   ApiResponse.fromJson(Map json) {
+    if (json == null) return;
     data = json['data'];
     status = json['status'];
     message = json['message'];
@@ -44,7 +45,7 @@ class ApiInterceptor extends InterceptorsWrapper {
 
   @override
   Future onError(DioError err) async {
-    var resp = ApiResponse.fromJson(err.response.data);
+    var resp = ApiResponse.fromJson(err.response?.data);
     if (resp.isError()) {
       return ApiError(
         response: resp,

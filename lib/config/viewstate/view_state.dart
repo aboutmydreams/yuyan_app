@@ -47,6 +47,17 @@ class ViewError {
     this.error = 'error',
     this.type = ViewErrorType.unknown,
   });
+
+  @override
+  String toString() {
+    var errDebug = '''{
+    "title": $title,
+    "content":$content,
+    "error": ${Error.safeToString(error)},
+    "type": $type
+}''';
+    return errDebug;
+  }
 }
 
 mixin ControllerStateMixin on GetxController {
@@ -126,15 +137,25 @@ mixin ControllerStateMixin on GetxController {
       case ApiError: //请求正常，返回的是API错误
         return _handlerApiError(e);
       case DioError: //请求可能识别了，例如网络超时等
-        var err = e as DioError;
-        if (err.error is ApiError) {
-          //这里Dio会将错误强制包装成DioError类型
-          //因此只能通过这个来判断是否ApiError
-          return _handlerApiError(err.error);
-        }
+        var err = (e as DioError).error;
+        //这里Dio会将错误强制包装成DioError类型
+        //因此只能通过这个来判断是否ApiError
+        if (err != null) return _handlerError(err);
+        // switch (err.runtimeType) {
+        //   case ApiError:
+        //     return _handlerApiError(err);
+        //   case SocketException:
+        //     return ViewError(
+        //       title: 'Socket错误',
+        //       content: err.message,
+        //       error: err,
+        //       type: ViewErrorType.network,
+        //     );
+        //   default:
+        // }
         return ViewError(
           title: '网络错误',
-          content: Error.safeToString(err),
+          content: Error.safeToString(err.error),
           error: err,
           type: ViewErrorType.network,
         );
@@ -150,9 +171,10 @@ mixin ControllerStateMixin on GetxController {
       case RangeError: //数组越界
       case IndexError: //同上
       case FormatException: //String字符出现非法编码
+        var err = e as FormatException;
         return ViewError(
           title: 'App内部错误',
-          content: Error.safeToString(e),
+          content: Error.safeToString(err.message),
           error: e,
           type: ViewErrorType.dart,
         );
@@ -211,7 +233,7 @@ mixin ControllerStateMixin on GetxController {
           return onError(error);
         }
         return Center(
-          child: Text('error: $error}'),
+          child: Text('error: $error'),
         );
       default:
       //当状态为空的情况

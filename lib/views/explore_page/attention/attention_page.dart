@@ -601,14 +601,7 @@ class _DocBookWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // String slug = event.url.split("/").last;
-        // String login = event.url.split("/")[3];
-        // OpenPage.docBook(
-        //   context,
-        //   bookId: event.id,
-        //   bookSlug: slug,
-        //   login: login,
-        // );
+        MyRoute.bookDocs(book.id);
       },
       child: Container(
         height: 66,

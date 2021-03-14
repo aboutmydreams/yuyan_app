@@ -26,15 +26,11 @@ class QuickLinkController
         );
 
   @override
-  Future fetchMore() {
-    throw UnimplementedError();
-  }
-
-  @override
   Future fetchData() {
     return ApiRepository.getUserQuickLinkList();
   }
 }
+
 //
 // class QuickManage extends Model {
 //   int page = 1;

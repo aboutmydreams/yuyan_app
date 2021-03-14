@@ -14,6 +14,7 @@ import 'package:yuyan_app/views/begin_init/login_page/login_page.dart';
 import 'package:yuyan_app/views/dashboard/dashboard.dart';
 import 'package:yuyan_app/views/dashboard/quick/note/note_page.dart';
 import 'package:yuyan_app/views/dashboard/quick/setting/quick_set.dart';
+import 'package:yuyan_app/views/document_page/book_doc_page.dart';
 import 'package:yuyan_app/views/document_page/doc_detail_page.dart';
 import 'package:yuyan_app/views/home_page.dart';
 import 'package:yuyan_app/views/my_page/about_yuyan/about.dart';
@@ -125,6 +126,13 @@ class RouteName {
 //
 
 class MyRoute {
+  static bookDocs(int bookId) {
+    Get.to(
+      BookDocPage(bookId: bookId),
+      preventDuplicates: false,
+    );
+  }
+
   static webview(String url) {
     Get.to(
       WebviewPage(url: url),

@@ -46,7 +46,7 @@ class _DocDetailPageState extends State<DocDetailPage> {
                 },
                 child: MenuItemWidget(
                   iconData: Icons.open_in_browser,
-                  title: '浏览器打开',
+                  title: '打开网页版',
                 ),
               ),
               // PopupMenuItem(
