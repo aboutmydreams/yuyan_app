@@ -107,28 +107,7 @@ class _QuickLinkEntryWidget extends StatelessWidget {
         : iconType[data.type] ?? "assets/images/dashboard/book.png";
     return GestureDetector(
       onTap: () {
-        if (data.type == "Group") {
-          // OpenPage.group(
-          //   context,
-          //   groupdata: GroupData(
-          //     id: data.targetId,
-          //     name: data.title ?? "",
-          //     avatarUrl: data.icon,
-          //   ),
-          // );
-        } else if (data.type == "Book") {
-          print(data.targetId);
-          print(data.url);
-          // OpenPage.docBook(
-          //   context,
-          //   bookId: data.targetId,
-          // );
-        } else {
-          String url = data.url[0] == '/'
-              ? "https://www.yuque.com" + data.url
-              : data.url;
-          // openUrl(context, url);
-        }
+        Util.handleQuickLinkNav(data);
       },
       child: Container(
         height: 50,
@@ -147,10 +126,10 @@ class _QuickLinkEntryWidget extends StatelessWidget {
         child: Row(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(right: 10),
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
               child: Hero(
-                tag: data.targetId,
-                child: userAvatar(imageUrl, height: 50),
+                tag: data.targetId ?? '',
+                child: userAvatar(imageUrl, height: 36),
               ),
             ),
             Container(

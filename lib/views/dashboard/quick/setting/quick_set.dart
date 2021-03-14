@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:yuyan_app/controller/quick_link_controller.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
+import 'package:yuyan_app/util/util.dart';
 
 class QuickSetPage extends StatelessWidget {
   const QuickSetPage({Key key}) : super(key: key);
@@ -70,10 +70,7 @@ class _QuickSetItemWidget extends StatelessWidget {
         : iconType[data.type] ?? "assets/images/dashboard/book.png";
     return GestureDetector(
       onTap: () {
-        var url = data.type != "Normal"
-            ? "https://www.yuque.com" + data.url
-            : data.url;
-        openUrl(context, url);
+        Util.handleQuickLinkNav(data);
       },
       child: Container(
         height: 70,

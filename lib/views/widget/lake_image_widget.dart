@@ -19,7 +19,10 @@ class LakeImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var imageUrl = json['src'];
+    var imageUrl = json['src'] as String;
+    if(imageUrl.startsWith('//')){
+      imageUrl = 'https:' + imageUrl;
+    }
     if (json['status'] != 'done') {
       return SizedBox.shrink();
     }

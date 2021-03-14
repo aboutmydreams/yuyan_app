@@ -1,10 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
+import 'package:yuyan_app/config/route_manager.dart';
+import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/oauth2/random_string/random_string.dart';
 
 class Util {
+  static goUrl(String url) {
+    MyRoute.webview('https://www.yuque.com' + url);
+  }
+
+  static handleQuickLinkNav(QuickLinkSeri link) {
+    switch (link.type) {
+      case 'Book':
+        MyRoute.bookDocs(link.targetId);
+        break;
+      case 'Group':
+        // MyRoute.group(group: null);
+        break;
+      case 'User':
+        // MyRoute.user(user: null);
+        break;
+      case 'Normal':
+        MyRoute.webview(link.url);
+        break;
+    }
+  }
+
   static String genHeroTag() {
     String tag =
         randomString(5) + DateTime.now().microsecondsSinceEpoch.toString();

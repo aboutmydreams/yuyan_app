@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -13,25 +12,15 @@ import 'package:flutter_html/style.dart';
 import 'package:flutter_html/src/css_parser.dart' as cssutil;
 import 'package:csslib/parser.dart' as cssparser;
 import 'package:csslib/visitor.dart' as css;
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as htmlparser;
 import 'package:get/get.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:romanice/romanice.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:yuyan_app/config/route_manager.dart';
-import 'package:yuyan_app/controller/action_controller.dart';
 import 'package:yuyan_app/model/document/card/card_link_detail.dart';
 import 'package:yuyan_app/model/document/card/card_video_seri.dart';
-import 'package:yuyan_app/model/document/card/vote_item_seri.dart';
-import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/lake/lake_card_seri.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/util/svg_provider.dart';
-import 'package:yuyan_app/util/util.dart';
-import 'package:yuyan_app/views/image_page/image_view_page.dart';
 import 'package:yuyan_app/views/webview_page/webview_page.dart';
 import 'package:yuyan_app/views/widget/label_widget.dart';
 import 'package:yuyan_app/views/widget/lake_calendar_widget.dart';
@@ -271,6 +260,10 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
     attr['value'] = '!value!'; //for less print
     debugPrint('attr: $attr');
     switch (name) {
+      case 'youku':
+        return EmbedWebviewPage(
+          url: json['url'],
+        );
       case 'vote':
         return VoteCardWidget(
           docId: widget.docId,
@@ -528,11 +521,10 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
         );
       },
       'span': (_, child, attr, elem) {
-        debugPrint('render span !!!');
         if (elem.nodes.length > 0 && elem.nodes.first is dom.Element) {
           var firstElem = elem.nodes.first as dom.Element;
           if (firstElem.localName == 'br') {
-            debugPrint('span => br');
+            // debugPrint('span => br');
             final height = HtmlUtil.calculateTextHeight();
             return Container(
               height: height,
@@ -566,7 +558,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
           var firstElem = elem.nodes.first;
           if (firstElem is dom.Element) {
             if (firstElem.localName == 'br') {
-              debugPrint('p => br');
+              // debugPrint('p => br');
               final height = HtmlUtil.calculateTextHeight();
               return Container(
                 height: height,
@@ -618,12 +610,11 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
         );
       },
       'colgroup': (_, child, attr, elem) {
-        debugPrint('colgroup');
         elem.nodes.forEach((node) {
           var width = HtmlUtil.parseDouble(node.attributes['width']) ?? 250;
           _tableWidth += width;
           _tableColWidth.add(width);
-          debugPrint('col => width: $width');
+          // debugPrint('col => width: $width');
         });
         elem.parent.nodes[1].nodes.forEach((node) {
           var height = HtmlUtil.getInlineStyleValue(
@@ -631,7 +622,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
           height *= 1.25;
           _tableHeight += height;
           _tableRowHeight.add(height);
-          debugPrint('tr => height: $height');
+          // debugPrint('tr => height: $height');
         });
         _tableFilled = List.generate(_tableRowHeight.length,
             (_) => List.generate(_tableColWidth.length, (_) => false));
@@ -682,7 +673,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
           ),
         );
         _stackChildren.add(stackChild);
-        debugPrint('td[add] => size => $widget, $height');
+        // debugPrint('td[add] => size => $widget, $height');
         // debugPrint('td => size => ${_.buildContext.size}');
         return _fallbackWidget;
       },

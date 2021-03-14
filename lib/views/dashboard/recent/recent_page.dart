@@ -140,18 +140,17 @@ class _UserRecentItemWidget extends StatelessWidget {
                 ),
               ),
             ),
-            data.canEdit
-                ? Container(
-                    margin: EdgeInsets.only(right: 16),
-                    child: IconButton(
-                      onPressed: () {
-                        // openUrl(context, url + "/edit");
-                      },
-                      color: AppColors.primaryText,
-                      icon: Icon(Icons.edit),
-                    ),
-                  )
-                : Text("")
+            if (data.canEdit)
+              Container(
+                margin: EdgeInsets.only(right: 16),
+                child: IconButton(
+                  onPressed: () {
+                    MyRoute.webview(url + '/edit');
+                  },
+                  color: AppColors.primaryText,
+                  icon: Icon(Icons.edit),
+                ),
+              ),
           ],
         ),
       ),

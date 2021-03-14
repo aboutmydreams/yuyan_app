@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/viewstate/view_page.dart';
 import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/model/document/action.dart';
@@ -34,16 +35,14 @@ class MyFollowBookItemWidget extends StatelessWidget {
     // data.ifFollow = true;
     return GestureDetector(
       onTap: () {
-        // if (data.target.type == "Book") {
-        //   OpenPage.docBook(
-        //     context,
-        //     bookId: data.target.id,
-        //     bookSlug: data.target.slug,
-        //     login: data.targetGroup.login,
-        //   );
-        // } else {
-        //   openUrl(context, "https://www.yuque.com${data.sUrl}");
-        // }
+        switch (data.targetType) {
+          case 'Book':
+            var book = data.target.serialize<BookSeri>();
+            MyRoute.bookDocs(book.id);
+            break;
+          default:
+            Util.goUrl(data.url);
+        }
       },
       child: Container(
         height: 70,
