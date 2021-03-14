@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart' hide WebView;
 import 'package:get/get.dart';
+import 'package:share_extend/share_extend.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:yuyan_app/views/widget/drop_menu_item_widget.dart';
 
 class EmbedWebviewPage extends StatefulWidget {
   final String url;
@@ -83,7 +86,9 @@ class WebviewPage extends StatefulWidget {
 class _WebviewPageState extends State<WebviewPage> {
   var _url = ''.obs;
   var _title = ''.obs;
+
   InAppWebViewController _controller;
+  bool _forcePopup = false;
 
   @override
   void initState() {
@@ -95,24 +100,73 @@ class _WebviewPageState extends State<WebviewPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Obx(
-          () => Text(_title.value),
+    return WillPopScope(
+      onWillPop: () async {
+        if (_controller == null || _forcePopup) return true;
+        if (await _controller.canGoBack()) {
+          _controller.goBack();
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: false,
+          leading: IconButton(
+            icon: Icon(Icons.close),
+            onPressed: () {
+              _forcePopup = true;
+              Get.back();
+            },
+          ),
+          title: Obx(
+            () => Text(_title.value),
+          ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.share),
+              onPressed: () {
+                ShareExtend.share('${_url.value}', 'text');
+              },
+            ),
+            PopupMenuButton(
+              itemBuilder: (_) => [
+                PopupMenuItem(
+                  value: () {
+                    launch(_url.value);
+                  },
+                  child: MenuItemWidget(
+                    iconData: Icons.open_in_browser,
+                    title: '浏览器打开',
+                  ),
+                ),
+                PopupMenuItem(
+                  value: () {
+                    _controller.reload();
+                  },
+                  child: MenuItemWidget(
+                    iconData: Icons.refresh,
+                    title: '刷新',
+                  ),
+                ),
+              ],
+              onSelected: (_) => _?.call(),
+            ),
+          ],
         ),
-      ),
-      body: Container(
-        child: InAppWebView(
-          initialUrl: widget.url,
-          onTitleChanged: (c, title) {
-            _title.value = title;
-          },
-          onLoadStart: (c, url) {
-            _url.value = url;
-          },
-          onWebViewCreated: (c) {
-            _controller = c;
-          },
+        body: Container(
+          child: InAppWebView(
+            initialUrl: widget.url,
+            onTitleChanged: (c, title) {
+              _title.value = title;
+            },
+            onLoadStart: (c, url) {
+              _url.value = url;
+            },
+            onWebViewCreated: (c) {
+              _controller = c;
+            },
+          ),
         ),
       ),
     );
