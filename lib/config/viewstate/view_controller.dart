@@ -164,6 +164,17 @@ abstract class FetchListValueController<T>
   }
 
   Future<List<T>> fetchMore() => null;
+
+  //convenient methods
+  void add(T newItem) {
+    _value?.add(newItem);
+    update();
+  }
+
+  void remove(T oldItem) {
+    _value?.remove(oldItem);
+    update();
+  }
 }
 
 abstract class FetchSavableController<T extends BaseSavableJson>

@@ -20,19 +20,21 @@ class LakeImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var imageUrl = json['src'] as String;
-    if(imageUrl.startsWith('//')){
+    if (imageUrl.startsWith('//')) {
       imageUrl = 'https:' + imageUrl;
     }
-    if (json['status'] != 'done') {
+    if (json['status'] != null && json['status'] != 'done') {
       return SizedBox.shrink();
     }
-    var isSvg = (imageUrl as String).endsWith('.svg');
-    if (!isSvg) others.add(imageUrl);
+    var isSvg = imageUrl.endsWith('.svg');
+    if (!isSvg) others?.add(imageUrl);
     var width = HtmlUtil.parseDouble(json['width']);
     var height = HtmlUtil.parseDouble(json['height']);
-    var ratio = width / height;
-    width = width.clamp(0, Get.width);
-    height = width / ratio;
+    if (width != null && height != null) {
+      var ratio = width / height;
+      width = width.clamp(0, Get.width);
+      height = width / ratio;
+    }
     Widget child;
     if (isSvg) {
       child = SvgPicture.network(

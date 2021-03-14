@@ -4,7 +4,7 @@ class CommentDetailSeri {
   int id;
   int userId;
   UserSeri user;
-  dynamic parentId;
+  int parentId;
   String format;
   String body;
   String bodyAsl;

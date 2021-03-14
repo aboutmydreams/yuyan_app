@@ -260,6 +260,8 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
     attr['value'] = '!value!'; //for less print
     debugPrint('attr: $attr');
     switch (name) {
+      case 'emoji':
+        return LakeImageWidget(json: json, others: imgUrl);
       case 'youku':
         return EmbedWebviewPage(
           url: json['url'],

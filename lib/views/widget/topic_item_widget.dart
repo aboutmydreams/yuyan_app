@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smart_color/smart_color.dart';
+import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/model/topic/labels.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
@@ -147,6 +148,7 @@ class TopicRowItemWidget extends StatelessWidget {
         //   iid: data.iid,
         //   groupId: data.groupId,
         // );
+        MyRoute.topic(data.iid, data.groupId);
       },
       child: Container(
         margin: EdgeInsets.only(top: 2, bottom: 9, left: 10, right: 10),

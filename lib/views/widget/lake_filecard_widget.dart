@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/util/util.dart';
 
 class LakeFileCardWidget extends StatelessWidget {
   final Map json;
@@ -14,6 +16,7 @@ class LakeFileCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
+        width: Get.width,
         child: Row(
           children: [
             Padding(
@@ -21,7 +24,7 @@ class LakeFileCardWidget extends StatelessWidget {
               child: AppIcon.iconType('file'),
             ),
             Text(
-              '${json['name']}',
+              '${json['name']}'.clip(12, ellipsis: true),
               style: TextStyle(
                 color: Colors.blue,
                 fontWeight: FontWeight.bold,
@@ -29,7 +32,13 @@ class LakeFileCardWidget extends StatelessWidget {
               ),
             ),
             Spacer(),
-            Text('${json['size']} bytes'),
+            Expanded(
+              flex: 2,
+              child: Text(
+                '${json['size']} bytes',
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
             InkWell(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),

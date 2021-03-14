@@ -15,7 +15,9 @@ class ImageViewerPage extends StatefulWidget {
     Key key,
     @required this.imageUrls,
     @required this.initUrl,
-  }) : super(key: key);
+  })  : assert(imageUrls != null),
+        assert(initUrl != null),
+        super(key: key);
 
   @override
   _ImageViewerPageState createState() => _ImageViewerPageState();
@@ -25,13 +27,15 @@ class _ImageViewerPageState extends State<ImageViewerPage> {
   PageController _controller;
 
   var _index = 0.obs;
+  var imgLength = 1;
 
   @override
   void initState() {
     super.initState();
-    var index = widget.imageUrls.indexOf(widget.initUrl);
+    var index = widget.imageUrls?.indexOf(widget.initUrl);
     if (index != -1) {
       _index.value = index;
+      imgLength = widget.imageUrls.length;
     }
     _controller = PageController(initialPage: index);
   }
@@ -49,7 +53,7 @@ class _ImageViewerPageState extends State<ImageViewerPage> {
             child: ExtendedImageGesturePageView.builder(
               onPageChanged: (i) => _index.value = i,
               controller: _controller,
-              itemCount: widget.imageUrls.length,
+              itemCount: imgLength,
               itemBuilder: (context, index) {
                 debugPrint('index: $index => ${widget.imageUrls[index]}');
                 return Container(
@@ -99,7 +103,7 @@ class _ImageViewerPageState extends State<ImageViewerPage> {
                   padding: const EdgeInsets.only(left: 12),
                   child: Obx(
                     () => Text(
-                      '${_index.value + 1}/${widget.imageUrls.length}',
+                      '${_index.value + 1}/$imgLength',
                       style: TextStyle(
                         color: Colors.white,
                       ),

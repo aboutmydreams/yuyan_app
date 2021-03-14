@@ -26,6 +26,7 @@ import 'package:yuyan_app/views/my_page/my/my_group_page.dart';
 import 'package:yuyan_app/views/my_page/my/my_mark_page.dart';
 import 'package:yuyan_app/views/my_page/my/my_topic_page.dart';
 import 'package:yuyan_app/views/my_page/setting/setting_page.dart';
+import 'package:yuyan_app/views/topic_page/topic_detail_page.dart';
 import 'package:yuyan_app/views/user_page/user_page.dart';
 import 'package:yuyan_app/views/webview_page/webview_page.dart';
 
@@ -126,6 +127,15 @@ class RouteName {
 //
 
 class MyRoute {
+  static topic(int iid, int groupId) {
+    Get.to(
+      TopicDetailPage(
+        commentId: iid,
+        groupId: groupId,
+      ),
+    );
+  }
+
   static bookDocs(int bookId) {
     Get.to(
       BookDocPage(bookId: bookId),

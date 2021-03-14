@@ -22,6 +22,7 @@ import 'package:yuyan_app/model/notification/notification.dart';
 import 'package:yuyan_app/model/notification/notification_item.dart';
 import 'package:yuyan_app/model/serializer/serializer.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
+import 'package:yuyan_app/model/topic/topic_detail_seri.dart';
 
 class ApiRepository {
   static BaseApi api = BaseApi();
@@ -334,14 +335,43 @@ class ApiRepository {
     return list;
   }
 
-  static Future<List<CommentDetailSeri>> getCommentsList(
-      {int commentId}) async {
-    var res = await api.get(
-        '/comments?commentable_id=$commentId&commentable_type=Topic',
-        queryParameters: {
-          'commentable_id': commentId,
-          'commentable_type': 'Topic',
-        });
+  /// TOPIC [话题] 相关
+  static Future<CommentDetailSeri> postComment({
+    int commentId,
+    String comment,
+    int parentId,
+    String commentType = 'Topic',
+  }) async {
+    var data = {
+      "commentable_type": commentType,
+      "commentable_id": commentId,
+      "parent_id": parentId,
+      "body_asl": "<!doctype lake><p>$comment</p>",
+      "format": "lake"
+    };
+    var res = await api.post("/comments", data: data);
+    var asp = (res.data as ApiResponse);
+    return CommentDetailSeri.fromJson(asp.data);
+  }
+
+  static Future<TopicDetailSeri> getTopicDetail({int iid, int groupId}) async {
+    var res = await api.get('/topics/$iid', queryParameters: {
+      'group_id': groupId,
+    });
+    var asp = (res.data as ApiResponse);
+    return TopicDetailSeri.fromJson(asp.data);
+  }
+
+  static Future<List<CommentDetailSeri>> getCommentsList({
+    int commentId,
+    //comment_type => 要求是 Doc, Topic, ArtboardComment, Resource, DocVersion, Note 其中的一个
+    String commentType = 'Topic',
+  }) async {
+    var res = await api.get('/comments', queryParameters: {
+      'commentable_id': commentId,
+      'commentable_type': commentType,
+      'include_section': true,
+    });
     var data = (res.data as ApiResponse).data as List;
     return data.map((e) => CommentDetailSeri.fromJson(e)).toList();
   }
