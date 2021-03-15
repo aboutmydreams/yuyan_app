@@ -23,7 +23,6 @@ class QuickView extends StatelessWidget {
       ),
     );
     return GetBuilder<QuickLinkController>(
-      init: QuickLinkController(),
       builder: (c) => c.builder(
         (state) {
           return Container(

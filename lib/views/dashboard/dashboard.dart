@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:yuyan_app/controller/quick_link_controller.dart';
+import 'package:yuyan_app/controller/recent_controller.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/all_doc_book_data.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
@@ -73,11 +76,24 @@ class _MyDashBoardPageState extends State<MyDashBoardPage> {
           child: Icon(Icons.edit),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(children: [
-          QuickView(),
-          RecentPage(),
-        ]),
+      body: GetBuilder<RecentController>(
+        builder: (c) {
+          return SmartRefresher(
+            controller: c.refreshController,
+            onRefresh: () {
+              c.onRefreshCallback();
+              QuickLinkController.to.onRefreshCallback();
+            },
+            onLoading: c.onLoadMoreCallback,
+            enablePullUp: true,
+            child: SingleChildScrollView(
+              child: Column(children: [
+                QuickView(),
+                RecentPage(),
+              ]),
+            ),
+          );
+        },
       ),
     );
   }

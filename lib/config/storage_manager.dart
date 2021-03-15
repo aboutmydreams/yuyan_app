@@ -91,6 +91,8 @@ abstract class BaseSaveJson<T> extends BaseSavableJson<T> {
 }
 
 abstract class BaseSaveListJson<T> extends BaseSaveJson<List<T>> {
+  int get length => data.length;
+
   void removeFirst() {
     data.removeAt(0);
     updateData();

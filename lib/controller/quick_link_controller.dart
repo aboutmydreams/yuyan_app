@@ -1,5 +1,6 @@
 // https://www.yuque.com/api/quick_links
 
+import 'package:get/get.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
@@ -18,6 +19,8 @@ class QuickLinkDataProvider extends BaseSaveListJson<QuickLinkSeri> {
 
 class QuickLinkController
     extends FetchSavableController<QuickLinkDataProvider> {
+  static QuickLinkController get to => Get.find();
+
   QuickLinkController()
       : super(
           initData: QuickLinkDataProvider(),

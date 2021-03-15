@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:yuyan_app/config/app.dart';
@@ -82,6 +81,11 @@ class ApiRepository {
       }
       return list;
     }
+  }
+
+  static Future<bool> deleteRecentItem(int id) async {
+    var res = await api.delete('/mine/recent/$id');
+    return res.data.data;
   }
 
   static Future<List<UserRecentSeri>> getUserRecentList(

@@ -1,12 +1,15 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
+import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/controller/recent_controller.dart';
 import 'package:yuyan_app/model/dashboard/user_recent_seri.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/views/widget/animation_widget.dart';
 import 'package:yuyan_app/util/util.dart';
+import 'package:yuyan_app/views/widget/drop_menu_item_widget.dart';
 
 class RecentPage extends StatelessWidget {
   RecentPage({Key key}) : super(key: key);
@@ -106,7 +109,7 @@ class _UserRecentItemWidget extends StatelessWidget {
             BoxShadow(
               color: Color.fromARGB(25, 0, 0, 0),
               offset: Offset(1, 2),
-              blurRadius: 4,
+              blurRadius: 1,
             ),
           ],
           borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -140,17 +143,37 @@ class _UserRecentItemWidget extends StatelessWidget {
                 ),
               ),
             ),
-            if (data.canEdit)
-              Container(
-                margin: EdgeInsets.only(right: 16),
-                child: IconButton(
-                  onPressed: () {
-                    MyRoute.webview(url + '/edit');
+            PopupMenuButton(
+              itemBuilder: (_) => [
+                if (data.canEdit)
+                  PopupMenuItem(
+                    value: () {
+                      MyRoute.webview(url + '/edit');
+                    },
+                    child: MenuItemWidget(
+                      iconData: Icons.edit,
+                      title: '编辑',
+                    ),
+                  ),
+                PopupMenuItem(
+                  value: () {
+                    ApiRepository.deleteRecentItem(data.id).then((_) {
+                      if (_) {
+                        RecentController.to.remove(data);
+                        BotToast.showText(text: '成功');
+                      }
+                    }).catchError((e) {
+                      BotToast.showText(text: '失败');
+                    });
                   },
-                  color: AppColors.primaryText,
-                  icon: Icon(Icons.edit),
+                  child: MenuItemWidget(
+                    iconData: Icons.delete,
+                    title: '移除记录',
+                  ),
                 ),
-              ),
+              ],
+              onSelected: (_) => _?.call(),
+            ),
           ],
         ),
       ),
