@@ -9,8 +9,13 @@ class ApiResponse {
   String message;
   Map meta;
 
+  Map _raw;
+
+  Map get raw => _raw;
+
   ApiResponse.fromJson(Map json) {
     if (json == null) return;
+    _raw = json;
     data = json['data'];
     status = json['status'];
     message = json['message'];
@@ -91,7 +96,7 @@ class BaseApi extends BaseHttp with TokenMixin, OrganizationMixin {
     interceptors.add(ApiInterceptor());
 
     options.headers['User-Agent'] = userAgent;
-    options.headers['Content-Type'] = "application/json";
+    // options.headers['Content-Type'] = "application/json";
 
     options.baseUrl = baseUrl;
   }

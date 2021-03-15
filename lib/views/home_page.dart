@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     pageList = [
       ExplorePage(),
-      Dashboard(),
+      MyDashBoardPage(),
       NotificationPage(),
       MyPage(),
     ];

@@ -177,7 +177,7 @@ class DioReq {
         imagePath.substring(imagePath.lastIndexOf("/") + 1, imagePath.length);
     var ctoken = await getCtoken();
 
-    Map param = {
+    Map<String,dynamic> param = {
       "attachable_type": attachableType,
       "attachable_id": attachableId,
       "type": type,
@@ -187,7 +187,8 @@ class DioReq {
       imagePath,
       filename: name,
     );
-    FormData formData = FormData.fromMap({"file": image});
+    FormData formData =
+        FormData.fromMap({"file": image});
 
     Map headers = await autoHeader();
     try {

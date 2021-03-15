@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/service/api2_repository.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
@@ -228,12 +229,24 @@ class MyNoteProvider extends BaseSaveListJson<NoteSeri> {
 }
 
 class MyNoteController extends FetchSavableController<MyNoteProvider> {
+  static MyNoteController get to => Get.find();
+
+  void remove(NoteSeri item) {
+    value.remove(item);
+    update();
+  }
+
   MyNoteController()
       : super(
           initialRefresh: true,
           initData: MyNoteProvider(),
           state: ViewState.loading,
         );
+
+  @override
+  Future fetchMore() {
+    return ApiRepository.getMyNoteList(offset: value.data.length);
+  }
 
   @override
   Future fetchData() {

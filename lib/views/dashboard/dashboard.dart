@@ -1,26 +1,24 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:get/get.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/all_doc_book_data.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
-import 'package:yuyan_app/models/widgets_small/show_dialog/show_dialog.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
-import 'package:yuyan_app/util/analytics.dart';
-import 'package:yuyan_app/views/dashboard/create_doc/select_book.dart';
+import 'package:yuyan_app/views/dashboard/quick/note_editor/note_editor.dart';
 import 'package:yuyan_app/views/dashboard/quick/quick_view.dart';
 import 'package:yuyan_app/views/dashboard/recent/recent_page.dart';
 import 'package:yuyan_app/views/explore_page/search/search_bar.dart';
 import 'package:yuyan_app/views/widget/org_space_widget.dart';
 
-class Dashboard extends StatefulWidget {
-  Dashboard({Key key}) : super(key: key);
+class MyDashBoardPage extends StatefulWidget {
+  MyDashBoardPage({Key key}) : super(key: key);
 
   @override
-  _DashboardState createState() => _DashboardState();
+  _MyDashBoardPageState createState() => _MyDashBoardPageState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _MyDashBoardPageState extends State<MyDashBoardPage> {
   AllDocBookJson allDocBookJson;
 
   @override
@@ -38,7 +36,6 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    analytics.logEvent(name: 'dashboard');
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -65,24 +62,13 @@ class _DashboardState extends State<Dashboard> {
       ),
       floatingActionButton: GestureDetector(
         onLongPress: () {
-          showWindow(context,
-              title: "选择一个知识库",
-              children: allDocBookJson == null
-                  ? null
-                  : allDocBookJson.data.isEmpty
-                      ? [Text("暂无知识库", style: AppStyles.textStyleBB)]
-                      : allDocBookJson.data
-                          .map((onebook) => SelectView(
-                                book: onebook,
-                              ))
-                          .toList());
           Timer(Duration(milliseconds: 400), () {
             myToast(context, "感谢你的期待 💕");
           });
         },
         child: FloatingActionButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/edit/note');
+            Get.to(MarkdownEditorPage());
           },
           child: Icon(Icons.edit),
         ),

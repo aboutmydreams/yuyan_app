@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
@@ -63,31 +65,42 @@ class _ImageViewerPageState extends State<ImageViewerPage> {
                     onTap: () {
                       Navigator.of(context).pop();
                     },
-                    child: ExtendedImage.network(
-                      widget.imageUrls[index],
-                      width: double.infinity,
-                      height: double.infinity,
-                      mode: ExtendedImageMode.gesture,
-                      filterQuality: FilterQuality.high,
-                      onDoubleTap: (state) {
-                        var scale = state.gestureDetails.totalScale;
-                        if (scale == 1) {
-                          state.handleDoubleTap(scale: 2);
-                        } else {
-                          state.handleDoubleTap(scale: 1);
-                        }
-                      },
-                      initGestureConfigHandler: (state) {
-                        return GestureConfig(
-                          minScale: 0.7,
-                          animationMinScale: 0.5,
-                          maxScale: 3,
-                          animationMaxScale: 3.5,
-                          speed: 1.0,
-                          inPageView: true,
-                        );
-                      },
-                    ),
+                    child: () {
+                      ImageProvider image;
+                      var uri = widget.imageUrls[index];
+                      if (uri.startsWith('/')) {
+                        var file = File.fromUri(Uri.parse(uri));
+                        image = ExtendedFileImageProvider(file);
+                      } else {
+                        image = ExtendedNetworkImageProvider(uri);
+                      }
+                      return ExtendedImage(
+                        image: image,
+                        // widget.imageUrls[index],
+                        width: double.infinity,
+                        height: double.infinity,
+                        mode: ExtendedImageMode.gesture,
+                        filterQuality: FilterQuality.high,
+                        onDoubleTap: (state) {
+                          var scale = state.gestureDetails.totalScale;
+                          if (scale == 1) {
+                            state.handleDoubleTap(scale: 2);
+                          } else {
+                            state.handleDoubleTap(scale: 1);
+                          }
+                        },
+                        initGestureConfigHandler: (state) {
+                          return GestureConfig(
+                            minScale: 0.7,
+                            animationMinScale: 0.5,
+                            maxScale: 3,
+                            animationMaxScale: 3.5,
+                            speed: 1.0,
+                            inPageView: true,
+                          );
+                        },
+                      );
+                    }(),
                   ),
                 );
               },

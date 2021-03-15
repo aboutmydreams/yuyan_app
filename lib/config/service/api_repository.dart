@@ -1,3 +1,5 @@
+
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/net/api.dart';
@@ -14,7 +16,9 @@ import 'package:yuyan_app/model/document/doc_detail/doc_detail.dart';
 import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/document/group_user.dart';
 import 'package:yuyan_app/model/document/note/note.dart';
+import 'package:yuyan_app/model/document/note/note_status.dart';
 import 'package:yuyan_app/model/document/organization_lite.dart';
+import 'package:yuyan_app/model/document/upload/upload_result_seri.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/document/user_profile.dart';
 import 'package:yuyan_app/model/events/event_seri.dart';
@@ -425,6 +429,53 @@ class ApiRepository {
   }
 
   ///语雀小记
+  static Future<bool> deleteNote(int id) async {
+    var res = await api.delete('/notes/$id');
+    var asp = (res.data as ApiResponse);
+    return asp.data;
+  }
+
+  static Future<String> convertLake({
+    String markdown,
+  }) async {
+    var res = await api.post(
+      '/docs/convert',
+      data: {
+        'from': 'markdown',
+        'to': 'lake',
+        'content': markdown,
+        'ctoken': App.tokenProvider.data.cToken,
+      },
+      options: Options(headers: {
+        'referer': 'https://www.yuque.com/dashboard/notes',
+      }),
+    );
+    var asp = (res.data as ApiResponse);
+    return asp.data['content'];
+  }
+
+  static Future<NoteSeri> postNote({
+    String html,
+    int id = 0,
+    String type = 'all',
+  }) async {
+    var res = await api.put(
+      '/notes/$id',
+      data: {
+        "body_asl": html,
+        "body_html": html,
+        "description": html,
+        "has_attachment": false,
+        "has_bookmark": false,
+        "has_image": html.contains('name="image"'),
+        "has_todo": html.contains('name="checkbox"'),
+        "save_type": "user"
+      },
+    );
+    var asp = (res.data as ApiResponse);
+    return NoteSeri.fromJson(asp.data);
+  }
+
   static Future<List<NoteSeri>> getMyNoteList({
     String text = '',
     String type = 'all',
@@ -448,6 +499,44 @@ class ApiRepository {
     var res = await api.get('/notes/$noteId');
     var asp = (res.data as ApiResponse);
     return NoteSeri.fromJson(asp.data);
+  }
+
+  static Future<NoteStatusSeri> getNoteStatus() async {
+    var res = await api.get('/notes/status');
+    var asp = (res.data as ApiResponse);
+    return NoteStatusSeri.fromJson(asp.raw);
+  }
+
+  static Future<UploadResultSeri> postNoteImage({
+    String path,
+    String attachableType,
+    int attachableId,
+    String type = 'image',
+    ProgressCallback progressCallback,
+  }) async {
+    /// attachableType: Doclet: 小记 doc: 文档
+    var name = path.substring(path.lastIndexOf('/') + 1);
+    Map<String, dynamic> query = {
+      "attachable_type": attachableType,
+      "attachable_id": attachableId,
+      "type": type,
+      "ctoken": App.tokenProvider.data.cToken,
+    };
+    var image = await MultipartFile.fromFile(path, filename: name);
+    FormData formData = FormData.fromMap({"file": image});
+    var res = await api.post(
+      '/upload/attach',
+      queryParameters: query,
+      data: formData,
+      onSendProgress: progressCallback,
+      options: Options(
+        headers: {
+          'Referer': 'https://www.yuque.com/api/upload/attach',
+        },
+      ),
+    );
+    var asp = (res.data as ApiResponse);
+    return UploadResultSeri.fromJson(asp.data);
   }
 
   ///文档

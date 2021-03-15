@@ -90,4 +90,25 @@ abstract class BaseSaveJson<T> extends BaseSavableJson<T> {
   }
 }
 
-abstract class BaseSaveListJson<T> extends BaseSaveJson<List<T>> {}
+abstract class BaseSaveListJson<T> extends BaseSaveJson<List<T>> {
+  void removeFirst() {
+    data.removeAt(0);
+    updateData();
+  }
+
+  void removeLast() {
+    data.removeLast();
+    updateData();
+  }
+
+  void add(T item) {
+    data.add(item);
+    updateData();
+  }
+
+  bool remove(T item) {
+    var res = data.remove(item);
+    updateData();
+    return res;
+  }
+}
