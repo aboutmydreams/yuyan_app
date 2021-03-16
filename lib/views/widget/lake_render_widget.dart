@@ -174,12 +174,13 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
         //handle fontsize
         var font = attr['class'].replaceFirst('lake-fontsize-', '');
         var size = int.tryParse(font) ?? 12;
+        if (size == 1515) size = 15; //shit, 语雀JB玩意
         if (size > 128) size = 128;
         //ps, 由于flutter_html先渲染了child, 导致无法通过修改style来设置字体
         //但是span里面嵌入的内容可能比较复杂，这里仅仅是为了显示特定字体做出的妥协罢了，无奈
         var style = attr['style']?.split(';');
         if (style == null) style = <String>[];
-        style.add('font-size: $font');
+        style.add('font-size: $size');
         attr['style'] = style.join(';');
       }
     });
@@ -473,7 +474,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
                 bottom: 0,
                 child: Text(
                   olMark,
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.start,
                   style: _.style.generateTextStyle().copyWith(letterSpacing: 0),
                 ),
               ),
@@ -593,7 +594,8 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
       },
       'table': (_, child, attr, elem) {
         // 这里的child被抛弃了，它不做渲染结果
-        _tableWidth = HtmlUtil.getInlineStyleValue(attr['style'], 'width');
+        _tableWidth =
+            HtmlUtil.getInlineStyleValue(attr['style'], 'width') ?? _tableWidth;
         return NotificationAbsorbWidget(
           child: Scrollbar(
             child: SingleChildScrollView(
@@ -612,19 +614,22 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
         );
       },
       'colgroup': (_, child, attr, elem) {
+        debugPrint('render colgroup');
         elem.nodes.forEach((node) {
           var width = HtmlUtil.parseDouble(node.attributes['width']) ?? 250;
           _tableWidth += width;
           _tableColWidth.add(width);
           // debugPrint('col => width: $width');
         });
-        elem.parent.nodes[1].nodes.forEach((node) {
-          var height = HtmlUtil.getInlineStyleValue(
-              node.attributes['style'], 'height', 100);
-          height *= 1.25;
-          _tableHeight += height;
-          _tableRowHeight.add(height);
-          // debugPrint('tr => height: $height');
+        elem.parent.nodes.skip(1).forEach((element) {
+          element.nodes.forEach((node) {
+            var height = HtmlUtil.getInlineStyleValue(
+                node.attributes['style'], 'height', 100);
+            height *= 1.25;
+            _tableHeight += height;
+            _tableRowHeight.add(height);
+            // debugPrint('tr => height: $height');
+          });
         });
         _tableFilled = List.generate(_tableRowHeight.length,
             (_) => List.generate(_tableColWidth.length, (_) => false));
@@ -632,6 +637,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
       },
       'col': _fallbackRender,
       'tbody': _fallbackRender,
+      'thead': _fallbackRender,
       'tr': (_, child, attr, elem) {
         // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         //   debugPrint('tr !!!!!!!!!!!!!!!!!');

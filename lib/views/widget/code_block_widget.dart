@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_html/html_parser.dart';
 import 'package:get/get.dart' hide Node;
 import 'package:highlight/highlight.dart' show highlight, Node;
 
@@ -39,36 +40,19 @@ class CodeBlockWidget extends StatelessWidget {
     int tabSize = 8, // TODO: https://github.com/flutter/flutter/issues/50087
   }) : source = input.replaceAll('\t', ' ' * tabSize);
 
+  InlineSpan _parseTree(Node node) {
+    return TextSpan(
+      style: theme[node.className]?.copyWith(
+        fontSize: 12,
+      ),
+      text: node.value,
+      children: node.children?.map((e) => _parseTree(e))?.toList(),
+    );
+  }
+
   List<InlineSpan> _convert(List<Node> nodes) {
-    List<InlineSpan> spans = [];
-    var currentSpans = spans;
-    List<List<InlineSpan>> stack = [];
-
-    _traverse(Node node) {
-      if (node.value != null) {
-        currentSpans.add(node.className == null
-            ? TextSpan(text: node.value)
-            : TextSpan(text: node.value, style: theme[node.className]));
-      } else if (node.children != null) {
-        List<InlineSpan> tmp = [];
-        currentSpans.add(TextSpan(children: tmp, style: theme[node.className]));
-        stack.add(currentSpans);
-        currentSpans = tmp;
-
-        node.children.forEach((n) {
-          _traverse(n);
-          if (n == node.children.last) {
-            currentSpans = stack.isEmpty ? spans : stack.removeLast();
-          }
-        });
-      }
-    }
-
-    for (var node in nodes) {
-      _traverse(node);
-    }
-
-    return spans;
+    debugPrint('begin _convert');
+    return nodes.map((e) => _parseTree(e)).toList();
   }
 
   static const _rootKey = 'root';
@@ -130,7 +114,7 @@ class CodeBlockWidget extends StatelessWidget {
                   children: List.generate(lines, (index) {
                     return Container(
                       width: 36,
-                      padding: EdgeInsets.only(top: 0.2, bottom: 0.2, right: 4),
+                      padding: const EdgeInsets.only(right: 4),
                       child: Text.rich(
                         TextSpan(text: '${index + 1}'),
                         textAlign: TextAlign.end,
@@ -150,7 +134,7 @@ class CodeBlockWidget extends StatelessWidget {
                         children: _convert(
                             highlight.parse(source, language: language).nodes),
                       ),
-                      scrollPhysics: NeverScrollableScrollPhysics(),
+                      // scrollPhysics: NeverScrollableScrollPhysics(),
                     ),
                   ),
                 ),
