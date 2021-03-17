@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:share/share.dart';
+import 'package:share_extend/share_extend.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/book_doc/doc_page/view/comment_panel.dart';
@@ -57,6 +57,7 @@ class _DocPageWebState extends State<DocPageWeb> {
       this.bookId,
       this.docId,
       this.onlyUser: false});
+
   final int bookId;
   final int docId;
   final String login;
@@ -290,8 +291,10 @@ class _DocPageWebState extends State<DocPageWeb> {
                       fakeReport(context);
                       break;
                     case 'E':
-                      Share.share(
-                          '我上分享了语雀文档「${docTitle != "" ? docTitle : "文档"}」快来瞧瞧！ $shareUrl');
+                      ShareExtend.share(
+                        '我上分享了语雀文档「${docTitle != "" ? docTitle : "文档"}」快来瞧瞧！ $shareUrl',
+                        'text',
+                      );
                       break;
                   }
                 },
@@ -338,14 +341,12 @@ class _DocPageWebState extends State<DocPageWeb> {
                     onWebViewCreated: (InAppWebViewController controller) {
                       _webController = controller;
                     },
-                    onLoadStart:
-                        (InAppWebViewController controller, Uri url) {
+                    onLoadStart: (InAppWebViewController controller, url) {
                       // setState(() {
                       //   this.theUrl = url;
                       // });
                     },
-                    onLoadStop:
-                        (InAppWebViewController controller, Uri url) async {
+                    onLoadStop: (InAppWebViewController controller, url) async {
                       // 页面加载完成后注入js方法, 获取页面总高度
                       // var height = await _webController.evaluateJavascript(
                       //   source: 'document.body.scrollHeight;',

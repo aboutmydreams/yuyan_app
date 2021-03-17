@@ -74,13 +74,13 @@ class _BrowserWithBarState extends State<BrowserWithBar> {
               onWebViewCreated: (InAppWebViewController controller) {
                 _webController = controller;
               },
-              onLoadStart: (InAppWebViewController controller, Uri otherUrl) {
+              onLoadStart: (InAppWebViewController controller, otherUrl) {
                 // print(otherUrl);
                 // setState(() {
                 //   this.url = otherUrl;
                 // });
               },
-              onLoadStop: (InAppWebViewController controller, Uri url) async {
+              onLoadStop: (InAppWebViewController controller, url) async {
                 // 页面加载完成后注入js方法, 获取页面总高度
                 // 文档标题："document.title"
                 var height = await _webController.evaluateJavascript(

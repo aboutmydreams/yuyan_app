@@ -6,6 +6,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart' hide WebView;
 import 'package:get/get.dart';
 import 'package:share_extend/share_extend.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/views/widget/drop_menu_item_widget.dart';
 
 class EmbedWebviewPage extends StatefulWidget {
@@ -33,10 +34,8 @@ class EmbedWebviewPage extends StatefulWidget {
 class _EmbedWebviewPageState extends State<EmbedWebviewPage> {
   @override
   Widget build(BuildContext context) {
-    debugPrint('webview: ${widget.url}');
     var uri = Uri.tryParse(widget.url);
     var h = uri.queryParameters['height'];
-    debugPrint('h ==> $h');
     var height = double.tryParse(h ?? '') ?? Get.width;
     return Container(
       decoration: BoxDecoration(
@@ -53,17 +52,13 @@ class _EmbedWebviewPageState extends State<EmbedWebviewPage> {
           SizedBox(
             height: height,
             child: InAppWebView(
-              // initialUrl: widget.url,
-              initialUrlRequest: URLRequest(
-                url: Uri.tryParse(widget.url),
-              ),
-              onScrollChanged: (c, x, y) {
-                debugPrint('onscroll: ($x,$y)');
-              },
+              initialOptions: Config.webview,
+              initialUrl: uri.toString(),
+              // initialUrlRequest: URLRequest(url: uri),
               onLoadStart: (c, url) {
-                if (url.path != widget.url) {
+                if (url.toString() != widget.url) {
                   if (widget.lockUrl) c.goBack();
-                  widget.onUrlChanged?.call(url.path);
+                  widget.onUrlChanged?.call(url.toString());
                 }
                 debugPrint('page load!: $url');
               },
@@ -95,6 +90,8 @@ class _WebviewPageState extends State<WebviewPage> {
   var _title = ''.obs;
 
   InAppWebViewController _controller;
+
+  // PullToRefreshController _pullController;
   bool _forcePopup = false;
 
   @override
@@ -103,6 +100,24 @@ class _WebviewPageState extends State<WebviewPage> {
     _url.value = widget.url;
     _title.value = widget.url;
     debugPrint('webview: ${widget.url}');
+    // _pullController = PullToRefreshController(
+    //   onRefresh: () {
+    //     _controller?.reload()?.then((v) async {
+    //       await _controller.reload();
+    //       Future.doWhile(() async {
+    //         debugPrint('isloading =>  ${await _controller.isLoading()}');
+    //         var loading = await _controller.isLoading();
+    //         if (loading) {
+    //           await Future.delayed(Duration(milliseconds: 100));
+    //           return true;
+    //         }
+    //         _pullController.endRefreshing();
+    //         return false;
+    //       });
+    //     });
+    //     debugPrint('refresh event !');
+    //   },
+    // );
   }
 
   @override
@@ -112,6 +127,7 @@ class _WebviewPageState extends State<WebviewPage> {
         if (_controller == null || _forcePopup) return true;
         if (await _controller.canGoBack()) {
           _controller.goBack();
+          // _controller.webStorage.sessionStorage.getItem(key: 'cookie');
           return false;
         }
         return true;
@@ -163,15 +179,17 @@ class _WebviewPageState extends State<WebviewPage> {
         ),
         body: Container(
           child: InAppWebView(
-            // initialUrl: widget.url,
-            initialUrlRequest: URLRequest(
-              url: Uri.tryParse(widget.url),
-            ),
+            initialOptions: Config.webview,
+            // pullToRefreshController: _pullController,
+            initialUrl: widget.url,
+            // initialUrlRequest: URLRequest(
+            //   url: Uri.parse(widget.url),
+            // ),
             onTitleChanged: (c, title) {
               _title.value = title;
             },
             onLoadStart: (c, url) {
-              _url.value = url.path;
+              _url.value = url.toString();
             },
             onWebViewCreated: (c) {
               _controller = c;

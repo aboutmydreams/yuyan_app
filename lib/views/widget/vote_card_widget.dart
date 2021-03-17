@@ -55,7 +55,7 @@ class VoteCardWidget extends StatelessWidget {
                   voteInfo[item.id] = item;
                   voteMembers.addAll(item.members);
                 });
-                voteLength = voteMembers.length;
+                voteLength = data.voted.length;
                 List children = (json['items'] as List).map((item) {
                   var count = voteInfo[item['id']]?.count ?? 0;
                   var ratio = count / voteLength;

@@ -99,8 +99,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
-  crypto:
+  convert:
     dependency: transitive
+    description:
+      name: convert
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.1"
+  crypto:
+    dependency: "direct overridden"
     description:
       name: crypto
       url: "https://pub.dartlang.org"
@@ -238,7 +245,7 @@ packages:
       name: flutter_inappwebview
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.0+4"
+    version: "4.0.0+4"
   flutter_layout_grid:
     dependency: transitive
     description:
@@ -602,7 +609,7 @@ packages:
     source: hosted
     version: "4.1.0"
   provider:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: provider
       url: "https://pub.dartlang.org"
@@ -664,13 +671,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.6"
-  share:
-    dependency: "direct main"
-    description:
-      name: share
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.6.5+4"
   share_extend:
     dependency: "direct main"
     description:
@@ -871,7 +871,7 @@ packages:
       name: uuid
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.1"
+    version: "2.2.2"
   vector_math:
     dependency: transitive
     description:

@@ -9,12 +9,16 @@ environment:
 
 publish_to: none
 
+dependency_overrides:
+  crypto: 3.0.0
+
 dependencies:
   flutter:
     sdk: flutter
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
+  ## flutter图标相关
   cupertino_icons: ^1.0.0
   font_awesome_flutter: ^8.7.0
 
@@ -24,12 +28,13 @@ dependencies:
       url: git@github.com:dreamer2q/zefyr.git
       ref: nullsafety
       path: packages/zefyr
-  notus:
-    git:
-      url: git@github.com:dreamer2q/zefyr.git
-      ref: nullsafety
-      path: packages/notus
 
+  notus: 1.0.0-dev.4.0
+  #  notus:
+  #    git:
+  #      url: git@github.com:dreamer2q/zefyr.git
+  #      ref: nullsafety
+  #      path: packages/notus
 
   # 底部导航栏
   curved_navigation_bar: ^0.3.1
@@ -44,6 +49,8 @@ dependencies:
       url: https://github.com/vrtdev/flutter_html.git
   ## 代码高亮支持
   flutter_highlight: 0.6.0
+  ## clipboard复制代码
+  clipboard: 0.1.2+8
   ## 组件显示，支持缩放
   photo_view: 0.10.3
   ## 图片缓存
@@ -52,11 +59,13 @@ dependencies:
   extended_image: 3.0.0
   ## 视频播放
   chewie: ^1.0.0
+  ## svg渲染
+  flutter_svg: ^0.21.0-nullsafety.0
 
   # Webview相关
   flutter_webview_plugin:
     git: https://github.com/aboutmydreams/flutter_webview_plugin.git
-  flutter_inappwebview: 5.1.0+4
+  flutter_inappwebview: 4.0.0+4
 
   # goodlook guide 液体
   liquid_swipe: ^1.5.0
@@ -101,18 +110,10 @@ dependencies:
   # flare动画
   flare_flutter: ^2.0.6
 
-  # use svg
-  flutter_svg: ^0.21.0-nullsafety.0
-
   # 裁剪 我的页面顶部背景
   flutter_custom_clippers: ^1.1.0
-
-  # clipboard复制代码
-  clipboard: 0.1.2+8
-
   # 列表动画
   flutter_staggered_animations: 1.0.0
-
   # 话题标签颜色
   smart_color: ^0.2.2
 
