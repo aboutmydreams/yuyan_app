@@ -156,14 +156,13 @@ class LakeRenderWidget extends StatefulWidget {
 }
 
 class _LakeRenderWidgetState extends State<LakeRenderWidget> {
-  final Widget _fallbackWidget = SizedBox.shrink();
-
   AutoScrollController _autoController = AutoScrollController();
   String data;
 
   initState() {
     super.initState();
 
+    //预处理Lake的一些class，方便HTML渲染
     var tree = htmlparser.parse(widget.data);
     var spans = tree.getElementsByTagName('span');
     spans.forEach((elem) {
@@ -189,9 +188,6 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
     assert(data != null && data != '');
   }
 
-  _fallbackRender(_, child, attr, elem) {
-    return _fallbackWidget;
-  }
 
   final _htmlStyle = {
     '*': Style(
@@ -250,6 +246,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
     ),
   };
 
+  //保存所有图片的链接
   var imgUrl = <String>[];
 
   _lakeCardRender(RenderContext _, Widget child) {
@@ -276,6 +273,8 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
     attr['value'] = '!value!'; //for less print
     debugPrint('attr: $attr');
     switch (name) {
+      case 'premium':
+        return YuquePremiumPurchase(json: json);
       case 'emoji':
         return LakeImageWidget(json: json, others: imgUrl);
       case 'youku':
@@ -331,12 +330,12 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
       case 'calendar':
         return LakeCalenderWidget(json: json);
       case 'codeblock':
-      return CodeBlockWidget(
-        json['code'],
-        language: json['mode'] ?? 'plain',
-        padding: EdgeInsets.all(8),
-        theme: themeMap['github'],
-      );
+        return CodeBlockWidget(
+          json['code'],
+          language: json['mode'] ?? 'plain',
+          padding: EdgeInsets.all(8),
+          theme: themeMap['github'],
+        );
       case 'file':
         return LakeFileCardWidget(json: json);
       case 'yuqueinline': //语雀链接
@@ -408,15 +407,6 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // int _colIndex = 0;
-    int _rowIndex = 0;
-    double _tableWidth = 0;
-    double _tableHeight = 0;
-    List<double> _tableColWidth = [];
-    List<double> _tableRowHeight = [];
-    List<List<bool>> _tableFilled = [];
-    List<Widget> _stackChildren = [];
-
     final Map<String, CustomRender> _customRender = {
       'h1': _addPositionId,
       'h2': _addPositionId,

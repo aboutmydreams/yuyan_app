@@ -49,3 +49,62 @@ class LakeYuqueCardWidget extends StatelessWidget {
     );
   }
 }
+
+class YuquePremiumPurchase extends StatelessWidget {
+  YuquePremiumPurchase({
+    Key key,
+    @required this.json,
+  }) : super(key: key);
+
+  final Map json;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Container(
+                color: Colors.yellow,
+                height: 1,
+                width: 50,
+              ),
+              Text(
+                '  💲 以下内容需要付费阅读  ',
+                style: TextStyle(
+                  color: Colors.orange,
+                  fontSize: 12,
+                ),
+              ),
+              Container(
+                color: Colors.yellow,
+                height: 1,
+                width: 50,
+              ),
+            ],
+          ),
+        ),
+        Container(
+          width: Get.width,
+          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 20),
+          margin: const EdgeInsets.only(bottom: 12),
+          child: ElevatedButton(
+            onPressed: () {
+              Get.defaultDialog(
+                title: '暂不支持',
+                content: Text('暂不支持这种购买，请打开网页版进行操作'),
+                onConfirm: () {
+                  Get.back();
+                },
+              );
+            },
+            child: Text('${json['price']} 元付费阅读全文'),
+          ),
+        ),
+      ],
+    );
+  }
+}

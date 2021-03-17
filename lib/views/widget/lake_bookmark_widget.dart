@@ -25,7 +25,11 @@ class LakeBookmarkWidget extends StatelessWidget {
           title: Text('${detail['title']}'),
           subtitle: Column(
             children: [
-              Text('${detail['desc']}'),
+              Text(
+                '${detail['desc']}',
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
               Row(
                 children: [
                   CachedNetworkImage(
