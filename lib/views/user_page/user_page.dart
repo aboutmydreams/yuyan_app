@@ -58,7 +58,7 @@ class _UserPageState extends State<UserPage>
   @override
   Widget build(BuildContext context) {
     var userId = widget.user.id;
-    var tag = '$userId';
+    var controllerTag = '$userId';
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (_, inner) => [
@@ -84,7 +84,7 @@ class _UserPageState extends State<UserPage>
             forceElevated: inner,
             actions: <Widget>[
               GetBuilder<FollowUserController>(
-                tag: tag,
+                tag: controllerTag,
                 builder: (c) => c.stateBuilder(
                   onLoading: SizedBox.shrink(),
                   onIdle: () => IconButton(
@@ -115,7 +115,7 @@ class _UserPageState extends State<UserPage>
             flexibleSpace: FlexibleSpaceBar(
               background: UserFlexibleWidget(
                 user: widget.user,
-                tag: tag,
+                tag: widget.heroTag,
               ),
             ),
             bottom: TabBar(
@@ -129,7 +129,7 @@ class _UserPageState extends State<UserPage>
           controller: _tabController,
           children: [
             FetchRefreshListViewBuilder<UserBookController>(
-              tag: tag,
+              tag: controllerTag,
               builder: (c) => c.stateBuilder(
                 onIdle: () => ListView.builder(
                   itemCount: c.value.length,
@@ -140,7 +140,7 @@ class _UserPageState extends State<UserPage>
               ),
             ),
             FetchRefreshListViewBuilder<UserGroupController>(
-              tag: tag,
+              tag: controllerTag,
               builder: (c) => c.stateBuilder(
                 onIdle: () => ListView.builder(
                   itemCount: c.value.length,
@@ -151,7 +151,7 @@ class _UserPageState extends State<UserPage>
               ),
             ),
             FetchRefreshListViewBuilder<UserFollowingController>(
-              tag: tag,
+              tag: controllerTag,
               builder: (c) => c.stateBuilder(
                 onIdle: () => ListView.builder(
                   itemCount: c.value.length,
@@ -163,7 +163,7 @@ class _UserPageState extends State<UserPage>
               ),
             ),
             FetchRefreshListViewBuilder<UserFollowerController>(
-              tag: tag,
+              tag: controllerTag,
               builder: (c) => c.stateBuilder(
                 onIdle: () => ListView.builder(
                   itemCount: c.value.length,

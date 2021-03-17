@@ -94,6 +94,9 @@ class _ToUserWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (item.subjects == null) {
+      item.subjects = [item.subject];
+    }
     return Container(
       padding: EdgeInsets.only(top: 14, bottom: 20),
       decoration: BoxDecoration(
@@ -133,9 +136,10 @@ class _ToUserWidget extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _UserFollowWidget(
-                        user: item.subject.serialize<UserLiteSeri>(),
-                      ),
+                      for (var i in item.subjects)
+                        _UserFollowWidget(
+                          user: i.serialize<UserLiteSeri>(),
+                        ),
                     ],
                   ),
                 ),
@@ -242,10 +246,15 @@ class _ToDocWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        MyRoute.docDetail(
-          bookId: sub.bookId,
-          slug: sub.slug,
-        );
+        debugPrint('test $item');
+        if (sub != null) {
+          MyRoute.docDetail(
+            bookId: sub.bookId,
+            slug: sub.slug,
+          );
+        }else{
+          MyRoute.bookDocs(sub2.id);
+        }
       },
       child: Container(
         padding: EdgeInsets.only(top: 14, bottom: 20),
@@ -290,16 +299,15 @@ class _ToDocWidget extends StatelessWidget {
                             style: AppStyles.textStyleB,
                           ),
                         ),
-                        desc.isBlank
-                            ? SizedBox(height: 7)
-                            : Container(
-                                margin: EdgeInsets.only(top: 7),
-                                child: Text(
-                                  "$desc",
-                                  textAlign: TextAlign.start,
-                                  style: AppStyles.textStyleC,
-                                ),
-                              ),
+                        if (!desc.isBlank)
+                          Container(
+                            margin: EdgeInsets.only(top: 7),
+                            child: Text(
+                              "$desc",
+                              textAlign: TextAlign.start,
+                              style: AppStyles.textStyleC,
+                            ),
+                          ),
                       ],
                     ),
                   ),
@@ -542,6 +550,12 @@ class _ToBookWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (item.subjects == null) {
+      item.subjects = [item.subject];
+    } else {
+      debugPrint('test');
+    }
+
     return Container(
       padding: EdgeInsets.only(top: 14, bottom: 20),
       decoration: BoxDecoration(
@@ -554,39 +568,36 @@ class _ToBookWidget extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: EdgeInsets.only(left: 18, right: 18),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 44,
-                  margin: EdgeInsets.only(right: 3),
-                  child: _UserLiteWidget(
-                    user: item.actor,
-                    eventType: item.eventType,
-                    eventTime: item.updatedAt,
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 13),
-                  decoration: BoxDecoration(
-                    color: AppColors.eventBack,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [_DocBookWidget(book: item.book)],
-                  ),
-                ),
-              ],
+      child: Container(
+        margin: EdgeInsets.only(left: 18, right: 18),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 44,
+              margin: EdgeInsets.only(right: 3),
+              child: _UserLiteWidget(
+                user: item.actor,
+                eventType: item.eventType,
+                eventTime: item.updatedAt,
+              ),
             ),
-          ),
-        ],
+            Container(
+              margin: EdgeInsets.only(top: 13),
+              decoration: BoxDecoration(
+                color: AppColors.eventBack,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (var i in item.subjects)
+                    _DocBookWidget(book: i.serialize<BookEventSeri>()),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

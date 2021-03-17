@@ -38,12 +38,8 @@ class AttendController extends FetchSavableController<AttendDataProvider> {
 
   Future _doFetch({bool refresh = false}) async {
     var resp = await ApiRepository.getAttendEvents(refresh ? 0 : offset);
-    if (refresh) {
-      offset = resp.length;
-    } else {
-      offset += resp.length;
-    }
-    return resp;
+    offset = resp.item2.meta['offset'];
+    return resp.item1;
   }
 
   @override

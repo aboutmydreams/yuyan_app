@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:tuple/tuple.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/net/api.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
@@ -32,13 +33,14 @@ class ApiRepository {
 
   static int get currentUserId => App.user.data.id;
 
-  static Future<List<EventSeri>> getAttendEvents([int offset = 0]) async {
+  static Future<Tuple2<List<EventSeri>, ApiResponse>> getAttendEvents(
+      [int offset = 0]) async {
     var resp = await api.get('/events', queryParameters: {
       'offset': offset,
     });
     var asp = resp.data as ApiResponse;
     var data = (asp.data as List).map((e) => EventSeri.fromJson(e)).toList();
-    return data;
+    return Tuple2.fromList([data, asp]);
   }
 
   static Future<List<DocSeri>> getExploreSelections([int limit = 4]) async {

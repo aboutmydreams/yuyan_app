@@ -66,8 +66,10 @@ class _RecommendItemWidget extends StatelessWidget {
       case 'web.doc':
         return buildDoc(item.serialize<DocSeri>());
       case 'web.book':
+        return SizedBox.shrink();
         return Text('book');
       case 'web.user':
+        return SizedBox.shrink();
         return Text('user');
       default:
         return Text('default');
@@ -80,15 +82,13 @@ class _RecommendItemWidget extends StatelessWidget {
     Widget descWidget;
     if (hasCover) {
       coverWidget = ClipRRect(
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(8),
         child: Container(
-          width: 147,
-          height: 91,
+          width: 148,
+          height: 90,
           child: CachedNetworkImage(
             imageUrl: data.cover,
             placeholder: (context, url) => Container(
-              width: 147,
-              height: 91,
               color: AppColors.background,
             ), // Colors.white10,
             errorWidget: (context, url, error) => Icon(Icons.error),
@@ -106,113 +106,87 @@ class _RecommendItemWidget extends StatelessWidget {
         ),
       );
     }
-    // String imageUrl = data.cover;
+    Widget child = Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          data.title,
+          maxLines: hasCover ? 4 : 1,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.left,
+          style: AppStyles.textStyleBB,
+        ),
+        if (!hasCover) descWidget,
+        Spacer(),
+        GestureDetector(
+          onTap: () {
+            MyRoute.user(user: data.user.toUserLiteSeri());
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              UserAvatarWidget(
+                avatar: data.user.avatarUrl,
+                height: 22,
+              ),
+              SizedBox(width: 7),
+              Container(
+                child: Text(
+                  data.user.name.clip(6, ellipsis: true),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppStyles.textStyleCC,
+                ),
+              ),
+              Spacer(),
+              Container(
+                width: 21,
+                height: 21,
+                margin: EdgeInsets.only(right: 5),
+                child: SvgPicture.asset(
+                  "assets/images/paddy.svg",
+                  semanticsLabel: 'paddy',
+                ),
+              ),
+              Text(
+                "${data.likesCount * 7}",
+                textAlign: TextAlign.left,
+                style: AppStyles.textStyleCC,
+              )
+            ],
+          ),
+        ),
+      ],
+    );
+    if (hasCover) {
+      child = Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          coverWidget,
+          SizedBox(width: 12),
+          Expanded(
+            child: child,
+          ),
+        ],
+      );
+    }
     return GestureDetector(
       onTap: () {
         MyRoute.docDetail(bookId: data.bookId, slug: data.slug);
-        // OpenPage.docWeb(
-        //   context,
-        //   login: data.book.user.login,
-        //   bookSlug: data.book.slug,
-        //   bookId: data.bookId,
-        //   docId: data.id,
-        //   onlyUser: true,
-        // );
       },
       child: Container(
-        height: 102,
-        margin: EdgeInsets.only(left: 16, top: 21, right: 15),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (hasCover) coverWidget,
-            Expanded(
-              child: Container(
-                margin: EdgeInsets.only(left: 12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      data.title,
-                      maxLines: hasCover ? 4 : 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                      style: AppStyles.textStyleBB,
-                    ),
-                    if (!hasCover) descWidget,
-                    Spacer(),
-                    Container(
-                      margin: EdgeInsets.only(bottom: 11, right: 8),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(11),
-                            child: Container(
-                              width: 22,
-                              height: 22,
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color.fromARGB(128, 116, 116, 116),
-                                    offset: Offset(0, 0),
-                                    blurRadius: 1,
-                                  ),
-                                ],
-                              ),
-                              child: UserAvatarWidget(
-                                avatar: data.user.avatarUrl,
-                                height: 22,
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 7),
-                          Container(
-                            child: Text(
-                              data.user.name.clip(6,ellipsis: true),
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppStyles.textStyleCC,
-                            ),
-                          ),
-                          Spacer(),
-                          Container(
-                            width: 55,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Container(
-                                  width: 21,
-                                  height: 21,
-                                  margin: EdgeInsets.only(right: 5),
-                                  child: SvgPicture.asset(
-                                    "assets/images/paddy.svg",
-                                    semanticsLabel: 'paddy',
-                                  ),
-                                ),
-                                Expanded(child: SizedBox()),
-                                Container(
-                                  margin: EdgeInsets.only(left: 0),
-                                  child: Text(
-                                    "${data.likesCount * 7}",
-                                    textAlign: TextAlign.center,
-                                    style: AppStyles.textStyleCC,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+        height: 134,
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: Colors.grey.withOpacity(0.1),
+              width: 0.5,
             ),
-          ],
+          ),
         ),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+        child: child,
       ),
     );
   }
@@ -285,7 +259,6 @@ class __ExploreBannerWidgetState extends State<_ExploreBannerWidget>
             Spacer(),
             Container(
               height: 46,
-              margin: EdgeInsets.only(right: 47),
               child: UserTileWidget(
                 user: data.user,
                 title: '${data.title}',

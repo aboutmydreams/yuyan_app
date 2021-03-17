@@ -21,6 +21,7 @@ class EventSeri {
   String createdAt;
   String updatedAt;
   Serializer subject;
+  List<Serializer> subjects;
   Serializer secondSubject;
   Serializer thirdSubject;
   UserLiteSeri actor;
@@ -71,6 +72,11 @@ class EventSeri {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     subject = Serializer.fromJson(json['subject']);
+    if (json['subjects'] != null) {
+      subjects = (json['subjects'] as List)
+          .map((e) => Serializer.fromJson(e))
+          .toList();
+    }
     secondSubject = Serializer.fromJson(json['second_subject']);
     thirdSubject = Serializer.fromJson(json['third_subject']);
     actor = UserLiteSeri.fromJson(json['actor']);
@@ -97,6 +103,8 @@ class EventSeri {
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     data['subject'] = this.subject?.toJson();
+    data['subjects'] =
+        subjects == null ? null : subjects.map((e) => e.toJson()).toList();
     data['second_subject'] = this.secondSubject?.toJson();
     data['third_subject'] = this.thirdSubject?.toJson();
     data['actor'] = this.actor?.toJson();

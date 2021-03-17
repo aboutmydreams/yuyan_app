@@ -67,6 +67,9 @@ dependencies:
     git: https://github.com/aboutmydreams/flutter_webview_plugin.git
   flutter_inappwebview: 4.0.0+4
 
+  ## 多返回值
+  tuple: 2.0.0
+
   # goodlook guide 液体
   liquid_swipe: ^1.5.0
   flutter_swiper: 1.1.6

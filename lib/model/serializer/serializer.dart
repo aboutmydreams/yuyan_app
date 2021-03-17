@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/comment.dart';
 import 'package:yuyan_app/model/document/design.dart';
@@ -30,7 +31,13 @@ class Serializer {
         _data = json;
 
   Serializer.fromJson(json) {
-    if (json == null) return;
+    if (json == null) {
+      debugPrint('Serializer received null input => $json');
+      return;
+    }
+    if(json is List){
+      debugPrint('json data is a List !');
+    }
     _data = json;
     _serializer = json["_serializer"];
   }
