@@ -7,7 +7,6 @@ import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/models/oauth2/oauth2.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
-import 'package:yuyan_app/util/analytics.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -163,8 +162,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     print(oauthUrl);
-    analytics.logEvent(name: 'login');
-
     return WebviewScaffold(
       url: oauthUrl,
       appBar: AppBar(

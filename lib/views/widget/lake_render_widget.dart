@@ -7,9 +7,6 @@ import 'package:flutter_highlight/theme_map.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/html_parser.dart';
 import 'package:flutter_html/style.dart';
-
-// ignore: implementation_imports
-import 'package:flutter_html/src/css_parser.dart' as cssutil;
 import 'package:csslib/parser.dart' as cssparser;
 import 'package:csslib/visitor.dart' as css;
 import 'package:html/dom.dart' as dom;
@@ -35,6 +32,10 @@ import 'package:yuyan_app/views/widget/video_widget.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart' as inapp;
 import 'package:webview_flutter/webview_flutter.dart' as view;
 import 'package:yuyan_app/views/widget/vote_card_widget.dart';
+
+// ignore: implementation_imports
+import 'package:flutter_html/src/layout_element.dart';
+import 'package:flutter_html/src/css_parser.dart' as cssutil;
 
 import 'lake_task_item_widget.dart';
 import 'lake_yuquecard_widget.dart';
@@ -71,7 +72,7 @@ class HtmlUtil {
   static double calculateTextHeight({double fontSize}) {
     TextPainter painter = TextPainter(
       ///AUTO：华为手机如果不指定locale的时候，该方法算出来的文字高度是比系统计算偏小的。
-      locale: Localizations.localeOf(Get.context, nullOk: true),
+      locale: Localizations.localeOf(Get.context),
       maxLines: 1,
       textDirection: TextDirection.ltr,
       text: TextSpan(
@@ -235,11 +236,25 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
     'blockquote': Style(
       color: Colors.grey,
     ),
+    'tbody': Style(
+      border: Border.all(
+        color: Colors.grey,
+        width: 0.5,
+      ),
+    ),
+    'tr': Style(
+      border: Border.all(
+        color: Colors.grey,
+        width: 0.5,
+      ),
+    ),
   };
 
   var imgUrl = <String>[];
 
-  _lakeCardRender(RenderContext _, Widget child, Map attr, dom.Element elem) {
+  _lakeCardRender(RenderContext _, Widget child) {
+    var attr = _.tree.attributes;
+    var elem = _.tree.element;
     // var type = attr['type']; //style type
     var name = attr['name']; //type name
     var value = attr['value']; //json value
@@ -316,12 +331,12 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
       case 'calendar':
         return LakeCalenderWidget(json: json);
       case 'codeblock':
-        return CodeBlockWidget(
-          json['code'],
-          language: json['mode'] ?? 'plain',
-          padding: EdgeInsets.all(8),
-          theme: themeMap['github'],
-        );
+      return CodeBlockWidget(
+        json['code'],
+        language: json['mode'] ?? 'plain',
+        padding: EdgeInsets.all(8),
+        theme: themeMap['github'],
+      );
       case 'file':
         return LakeFileCardWidget(json: json);
       case 'yuqueinline': //语雀链接
@@ -329,13 +344,9 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
         return LakeInlineLinkWidget(link: link);
       case 'table':
         //TODO(@dreamer2q): 表格的高度可能没有给出，如何自动适应高度?
-        return Container(
-          width: Get.width,
-          padding: EdgeInsets.symmetric(vertical: 8),
-          child: LakeRenderWidget(
-            data: json['html'],
-            shrinkWrap: true,
-          ),
+        return LakeRenderWidget(
+          data: json['html'],
+          shrinkWrap: true,
         );
       case 'video':
         return LakeVideoPlayWidget(
@@ -381,7 +392,8 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
     }
   }
 
-  _addPositionId(RenderContext _, Widget child, Map attr, dom.Element elem) {
+  _addPositionId(RenderContext _, Widget child) {
+    var attr = _.tree.attributes;
     if (attr['id'] != null) {
       var index = attr['id'].hashCode;
       return AutoScrollTag(
@@ -412,11 +424,12 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
       'h4': _addPositionId,
       'h5': _addPositionId,
       'h6': _addPositionId,
-      'cursor': (_, child, attr, elem) {
+      'cursor': (_, child) {
         //skip cursor,如果不跳过cursor附近的内容就无法渲染出来
         return child;
       },
-      'a': (_, child, attr, elem) {
+      'a': (_, child) {
+        var attr = _.tree.attributes;
         debugPrint('$attr');
         _.buildContext.widget;
         return GestureDetector(
@@ -432,7 +445,8 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
           child: child,
         );
       },
-      'ul': (_, child, attr, elem) {
+      'ul': (_, child) {
+        var attr = _.tree.attributes;
         var indent = attr['data-lake-indent'];
         int index = int.tryParse(indent ?? "0") ?? 0;
         return Padding(
@@ -441,7 +455,8 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
           child: child,
         );
       },
-      'ol': (_, child, attr, elem) {
+      'ol': (_, child) {
+        var attr = _.tree.attributes;
         var indent = attr['data-lake-indent'];
         int index = int.tryParse(indent ?? "0") ?? 0;
         return Padding(
@@ -450,7 +465,9 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
           child: child,
         );
       },
-      'li': (_, child, attr, elem) {
+      'li': (_, child) {
+        var attr = _.tree.attributes;
+        var elem = _.tree.element;
         var isTask = attr['class']?.contains('lake-list-task');
         if (isTask ?? false) {
           return Padding(
@@ -509,7 +526,8 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
           ],
         );
       },
-      'code': (_, child, attr, elem) {
+      'code': (_, child) {
+        var attr = _.tree.element;
         return Container(
           padding: EdgeInsets.zero,
           margin: EdgeInsets.zero,
@@ -523,7 +541,9 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
           child: child,
         );
       },
-      'span': (_, child, attr, elem) {
+      'span': (_, child) {
+        var attr = _.tree.attributes;
+        var elem = _.tree.element;
         if (elem.nodes.length > 0 && elem.nodes.first is dom.Element) {
           var firstElem = elem.nodes.first as dom.Element;
           if (firstElem.localName == 'br') {
@@ -539,24 +559,10 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
         if (attr['style'] != null) {
           HtmlUtil.applyInlineStyle(attr['style'], _.style);
         }
-        // if (attr['class'] != null) {
-        //   //handle fontsize
-        //   var font = attr['class'].replaceFirst('lake-fontsize-', '');
-        //   var size = int.tryParse(font) ?? 12;
-        //   if (size > 128) size = 128;
-        //   fontSize = FontSize(size.toDouble());
-        //   //ps, 由于flutter_html先渲染了child, 导致无法通过修改style来设置字体
-        //   //但是span里面嵌入的内容可能比较复杂，这里仅仅是为了显示特定字体做出的妥协罢了，无奈
-        //   return TextSpan(
-        //     text: elem.text,
-        //     style: _.style.generateTextStyle().copyWith(
-        //           fontSize: fontSize.size,
-        //         ),
-        //   );
-        // }
         return null;
       },
-      'p': (_, child, attr, elem) {
+      'p': (_, child) {
+        var elem = _.tree.element;
         if (elem.nodes.length > 0) {
           var firstElem = elem.nodes.first;
           if (firstElem is dom.Element) {
@@ -575,7 +581,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
           child: child,
         );
       },
-      'blockquote': (_, child, attr, elem) {
+      'blockquote': (_, child) {
         return Padding(
           padding: EdgeInsets.only(left: 8.0),
           child: Container(
@@ -592,98 +598,22 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
           ),
         );
       },
-      'table': (_, child, attr, elem) {
-        // 这里的child被抛弃了，它不做渲染结果
-        _tableWidth =
-            HtmlUtil.getInlineStyleValue(attr['style'], 'width') ?? _tableWidth;
-        return NotificationAbsorbWidget(
-          child: Scrollbar(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Container(
-                width: _tableWidth,
-                height: _tableHeight,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 0.5),
-                ),
-                margin: EdgeInsets.symmetric(vertical: 8),
-                child: Stack(children: _stackChildren),
-              ),
-            ),
-          ),
-        );
-      },
-      'colgroup': (_, child, attr, elem) {
-        debugPrint('render colgroup');
-        elem.nodes.forEach((node) {
-          var width = HtmlUtil.parseDouble(node.attributes['width']) ?? 250;
-          _tableWidth += width;
-          _tableColWidth.add(width);
-          // debugPrint('col => width: $width');
-        });
-        elem.parent.nodes.skip(1).forEach((element) {
-          element.nodes.forEach((node) {
-            var height = HtmlUtil.getInlineStyleValue(
-                node.attributes['style'], 'height', 100);
-            height *= 1.25;
-            _tableHeight += height;
-            _tableRowHeight.add(height);
-            // debugPrint('tr => height: $height');
-          });
-        });
-        _tableFilled = List.generate(_tableRowHeight.length,
-            (_) => List.generate(_tableColWidth.length, (_) => false));
-        return _fallbackWidget;
-      },
-      'col': _fallbackRender,
-      'tbody': _fallbackRender,
-      'thead': _fallbackRender,
-      'tr': (_, child, attr, elem) {
-        // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        //   debugPrint('tr !!!!!!!!!!!!!!!!!');
-        //   _.buildContext.visitChildElements((element) {
-        //     debugPrint('tr => element => depth ${element.depth} ${element.size}, ${element.widget}');
-        //   });
-        //   debugPrint('tr ||||||||||||||||||');
-        // });
-        _rowIndex++;
-        return _fallbackWidget;
-      },
-      'td': (_, child, attr, elem) {
-        //! 构建核心！
-        var colspan = int.tryParse(attr['colspan'] ?? '1') ?? 1;
-        var rowspan = int.tryParse(attr['rowspan'] ?? '1') ?? 1;
-        var colIndex = _tableFilled[_rowIndex].indexOf(false);
-        var left = _tableColWidth.take(colIndex).sum();
-        var top = _tableRowHeight.take(_rowIndex).sum();
-        var width = _tableColWidth.getRange(colIndex, colIndex + colspan).sum();
-        var height =
-            _tableRowHeight.getRange(_rowIndex, _rowIndex + rowspan).sum();
-        for (int i = 0; i < rowspan; i++) {
-          _tableFilled[_rowIndex + i]
-              .fillRange(colIndex, colIndex + colspan, true);
-        }
-        var stackChild = Positioned(
-          left: left,
-          top: top,
+      'table': (_, child) {
+        var inlineStyle = _.tree.attributes['style'];
+        var width =
+            HtmlUtil.getInlineStyleValue(inlineStyle, 'width', Get.width);
+        _.style.width = width;
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
           child: Container(
-            width: width,
-            height: height,
-            padding: EdgeInsets.zero,
-            margin: EdgeInsets.zero,
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.grey,
-                width: 0.5,
-              ),
+            width: width + 20,
+            alignment: Alignment.center,
+            constraints: BoxConstraints(
+              maxWidth: width + 16,
             ),
-            child: child,
+            child: (_.tree as TableLayoutElement).toWidget(_),
           ),
         );
-        _stackChildren.add(stackChild);
-        // debugPrint('td[add] => size => $widget, $height');
-        // debugPrint('td => size => ${_.buildContext.size}');
-        return _fallbackWidget;
       },
       'card': _lakeCardRender,
     };
@@ -691,6 +621,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
     return Scrollbar(
       child: SingleChildScrollView(
         controller: _autoController,
+        physics: widget.shrinkWrap ? NeverScrollableScrollPhysics() : null,
         child: Html(
           shrinkWrap: widget.shrinkWrap,
           data: data,

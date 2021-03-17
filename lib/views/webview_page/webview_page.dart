@@ -34,6 +34,10 @@ class _EmbedWebviewPageState extends State<EmbedWebviewPage> {
   @override
   Widget build(BuildContext context) {
     debugPrint('webview: ${widget.url}');
+    var uri = Uri.tryParse(widget.url);
+    var h = uri.queryParameters['height'];
+    debugPrint('h ==> $h');
+    var height = double.tryParse(h ?? '') ?? Get.width;
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -47,16 +51,19 @@ class _EmbedWebviewPageState extends State<EmbedWebviewPage> {
         children: [
           if (widget.header != null) widget.header,
           SizedBox(
-            height: Get.width,
+            height: height,
             child: InAppWebView(
-              initialUrl: widget.url,
+              // initialUrl: widget.url,
+              initialUrlRequest: URLRequest(
+                url: Uri.tryParse(widget.url),
+              ),
               onScrollChanged: (c, x, y) {
                 debugPrint('onscroll: ($x,$y)');
               },
               onLoadStart: (c, url) {
-                if (url != widget.url) {
+                if (url.path != widget.url) {
                   if (widget.lockUrl) c.goBack();
-                  widget.onUrlChanged?.call(url);
+                  widget.onUrlChanged?.call(url.path);
                 }
                 debugPrint('page load!: $url');
               },
@@ -156,12 +163,15 @@ class _WebviewPageState extends State<WebviewPage> {
         ),
         body: Container(
           child: InAppWebView(
-            initialUrl: widget.url,
+            // initialUrl: widget.url,
+            initialUrlRequest: URLRequest(
+              url: Uri.tryParse(widget.url),
+            ),
             onTitleChanged: (c, title) {
               _title.value = title;
             },
             onLoadStart: (c, url) {
-              _url.value = url;
+              _url.value = url.path;
             },
             onWebViewCreated: (c) {
               _controller = c;

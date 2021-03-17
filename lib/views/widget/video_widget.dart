@@ -50,7 +50,6 @@ class _LakeVideoPlayWidgetState extends State<LakeVideoPlayWidget> {
             controller = ChewieController(
               autoInitialize: true,
               videoPlayerController: player,
-              aspectRatio: 4 / 3,
             );
           }
           return Container(

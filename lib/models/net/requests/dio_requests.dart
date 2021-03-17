@@ -54,12 +54,12 @@ class DioReq {
   static onDioError(DioError e) {
     print(e.toString());
     print(e.request.path);
-    if (e.type == DioErrorType.RESPONSE) {
+    if (e.type == DioErrorType.response) {
       // print(e.response.statusCode); //403 权限不足（token过期）
       return {"data": 403};
-    } else if (e.type == DioErrorType.CONNECT_TIMEOUT) {
+    } else if (e.type == DioErrorType.connectTimeout) {
       return {"data": "连接超时，请检查网络"};
-    } else if (e.type == DioErrorType.DEFAULT) {
+    } else if (e.type == DioErrorType.other) {
       return {"data": "网络错误"};
     } else {
       return {"data": "${e.toString()}"};

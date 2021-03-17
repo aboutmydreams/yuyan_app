@@ -134,7 +134,6 @@ class CodeBlockWidget extends StatelessWidget {
                         children: _convert(
                             highlight.parse(source, language: language).nodes),
                       ),
-                      // scrollPhysics: NeverScrollableScrollPhysics(),
                     ),
                   ),
                 ),

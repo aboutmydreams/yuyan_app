@@ -76,12 +76,10 @@ class _MarkdownEditorPageState extends State<MarkdownEditorPage> {
                 ),
               ],
             ),
-            body: ZefyrScaffold(
-              child: ZefyrEditor(
-                controller: _zefyrController,
-                focusNode: _focusNode,
-                imageDelegate: NoteImageDelegate(id),
-              ),
+            body: ZefyrEditor(
+              controller: _zefyrController,
+              focusNode: _focusNode,
+              // imageDelegate: NoteImageDelegate(id),
             ),
           );
         },

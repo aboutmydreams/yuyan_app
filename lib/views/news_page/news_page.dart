@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/controller/notification_controller.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/util/analytics.dart';
 import 'package:yuyan_app/views/news_page/view/one_news.dart';
 import 'package:yuyan_app/views/widget/notification_absorb.dart';
 import 'package:yuyan_app/views/widget/org_space_widget.dart';
@@ -85,7 +84,6 @@ class _NotificationPageState extends State<NotificationPage>
 
   @override
   Widget build(BuildContext context) {
-    analytics.logEvent(name: 'news_page');
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(

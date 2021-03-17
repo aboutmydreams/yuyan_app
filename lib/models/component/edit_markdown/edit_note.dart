@@ -150,16 +150,17 @@ class _EditNotePageState extends State<EditNotePage> {
         ),
         body: Stack(
           children: [
-            ZefyrScaffold(
-              child: ZefyrEditor(
-                controller: _controller,
-                focusNode: _focusNode,
-                mode: _editing ? ZefyrMode.edit : ZefyrMode.select,
-                imageDelegate: CustomImageDelegate(),
-                keyboardAppearance:
-                    _darkTheme ? Brightness.dark : Brightness.light,
-              ),
+            // ZefyrScaffold(
+            //   child:
+            ZefyrEditor(
+              controller: _controller,
+              focusNode: _focusNode,
+              // mode: _editing ? ZefyrMode.edit : ZefyrMode.select,
+              // imageDelegate: CustomImageDelegate(),
+              keyboardAppearance:
+                  _darkTheme ? Brightness.dark : Brightness.light,
             ),
+            // ),
             Positioned(
               child: isPublishing ? loading() : SizedBox(height: 10),
             ),

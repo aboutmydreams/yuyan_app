@@ -1,36 +1,13 @@
 name: yuyan_app
-description: A new Flutter project.
 
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+description: 雨燕，一款第三方语雀移动客户端
 
 version: 1.1.1+1.1.1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.10.0 <3.0.0"
 
-# dependency_overrides:
-#   chewie:
-#     git:
-#       url: https://github.com/masewo/chewie.git
-dependency_overrides:
-  flutter_svg: ^0.19.1
-  flutter_webview_plugin:
-    git: https://github.com/aboutmydreams/flutter_webview_plugin.git
-  notus:
-    git: https://github.com/aboutmydreams/notus.git
-  # markdown / 富文本 编辑器
-  zefyr:
-    git: https://github.com/aboutmydreams/zefyr.git
-
+publish_to: none
 
 dependencies:
   flutter:
@@ -41,24 +18,52 @@ dependencies:
   cupertino_icons: ^1.0.0
   font_awesome_flutter: ^8.7.0
 
-  # goodlook bar
+  # 富文本编辑器, Bug多多
+  zefyr:
+    git:
+      url: git@github.com:dreamer2q/zefyr.git
+      ref: nullsafety
+      path: packages/zefyr
+  notus:
+    git:
+      url: git@github.com:dreamer2q/zefyr.git
+      ref: nullsafety
+      path: packages/notus
+
+
+  # 底部导航栏
   curved_navigation_bar: ^0.3.1
 
-  # scroll to html tag
+  # HTML渲染部分，主要用于渲染语雀文档
+  ## 文档瞄点
   scroll_to_index: 1.0.6
+  ## html渲染
+  flutter_html: # ^1.3.0
+    git:
+      ref: 47e3931596dc4bb1d5f6e6a38d829e91e54d9abb
+      url: https://github.com/vrtdev/flutter_html.git
+  ## 代码高亮支持
+  flutter_highlight: 0.6.0
+  ## 组件显示，支持缩放
+  photo_view: 0.10.3
+  ## 图片缓存
+  cached_network_image: ^2.0.0
+  ## 图片查看，编辑
+  extended_image: 3.0.0
+  ## 视频播放
+  chewie: ^1.0.0
+
+  # Webview相关
+  flutter_webview_plugin:
+    git: https://github.com/aboutmydreams/flutter_webview_plugin.git
+  flutter_inappwebview: 5.1.0+4
 
   # goodlook guide 液体
   liquid_swipe: ^1.5.0
   flutter_swiper: 1.1.6
 
-  # 解析html
-  flutter_html: ^1.3.0
-
-  # sha1 加密
-  crypto: ^2.1.3
-
   # 网络请求
-  dio: 3.0.10
+  dio: 4.0.0-beta7
   pretty_json: 1.1.0
 
   # 弱提示
@@ -70,76 +75,43 @@ dependencies:
 
   # 有序列表
   romanice: 1.0.0+1
-  # date picker
-  #  nepali_date_picker: 4.2.0+1
-  #hight light
-  flutter_highlight: 0.6.0
-  # latex
-  flutter_tex: 3.6.7+10
-  # photo_view
-  photo_view: 0.10.3
 
   # 下拉刷新
-  pull_to_refresh: 1.6.3
-
-  # 图片缓存
-  cached_network_image: ^2.0.0
-
-  # 图片查看
-  extended_image: 1.1.1
+  pull_to_refresh: 1.6.4
 
   # 写入文件
-  path_provider: ^1.6.11
+  path_provider: ^2.0.1
 
   # 状态管理
-  provider: ^4.0.4
   scoped_model: ^1.0.1
-  get: 3.25.6
+  get: 4.0.0-nullsafety.2
 
   # 数据分析
-  firebase_core: ^0.5.3 # This dependency was added during initial configuration.
-  firebase_analytics: ^6.3.0 # add dependency for Google Analytics for Firebase
-
-  chewie: ^0.12.0
-
-  # html
-  #  flutter_widget_from_html: ^0.5.2+1
+  #  firebase_core: ^0.5.3 # This dependency was added during initial configuration.
+  #  firebase_analytics: ^6.3.0 # add dependency for Google Analytics for Firebase
 
   # 缓存
-  shared_preferences: ^0.5.8
-  json_store: 1.2.0
-  get_storage:
+  shared_preferences: ^2.0.5
+  get_storage: 2.0.1
 
   # 分享
-  share: ^0.6.4+3
   share_extend: ^1.1.9
-
   # 权限
   permission_handler: ^5.0.0+hotfix.8
-
-  # webView
-  webview_flutter: 1.0.7
-  flutter_inappwebview: 4.0.0+4
-  # git: https://github.com/aboutmydreams/flutter_inappwebview.git
-  # flutter_webview_plugin: ^0.3.11
-
-  # flare
+  # flare动画
   flare_flutter: ^2.0.6
 
-  # request with cookie
-  requests: ^3.0.3
-
   # use svg
-  flutter_svg: ^0.19.1
+  flutter_svg: ^0.21.0-nullsafety.0
 
   # 裁剪 我的页面顶部背景
   flutter_custom_clippers: ^1.1.0
 
-  # clipboard
+  # clipboard复制代码
   clipboard: 0.1.2+8
 
   # 列表动画
-  flutter_staggered_animations: ^0.1.2
+  flutter_staggered_animations: 1.0.0
 
   # 话题标签颜色
   smart_color: ^0.2.2
@@ -160,14 +132,10 @@ dependencies:
   shifting_tabbar: ^0.3.1
 
   # 图片选择器
-  image_picker: ^0.6.7+22
-  # multi_image_picker: ^4.7.14
+  image_picker: ^0.7.2
 
   # lake to markdown
-  html2md: ^0.5.1
-
-  # markdown to quill
-  # quill_markdown: ^0.0.3
+  html2md: ^1.0.1
 
   # markdown 渲染器
   flutter_markdown: ^0.5.2
@@ -198,17 +166,6 @@ flutter:
     - assets/images/my_page/
     - assets/images/card/
 
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware.
-
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
   fonts:
     - family: Silom
       fonts:
@@ -218,11 +175,3 @@ flutter:
         - asset: assets/fonts/sans_bold.ttf
         # - asset: fonts/Schyler-Italic.ttf
         #   style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages

@@ -309,14 +309,14 @@ class _DocPageWebState extends State<DocPageWeb> {
                   padding: EdgeInsets.fromLTRB(0, 0, 0, 4),
                   color: Colors.white,
                   child: InAppWebView(
-                    initialUrl: theUrl,
+                    // initialUrl: theUrl,
                     initialOptions: InAppWebViewGroupOptions(
                       android: AndroidInAppWebViewOptions(
                         databaseEnabled: true,
                         domStorageEnabled: true,
                         allowContentAccess: true,
-                        allowFileAccessFromFileURLs: true,
-                        allowUniversalAccessFromFileURLs: true,
+                        // allowFileAccessFromFileURLs: true,
+                        // allowUniversalAccessFromFileURLs: true,
                         forceDark: AndroidForceDark.FORCE_DARK_AUTO,
                         // layoutAlgorithm:
                       ),
@@ -328,7 +328,6 @@ class _DocPageWebState extends State<DocPageWeb> {
                         allowsLinkPreview: false,
                       ),
                       crossPlatform: InAppWebViewOptions(
-                        debuggingEnabled: true,
                         cacheEnabled: true,
                         transparentBackground: true,
                         javaScriptCanOpenWindowsAutomatically: true,
@@ -336,18 +335,17 @@ class _DocPageWebState extends State<DocPageWeb> {
                         contentBlockers: [],
                       ),
                     ),
-                    initialHeaders: {},
                     onWebViewCreated: (InAppWebViewController controller) {
                       _webController = controller;
                     },
                     onLoadStart:
-                        (InAppWebViewController controller, String url) {
-                      setState(() {
-                        this.theUrl = url;
-                      });
+                        (InAppWebViewController controller, Uri url) {
+                      // setState(() {
+                      //   this.theUrl = url;
+                      // });
                     },
                     onLoadStop:
-                        (InAppWebViewController controller, String url) async {
+                        (InAppWebViewController controller, Uri url) async {
                       // 页面加载完成后注入js方法, 获取页面总高度
                       // var height = await _webController.evaluateJavascript(
                       //   source: 'document.body.scrollHeight;',

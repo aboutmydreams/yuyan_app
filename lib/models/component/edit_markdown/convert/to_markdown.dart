@@ -169,9 +169,9 @@ class _NotusMarkdownEncoder extends Converter<Delta, String> {
       _writeHeadingTag(buffer, attribute as NotusAttribute<int>);
     } else if (attribute.key == NotusAttribute.block.key) {
       _writeBlockTag(buffer, attribute as NotusAttribute<String>, close: close);
-    } else if (attribute.key == NotusAttribute.embed.key) {
-      _writeImageTag(buffer, attribute as NotusAttribute<Map<String, dynamic>>,
-          close: close);
+    // } else if (attribute.key == NotusAttribute.embed.key) {
+    //   _writeImageTag(buffer, attribute as NotusAttribute<Map<String, dynamic>>,
+    //       close: close);
     } else {
       throw new ArgumentError('Cannot handle $attribute');
     }

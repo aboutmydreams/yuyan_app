@@ -10,7 +10,6 @@ import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/controller/binding/app_binding.dart';
 import 'package:yuyan_app/state_manage/toppest.dart';
-import 'package:yuyan_app/util/analytics.dart';
 
 TopStateModel topModel1 = topModel;
 
@@ -41,7 +40,6 @@ class MyApp extends StatelessWidget {
       // 去除debug标志
       getPages: MyRoute.pages,
       navigatorObservers: <NavigatorObserver>[
-        observer,
         BotToastNavigatorObserver(),
       ],
       //加入路由统计

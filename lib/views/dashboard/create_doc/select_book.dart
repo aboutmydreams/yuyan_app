@@ -4,7 +4,6 @@ import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/all_doc_book_data.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
-import 'package:yuyan_app/util/analytics.dart';
 
 class SelectView extends StatelessWidget {
   const SelectView({Key key, this.book}) : super(key: key);
@@ -12,7 +11,6 @@ class SelectView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    analytics.logEvent(name: 'select_book');
     return ListTile(
       leading: userAvatar(book.user.avatarUrl, height: 30),
       title: Text(book.name),

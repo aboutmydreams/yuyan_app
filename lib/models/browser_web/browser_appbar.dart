@@ -50,7 +50,7 @@ class _BrowserWithBarState extends State<BrowserWithBar> {
         children: <Widget>[
           Positioned(
             child: InAppWebView(
-              initialUrl: url,
+              // initialUrl: url,
               initialOptions: InAppWebViewGroupOptions(
                 android: AndroidInAppWebViewOptions(
                   databaseEnabled: true,
@@ -64,7 +64,6 @@ class _BrowserWithBarState extends State<BrowserWithBar> {
                   allowsLinkPreview: false,
                 ),
                 crossPlatform: InAppWebViewOptions(
-                  debuggingEnabled: true,
                   cacheEnabled: true,
                   transparentBackground: true,
                   javaScriptCanOpenWindowsAutomatically: true,
@@ -72,19 +71,16 @@ class _BrowserWithBarState extends State<BrowserWithBar> {
                   contentBlockers: [],
                 ),
               ),
-              initialHeaders: {},
               onWebViewCreated: (InAppWebViewController controller) {
                 _webController = controller;
               },
-              onLoadStart:
-                  (InAppWebViewController controller, String otherUrl) {
-                print(otherUrl);
-                setState(() {
-                  this.url = otherUrl;
-                });
+              onLoadStart: (InAppWebViewController controller, Uri otherUrl) {
+                // print(otherUrl);
+                // setState(() {
+                //   this.url = otherUrl;
+                // });
               },
-              onLoadStop:
-                  (InAppWebViewController controller, String url) async {
+              onLoadStop: (InAppWebViewController controller, Uri url) async {
                 // 页面加载完成后注入js方法, 获取页面总高度
                 // 文档标题："document.title"
                 var height = await _webController.evaluateJavascript(
