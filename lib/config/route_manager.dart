@@ -29,6 +29,7 @@ import 'package:yuyan_app/views/my_page/setting/setting_page.dart';
 import 'package:yuyan_app/views/topic_page/topic_detail_page.dart';
 import 'package:yuyan_app/views/user_page/user_page.dart';
 import 'package:yuyan_app/views/webview_page/webview_page.dart';
+import 'package:yuyan_app/views/widget/lake_mention_widget.dart';
 
 // ZefyrController _controller;
 // bool _editing = true;
@@ -173,6 +174,13 @@ class MyRoute {
         user: user,
         heroTag: heroTag,
       ),
+      preventDuplicates: false,
+    );
+  }
+
+  static userByLogin(String login) {
+    Get.to(
+      UserByLoginPage(login: login),
       preventDuplicates: false,
     );
   }
