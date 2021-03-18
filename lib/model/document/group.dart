@@ -1,3 +1,4 @@
+import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/events/user_lite_seri.dart';
 
 class GroupSeri {
@@ -199,6 +200,24 @@ class GroupSeri {
       isPaid: isPaid,
       avatarUrl: avatarUrl,
       description: description,
+    );
+  }
+
+  UserSeri toUserSeri() {
+    return UserSeri(
+      id: id,
+      type: type,
+      login: login,
+      name: name,
+      avatar: avatar,
+      avatarUrl: avatarUrl,
+      description: description,
+      followersCount: followersCount,
+      followingCount: followingCount,
+      status: status,
+      public: public,
+      isPaid: isPaid,
+      memberLevel: memberLevel,
     );
   }
 }

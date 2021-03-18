@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:package_info/package_info.dart';

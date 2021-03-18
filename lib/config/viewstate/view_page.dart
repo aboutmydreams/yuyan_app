@@ -3,16 +3,23 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
+import 'package:yuyan_app/config/viewstate/view_state.dart';
 
 class FetchRefreshListViewBuilder<T extends FetchListValueController>
     extends StatelessWidget {
-  final Function(T) builder;
   final String tag;
+  final Widget Function(T) builder;
+  final Widget onLoading;
+  final Widget onEmpty;
+  final Widget Function(ViewError error) onError;
 
-  const FetchRefreshListViewBuilder({
+  FetchRefreshListViewBuilder({
     Key key,
     this.builder,
     this.tag,
+    this.onLoading,
+    this.onError,
+    this.onEmpty,
   }) : super(key: key);
 
   @override
@@ -20,13 +27,37 @@ class FetchRefreshListViewBuilder<T extends FetchListValueController>
     return GetBuilder<T>(
       tag: tag,
       autoRemove: false,
-      builder: (c) => SmartRefresher(
-        controller: c.refreshController,
-        onRefresh: () => c.onRefresh(),
-        onLoading: c.onRefreshMore,
-        child: builder(c),
-        // child: builder(c),
-      ),
+      builder: (c) {
+        if (c == null) {
+          return Container(
+            padding: const EdgeInsets.all(16),
+            margin: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.red,
+              ),
+            ),
+            child: Text(
+              'get controller: ${T.toString()} with tag: $tag'
+              'resulted in a null controller'
+              'did you forget to Get.put'
+              'or, you just mess up with tag',
+            ),
+          );
+        }
+        return c.stateBuilder(
+          onIdle: () => SmartRefresher(
+            controller: c.refreshController,
+            onRefresh: c.refreshCallback,
+            onLoading: c.loadMoreCallback,
+            enablePullUp: true,
+            child: builder(c),
+          ),
+          onLoading: onLoading,
+          onEmpty: onEmpty,
+          onError: onError,
+        );
+      },
     );
   }
 }

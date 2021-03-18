@@ -11,8 +11,9 @@ import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/views/dashboard/quick/note_editor/note_editor.dart';
 import 'package:yuyan_app/views/dashboard/quick/quick_view.dart';
 import 'package:yuyan_app/views/dashboard/recent/recent_page.dart';
-import 'package:yuyan_app/views/explore_page/search/search_bar.dart';
+import 'package:yuyan_app/views/explore_page/search/search_delegate.dart';
 import 'package:yuyan_app/views/widget/org_space_widget.dart';
+import 'package:yuyan_app/views/widget/search_action_widget.dart';
 
 class MyDashBoardPage extends StatefulWidget {
   MyDashBoardPage({Key key}) : super(key: key);
@@ -48,19 +49,7 @@ class _MyDashBoardPageState extends State<MyDashBoardPage> {
         title: Text("书桌"),
         leading: OrgSpaceLeadingWidget(),
         actions: [
-          IconButton(
-            icon: Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
-            tooltip: '搜索与我有关',
-            onPressed: () {
-              showSearch(
-                context: context,
-                delegate: SearchBarDelegate(aboutMe: true),
-              );
-            },
-          )
+          SearchActionWidget(),
         ],
       ),
       floatingActionButton: GestureDetector(

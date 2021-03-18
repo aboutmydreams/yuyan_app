@@ -4,6 +4,7 @@ import 'package:yuyan_app/model/document/comment.dart';
 import 'package:yuyan_app/model/document/design.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/doc_lite.dart';
+import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/document/group_user.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/events/book_event_seri.dart';
@@ -35,7 +36,7 @@ class Serializer {
       debugPrint('Serializer received null input => $json');
       return;
     }
-    if(json is List){
+    if (json is List) {
       debugPrint('json data is a List !');
     }
     _data = json;
@@ -52,6 +53,7 @@ class Serializer {
       'web.book': () => BookSeri.fromJson(_data),
       'web.user': () => UserSeri.fromJson(_data),
       'web.group_user': () => GroupUserSeri.fromJson(_data),
+      'web.group': () => GroupSeri.fromJson(_data),
       'web.comment': () => CommentSeri.fromJson(_data),
       'web.topic': () => TopicSeri.fromJson(_data),
       'web.doc_lite': () => DocLiteSeri.fromJson(_data),
@@ -59,9 +61,16 @@ class Serializer {
     };
   }
 
-  T serialize<T>() {
-    if (_serializer == null) {
+  T serialize<T>([String serializer]) {
+    if (_data == null) {
       return null;
+    }
+    if (_serializer == null) {
+      if (serializer == null) {
+        _serializer = '${T.toString()}'.replaceFirst('Seri', '');
+      } else {
+        _serializer = serializer;
+      }
     }
     if (!_serializer.startsWith('web')) {
       _serializer = 'web.' + _serializer.toLowerCase();

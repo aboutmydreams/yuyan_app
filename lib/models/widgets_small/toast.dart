@@ -103,27 +103,3 @@ myToast(BuildContext context, String text) {
     position: 'bottom', // String 提示框显示位置，默认是center，可设置top和bottom
   );
 }
-
-// myOldToast(String text) {
-//   return fluToast.Fluttertoast.showToast(
-//     msg: text,
-//     toastLength: fluToast.Toast.LENGTH_SHORT,
-//     gravity: fluToast.ToastGravity.CENTER,
-//     timeInSecForIos: 1,
-//     backgroundColor: Colors.yellow,
-//     fontSize: 16.0,
-//     textColor: Colors.black87,
-//   );
-// }
-
-// myToastTime(String text, int time1) {
-//   return Fluttertoast.showToast(
-//     msg: text,
-//     toastLength: Toast.LENGTH_SHORT,
-//     gravity: ToastGravity.CENTER,
-//     timeInSecForIos: time1,
-//     backgroundColor: Colors.yellow,
-//     fontSize: 16.0,
-//     textColor: Colors.black87,
-//   );
-// }

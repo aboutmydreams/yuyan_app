@@ -1,12 +1,45 @@
+import 'dart:math';
+
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
+import 'package:yuyan_app/controller/theme_controller.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/oauth2/random_string/random_string.dart';
 
 class Util {
+  static toast(String text) {
+    BotToast.showCustomText(
+      onlyOne: true,
+      duration: Duration(seconds: 2),
+      toastBuilder: (cancel) {
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          decoration: BoxDecoration(
+            color: ThemeController.to.primarySwatchColor,
+            boxShadow: [
+              BoxShadow(
+                color: Color.fromARGB(55, 0, 0, 0),
+                offset: Offset(1, 2),
+                blurRadius: 4,
+              ),
+            ],
+            borderRadius: BorderRadius.circular(32.0),
+          ),
+          child: Text(
+            "$text",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   static goUrl(String url) {
     MyRoute.webview('https://www.yuque.com' + url);
   }
@@ -153,5 +186,25 @@ extension StringEx on String {
 
   DateTime toDateTime() {
     return DateTime.tryParse(this);
+  }
+}
+
+extension ListEx<T> on List<T> {
+  T rand() {
+    final _random = new Random();
+    var item = this[_random.nextInt(this.length)];
+    return item;
+  }
+}
+
+extension NumEx<T extends num> on List<T> {
+  T sum() {
+    return this.reduce((a, b) => a + b);
+  }
+}
+
+extension IterEx<T extends num> on Iterable<T> {
+  T sum() {
+    return this.reduce((a, b) => a + b);
   }
 }

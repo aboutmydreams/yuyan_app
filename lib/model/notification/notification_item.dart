@@ -1,6 +1,5 @@
+import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/serializer/serializer.dart';
-
-import 'actor.dart';
 
 class NotificationItemSeri {
   dynamic params;
@@ -22,7 +21,7 @@ class NotificationItemSeri {
   String createdAt;
   String updatedAt;
 
-  Actor actor;
+  UserSeri actor;
 
   Serializer subject;
   Serializer secondSubject;
@@ -67,7 +66,7 @@ class NotificationItemSeri {
     readAt = json["read_at"];
     createdAt = json["created_at"];
     updatedAt = json["updated_at"];
-    actor = json["actor"] != null ? Actor.fromJson(json["actor"]) : null;
+    actor = json["actor"] != null ? UserSeri.fromJson(json["actor"]) : null;
 
     subject = json["subject"] != null
         ? Serializer(serializer: subjectType, json: json["subject"])

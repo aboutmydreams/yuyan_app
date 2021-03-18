@@ -24,6 +24,7 @@ import 'package:yuyan_app/model/document/user_profile.dart';
 import 'package:yuyan_app/model/events/event_seri.dart';
 import 'package:yuyan_app/model/notification/notification.dart';
 import 'package:yuyan_app/model/notification/notification_item.dart';
+import 'package:yuyan_app/model/search/search_result_seri.dart';
 import 'package:yuyan_app/model/serializer/serializer.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
 import 'package:yuyan_app/model/topic/topic_detail_seri.dart';
@@ -260,16 +261,16 @@ class ApiRepository {
     return list;
   }
 
-  static Future getMyBooks({int limit, int offset}) async {
-    var res = await api.get(
-      "/mine/follows",
-      queryParameters: {
-        "limit": limit,
-        "offset": offset,
-        "type": "Book",
-      },
-    );
-  }
+  // static Future getMyBooks({int limit, int offset}) async {
+  //   var res = await api.get(
+  //     "/mine/follows",
+  //     queryParameters: {
+  //       "limit": limit,
+  //       "offset": offset,
+  //       "type": "Book",
+  //     },
+  //   );
+  // }
 
   // 查看是否收藏(文章或团队)
   static Future<bool> getIfMark({
@@ -607,5 +608,26 @@ class ApiRepository {
     );
     var asp = (res.data as ApiResponse);
     return asp.data;
+  }
+
+  //# 搜索相关
+  static Future<SearchResultSeri> search({
+    String query = '',
+    //topic, book, doc, artboard, group, user, attachment, resource, note, content, edison
+    String type = 'doc',
+    int page = 1,
+    bool relateMe = false,
+  }) async {
+    var res = await api.get(
+      '/zsearch',
+      queryParameters: {
+        'q': query,
+        'p': page,
+        'type': type,
+        if (relateMe) 'related': relateMe,
+      },
+    );
+    var asp = (res.data as ApiResponse);
+    return SearchResultSeri.fromJson(asp.data);
   }
 }

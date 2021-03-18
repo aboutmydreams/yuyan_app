@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smart_color/smart_color.dart';
 import 'package:yuyan_app/config/route_manager.dart';
+import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/topic/labels.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
@@ -138,6 +139,8 @@ class TopicRowItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     data.labels ??= [];
 
+    UserSeri user = data.user ?? data.group.toUserSeri();
+
     return GestureDetector(
       onTap: () {
         // var url = "https://www.yuque.com/${data.group.login}/topics/${data.iid}";
@@ -171,12 +174,12 @@ class TopicRowItemWidget extends StatelessWidget {
             Row(
               children: <Widget>[
                 UserAvatarWidget(
-                  avatar: data.user.avatarUrl,
+                  avatar: user.avatarUrl,
                   height: 25,
                 ),
                 SizedBox(width: 8),
                 Text(
-                  data.user.name,
+                  user.name,
                   overflow: TextOverflow.ellipsis,
                   style: AppStyles.textStyleC,
                 )

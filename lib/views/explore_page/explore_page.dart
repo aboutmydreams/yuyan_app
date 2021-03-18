@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:yuyan_app/views/explore_page/search/search_bar.dart';
+import 'package:get/get.dart';
+import 'package:yuyan_app/views/explore_page/search/search_delegate.dart';
 import 'package:yuyan_app/views/widget/org_space_widget.dart';
+import 'package:yuyan_app/views/widget/search_action_widget.dart';
 import 'attention/attention_page.dart';
 import 'selection/selection_page.dart';
 
@@ -26,17 +28,8 @@ class _ExplorePageState extends State<ExplorePage>
           toolbarOpacity: 1.0,
           bottomOpacity: 5.0,
           leading: OrgSpaceLeadingWidget(),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.search,
-                color: Colors.white,
-              ),
-              tooltip: '在语雀中搜索',
-              onPressed: () {
-                showSearch(context: context, delegate: SearchBarDelegate());
-              },
-            )
+          actions: [
+            SearchActionWidget(),
           ],
           elevation: 0.0,
           title: TabBar(
