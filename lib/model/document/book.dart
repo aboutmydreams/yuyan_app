@@ -1,4 +1,4 @@
-import 'book_stack/summary.dart';
+import 'group_home/summary.dart';
 import 'meta/ability.dart';
 import 'user.dart';
 

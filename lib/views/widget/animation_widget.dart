@@ -8,6 +8,7 @@ class AnimationListWidget extends StatelessWidget {
   final IndexedWidgetBuilder itemBuilder;
   final int animationType;
   final ScrollPhysics physics;
+  final bool shrinkWrap;
 
   AnimationListWidget({
     Key key,
@@ -15,6 +16,7 @@ class AnimationListWidget extends StatelessWidget {
     this.itemCount,
     this.itemBuilder,
     this.physics,
+    this.shrinkWrap = false,
     this.animationType = 1,
   }) : super(key: key);
 
@@ -25,6 +27,7 @@ class AnimationListWidget extends StatelessWidget {
         physics: physics,
         controller: controller,
         itemCount: itemCount,
+        shrinkWrap: shrinkWrap,
         itemBuilder: (_, i) {
           return AnimationConfiguration.staggeredList(
             position: i,

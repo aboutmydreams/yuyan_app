@@ -7,13 +7,14 @@ import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/model/dashboard/user_recent_seri.dart';
 import 'package:yuyan_app/model/document/action.dart';
 import 'package:yuyan_app/model/document/book.dart';
-import 'package:yuyan_app/model/document/book_stack/book_stack.dart';
 import 'package:yuyan_app/model/document/card/card_video_info_seri.dart';
 import 'package:yuyan_app/model/document/card/vote_detail.dart';
 import 'package:yuyan_app/model/document/commen/comment_detail.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/doc_detail/doc_detail.dart';
 import 'package:yuyan_app/model/document/group.dart';
+import 'package:yuyan_app/model/document/group_home/book_stack.dart';
+import 'package:yuyan_app/model/document/group_home/group_home_seri.dart';
 import 'package:yuyan_app/model/document/group_user.dart';
 import 'package:yuyan_app/model/document/note/note.dart';
 import 'package:yuyan_app/model/document/note/note_status.dart';
@@ -159,6 +160,17 @@ class ApiRepository {
     var res = await api.get("/groups/$groupId/bookstacks");
     var asp = (res.data as ApiResponse).data;
     var list = (asp as List).map((e) => BookStackSeri.fromJson(e)).toList();
+    return list;
+  }
+
+  static Future<List<GroupViewBlockSeri>> getGroupHome({int groupId}) async {
+    var res = await api.get(
+      '/groups/$groupId/homepage',
+      queryParameters: {'include_data': true},
+    );
+    var asp = (res.data as ApiResponse);
+    var list =
+        (asp.data as List).map((e) => GroupViewBlockSeri.fromJson(e)).toList();
     return list;
   }
 

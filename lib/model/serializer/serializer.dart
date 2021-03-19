@@ -6,6 +6,7 @@ import 'package:yuyan_app/model/document/design.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/doc_lite.dart';
 import 'package:yuyan_app/model/document/group.dart';
+import 'package:yuyan_app/model/document/group_home/book_stack.dart';
 import 'package:yuyan_app/model/document/group_user.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/events/book_event_seri.dart';
@@ -24,11 +25,11 @@ class Serializer {
     return _serializer == type;
   }
 
-  Map _data;
+  dynamic _data;
 
-  Map get raw => _data;
+  dynamic get raw => _data;
 
-  Serializer({String serializer, Map json})
+  Serializer({String serializer, json})
       : _serializer = serializer,
         _data = json;
 
@@ -37,15 +38,18 @@ class Serializer {
       debugPrint('Serializer received null input => $json');
       return;
     }
-    if (json is List) {
-      debugPrint('json data is a List !');
+    if (json is Map) {
+      _data = json;
+      _serializer = json["_serializer"];
+    } else if (json is List) {
+      _data = json.map((e) => Serializer.fromJson(e)).toList();
+      _serializer = '_convert.list';
     }
-    _data = json;
-    _serializer = json["_serializer"];
   }
 
   Map<String, Function> _doSerializer() {
     return {
+      'web.book_stack': () => BookStackSeri.fromJson(_data),
       'web.user_lite': () => UserLiteSeri.fromJson(_data),
       'web.book_event': () => BookEventSeri.fromJson(_data),
       'web.doc_event': () => DocEventSeri.fromJson(_data),
@@ -59,6 +63,8 @@ class Serializer {
       'web.topic': () => TopicSeri.fromJson(_data),
       'web.doc_lite': () => DocLiteSeri.fromJson(_data),
       'web.design': () => DesignSeri.fromJson(_data),
+      '_convert.list': <T>() =>
+          (_data as List<Serializer>).map((e) => e.serialize<T>()).toList(),
     };
   }
 
@@ -66,19 +72,25 @@ class Serializer {
     if (_data == null) {
       return null;
     }
-    if (_serializer == null) {
-      if (serializer == null) {
-        _serializer = '${T.toString()}'.replaceFirst('Seri', '');
-      } else {
-        _serializer = serializer;
-      }
+    var seri = serializer ?? _serializer;
+    if (seri == null) {
+      seri = '${T.toString()}';
     }
-    if (!_serializer.startsWith('web')) {
-      _serializer = 'web.' + ReCase(_serializer).snakeCase;
+    if (seri.endsWith('Seri')) {
+      seri = seri.replaceFirst('Seri', '');
     }
-    var func = _doSerializer()[_serializer];
+    if (!seri.startsWith('_') && !seri.startsWith('web')) {
+      seri = 'web.' + ReCase(seri).snakeCase;
+    }
+    var func = _doSerializer()[seri];
     return func?.call() as T;
   }
 
-  Map toJson() => _data;
+  List<T> list<T>([String serializer]) {
+    var func = _doSerializer()[serializer ?? _serializer];
+    var lst = func?.call<T>() as List<T>;
+    return lst;
+  }
+
+  toJson() => _data;
 }

@@ -179,9 +179,9 @@ class SettingListWidget extends StatelessWidget {
                 "https://cdn.nlark.com/yuque/0/2020/png/164272/1581178391840-avatar/dfd33ab4-7115-4fce-b504-faeb9d3ca24d.png";
             Get.to(GroupPage(
               group: GroupSeri(
-                id: 671004,
-                name: "语燕",
-                description: "自缘不睹榴皮字，想像祇园蔓草书",
+                id: 2616655,
+                name: "Redhome",
+                description: "没有内容的哦",
                 avatarUrl: avatarUrl,
               ),
             ));
