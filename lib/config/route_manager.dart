@@ -72,6 +72,9 @@ class MyRoute {
   }
 
   static webview(String url) {
+    if (!url.startsWith('http')) {
+      url = 'https://www.yuque.com' + url;
+    }
     Get.to(
       WebviewPage(url: url),
       preventDuplicates: false,

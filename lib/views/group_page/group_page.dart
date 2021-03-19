@@ -2,10 +2,14 @@ import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
+import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/action_controller.dart';
 import 'package:yuyan_app/controller/global/group_controller.dart';
+import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/model/document/book.dart';
+import 'package:yuyan_app/model/document/doc_detail/contributors.dart';
 import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/document/group_home/book_stack.dart';
 import 'package:yuyan_app/model/document/group_home/group_home_seri.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recase/recase.dart';
+import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/comment.dart';
 import 'package:yuyan_app/model/document/design.dart';
@@ -49,6 +50,7 @@ class Serializer {
 
   Map<String, Function> _doSerializer() {
     return {
+      'web.quick_link': () => QuickLinkSeri.fromJson(_data),
       'web.book_stack': () => BookStackSeri.fromJson(_data),
       'web.user_lite': () => UserLiteSeri.fromJson(_data),
       'web.book_event': () => BookEventSeri.fromJson(_data),

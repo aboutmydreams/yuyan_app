@@ -49,6 +49,10 @@ class _HomeWidget extends StatelessWidget {
             stack: block.data.list<BookStackSeri>(),
           ),
         );
+      case 'banner':
+        return _BannerWidget(
+          data: block.data.list<QuickLinkSeri>(),
+        );
       // case 'custom':
       // case 'quickLinks':
       default:
@@ -61,6 +65,64 @@ class _HomeWidget extends StatelessWidget {
           child: Text('不支持主页类型: ${block.type}'),
         );
     }
+  }
+}
+
+class _BannerWidget extends StatelessWidget {
+  final List<QuickLinkSeri> data;
+
+  const _BannerWidget({
+    Key key,
+    this.data,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      width: Get.width,
+      height: 160,
+      child: Swiper(
+        itemCount: data.length,
+        itemBuilder: (_, i) {
+          var item = data[i];
+          Widget child = Container(
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+            child: Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: CachedNetworkImage(
+                    height: 160,
+                    imageUrl: item.icon,
+                    placeholder: (_, url) =>
+                        Container(color: AppColors.background),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Positioned(
+                  left: 8,
+                  bottom: 4,
+                  child: Text(
+                    '${item.title}',
+                    style: AppStyles.groupTextStyle.copyWith(
+                      backgroundColor: Colors.black.withOpacity(0.3),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+          return GestureDetector(
+            onTap: () {
+              MyRoute.webview(item.url);
+            },
+            child: child,
+          );
+        },
+      ),
+    );
   }
 }
 
