@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/style.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/global/user_controller.dart';
@@ -41,17 +42,21 @@ class LakeMentionWidget extends StatelessWidget {
   final String name;
   final String login;
   final bool showLogin;
+  final String before;
+  final double fontSize;
 
   const LakeMentionWidget({
     Key key,
     this.name,
     this.login,
+    this.fontSize = 12,
     this.showLogin = true,
+    this.before = '@',
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var text = '@$name';
+    var text = '$before$name';
     if (showLogin) {
       text += '($login)';
     }
@@ -63,6 +68,7 @@ class LakeMentionWidget extends StatelessWidget {
         text,
         style: TextStyle(
           color: Colors.blue,
+          fontSize: fontSize,
         ),
       ),
     );

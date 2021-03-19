@@ -53,6 +53,15 @@ class _HomeWidget extends StatelessWidget {
         return _BannerWidget(
           data: block.data.list<QuickLinkSeri>(),
         );
+      case 'docList':
+        return _BlockWidgetWrap(
+          title: block.title,
+          child: _DocListWidget(
+            docs: block.data.list<DocSeri>(),
+          ),
+        );
+      case 'events':
+        return null;
       // case 'custom':
       // case 'quickLinks':
       default:
@@ -331,6 +340,157 @@ class _BookTileWrap extends StatelessWidget {
                     "${book.description}",
                     style: AppStyles.textStyleCC,
                   )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _BlockWidgetWrap extends StatelessWidget {
+  final String title;
+  final Widget child;
+  final Border border;
+
+  const _BlockWidgetWrap({
+    Key key,
+    this.title,
+    this.child,
+    this.border = const Border(
+      top: BorderSide(
+        color: Colors.grey,
+        width: 0.24,
+      ),
+    ),
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 10, bottom: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+            child: Text(
+              '$title',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppStyles.textStyleB,
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            decoration: BoxDecoration(
+              border: border,
+            ),
+            child: child,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DocListWidget extends StatelessWidget {
+  final List<DocSeri> docs;
+
+  const _DocListWidget({
+    Key key,
+    this.docs,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 2,
+      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 6),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: docs.map((e) {
+            return _DocTileWidget(doc: e, last: e == docs.last);
+          }).toList(),
+        ),
+      ),
+    );
+  }
+}
+
+class _DocTileWidget extends StatelessWidget {
+  final DocSeri doc;
+  final bool last;
+  final Border border;
+
+  const _DocTileWidget({
+    Key key,
+    this.doc,
+    this.last = false,
+    this.border = const Border(
+      bottom: BorderSide(
+        width: 0.25,
+        color: Colors.grey,
+      ),
+    ),
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: last ? null : border,
+      ),
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.only(right: 8, left: 12),
+            child: AppIcon.iconType(doc.type, size: 24),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "${doc.title}",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppStyles.textStyleB,
+                ),
+                DefaultTextStyle(
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: Colors.black,
+                  ),
+                  child: Row(
+                    children: [
+                      LakeMentionWidget(
+                        before: '',
+                        showLogin: false,
+                        login: doc.user.login,
+                        name: doc.user.name,
+                        fontSize: 10,
+                      ),
+                      Text(
+                        ' 发布于 ',
+                        style: AppStyles.textStyleCC.copyWith(
+                          fontSize: 10,
+                        ),
+                      ),
+                      Text('${doc.book.name}'),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

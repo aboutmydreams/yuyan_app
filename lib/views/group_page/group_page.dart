@@ -9,6 +9,7 @@ import 'package:yuyan_app/controller/action_controller.dart';
 import 'package:yuyan_app/controller/global/group_controller.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/model/document/book.dart';
+import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/doc_detail/contributors.dart';
 import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/document/group_home/book_stack.dart';
@@ -18,14 +19,14 @@ import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/util/util.dart';
+import 'package:yuyan_app/views/explore_page/widget/doc_tile_widget.dart';
 import 'package:yuyan_app/views/widget/animation_widget.dart';
 import 'package:yuyan_app/views/widget/book_row_widget.dart';
 import 'package:yuyan_app/views/widget/drop_menu_item_widget.dart';
+import 'package:yuyan_app/views/widget/lake_mention_widget.dart';
 import 'package:yuyan_app/views/widget/topic_item_widget.dart';
 import 'package:yuyan_app/views/widget/user_flexible_widget.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
-
-import 'widget/group_home_widget.dart';
 
 part 'widget/home_widget.dart';
 
