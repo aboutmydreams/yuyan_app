@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recase/recase.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/comment.dart';
 import 'package:yuyan_app/model/document/design.dart';
@@ -73,7 +74,7 @@ class Serializer {
       }
     }
     if (!_serializer.startsWith('web')) {
-      _serializer = 'web.' + _serializer.toLowerCase();
+      _serializer = 'web.' + ReCase(_serializer).snakeCase;
     }
     var func = _doSerializer()[_serializer];
     return func?.call() as T;

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:yuyan_app/views/explore_page/search/search_delegate.dart';
 import 'package:yuyan_app/views/widget/org_space_widget.dart';
 import 'package:yuyan_app/views/widget/search_action_widget.dart';
 import 'attention/attention_page.dart';

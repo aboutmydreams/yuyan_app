@@ -54,6 +54,9 @@ class SearchController extends FetchListValueController<SearchResultSeri> {
 
   int get numHits => value.map((e) => e.numHits).sum();
 
+  /// 重写检查空数据的方法
+  bool isEmpty(data) => data.map((e) => e.numHits).sum() == 0;
+
   List<SearchHitSeri> get hits =>
       value.map((e) => e.hits).reduce((a, b) => a + b);
 
@@ -61,12 +64,6 @@ class SearchController extends FetchListValueController<SearchResultSeri> {
   bool relateMe;
 
   int page = 1;
-
-  // onInit(){
-  //  super.onInit();
-  //
-  //  doSearch(text);
-  // }
 
   doSearch(String text, {bool relate = false}) {
     query = text;

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:yuyan_app/util/util.dart';
-import 'package:yuyan_app/views/explore_page/search/search_result_page.dart';
+import 'package:yuyan_app/views/search_page/search_result_page.dart';
 
 class SearchBarDelegate extends SearchDelegate {
   SearchBarDelegate() : super(searchFieldLabel: 'Search');
 
-  int pageIndex = 0;
+  var pageIndex = 0.obs;
 
   // 重写叉叉
   @override
@@ -57,7 +58,7 @@ class SearchBarDelegate extends SearchDelegate {
       var tipList = ["🔍 丶❔", "找点什么呢", "先打字再 🔍 ❗"];
       Util.toast(tipList.rand());
     } else {
-      pageIndex = index;
+      pageIndex.value = index;
       showResults(null);
     }
   }

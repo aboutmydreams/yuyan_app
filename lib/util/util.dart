@@ -180,6 +180,20 @@ class Util {
 }
 
 extension StringEx on String {
+  static Map<String, String> eventType = {
+    "update_doc": "更新了文档",
+    "like_doc": "打赏了稻谷",
+    "publish_doc": "发布了文章",
+    "watch_book": "关注了知识库",
+    "follow_user": "关注了雀友",
+    "like_artboard": "给画板赞赏了稻谷",
+    "upload_artboards": "更新了画板"
+  };
+
+  String transEvent() {
+    return eventType[this] ?? '未知事件';
+  }
+
   String clip(int max, {bool ellipsis = false}) {
     return Util.stringClip(this, max, ellipsis: ellipsis);
   }

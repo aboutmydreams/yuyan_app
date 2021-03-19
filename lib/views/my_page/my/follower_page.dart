@@ -3,7 +3,7 @@ import 'package:yuyan_app/config/viewstate/view_page.dart';
 import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/views/widget/animation_widget.dart';
-import 'package:yuyan_app/views/widget/follow_row_widget.dart';
+import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class MyFollowerPage extends FetchRefreshListViewPage<MyFollowerController> {
   MyFollowerPage() : super(title: '关注我的');
@@ -14,7 +14,7 @@ class MyFollowerPage extends FetchRefreshListViewPage<MyFollowerController> {
     return AnimationListWidget(
       itemCount: data.length,
       itemBuilder: (_, i) {
-        return FollowRowItemWidget(user: data[i]);
+        return UserFollowTileWidget(user: data[i]);
       },
     );
   }

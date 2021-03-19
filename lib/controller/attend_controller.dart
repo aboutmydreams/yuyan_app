@@ -17,16 +17,6 @@ class AttendDataProvider extends BaseSaveListJson<EventSeri> {
 }
 
 class AttendController extends FetchSavableController<AttendDataProvider> {
-  static Map<String, String> eventType = {
-    "update_doc": "更新了文档",
-    "like_doc": "打赏了稻谷",
-    "publish_doc": "发布了文章",
-    "watch_book": "关注了知识库",
-    "follow_user": "关注了雀友",
-    "like_artboard": "给画板赞赏了稻谷",
-    "upload_artboards": "更新了画板"
-  };
-
   AttendController()
       : super(
           initialRefresh: true,

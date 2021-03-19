@@ -18,14 +18,7 @@ Widget userEvent(BuildContext context,
     children: [
       GestureDetector(
         onTap: () {
-          OpenPage.user(
-            context,
-            login: login,
-            name: name,
-            avatarUrl: userImg,
-            userId: userId,
-            tag: tag,
-          );
+
         },
         child: Hero(tag: tag, child: userAvatar(userImg)),
       ),
@@ -36,15 +29,6 @@ Widget userEvent(BuildContext context,
           margin: EdgeInsets.only(left: 14, bottom: 1),
           child: GestureDetector(
             onTap: () {
-              // openUrl(context, "https://www.yuque.com/$login");
-              OpenPage.user(
-                context,
-                login: login,
-                name: name,
-                avatarUrl: userImg,
-                userId: userId,
-                tag: tag,
-              );
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -97,14 +81,6 @@ Widget docUserEvent(BuildContext context,
   tag ??= getTag();
   return GestureDetector(
     onTap: () {
-      OpenPage.user(
-        context,
-        login: login,
-        name: name,
-        avatarUrl: userImg,
-        userId: userId,
-        tag: tag,
-      );
     },
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,

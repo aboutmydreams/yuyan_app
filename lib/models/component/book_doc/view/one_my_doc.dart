@@ -42,14 +42,6 @@ Widget buildDoc(BuildContext context, Map data) {
     onTap: () {
       bool onlyUser = data["onlyUser"] ?? false;
       if ((data["type"] == "Doc") || (data["type"] == "doc")) {
-        OpenPage.docWeb(
-          context,
-          login: data["login"],
-          bookId: data["bookId"],
-          docId: data["docId"],
-          bookSlug: data["bookSlug"],
-          onlyUser: onlyUser,
-        );
       } else {
         openUrl(context, url);
       }

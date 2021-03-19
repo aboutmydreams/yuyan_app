@@ -11,7 +11,6 @@ import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/views/dashboard/quick/note_editor/note_editor.dart';
 import 'package:yuyan_app/views/dashboard/quick/quick_view.dart';
 import 'package:yuyan_app/views/dashboard/recent/recent_page.dart';
-import 'package:yuyan_app/views/explore_page/search/search_delegate.dart';
 import 'package:yuyan_app/views/widget/org_space_widget.dart';
 import 'package:yuyan_app/views/widget/search_action_widget.dart';
 

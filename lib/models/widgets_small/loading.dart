@@ -16,6 +16,8 @@ Widget loading() {
 }
 
 class ViewLoadingWidget extends StatelessWidget {
+  const ViewLoadingWidget();
+
   @override
   Widget build(BuildContext context) {
     return Center(

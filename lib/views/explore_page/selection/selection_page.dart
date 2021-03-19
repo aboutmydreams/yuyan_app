@@ -259,8 +259,8 @@ class __ExploreBannerWidgetState extends State<_ExploreBannerWidget>
             Spacer(),
             Container(
               height: 46,
-              child: UserTileWidget(
-                user: data.user,
+              child: UserActionTileWidget(
+                user: data.user.toUserLiteSeri(),
                 title: '${data.title}',
                 subTitle: '${data.user.name} 发布于 ${data.book.name}',
               ),

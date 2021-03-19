@@ -144,6 +144,9 @@ dependencies:
   # markdown 渲染器
   flutter_markdown: ^0.5.2
 
+  ## 字符串格式
+  recase: 3.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -6,9 +6,9 @@ import 'package:yuyan_app/controller/global/user_controller.dart';
 import 'package:yuyan_app/model/events/user_lite_seri.dart';
 import 'package:yuyan_app/models/widgets_small/menu_item.dart';
 import 'package:yuyan_app/views/widget/book_row_widget.dart';
-import 'package:yuyan_app/views/widget/follow_row_widget.dart';
-import 'package:yuyan_app/views/widget/group_row_widget.dart';
+import 'package:yuyan_app/views/widget/group_widget.dart';
 import 'package:yuyan_app/views/widget/user_flexible_widget.dart';
+import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class UserPage extends StatefulWidget {
   final UserLiteSeri user;
@@ -144,7 +144,7 @@ class _UserPageState extends State<UserPage>
               builder: (c) => c.stateBuilder(
                 onIdle: () => ListView.builder(
                   itemCount: c.value.length,
-                  itemBuilder: (_, i) => GroupRowItemWidget(
+                  itemBuilder: (_, i) => GroupTileWidget(
                     group: c.value[i],
                   ),
                 ),
@@ -155,7 +155,7 @@ class _UserPageState extends State<UserPage>
               builder: (c) => c.stateBuilder(
                 onIdle: () => ListView.builder(
                   itemCount: c.value.length,
-                  itemBuilder: (_, i) => FollowRowItemWidget(
+                  itemBuilder: (_, i) => UserFollowTileWidget(
                     user: c.value[i],
                     hideButton: false,
                   ),
@@ -167,7 +167,7 @@ class _UserPageState extends State<UserPage>
               builder: (c) => c.stateBuilder(
                 onIdle: () => ListView.builder(
                   itemCount: c.value.length,
-                  itemBuilder: (_, i) => FollowRowItemWidget(
+                  itemBuilder: (_, i) => UserFollowTileWidget(
                     user: c.value[i],
                     hideButton: false,
                   ),

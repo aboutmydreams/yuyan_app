@@ -46,12 +46,14 @@ class FetchRefreshListViewBuilder<T extends FetchListValueController>
           );
         }
         return c.stateBuilder(
-          onIdle: () => SmartRefresher(
-            controller: c.refreshController,
-            onRefresh: c.refreshCallback,
-            onLoading: c.loadMoreCallback,
-            enablePullUp: true,
-            child: builder(c),
+          onIdle: () => Scrollbar(
+            child: SmartRefresher(
+              controller: c.refreshController,
+              onRefresh: c.refreshCallback,
+              onLoading: c.loadMoreCallback,
+              enablePullUp: true,
+              child: builder(c),
+            ),
           ),
           onLoading: onLoading,
           onEmpty: onEmpty,

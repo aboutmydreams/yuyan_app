@@ -4,8 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/net/api.dart';
-import 'package:yuyan_app/models/widgets_small/loading.dart';
-import 'package:yuyan_app/models/widgets_small/nothing.dart';
+
+import 'view_state_widget.dart';
 
 enum ViewState {
   idle, //加载完毕，闲置状态
@@ -225,16 +225,14 @@ mixin ControllerStateMixin on GetxController {
       case ViewState.idle:
         return onIdle();
       case ViewState.empty:
-        return onEmpty ?? ViewEmptyWidget();
+        return onEmpty ?? const ViewEmptyWidget();
       case ViewState.loading:
-        return onLoading ?? ViewLoadingWidget();
+        return onLoading ?? const ViewLoadingWidget();
       case ViewState.error:
         if (onError != null) {
           return onError(error);
         }
-        return Center(
-          child: Text('error: $error'),
-        );
+        return ViewErrorWidget(error: error);
       default:
       //当状态为空的情况
     }

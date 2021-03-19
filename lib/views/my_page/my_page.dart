@@ -5,7 +5,7 @@ import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/controller/version_controller.dart';
 import 'package:yuyan_app/model/document/group.dart';
-import 'package:yuyan_app/models/component/group/group_page.dart';
+import 'package:yuyan_app/views/group_page/group_page.dart';
 import 'package:yuyan_app/views/my_page/widget/user_info_card_widget.dart';
 import 'package:yuyan_app/views/widget/animation_widget.dart';
 import 'package:yuyan_app/views/widget/setting_item_widget.dart';
@@ -177,7 +177,7 @@ class SettingListWidget extends StatelessWidget {
             // ));
             final avatarUrl =
                 "https://cdn.nlark.com/yuque/0/2020/png/164272/1581178391840-avatar/dfd33ab4-7115-4fce-b504-faeb9d3ca24d.png";
-            Get.to(GroupPage2(
+            Get.to(GroupPage(
               group: GroupSeri(
                 id: 671004,
                 name: "语燕",

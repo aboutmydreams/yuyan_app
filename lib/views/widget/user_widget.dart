@@ -4,21 +4,178 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/model/document/user.dart';
+import 'package:yuyan_app/model/events/user_lite_seri.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/util/util.dart';
 
+import 'follow_button_widget.dart';
+
 class UserTileWidget extends StatelessWidget {
+  final UserLiteSeri user;
+
+  const UserTileWidget({
+    Key key,
+    this.user,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final heroTag = Util.genHeroTag();
+    Widget child = Container(
+      height: 70,
+      margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+      decoration: BoxDecoration(
+        color: AppColors.background,
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromARGB(25, 0, 0, 0),
+            offset: Offset(1, 1),
+            blurRadius: 2,
+          ),
+        ],
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: Row(
+        children: <Widget>[
+          SizedBox(width: 16),
+          Hero(
+            tag: heroTag,
+            child: UserAvatarWidget(
+              avatar: user.avatarUrl,
+              height: 50,
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.5,
+            margin: EdgeInsets.only(left: 16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    user.name.clip(10, ellipsis: true),
+                    style: AppStyles.textStyleB,
+                  ),
+                ),
+                SizedBox(height: 2),
+                if (user.description != null)
+                  Container(
+                    child: Text(
+                      user.description.clip(15, ellipsis: true),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppStyles.textStyleC,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+    return GestureDetector(
+      onTap: () {
+        MyRoute.user(
+          user: user,
+          heroTag: heroTag,
+        );
+      },
+      child: child,
+    );
+  }
+}
+
+class UserFollowTileWidget extends StatelessWidget {
   final UserSeri user;
+  final bool isFollow;
+  final bool hideButton;
+
+  const UserFollowTileWidget({
+    Key key,
+    this.user,
+    this.isFollow,
+    this.hideButton = true,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // user.isfollow = true;
+    // String tag = Util.genHeroTag();
+    return GestureDetector(
+      onTap: () {
+        MyRoute.user(user: user.toUserLiteSeri());
+      },
+      child: Container(
+        height: 70,
+        margin: EdgeInsets.only(left: 5, top: 2, bottom: 8, right: 5),
+        decoration: BoxDecoration(
+          color: AppColors.background,
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromARGB(25, 0, 0, 0),
+              offset: Offset(1, 2),
+              blurRadius: 4,
+            ),
+          ],
+          borderRadius: BorderRadius.all(Radius.circular(5)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(width: 20),
+            UserAvatarWidget(avatar: user.avatarUrl, height: 50),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.4,
+              margin: EdgeInsets.only(left: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      user.name.clip(10, ellipsis: true),
+                      style: AppStyles.textStyleB,
+                    ),
+                  ),
+                  SizedBox(height: 2),
+                  if (user.description != null)
+                    Container(
+                      child: Text(
+                        user.description.clip(15, ellipsis: true),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppStyles.textStyleC,
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            Spacer(),
+            if (!hideButton)
+              FollowButtonWidget(
+                user: user,
+                initialFollow: isFollow,
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class UserActionTileWidget extends StatelessWidget {
+  final UserLiteSeri user;
   final String title;
   final String subTitle;
-  final String time;
+  final String actionTime;
 
-  UserTileWidget({
+  UserActionTileWidget({
     Key key,
     this.user,
     this.title,
     this.subTitle,
-    this.time,
+    this.actionTime,
   }) : super(key: key);
 
   @override
@@ -54,11 +211,11 @@ class UserTileWidget extends StatelessWidget {
             ),
           ),
         ),
-        if (!GetUtils.isNullOrBlank(time))
+        if (!GetUtils.isNullOrBlank(actionTime))
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              Util.timeCut("$time"),
+              Util.timeCut("$actionTime"),
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: AppColors.primaryText,
@@ -73,7 +230,7 @@ class UserTileWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         MyRoute.user(
-          user: user.toUserLiteSeri(),
+          user: user,
           heroTag: tag,
         );
       },

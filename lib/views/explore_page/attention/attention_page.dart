@@ -13,6 +13,7 @@ import 'package:yuyan_app/models/widgets_small/loading.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/util/util.dart';
+import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class AttentionPage extends StatelessWidget {
   @override
@@ -30,14 +31,17 @@ class AttentionPage extends StatelessWidget {
               (state) {
                 var data = state.data;
                 return ListView.builder(
+                  key: PageStorageKey('attention'),
                   itemCount: data.length,
                   itemBuilder: (BuildContext context, int index) {
                     return _AttendItem(data[index]);
                   },
                 );
               },
-              onLoading: loading(),
-              onEmpty: NothingPage(top: 100, text: "去关注一些人叭~"),
+              onEmpty: NothingPage(
+                top: 100,
+                text: "去关注一些人叭~",
+              ),
             ),
           );
         },
@@ -121,10 +125,10 @@ class _ToUserWidget extends StatelessWidget {
                 Container(
                   height: 44,
                   margin: EdgeInsets.only(right: 3),
-                  child: _UserLiteWidget(
+                  child: UserActionTileWidget(
                     user: item.actor,
-                    eventTime: item.updatedAt,
-                    eventType: item.eventType,
+                    actionTime: item.updatedAt,
+                    subTitle: item.eventType.transEvent(),
                   ),
                 ),
                 Container(
@@ -152,75 +156,75 @@ class _ToUserWidget extends StatelessWidget {
   }
 }
 
-class _UserLiteWidget extends StatelessWidget {
-  final UserLiteSeri user;
-  final String eventType;
-  final String eventTime;
-
-  const _UserLiteWidget({
-    Key key,
-    this.user,
-    this.eventTime,
-    this.eventType,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final tag = Util.genHeroTag();
-    final eventDesc = AttendController.eventType[eventType];
-    return InkWell(
-      onTap: () => MyRoute.user(user: user, heroTag: tag),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Hero(
-            tag: tag,
-            child: userAvatar(user.avatarUrl),
-          ),
-          Expanded(
-            flex: 1,
-            child: Container(
-              height: 44,
-              margin: EdgeInsets.only(left: 14, bottom: 1),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "${user.name}",
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                    style: AppStyles.textStyleBB,
-                  ),
-                  SizedBox(height: 2),
-                  Text(
-                    "$eventDesc",
-                    textAlign: TextAlign.center,
-                    style: AppStyles.textStyleCC,
-                  )
-                ],
-              ),
-            ),
-          ),
-          if (eventTime != null)
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                Util.timeCut("$eventTime"),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: AppColors.primaryText,
-                  fontFamily: "PingFang SC",
-                  fontWeight: FontWeight.w400,
-                  fontSize: 12,
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-}
+// class _UserLiteWidget extends StatelessWidget {
+//   final UserLiteSeri user;
+//   final String eventType;
+//   final String eventTime;
+//
+//   const _UserLiteWidget({
+//     Key key,
+//     this.user,
+//     this.eventTime,
+//     this.eventType,
+//   }) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final tag = Util.genHeroTag();
+//     final eventDesc = AttendController.eventType[eventType];
+//     return InkWell(
+//       onTap: () => MyRoute.user(user: user, heroTag: tag),
+//       child: Row(
+//         crossAxisAlignment: CrossAxisAlignment.center,
+//         children: [
+//           Hero(
+//             tag: tag,
+//             child: userAvatar(user.avatarUrl),
+//           ),
+//           Expanded(
+//             flex: 1,
+//             child: Container(
+//               height: 44,
+//               margin: EdgeInsets.only(left: 14, bottom: 1),
+//               child: Column(
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   Text(
+//                     "${user.name}",
+//                     maxLines: 1,
+//                     textAlign: TextAlign.center,
+//                     style: AppStyles.textStyleBB,
+//                   ),
+//                   SizedBox(height: 2),
+//                   Text(
+//                     "$eventDesc",
+//                     textAlign: TextAlign.center,
+//                     style: AppStyles.textStyleCC,
+//                   )
+//                 ],
+//               ),
+//             ),
+//           ),
+//           if (eventTime != null)
+//             Align(
+//               alignment: Alignment.centerLeft,
+//               child: Text(
+//                 Util.timeCut("$eventTime"),
+//                 textAlign: TextAlign.center,
+//                 style: TextStyle(
+//                   color: AppColors.primaryText,
+//                   fontFamily: "PingFang SC",
+//                   fontWeight: FontWeight.w400,
+//                   fontSize: 12,
+//                 ),
+//               ),
+//             ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class _ToDocWidget extends StatelessWidget {
   final EventSeri item;
@@ -252,7 +256,7 @@ class _ToDocWidget extends StatelessWidget {
             bookId: sub.bookId,
             slug: sub.slug,
           );
-        }else{
+        } else {
           MyRoute.bookDocs(sub2.id);
         }
       },
@@ -268,53 +272,47 @@ class _ToDocWidget extends StatelessWidget {
             ),
           ],
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: EdgeInsets.only(left: 18, right: 19),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 44,
-                    margin: EdgeInsets.only(right: 3),
-                    child: _UserLiteWidget(
-                      user: item.actor,
-                      eventType: item.eventType,
-                      eventTime: time,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 7),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            "$title",
-                            textAlign: TextAlign.start,
-                            style: AppStyles.textStyleB,
-                          ),
-                        ),
-                        if (!desc.isBlank)
-                          Container(
-                            margin: EdgeInsets.only(top: 7),
-                            child: Text(
-                              "$desc",
-                              textAlign: TextAlign.start,
-                              style: AppStyles.textStyleC,
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                ],
+        child: Container(
+          margin: EdgeInsets.only(left: 18, right: 19),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 44,
+                margin: EdgeInsets.only(right: 3),
+                child: UserActionTileWidget(
+                  user: item.actor,
+                  actionTime: time,
+                  subTitle: item.eventType.transEvent(),
+                ),
               ),
-            ),
-          ],
+              Container(
+                margin: EdgeInsets.only(top: 7),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "$title",
+                        textAlign: TextAlign.start,
+                        style: AppStyles.textStyleB,
+                      ),
+                    ),
+                    if (!desc.isBlank)
+                      Container(
+                        margin: EdgeInsets.only(top: 7),
+                        child: Text(
+                          "$desc",
+                          textAlign: TextAlign.start,
+                          style: AppStyles.textStyleC,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -576,10 +574,10 @@ class _ToBookWidget extends StatelessWidget {
             Container(
               height: 44,
               margin: EdgeInsets.only(right: 3),
-              child: _UserLiteWidget(
+              child: UserActionTileWidget(
                 user: item.actor,
-                eventType: item.eventType,
-                eventTime: item.updatedAt,
+                actionTime: item.updatedAt,
+                subTitle: item.eventType.transEvent(),
               ),
             ),
             Container(

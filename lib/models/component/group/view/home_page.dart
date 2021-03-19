@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/models/component/open_page.dart';
 import 'package:yuyan_app/models/net/requests_api/group/data/group_home_data.dart';
 import 'package:yuyan_app/util/time_cut.dart';
 import 'package:yuyan_app/models/widgets_small/loading.dart';
@@ -115,13 +114,13 @@ Widget oneHomeDoc(
     BuildContext context, Summary data, String login, String bookSlug) {
   return InkWell(
     onTap: () {
-      OpenPage.docWeb(
-        context,
-        login: login,
-        bookSlug: bookSlug,
-        bookId: data.bookId,
-        docId: data.id,
-      );
+      // OpenPage.docWeb(
+      //   context,
+      //   login: login,
+      //   bookSlug: bookSlug,
+      //   bookId: data.bookId,
+      //   docId: data.id,
+      // );
     },
     child: Container(
       padding: EdgeInsets.fromLTRB(0, 7, 0, 2),

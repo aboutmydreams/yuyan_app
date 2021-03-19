@@ -3,8 +3,7 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
-import 'package:yuyan_app/models/widgets_small/loading.dart';
-import 'package:yuyan_app/models/widgets_small/nothing.dart';
+import 'package:yuyan_app/config/viewstate/view_state_widget.dart';
 
 /// 获取网络数据，携带状态管理。
 /// 子类需要实现[fetch]接口，用于获取数据
@@ -31,12 +30,18 @@ abstract class FetchValueController<T> extends GetxController
 
   T get value => _value;
 
+  /// 更新保存的[value]，并从构建监听的子组件
   set value(T newValue) {
     _value = newValue;
     update();
   }
 
+  /// 数据是否可用，用于判断刷新时候是否需要切换[ViewState.loading]状态
   bool get valueAvailable => _value != null;
+
+  /// 检查获取的数据是否是空数据，用于切换[ViewState.empty]状态
+  /// 子类可以重写，用于处理非[List]或者[List]永远非空的情况
+  bool isEmpty(T data) => GetUtils.isNullOrBlank(data);
 
   @protected
   initFetch() => onRefresh(force: true);
@@ -50,7 +55,7 @@ abstract class FetchValueController<T> extends GetxController
         setLoading();
       }
       var data = await fetch();
-      if (GetUtils.isNullOrBlank(data)) {
+      if (isEmpty(data)) {
         /// 如果之前的数据不可用，置为空状态
         /// 否则，说明之前已经存在数据，这次加载数据失败!
         /// 但是并不触发空状态，为了更好的用户体验
@@ -120,6 +125,7 @@ abstract class FetchListValueController<T>
   /// 加载更多数据，快捷方法，用于[SmartRefresh]组件
   loadMoreCallback() => onRefreshMore();
 
+  /// 加入了处理[RefreshController]的逻辑，其它流程和父类一样
   @override
   onRefresh({bool force = false}) async {
     try {
@@ -128,7 +134,7 @@ abstract class FetchListValueController<T>
       }
       refreshController.resetNoData();
       var data = await fetch();
-      if (GetUtils.isNullOrBlank(data)) {
+      if (isEmpty(data)) {
         if (force || !valueAvailable) {
           setEmpty();
         }
@@ -147,10 +153,11 @@ abstract class FetchListValueController<T>
     }
   }
 
+  /// 引入加载更多的流程，方便分页加载
   onRefreshMore() async {
     try {
       var data = await fetchMore();
-      if (GetUtils.isNullOrBlank(data)) {
+      if (isEmpty(data)) {
         refreshController.loadNoData();
       } else {
         _value.addAll(data);
@@ -163,9 +170,10 @@ abstract class FetchListValueController<T>
     }
   }
 
+  /// 如果需要[onRefreshMore]的功能，请重新此方法
   Future<List<T>> fetchMore() => null;
 
-  //convenient methods
+  /// convenient methods
   void add(T newItem) {
     _value?.add(newItem);
     update();
@@ -277,16 +285,14 @@ abstract class FetchSavableController<T extends BaseSavableJson>
       case ViewState.idle:
         return builder(value);
       case ViewState.empty:
-        return onEmpty ?? ViewEmptyWidget();
+        return onEmpty ?? const ViewEmptyWidget();
       case ViewState.loading:
-        return onLoading ?? ViewLoadingWidget();
+        return onLoading ?? const ViewLoadingWidget();
       case ViewState.error:
         if (onError != null) {
           return onError(error);
         }
-        return Center(
-          child: Text('error: $error}'),
-        );
+        return ViewErrorWidget(error: error);
     }
     return SizedBox.shrink();
   }

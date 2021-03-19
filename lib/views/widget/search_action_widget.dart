@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yuyan_app/views/explore_page/search/search_delegate.dart';
+import 'package:yuyan_app/views/search_page/search_delegate.dart';
 
 class SearchActionWidget extends StatelessWidget {
   @override

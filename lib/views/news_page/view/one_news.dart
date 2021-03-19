@@ -110,14 +110,14 @@ class NotificationItemWidget extends StatelessWidget {
                 // var url = "https://www.yuque.com/${data.actor.login}";
                 // openUrl(context, url);
                 if (data.actor != null) {
-                  OpenPage.user(
-                    context,
-                    login: data.actor.login,
-                    name: data.actor.name,
-                    avatarUrl: data.actor.avatarUrl,
-                    userId: data.actor.id,
-                    tag: tag,
-                  );
+                  // OpenPage.user(
+                  //   context,
+                  //   login: data.actor.login,
+                  //   name: data.actor.name,
+                  //   avatarUrl: data.actor.avatarUrl,
+                  //   userId: data.actor.id,
+                  //   tag: tag,
+                  // );
                 }
               },
               child: Container(
@@ -196,33 +196,4 @@ class NotificationItemWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-// 处理了一堆复杂的数据orz
-String clearSub(Notifications data) {
-  var subTitle = data.secondSubject != null
-      ? data.secondSubject.title != null
-          ? data.secondSubject.title
-          : data.secondSubject.name
-      : data.thirdSubject != null
-          ? data.subject != null
-              ? data.subject.title
-              : data.thirdSubject.name != null
-                  ? data.thirdSubject.name
-                  : null
-          : null;
-  var thTitle = data.thirdSubject != null
-      ? data.thirdSubject.name != null
-          ? data.thirdSubject.name
-          : data.subject != null
-              ? data.subject.title
-              : null
-      : null;
-
-  var title =
-      data.subject != null ? data.subject.title ?? data.subject.title : null;
-
-  var lastSub = title ?? subTitle ?? thTitle ?? "";
-  lastSub = lastSub != "" ? " [${clearText(lastSub, 10)}]" : "";
-  return lastSub;
 }
