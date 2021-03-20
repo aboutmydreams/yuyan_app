@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/action_controller.dart';
 import 'package:yuyan_app/controller/global/group_controller.dart';
+import 'package:yuyan_app/controller/quick_link_controller.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/doc.dart';
@@ -70,7 +71,7 @@ class _GroupPageState extends State<GroupPage>
 
     var groupId = widget.group.id;
     tag = '$groupId';
-    Get.put(GroupHomeController(groupId),tag: tag);
+    Get.put(GroupHomeController(groupId), tag: tag);
     Get.put(GroupStackController(groupId), tag: tag);
     Get.put(GroupMemberController(groupId), tag: tag);
     Get.put(GroupBookController(groupId), tag: tag);
@@ -151,7 +152,11 @@ class _GroupPageState extends State<GroupPage>
         tag: tag,
         builder: (c) => c.stateBuilder(
           onEmpty: NothingPage(top: 190, text: "首页空空"),
-          onIdle: () => _HomeWidget(items: c.value),
+          onIdle: () => _HomeWidget(
+            groupId: widget.group.id,
+            items: c.value,
+            meta: c.meta,
+          ),
         ),
       ),
       GetBuilder<GroupBookController>(

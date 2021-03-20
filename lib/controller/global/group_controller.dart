@@ -4,6 +4,7 @@ import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/group_home/book_stack.dart';
 import 'package:yuyan_app/model/document/group_home/group_home_seri.dart';
 import 'package:yuyan_app/model/document/group_user.dart';
+import 'package:yuyan_app/model/document/meta/meta.dart';
 import 'package:yuyan_app/model/events/event_seri.dart';
 import 'package:yuyan_app/model/events/user_event_seri.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
@@ -38,9 +39,13 @@ class GroupHomeController extends FetchListValueController<GroupViewBlockSeri> {
 
   GroupHomeController(this.groupId);
 
+  Map meta;
+
   @override
-  Future<List<GroupViewBlockSeri>> fetch() {
-    return ApiRepository.getGroupHome(groupId: groupId);
+  Future<List<GroupViewBlockSeri>> fetch() async {
+    var tup = await ApiRepository.getGroupHome(groupId: groupId);
+    meta = tup.item2.meta;
+    return tup.item1;
   }
 }
 

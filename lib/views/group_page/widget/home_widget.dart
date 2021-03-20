@@ -2,14 +2,30 @@ part of '../group_page.dart';
 
 class _HomeWidget extends StatelessWidget {
   final List<GroupViewBlockSeri> items;
+  final Map meta;
+  final int version;
+  final int groupId;
 
   _HomeWidget({
     Key key,
     this.items,
-  }) : super(key: key);
+    this.meta,
+    this.groupId,
+  })  : version = meta['version'] ?? 3,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (version < 2) {
+      return Container(
+        child: Text('鬼畜的版本:$version, 希望你永远不要遇到'),
+      );
+    }
+    if (version == 2) {
+      //兼容之前的版本，没有数据，只有meta
+      return _build2();
+    }
+    // 这里是version 3版本，携带有数据
     List<GroupViewBlockSeri> blocks = [];
     items.forEach((out) {
       /// placements一般有两个元素
@@ -20,7 +36,6 @@ class _HomeWidget extends StatelessWidget {
         blocks.addAll(inner.blocks);
       });
     });
-
     return ListView.builder(
       itemCount: blocks.length,
       itemBuilder: (_, i) {
@@ -30,7 +45,66 @@ class _HomeWidget extends StatelessWidget {
     );
   }
 
-  _blockType(GroupViewBlockSeri block) {
+  Widget _build2() {
+    var layout = meta['homepage']['layout'];
+    List<String> blocks = [
+      ...layout['header'],
+      ...layout['content'],
+      ...layout['aside'],
+    ];
+
+    var tag = '$groupId';
+    var controllers = {
+      'headlines': null,
+      'book_stacks': () => GroupStackController(groupId),
+      'topics': () => GroupTopicController(groupId),
+      'quick_links': null,
+      'latest_books': () => GroupBookController(groupId),
+      'latest_docs': null,
+    };
+
+    blocks.forEach((blk) {
+      var c = controllers[blk];
+      if (c != null) Get.lazyPut(() => c, tag: tag);
+    });
+
+    return _upgrade3(blocks, tag);
+  }
+
+  Widget _upgrade3(List<String> blocks, String tag) {
+    return ListView.builder(
+      itemCount: blocks.length,
+      itemBuilder: (_, i) {
+        var block = blocks[i];
+        return _proxy2to3(block, tag);
+      },
+    );
+  }
+
+  Widget _proxy2to3(String block, String tag) {
+    switch (block) {
+      case '':
+      default:
+        return Container(
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 0.3,
+              color: Colors.red,
+            ),
+          ),
+          child: Text('Not supported: $block\n'
+              '非常抱歉！你查看的团队首页使用了旧版本的API\n'
+              '不能很好的被【雨燕】支持\n'
+              '如果你有权限可以通过编辑一下团队首页即可升级\n'
+              '如果没有权限，可以去讨论区留言\n'
+              '当然，你可以选择打开网页版来解决这个问题\n'
+              '或者，你可以反馈给开发者，谢谢。'),
+        );
+    }
+  }
+
+  Widget _blockType(GroupViewBlockSeri block) {
     /// type类型
     /// 1. bookStack 首页知识库，支持自定义显示样式
     /// 2. custom 小记内容

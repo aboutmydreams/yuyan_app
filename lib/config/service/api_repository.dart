@@ -164,15 +164,21 @@ class ApiRepository {
     return list;
   }
 
-  static Future<List<GroupViewBlockSeri>> getGroupHome({int groupId}) async {
+  static Future<Tuple2<List<GroupViewBlockSeri>, ApiResponse>> getGroupHome(
+      {int groupId}) async {
     var res = await api.get(
       '/groups/$groupId/homepage',
       queryParameters: {'include_data': true},
     );
     var asp = (res.data as ApiResponse);
+    //兼容version2版本！
+    if (asp.data is Map) {
+      //为了避免empty状态
+      return Tuple2.fromList([[null], asp]);
+    }
     var list =
         (asp.data as List).map((e) => GroupViewBlockSeri.fromJson(e)).toList();
-    return list;
+    return Tuple2.fromList([list, asp]);
   }
 
   //目前仅用于获取Group的动态
