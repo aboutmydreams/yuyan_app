@@ -25,7 +25,7 @@ dependencies:
   # 富文本编辑器, Bug多多
   zefyr:
     git:
-      url: git@github.com:dreamer2q/zefyr.git
+      url: https://github.com/dreamer2q/zefyr.git
       ref: nullsafety
       path: packages/zefyr
 
