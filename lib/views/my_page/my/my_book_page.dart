@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/viewstate/view_page.dart';
 import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/model/document/book.dart';
@@ -44,15 +45,7 @@ class MyBookItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // openUrl(context, "https://www.yuque.com/${data.userId}/${data.slug}");
-
-        // if (data.type == "Book") {
-        //   OpenPage.docBook(context, bookId: data.id, bookSlug: data.slug);
-        // } else {
-        //   openUrl(context, "https://www.yuque.com/${data.userId}/${data.slug}");
-        // }
-      },
+      onTap: () => MyRoute.bookDocs(book),
       child: Container(
         height: 70,
         margin: EdgeInsets.only(left: 10, top: 2, bottom: 8, right: 10),

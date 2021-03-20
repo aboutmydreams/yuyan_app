@@ -1,52 +1,89 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_simple_treeview/flutter_simple_treeview.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/document/book_controller.dart';
+import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/animation_widget.dart';
 import 'package:yuyan_app/views/widget/lake_image_widget.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class BookDocPage extends StatelessWidget {
   final int bookId;
+  final BookSeri book;
 
-  const BookDocPage({
+  BookDocPage({
     Key key,
-    this.bookId,
-  }) : super(key: key);
+    this.book,
+  })  : bookId = book.id,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var title = '文档知识库';
+    var type = book?.type ?? 'Book';
     return Scaffold(
       appBar: AppBar(
-        title: Text('文档知识库'),
+        title: Text(book?.name ?? title),
         actions: [
           IconButton(
             icon: Icon(Icons.star_outline),
-            onPressed: (){
-
-            },
+            onPressed: () {},
           ),
         ],
       ),
-      body: GetBuilder<BookDocsController>(
-        tag: '$bookId',
-        init: BookDocsController(bookId),
-        builder: (c) => c.stateBuilder(
-          onIdle: () {
-            var data = c.value;
-            return AnimationListWidget(
-              itemCount: data.length,
-              itemBuilder: (_, i) {
-                return buildDoc(data[i]);
-              },
-            );
-          },
-        ),
-      ),
+      body: _typeBuilder(type),
     );
+  }
+
+  Widget _typeBuilder(String type) {
+    switch (type) {
+      case 'Book':
+        // var layout = book.layout ?? 'Book';
+        // return GetBuilder<BookTocController>(
+        //   tag: '$bookId',
+        //   init: BookTocController(bookId),
+        //   builder: (c) => c.stateBuilder(
+        //     onIdle: () {
+        //       var data = c.value;
+        //       var tree = Util.parseTocTree(data);
+        //       return SingleChildScrollView(
+        //         child: TreeView(
+        //           indent: 24,
+        //           nodes: tree,
+        //         ),
+        //       );
+        //     },
+        //   ),
+        // );
+        return GetBuilder<BookDocsController>(
+          tag: '$bookId',
+          init: BookDocsController(bookId),
+          builder: (c) => c.stateBuilder(
+            onIdle: () {
+              var data = c.value;
+              return AnimationListWidget(
+                itemCount: data.length,
+                itemBuilder: (_, i) {
+                  return buildDoc(data[i]);
+                },
+              );
+            },
+          ),
+        );
+      default:
+        return Container(
+          padding: const EdgeInsets.all(24),
+          child: Text(
+            'Unsupported type: $type',
+            style: AppStyles.textStyleA,
+          ),
+        );
+    }
   }
 
   Widget buildDoc(DocSeri data) {

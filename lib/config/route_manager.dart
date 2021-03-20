@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/controller/binding/app_binding.dart';
 import 'package:yuyan_app/controller/global/my_controller.dart';
+import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/events/user_lite_seri.dart';
 import 'package:yuyan_app/models/component/edit_markdown/edit_page.dart';
@@ -64,9 +65,11 @@ class MyRoute {
     );
   }
 
-  static bookDocs(int bookId) {
+  static bookDocs(BookSeri book) {
     Get.to(
-      BookDocPage(bookId: bookId),
+      BookDocPage(
+        book: book,
+      ),
       preventDuplicates: false,
     );
   }

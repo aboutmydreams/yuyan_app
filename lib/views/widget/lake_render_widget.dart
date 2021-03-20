@@ -18,6 +18,7 @@ import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/model/document/card/card_link_detail.dart';
 import 'package:yuyan_app/model/document/card/card_video_seri.dart';
 import 'package:yuyan_app/model/document/lake/lake_card_seri.dart';
+import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/views/webview_page/webview_page.dart';
 import 'package:yuyan_app/views/widget/label_widget.dart';
 import 'package:yuyan_app/views/widget/lake_calendar_widget.dart';
@@ -187,7 +188,6 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
     data = tree.outerHtml;
     assert(data != null && data != '');
   }
-
 
   final _htmlStyle = {
     '*': Style(
@@ -593,6 +593,18 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
         var width =
             HtmlUtil.getInlineStyleValue(inlineStyle, 'width', Get.width);
         _.style.width = width;
+        var query = _.tree.element.querySelector("table");
+        if (query != null) {
+          return Container(
+            padding: const EdgeInsets.all(24),
+            child: Text(
+              '暂不支持表格的嵌套，\n请打开网页版查看',
+              style: AppStyles.textStyleA.copyWith(
+                color: Colors.red,
+              ),
+            ),
+          );
+        }
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Container(

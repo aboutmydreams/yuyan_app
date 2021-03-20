@@ -19,6 +19,7 @@ import 'package:yuyan_app/model/document/group_user.dart';
 import 'package:yuyan_app/model/document/note/note.dart';
 import 'package:yuyan_app/model/document/note/note_status.dart';
 import 'package:yuyan_app/model/document/organization_lite.dart';
+import 'package:yuyan_app/model/document/toc/toc_seri.dart';
 import 'package:yuyan_app/model/document/upload/upload_result_seri.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/document/user_profile.dart';
@@ -174,7 +175,10 @@ class ApiRepository {
     //兼容version2版本！
     if (asp.data is Map) {
       //为了避免empty状态
-      return Tuple2.fromList([[null], asp]);
+      return Tuple2.fromList([
+        [null],
+        asp
+      ]);
     }
     var list =
         (asp.data as List).map((e) => GroupViewBlockSeri.fromJson(e)).toList();
@@ -580,6 +584,16 @@ class ApiRepository {
   }
 
   ///文档
+  static Future<List<TocSeri>> getBookTocList({int bookId}) async {
+    var res = await api.get(
+      '/catalog_nodes',
+      queryParameters: {'book_id': bookId},
+    );
+    var asp = (res.data as ApiResponse);
+    var list = (asp.data as List).map((e) => TocSeri.fromJson(e)).toList();
+    return list;
+  }
+
   static Future<DocDetailSeri> getDocDetail({int bookId, String slug}) async {
     var res = await api.get('/docs/$slug', queryParameters: {
       'book_id': bookId,

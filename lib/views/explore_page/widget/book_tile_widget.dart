@@ -19,7 +19,7 @@ class BookTileWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         var book = data;
-        MyRoute.bookDocs(book.id);
+        MyRoute.bookDocs(book);
       },
       child: Container(
         height: 86,

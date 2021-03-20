@@ -274,6 +274,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  flutter_simple_treeview:
+    dependency: "direct main"
+    description:
+      name: flutter_simple_treeview
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
   flutter_staggered_animations:
     dependency: "direct main"
     description:
@@ -976,7 +983,7 @@ packages:
       path: "packages/zefyr"
       ref: nullsafety
       resolved-ref: b95a30cfa32df6ca17288f371b00eb8d43654a92
-      url: "git@github.com:dreamer2q/zefyr.git"
+      url: "https://github.com/dreamer2q/zefyr.git"
     source: git
     version: "1.0.0-dev.2.0"
 sdks:

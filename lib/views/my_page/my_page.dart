@@ -8,6 +8,7 @@ import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/views/group_page/group_page.dart';
 import 'package:yuyan_app/views/my_page/widget/user_info_card_widget.dart';
 import 'package:yuyan_app/views/widget/animation_widget.dart';
+import 'package:yuyan_app/views/widget/lake_render_widget.dart';
 import 'package:yuyan_app/views/widget/setting_item_widget.dart';
 
 class MyPage extends StatefulWidget {
@@ -166,15 +167,6 @@ class SettingListWidget extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            // debugPrint('测试');
-            // Get.to(UserPage(
-            //   user: UserLiteSeri(
-            //     name: "Dreamer2q",
-            //     id: 2596791,
-            //     avatarUrl:
-            //         "https://cdn.nlark.com/yuque/0/2021/png/2596791/1613398048817-avatar/a3ec3f64-bab4-4760-8bd6-68b9ca64e05b.png",
-            //   ),
-            // ));
             final avatarUrl =
                 "https://cdn.nlark.com/yuque/0/2020/png/164272/1581178391840-avatar/dfd33ab4-7115-4fce-b504-faeb9d3ca24d.png";
             Get.to(GroupPage(

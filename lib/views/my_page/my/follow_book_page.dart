@@ -38,7 +38,7 @@ class MyFollowBookItemWidget extends StatelessWidget {
         switch (data.targetType) {
           case 'Book':
             var book = data.target.serialize<BookSeri>();
-            MyRoute.bookDocs(book.id);
+            MyRoute.bookDocs(book);
             break;
           default:
             Util.goUrl(data.url);

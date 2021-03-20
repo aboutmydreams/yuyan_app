@@ -2,15 +2,58 @@ import 'dart:math';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_simple_treeview/flutter_simple_treeview.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/theme_controller.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
+import 'package:yuyan_app/model/document/toc/toc_seri.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/oauth2/random_string/random_string.dart';
 
 class Util {
+  static List<TreeNode> parseTocTree(List<TocSeri> data) {
+    Map<String, TocSeri> map = {};
+    data.forEach((toc) {
+      map[toc.uuid] = toc;
+    });
+
+    Function(TreeNode, TocSeri) _parse;
+    _parse = (TreeNode parent, TocSeri child) {
+      var node = TreeNode(
+        content: Text('${child.title}'),
+        children: [],
+      ); //确保children已经初始化了
+      parent.children.add(node); //将自己添加进入父节点
+      var nc = map[child.childUuid];
+      if (nc != null) {
+        //现在这个节点充当父节点
+        //进行递归，优先处理子节点
+        _parse(node, nc);
+      }
+      //第一个兄弟节点
+      var sib = map[child.siblingUuid];
+      while (sib != null) {
+        var sibNode = TreeNode(
+          content: Text('${sib.title}'),
+          children: [],
+        );
+        parent.children.add(sibNode);
+        var nc = map[sib.childUuid];
+        if (nc != null) {
+          _parse(sibNode, nc);
+        }
+        //下一个兄弟节点
+        sib = map[sib.siblingUuid];
+      }
+    };
+
+    var root = TreeNode(children: []);
+    _parse(root, data.first);
+    return root.children;
+  }
+
   static toast(String text) {
     BotToast.showCustomText(
       onlyOne: true,
@@ -50,7 +93,7 @@ class Util {
         // MyRoute.docDetail(bookId: link.targetId, slug: link);
         break;
       case 'Book':
-        MyRoute.bookDocs(link.targetId);
+        // MyRoute.bookDocs(link);
         break;
       case 'Group':
         // MyRoute.group(group: null);

@@ -150,7 +150,7 @@ class _ToDocWidget extends StatelessWidget {
             slug: sub.slug,
           );
         } else {
-          MyRoute.bookDocs(sub2.id);
+          MyRoute.bookDocs(sub2.toBookSeri());
         }
       },
       child: Container(
@@ -503,7 +503,7 @@ class _DocBookWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        MyRoute.bookDocs(book.id);
+        MyRoute.bookDocs(book.toBookSeri());
       },
       child: Container(
         height: 66,

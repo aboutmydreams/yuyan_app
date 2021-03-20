@@ -83,7 +83,73 @@ class _HomeWidget extends StatelessWidget {
 
   Widget _proxy2to3(String block, String tag) {
     switch (block) {
-      case '':
+      case 'topics':
+        return GetBuilder<GroupTopicController>(
+          tag: tag,
+          builder: (c) => c.stateBuilder(
+            onIdle: () {
+              var data = c.value;
+              return _BlockWidgetWrap(
+                title: '话题',
+                child: Card(
+                  elevation: 2,
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
+                  child: _TopicListWidget(
+                    topics: data,
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      case 'headlines':
+        return SizedBox.shrink();
+      case 'book_stacks':
+        return GetBuilder<GroupStackController>(
+          tag: tag,
+          builder: (c) => c.stateBuilder(
+            onIdle: () {
+              var data = c.value;
+              return _BookStackWidget(
+                stack: data,
+              );
+            },
+          ),
+        );
+      case 'latest_books':
+        return GetBuilder<GroupBookController>(
+          tag: tag,
+          builder: (c) => c.stateBuilder(
+            onIdle: () {
+              var books = c.value;
+              return _BlockWidgetWrap(
+                title: '最新知识库',
+                child: Card(
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 6,
+                    horizontal: 12,
+                  ),
+                  child: ListView.separated(
+                    separatorBuilder: (_, __) => Divider(height: 0.3),
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: books.length,
+                    shrinkWrap: true,
+                    itemBuilder: (_, i) {
+                      var book = books[i];
+                      return _BookTileWrap(
+                        padding: const EdgeInsets.all(10),
+                        book: book,
+                      );
+                    },
+                  ),
+                ),
+              );
+            },
+          ),
+        );
       default:
         return Container(
           padding: const EdgeInsets.all(24),
