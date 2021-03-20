@@ -98,7 +98,7 @@ dependencies:
   path_provider: ^2.0.1
 
   # 状态管理
-  scoped_model: ^1.0.1
+  # scoped_model: ^1.0.1
   get: 4.0.0-nullsafety.2
 
   # 数据分析

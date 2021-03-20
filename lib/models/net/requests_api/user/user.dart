@@ -3,7 +3,6 @@ import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/my_follow_book_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_info_data.dart';
 import 'package:yuyan_app/models/oauth2/random_string/random_string.dart';
-import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
 
 import 'data/user_follow_data.dart';
 import 'data/user_profile_data.dart';
@@ -43,12 +42,12 @@ class DioUser {
   }
 
   // 团队信息
-  static getGroupData({int userId}) async {
-    var res = await DioReq.get("/users/$userId/groups?limit=1000&offset=0",
-        onlyUser: true);
-    GroupJson groupData = GroupJson.fromJson(res);
-    return groupData;
-  }
+  // static getGroupData({int userId}) async {
+  //   var res = await DioReq.get("/users/$userId/groups?limit=1000&offset=0",
+  //       onlyUser: true);
+  //   GroupJson groupData = GroupJson.fromJson(res);
+  //   return groupData;
+  // }
 
   /// [关注相关]
 

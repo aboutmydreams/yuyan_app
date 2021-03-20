@@ -6,7 +6,7 @@ import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/util/util.dart';
-import 'package:yuyan_app/views/dashboard/quick/view/note_quick.dart';
+import 'package:yuyan_app/views/dashboard/quick/widget/note_quick.dart';
 import 'package:yuyan_app/views/widget/notification_absorb.dart';
 
 class QuickView extends StatelessWidget {

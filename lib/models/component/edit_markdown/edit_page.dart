@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:quill_delta/quill_delta.dart';
 import 'package:yuyan_app/models/component/edit_markdown/convert/to_markdown.dart';
 import 'package:zefyr/zefyr.dart';
-// import 'package:notus/convert.dart';
-import 'view/images.dart';
 
 class FullPageEditorScreen extends StatefulWidget {
   @override

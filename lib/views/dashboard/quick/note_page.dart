@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/controller/global/user_controller.dart';
@@ -24,7 +25,7 @@ class QuickNotePage extends StatelessWidget {
       floatingActionButton: GestureDetector(
         child: FloatingActionButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/edit/note');
+            Get.toNamed(RouteName.editNote);
           },
           child: Icon(Icons.add),
         ),

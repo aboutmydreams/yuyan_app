@@ -1,13 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/events/user_event_seri.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/util/util.dart';
-import 'package:yuyan_app/views/explore_page/widget/doc_tile_widget.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 /// 用户、团队等动态组件

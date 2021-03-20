@@ -4,9 +4,6 @@ import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'dart:async';
 
-import 'package:yuyan_app/state_manage/account/if_login.dart';
-import 'package:yuyan_app/state_manage/toppest.dart';
-
 class SplashPage extends StatefulWidget {
   _SplashPageState createState() => _SplashPageState();
 }
@@ -14,36 +11,6 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
-
-    // 定时器
-    Timer(const Duration(milliseconds: 0), () {
-      ifLogin().then((res) {
-        if (res) {
-          // 初始化数据
-          topModel.update();
-        }
-      });
-    });
-
-    // // 定时器
-    // Timer timer = new Timer(
-    //   const Duration(milliseconds: 2500),
-    //   () {
-    //     try {
-    //       ifLogin().then((haveUserLogin) {
-    //         print("==islogin???==");
-    //         print(haveUserLogin);
-    //         if (haveUserLogin) {
-    //           Navigator.pushNamedAndRemoveUntil(
-    //               context, "/", (route) => route == null);
-    //         } else {
-    //           Navigator.pushNamedAndRemoveUntil(
-    //               context, "/guide", (route) => route == null);
-    //         }
-    //       });
-    //     } catch (e) {}
-    //   },
-    // );
 
     Future.delayed(Duration(milliseconds: 500), () {
       if (App.tokenProvider.isLogin) {
@@ -59,7 +26,7 @@ class _SplashPageState extends State<SplashPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
-        children: <Widget>[
+        children: [
           Positioned(
             top: 0,
             left: 0,

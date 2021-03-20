@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/config/app.dart';
+import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/models/oauth2/oauth2.dart';
-import 'package:yuyan_app/state_manage/toppest.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
+import 'package:yuyan_app/util/util.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -40,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
         var uri = Uri.parse(url);
         var code = uri.queryParameters['code'];
         processLogin(code).catchError((err) {
-          myToast(context, err.toString());
+          Util.toast(err.toString());
           webviewPlugin.reloadUrl(oauthUrl);
           webviewPlugin.show();
         });
@@ -61,59 +63,6 @@ class _LoginPageState extends State<LoginPage> {
             'document.querySelector(".third-login").style.display="none";')
         .catchError((_) {});
   }
-
-  /// 轮询 asses token api
-  /// 设置超时时间 `timeout` = 3 min
-  /// https://api.dartlang.org/stable/2.2.0/dart-async/Timer/Timer.periodic.html
-  // askTokenApi() {
-  //   int askTimes = 1;
-  //   int timeoutTimes = 60;
-  //   // 轮询函数，如果没有正确结果再次调用自己
-  //   askYuque(int a) {
-  //     // 定时器
-  //     Timer(
-  //       const Duration(milliseconds: 3000),
-  //       () async {
-  //         bool isLogin = await oauth2.saveAccessToken();
-  //         if (isLogin) {
-  //           // myOldToast("登录成功");
-  //           Timer(const Duration(milliseconds: 3000), () {
-  //             getAllCookies(flutterWebviewPlugin).then((res) {
-  //               topModel.update();
-  //             });
-  //           });
-  //
-  //           // 3s 后跳转
-  //           Timer(
-  //             const Duration(milliseconds: 3000),
-  //             () {
-  //               setState(
-  //                 () {
-  //                   logined = true;
-  //                   Navigator.pushNamedAndRemoveUntil(
-  //                       context, '/', (route) => route == null);
-  //                 },
-  //               );
-  //             },
-  //           );
-  //         }
-  //         print(isLogin);
-  //         print(askTimes);
-  //         askTimes += 1;
-  //
-  //         if ((askTimes < timeoutTimes) && (!logined)) {
-  //           askYuque(askTimes);
-  //         } else if (askTimes >= timeoutTimes) {
-  //           myToast(context, "验证超时，请稍后重试");
-  //         } else {}
-  //       },
-  //     );
-  //   }
-  //
-  //   askYuque(askTimes);
-  //
-  //   // Timer.periodic(Duration(milliseconds: 3000), askYuque(askTimes));
-  // }
 
   //登录处理流程
   Future<Null> processLogin(String code) async {
@@ -156,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
     // await DioUser.followUser(userId: 164272);
 
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => route == null);
-    topModel.update();
+    Get.offAllNamed(RouteName.home);
   }
 
   @override

@@ -2,7 +2,6 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_html/html_parser.dart';
 import 'package:get/get.dart' hide Node;
 import 'package:highlight/highlight.dart' show highlight, Node;
 

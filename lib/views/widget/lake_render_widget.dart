@@ -28,7 +28,6 @@ import 'package:yuyan_app/views/widget/lake_localdoc_widget.dart';
 import 'package:yuyan_app/views/widget/lake_locktext_widget.dart';
 import 'package:yuyan_app/views/widget/lake_mention_widget.dart';
 import 'package:yuyan_app/views/widget/lake_svg_widget.dart';
-import 'package:yuyan_app/views/widget/notification_absorb.dart';
 import 'package:yuyan_app/views/widget/video_widget.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart' as inapp;
 import 'package:webview_flutter/webview_flutter.dart' as view;

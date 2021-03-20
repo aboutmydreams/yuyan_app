@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_simple_treeview/flutter_simple_treeview.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/document/book_controller.dart';
@@ -7,7 +6,6 @@ import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/animation_widget.dart';
 import 'package:yuyan_app/views/widget/lake_image_widget.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';

@@ -59,7 +59,7 @@ class _MyDashBoardPageState extends State<MyDashBoardPage> {
         },
         child: FloatingActionButton(
           onPressed: () {
-            Get.to(MarkdownEditorPage());
+            Get.to(NoteEditorPage());
           },
           child: Icon(Icons.edit),
         ),

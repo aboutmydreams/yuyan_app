@@ -8,7 +8,6 @@ import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/views/group_page/group_page.dart';
 import 'package:yuyan_app/views/my_page/widget/user_info_card_widget.dart';
 import 'package:yuyan_app/views/widget/animation_widget.dart';
-import 'package:yuyan_app/views/widget/lake_render_widget.dart';
 import 'package:yuyan_app/views/widget/setting_item_widget.dart';
 
 class MyPage extends StatefulWidget {

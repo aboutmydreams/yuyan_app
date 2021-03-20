@@ -4,14 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:scoped_model/scoped_model.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/controller/binding/app_binding.dart';
-import 'package:yuyan_app/state_manage/toppest.dart';
-
-TopStateModel topModel1 = topModel;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,18 +28,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("build again!");
-    final botToastBuilder = BotToastInit();
+    final TransitionBuilder botToastBuilder = BotToastInit();
     return GetMaterialApp(
       title: '语燕',
       initialRoute: RouteName.splash,
       debugShowCheckedModeBanner: false,
-      // 去除debug标志
       getPages: MyRoute.pages,
       navigatorObservers: <NavigatorObserver>[
         BotToastNavigatorObserver(),
       ],
-      //加入路由统计
-      // home: MyHomePage(),
       initialBinding: AppBinding(),
       builder: (context, child) {
         return GestureDetector(
@@ -55,10 +48,7 @@ class MyApp extends StatelessWidget {
           },
           child: botToastBuilder(
             context,
-            ScopedModel<TopStateModel>(
-              model: topModel1,
-              child: child,
-            ),
+            child,
           ),
         );
       },
