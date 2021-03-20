@@ -3,6 +3,7 @@ import 'group.dart';
 
 class GroupUserSeri {
   String joinedAt;
+  int epv30;
   int id;
   int spaceId;
   int groupId;
@@ -21,26 +22,29 @@ class GroupUserSeri {
   GroupSeri group;
 
   GroupUserSeri({
-      this.joinedAt, 
-      this.id, 
-      this.spaceId, 
-      this.groupId, 
-      this.userId, 
-      this.role, 
-      this.status, 
-      this.deletedAt, 
-      this.pinnedAt, 
-      this.departmentName, 
-      this.groupDepartmentId, 
-      this.name, 
-      this.creatorId, 
-      this.createdAt, 
-      this.updatedAt, 
-      this.user, 
-      this.group});
+    this.joinedAt,
+    this.id,
+    this.epv30,
+    this.spaceId,
+    this.groupId,
+    this.userId,
+    this.role,
+    this.status,
+    this.deletedAt,
+    this.pinnedAt,
+    this.departmentName,
+    this.groupDepartmentId,
+    this.name,
+    this.creatorId,
+    this.createdAt,
+    this.updatedAt,
+    this.user,
+    this.group,
+  });
 
   GroupUserSeri.fromJson(dynamic json) {
     joinedAt = json["joined_at"];
+    epv30 = json["epv_30"];
     id = json["id"];
     spaceId = json["space_id"];
     groupId = json["group_id"];
@@ -63,6 +67,7 @@ class GroupUserSeri {
     var map = <String, dynamic>{};
     map["joined_at"] = joinedAt;
     map["id"] = id;
+    map["epv_30"] = epv30;
     map["space_id"] = spaceId;
     map["group_id"] = groupId;
     map["user_id"] = userId;
@@ -84,5 +89,4 @@ class GroupUserSeri {
     }
     return map;
   }
-
 }

@@ -17,7 +17,7 @@ class AppBinding extends Bindings {
 
     Get.put(App.orgSpaceProvider);
 
-    Get.lazyPut(() => VersionController());
+    Get.lazyPut(() => VersionController(), fenix: true);
   }
 }
 

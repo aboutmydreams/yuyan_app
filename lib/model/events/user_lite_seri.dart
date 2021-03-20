@@ -12,7 +12,7 @@ class UserLiteSeri {
   int followersCount;
   int followingCount;
   String description;
-  String sSerializer;
+  String serializer;
 
   UserLiteSeri({
     this.id,
@@ -28,7 +28,7 @@ class UserLiteSeri {
     this.followersCount,
     this.followingCount,
     this.description,
-    this.sSerializer,
+    this.serializer,
   });
 
   UserLiteSeri.fromJson(Map<String, dynamic> json) {
@@ -46,7 +46,7 @@ class UserLiteSeri {
     followersCount = json['followers_count'];
     followingCount = json['following_count'];
     description = json['description'];
-    sSerializer = json['_serializer'];
+    serializer = json['_serializer'];
   }
 
   Map<String, dynamic> toJson() {
@@ -64,7 +64,7 @@ class UserLiteSeri {
     data['followers_count'] = this.followersCount;
     data['following_count'] = this.followingCount;
     data['description'] = this.description;
-    data['_serializer'] = this.sSerializer;
+    data['_serializer'] = this.serializer;
     return data;
   }
 }

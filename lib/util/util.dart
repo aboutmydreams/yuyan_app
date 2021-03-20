@@ -46,6 +46,9 @@ class Util {
 
   static handleQuickLinkNav(QuickLinkSeri link) {
     switch (link.type) {
+      case 'Doc':
+        // MyRoute.docDetail(bookId: link.targetId, slug: link);
+        break;
       case 'Book':
         MyRoute.bookDocs(link.targetId);
         break;
@@ -55,9 +58,8 @@ class Util {
       case 'User':
         // MyRoute.user(user: null);
         break;
-      case 'Normal':
+      default:
         MyRoute.webview(link.url);
-        break;
     }
   }
 
@@ -181,6 +183,9 @@ class Util {
 
 extension StringEx on String {
   static Map<String, String> eventType = {
+    //前后端都不统一规范下，吐了>
+    "updateDoc": "更新了文档",
+    "publishDoc": "发布了文章",
     "update_doc": "更新了文档",
     "like_doc": "打赏了稻谷",
     "publish_doc": "发布了文章",

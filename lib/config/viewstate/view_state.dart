@@ -140,7 +140,9 @@ mixin ControllerStateMixin on GetxController {
         var err = (e as DioError).error;
         //这里Dio会将错误强制包装成DioError类型
         //因此只能通过这个来判断是否ApiError
-        if (err != null) return _handlerError(err);
+        //TODO(@dreamer2q): 测试错误处理，例如超时等。
+        if ((e as DioError).type == DioErrorType.other)
+          return _handlerError(err);
         // switch (err.runtimeType) {
         //   case ApiError:
         //     return _handlerApiError(err);

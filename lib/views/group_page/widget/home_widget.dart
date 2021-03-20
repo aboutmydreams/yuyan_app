@@ -42,12 +42,116 @@ class _HomeWidget extends StatelessWidget {
     /// 8. searchInput 搜索框，支持推荐内容
     /// 9. docList 热门文档，支持自定义显示样式
     ///10. banner 轮播图
+    ///11. headlines 头条?
     switch (block.type) {
-      case 'bookStacks':
-        return Container(
-          child: _BookStackWidget(
-            stack: block.data.list<BookStackSeri>(),
+      case 'headlines':
+
+        ///头条是啥东西呢?
+        ///不想研究了，直接屏蔽吧
+        return SizedBox.shrink();
+      case 'searchInput':
+        //TODO(@dreamer2q): 组织内部搜索，由scope参数提供
+        return SizedBox.shrink();
+      case 'memberList':
+        var members = block.data.list<GroupUserSeri>();
+        return _BlockWidgetWrap(
+          title: block.title,
+          child: _MemberListWidget(
+            members: members,
           ),
+        );
+      case 'bookList':
+        var books = block.data.list<BookSeri>();
+        return _BlockWidgetWrap(
+          title: block.title,
+          child: Card(
+            margin: const EdgeInsets.symmetric(
+              vertical: 6,
+              horizontal: 12,
+            ),
+            child: ListView.separated(
+              separatorBuilder: (_, __) => Divider(height: 0.3),
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: books.length,
+              shrinkWrap: true,
+              itemBuilder: (_, i) {
+                var book = books[i];
+                return _BookTileWrap(
+                  padding: const EdgeInsets.all(10),
+                  book: book,
+                );
+              },
+            ),
+          ),
+        );
+      case 'quickLinks':
+        var links = block.data.list<QuickLinkSeri>();
+        return _BlockWidgetWrap(
+          title: block.title,
+          child: Card(
+            margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+            elevation: 1,
+            child: Container(
+              height: 50,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: links.length,
+                itemBuilder: (_, i) {
+                  var link = links[i];
+                  return InkWell(
+                    onTap: () => Util.handleQuickLinkNav(link),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      decoration: BoxDecoration(),
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: [
+                          AppIcon.iconType(link.type),
+                          Text(
+                            '${link.title}',
+                            style: AppStyles.textStyleC,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        );
+      case 'custom':
+        var data = block.data.serialize<DocletSeri>();
+        return _BlockWidgetWrap(
+          title: block.title,
+          child: Card(
+            margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+            elevation: 1,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: LakeRenderWidget(
+                data: data.bodyAsl,
+              ),
+            ),
+          ),
+        );
+      case 'topicList':
+        return _BlockWidgetWrap(
+          title: block.title,
+          child: Card(
+            elevation: 2,
+            margin: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 6,
+            ),
+            child: _TopicListWidget(
+              topics: block.data.list<TopicSeri>(),
+            ),
+          ),
+        );
+      case 'bookStacks':
+        return _BookStackWidget(
+          stack: block.data.list<BookStackSeri>(),
         );
       case 'banner':
         return _BannerWidget(
@@ -61,9 +165,19 @@ class _HomeWidget extends StatelessWidget {
           ),
         );
       case 'events':
-        return null;
-      // case 'custom':
-      // case 'quickLinks':
+        return _BlockWidgetWrap(
+          title: block.title,
+          child: Card(
+            elevation: 2,
+            margin: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 6,
+            ),
+            child: GroupEventWidget(
+              blockId: block.id,
+            ),
+          ),
+        );
       default:
         return Container(
           margin: const EdgeInsets.all(12),
@@ -151,31 +265,9 @@ class _BookStackWidget extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (_, i) {
         var item = stack[i];
-        return Container(
-          margin: EdgeInsets.only(top: 10, bottom: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-                child: Text(
-                  "${item.name}",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppStyles.textStyleB,
-                ),
-              ),
-              _buildStack(stack[i]),
-            ],
-          ),
+        return _BlockWidgetWrap(
+          title: '${item.name}',
+          child: _buildStack(stack[i]),
         );
       },
     );
@@ -215,26 +307,30 @@ class _BookStackWidget extends StatelessWidget {
   }
 
   Widget _stackItem(BookSeri item, int type) {
-    Widget child = _BookTileWrap(
-      book: item,
-      bottom: Container(
-        padding: const EdgeInsets.only(top: 8),
-        decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(
-              color: Colors.grey.withOpacity(0.5),
-              width: 0.3,
-            ),
-          ),
-        ),
-        child: Column(
+    Widget bottom;
+    switch (type) {
+      case 0: //基础样式，无summary
+        break;
+      case 1: //
+        bottom = Column(
           children: _summaryList(item.summary, item.type),
-        ),
+        );
+        break;
+      case 2: //
+      case 3: //
+    }
+
+    Widget child = _BookTileWrap(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 0,
+        vertical: 4,
       ),
+      book: item,
+      bottom: bottom,
     );
 
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+      margin: EdgeInsets.symmetric(vertical: 4, horizontal: 12),
       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
       decoration: BoxDecoration(
         color: AppColors.background,
@@ -286,12 +382,24 @@ class _BookTileWrap extends StatelessWidget {
   final BookSeri book;
   final Widget top;
   final Widget bottom;
+  final EdgeInsets padding;
+  final EdgeInsets margin;
+  final Widget divider;
 
   const _BookTileWrap({
     Key key,
     this.book,
     this.top,
     this.bottom,
+    this.margin,
+    this.divider = const Divider(
+      height: 12,
+      thickness: 0.3,
+    ),
+    this.padding = const EdgeInsets.symmetric(
+      vertical: 4,
+      horizontal: 8,
+    ),
   }) : super(key: key);
 
   @override
@@ -307,7 +415,13 @@ class _BookTileWrap extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (top != null) top,
-          tile,
+          if (top != null) divider,
+          Container(
+            margin: margin,
+            padding: padding,
+            child: tile,
+          ),
+          if (bottom != null) divider,
           if (bottom != null) bottom,
         ],
       ),
@@ -315,36 +429,32 @@ class _BookTileWrap extends StatelessWidget {
   }
 
   _buildTile() {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.only(right: 12),
-            child: AppIcon.iconType(book.type, size: 24),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.only(right: 8),
+          child: AppIcon.iconType(book.type, size: 24),
+        ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "${book.name}",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppStyles.textStyleB,
+              ),
+              if (!GetUtils.isNullOrBlank(book.description))
                 Text(
-                  "${book.name}",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppStyles.textStyleB,
-                ),
-                if (book.description != null)
-                  Text(
-                    "${book.description}",
-                    style: AppStyles.textStyleCC,
-                  )
-              ],
-            ),
+                  "${book.description}",
+                  style: AppStyles.textStyleCC,
+                )
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -495,6 +605,196 @@ class _DocTileWidget extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _TopicListWidget extends StatelessWidget {
+  final List<TopicSeri> topics;
+
+  const _TopicListWidget({
+    Key key,
+    this.topics,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: ListView.separated(
+        shrinkWrap: true,
+        separatorBuilder: (_, __) => Divider(height: 0.3),
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: topics.length,
+        itemBuilder: (_, i) {
+          var topic = topics[i];
+          return _TopicTileWidget(topic: topic);
+        },
+      ),
+    );
+  }
+}
+
+class _TopicTileWidget extends StatelessWidget {
+  final TopicSeri topic;
+
+  _TopicTileWidget({
+    Key key,
+    this.topic,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Widget ans = Container(
+      padding: EdgeInsets.only(left: 16, right: 4),
+      alignment: Alignment.centerRight,
+      width: 56,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Icon(Icons.question_answer, size: 16),
+          Text(
+            "${topic.commentsCount}",
+            style: AppStyles.textStyleCC,
+          )
+        ],
+      ),
+    );
+    Widget user = Row(
+      children: [
+        UserAvatarWidget(
+          avatar: topic.user.avatarUrl,
+          height: 18,
+        ),
+        SizedBox(width: 4),
+        Container(
+          child: Text(
+            "${topic.user.name} 创建于 ${Util.timeCut(topic.createdAt)}",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppStyles.textStyleCC,
+          ),
+        ),
+      ],
+    );
+    Widget child = Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  child: Text(
+                    '${topic.title}',
+                    style: AppStyles.textStyleB,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                SizedBox(height: 5),
+                user,
+              ],
+            ),
+          ),
+          ans,
+        ],
+      ),
+    );
+    return GestureDetector(
+      onTap: () {
+        MyRoute.topic(topic.iid, topic.groupId);
+      },
+      child: child,
+    );
+  }
+}
+
+class _MemberListWidget extends StatelessWidget {
+  final List<GroupUserSeri> members;
+
+  const _MemberListWidget({
+    Key key,
+    this.members,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(
+        vertical: 6,
+        horizontal: 12,
+      ),
+      child: Container(
+        height: 125,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: members.length,
+          itemBuilder: (_, i) {
+            var member = members[i].user;
+            var tag = '${member.id}';
+            Widget child = Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: 12,
+                horizontal: 8,
+              ),
+              child: Column(
+                children: [
+                  Hero(
+                    tag: tag,
+                    child: UserAvatarWidget(
+                      avatar: member.avatarUrl,
+                      height: 64,
+                    ),
+                  ),
+                  Transform.translate(
+                    offset: Offset(0, -8),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 2, horizontal: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.withOpacity(.4),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.fire,
+                            size: 12,
+                            //TODO(@dreamer2q): 添加颜色映射
+                            color: Colors.red.withOpacity(
+                              (1 / (i + 1) + 0.4).clamp(0.4, 1).toDouble(),
+                            ),
+                          ),
+                          Text(
+                            '${members[i].epv30}',
+                            style: AppStyles.textStyleCC,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Text(
+                    '${member.name}',
+                    style: AppStyles.textStyleC,
+                  ),
+                ],
+              ),
+            );
+            return GestureDetector(
+              onTap: () {
+                MyRoute.user(
+                  heroTag: tag,
+                  user: member.toUserLiteSeri(),
+                );
+              },
+              child: child,
+            );
+          },
+        ),
       ),
     );
   }

@@ -23,6 +23,7 @@ import 'package:yuyan_app/model/document/upload/upload_result_seri.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/document/user_profile.dart';
 import 'package:yuyan_app/model/events/event_seri.dart';
+import 'package:yuyan_app/model/events/user_event_seri.dart';
 import 'package:yuyan_app/model/notification/notification.dart';
 import 'package:yuyan_app/model/notification/notification_item.dart';
 import 'package:yuyan_app/model/search/search_result_seri.dart';
@@ -172,6 +173,20 @@ class ApiRepository {
     var list =
         (asp.data as List).map((e) => GroupViewBlockSeri.fromJson(e)).toList();
     return list;
+  }
+
+  //目前仅用于获取Group的动态
+  static Future<Tuple2<List<UserEventSeri>, ApiResponse>> getViewBlocks({
+    int blockId,
+    int offset = 0,
+  }) async {
+    var resp = await api.get('/view_blocks/$blockId', queryParameters: {
+      'offset': offset,
+    });
+    var asp = resp.data as ApiResponse;
+    var data =
+        (asp.data as List).map((e) => UserEventSeri.fromJson(e)).toList();
+    return Tuple2.fromList([data, asp]);
   }
 
   static Future<List<BookSeri>> getBookList({

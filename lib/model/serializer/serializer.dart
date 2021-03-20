@@ -9,10 +9,12 @@ import 'package:yuyan_app/model/document/doc_lite.dart';
 import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/document/group_home/book_stack.dart';
 import 'package:yuyan_app/model/document/group_user.dart';
+import 'package:yuyan_app/model/document/note/doclet.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/events/book_event_seri.dart';
 import 'package:yuyan_app/model/events/doc_event_seri.dart';
 import 'package:yuyan_app/model/events/event_seri.dart';
+import 'package:yuyan_app/model/events/user_event_seri.dart';
 import 'package:yuyan_app/model/events/user_lite_seri.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
 
@@ -50,6 +52,7 @@ class Serializer {
 
   Map<String, Function> _doSerializer() {
     return {
+      'web.user_event': () => UserEventSeri.fromJson(_data),
       'web.quick_link': () => QuickLinkSeri.fromJson(_data),
       'web.book_stack': () => BookStackSeri.fromJson(_data),
       'web.user_lite': () => UserLiteSeri.fromJson(_data),
@@ -63,6 +66,7 @@ class Serializer {
       'web.group': () => GroupSeri.fromJson(_data),
       'web.comment': () => CommentSeri.fromJson(_data),
       'web.topic': () => TopicSeri.fromJson(_data),
+      'web.doclet': () => DocletSeri.fromJson(_data),
       'web.doc_lite': () => DocLiteSeri.fromJson(_data),
       'web.design': () => DesignSeri.fromJson(_data),
       '_convert.list': <T>() =>

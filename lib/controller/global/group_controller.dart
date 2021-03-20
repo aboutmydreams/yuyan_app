@@ -4,7 +4,34 @@ import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/group_home/book_stack.dart';
 import 'package:yuyan_app/model/document/group_home/group_home_seri.dart';
 import 'package:yuyan_app/model/document/group_user.dart';
+import 'package:yuyan_app/model/events/event_seri.dart';
+import 'package:yuyan_app/model/events/user_event_seri.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
+
+class GroupViewController extends FetchListValueController<UserEventSeri> {
+  final int blockId;
+
+  GroupViewController(this.blockId);
+
+  int offset = 0;
+  bool hasMore = false;
+
+  Future<List<UserEventSeri>> _do([bool refresh = false]) async {
+    var resp = await ApiRepository.getViewBlocks(
+      blockId: blockId,
+      offset: refresh ? 0 : offset,
+    );
+    offset = resp.item2.meta['offset'] ?? 0;
+    hasMore = resp.item2.meta['hasMore'] ?? false;
+    return resp.item1;
+  }
+
+  @override
+  Future<List<UserEventSeri>> fetch() => _do(true);
+
+  @override
+  Future<List<UserEventSeri>> fetchMore() => _do(false);
+}
 
 class GroupHomeController extends FetchListValueController<GroupViewBlockSeri> {
   final int groupId;
