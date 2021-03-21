@@ -9,9 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
-      - uses: actions/checkout@v1
+        uses: actions/checkout@v1
 
-      - name: set up key
+      - name: setup key
         env:
           KEY: ${{secrets.KEY}}
           SIGN: ${{secrets.SIGN}}
@@ -20,16 +20,23 @@ jobs:
           echo $SIGN | base64 -d > android/yuyan.jks
           pwd
 
-      - uses: actions/setup-java@v1
+      - name: setup java
+        uses: actions/setup-java@v1
         with:
           java-version: "12.x"
-      - uses: subosito/flutter-action@v1
+
+      - name: setup flutter
+        uses: subosito/flutter-action@v1
         with:
           channel: "stable"  # or: 'dev' or 'beta'
-      - run: flutter pub get
-      - run: flutter build apk --release --target-platform=android-arm64
 
-      - name: upload artifects
+      - name: fetch all dependencies
+        run: flutter pub get
+
+      - name: build release apk
+        run: flutter build apk --release --target-platform=android-arm64
+
+      - name: upload apk
         uses: actions/upload-artifact@main
         with:
           name: android-app
