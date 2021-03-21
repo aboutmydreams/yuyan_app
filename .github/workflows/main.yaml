@@ -27,7 +27,7 @@ jobs:
         with:
           channel: "stable"  # or: 'dev' or 'beta'
       - run: flutter pub get
-      - run: flutter build apk --debug
+      - run: flutter build apk --release --target-platform=android-arm64
 
       - name: upload artifects
         uses: actions/upload-artifact@main
