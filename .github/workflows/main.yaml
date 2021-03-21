@@ -16,7 +16,7 @@ jobs:
           KEY: ${{secrets.KEY}}
           SIGN: ${{secrets.SIGN}}
         run: |
-          echo $KEY > android/key.properties
+          echo $KEY  | base64 -d > android/key.properties
           echo $SIGN | base64 -d > android/yuyan.jks
           pwd
           ls android -l
