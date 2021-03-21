@@ -19,6 +19,7 @@ jobs:
           echo $KEY > android/key.properties
           echo $SIGN | base64 -d > android/yuyan.jks
           pwd
+          ls android -l
 
       - name: setup java
         uses: actions/setup-java@v1
