@@ -10,7 +10,6 @@ import 'package:yuyan_app/controller/theme_controller.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/model/document/toc/toc_seri.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/models/oauth2/random_string/random_string.dart';
 
 class Util {
   static List<TreeNode> parseTocTree(List<TocSeri> data) {
@@ -107,8 +106,7 @@ class Util {
   }
 
   static String genHeroTag() {
-    String tag =
-        randomString(5) + DateTime.now().microsecondsSinceEpoch.toString();
+    String tag = DateTime.now().microsecondsSinceEpoch.toString();
     return tag;
   }
 

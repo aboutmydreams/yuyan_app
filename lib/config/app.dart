@@ -1,4 +1,3 @@
-
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:package_info/package_info.dart';
 import 'package:webview_flutter/webview_flutter.dart' as web;
@@ -25,13 +24,19 @@ class App {
 }
 
 class Config {
+  static const String userAgent =
+      r'Mozilla/5.0 AppleWebKit/537.36 Chrome/88.0.4324.181 Mobile Safari/537.36 Yuyan';
+  static const String clientId = r'eeqJ55wPXkjEJZujqEQh';
+  static const String clientSecret =
+      r'cUqsOf2mnphsHKEpsJLHWXrsu8oPwtnBxPStbD9f';
+
   static get webview => InAppWebViewGroupOptions(
-        // crossPlatform: InAppWebViewOptions(
-        //   userAgent:
-        //       'Mozilla/5.0 AppleWebKit/537.36 Chrome/88.0.4324.181 Mobile Safari/537.36 Yuyan',
-        // ),
-        // android: AndroidInAppWebViewOptions(
-          // useHybridComposition: false,
-        // ),
+      // crossPlatform: InAppWebViewOptions(
+      //   userAgent:
+      //       'Mozilla/5.0 AppleWebKit/537.36 Chrome/88.0.4324.181 Mobile Safari/537.36 Yuyan',
+      // ),
+      // android: AndroidInAppWebViewOptions(
+      // useHybridComposition: false,
+      // ),
       );
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/app.dart';
+import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'dart:async';
 
@@ -14,9 +15,9 @@ class _SplashPageState extends State<SplashPage> {
 
     Future.delayed(Duration(milliseconds: 500), () {
       if (App.tokenProvider.isLogin) {
-        Get.offAllNamed("/");
+        Get.offAllNamed(RouteName.home);
       } else {
-        Get.offAllNamed("/guide");
+        Get.offAllNamed(RouteName.guide);
       }
     });
   }

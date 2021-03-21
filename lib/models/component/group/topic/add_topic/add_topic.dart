@@ -1,8 +1,4 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:yuyan_app/models/net/requests_api/user/user.dart';
-import 'package:yuyan_app/models/widgets_small/toast.dart';
 
 class AddTopicPage extends StatefulWidget {
   AddTopicPage({Key key, this.groupId, this.callback}) : super();
@@ -21,24 +17,24 @@ class _AddTopicPageState extends State<AddTopicPage> {
   var contentController = new TextEditingController();
 
   addTopic() async {
-    if (addTitleController.text.length > 0 &&
-        contentController.text.length > 0) {
-      var res = await DioUser.addTopic(
-        groupId: groupId,
-        title: addTitleController.text,
-        body: contentController.text,
-      );
-      if (res) {
-        myToast(context, "发布成功，返回上级页面");
-        callback();
-        Timer(Duration(milliseconds: 300), () {
-          Navigator.pop(context);
-        });
-      }
-      return res;
-    } else {
-      myToast(context, "请填写完整信息哦");
-    }
+    // if (addTitleController.text.length > 0 &&
+    //     contentController.text.length > 0) {
+    //   var res = await DioUser.addTopic(
+    //     groupId: groupId,
+    //     title: addTitleController.text,
+    //     body: contentController.text,
+    //   );
+    //   if (res) {
+    //     myToast(context, "发布成功，返回上级页面");
+    //     callback();
+    //     Timer(Duration(milliseconds: 300), () {
+    //       Navigator.pop(context);
+    //     });
+    //   }
+    //   return res;
+    // } else {
+    //   myToast(context, "请填写完整信息哦");
+    // }
   }
 
   @override

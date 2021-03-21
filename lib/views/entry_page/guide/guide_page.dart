@@ -1,9 +1,10 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:flutter/material.dart';
-import 'package:yuyan_app/views/begin_init/guide_page/guide1.dart';
-import 'package:yuyan_app/views/begin_init/guide_page/guide2.dart';
-import 'package:yuyan_app/views/begin_init/guide_page/guide3.dart';
+
+import 'guide1.dart';
+import 'guide2.dart';
+import 'guide3.dart';
 
 class GuidePage extends StatelessWidget {
   // int n = 0;

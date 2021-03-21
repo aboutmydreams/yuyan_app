@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/net/base.dart';
 import 'package:yuyan_app/config/net/token.dart';
 
@@ -82,8 +83,7 @@ class ApiError implements Exception {
 
 class BaseApi extends BaseHttp with TokenMixin, OrganizationMixin {
   final baseUrl;
-  final userAgent =
-      "Mozilla/5.0 AppleWebKit/537.36 Chrome/88.0.4324.181 Mobile Safari/537.36 Yuyan";
+  final userAgent = Config.userAgent;
 
   BaseApi({
     this.baseUrl = "https://www.yuque.com/api",

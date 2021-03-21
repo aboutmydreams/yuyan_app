@@ -3,14 +3,14 @@ import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/net/base.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 
-class TokenJson {
+class TokenJsonSeri {
   String accessToken;
   String session;
   String cToken;
 
   String allCookie;
 
-  TokenJson.fromJson(Map json) {
+  TokenJsonSeri.fromJson(Map json) {
     if (json['error'] != null) {
       throw 'error: ${json['error']} ${json['error_description']}';
     }
@@ -50,7 +50,7 @@ class TokenJson {
       };
 }
 
-class TokenProvider extends BaseSaveJson<TokenJson> {
+class TokenProvider extends BaseSaveJson<TokenJsonSeri> {
   bool get isLogin =>
       !isNullOrEmpty && data.accessToken != null && data.session != null;
 
@@ -58,8 +58,8 @@ class TokenProvider extends BaseSaveJson<TokenJson> {
   String get key => 'token';
 
   @override
-  TokenJson convert(json) {
-    return TokenJson.fromJson(json);
+  TokenJsonSeri convert(json) {
+    return TokenJsonSeri.fromJson(json);
   }
 }
 
@@ -83,10 +83,12 @@ mixin TokenMixin on BaseHttp {
     });
   }
 
-  setToken(TokenJson token) {
-    options.headers['X-Auth-Token'] = token.accessToken;
-    options.headers['Cookie'] = token.getCookie();
-    options.headers['x-csrf-token'] = token.cToken;
+  setToken(TokenJsonSeri token) {
+    if (token != null) {
+      options.headers['X-Auth-Token'] = token.accessToken;
+      options.headers['Cookie'] = token.getCookie();
+      options.headers['x-csrf-token'] = token.cToken;
+    }
   }
 }
 

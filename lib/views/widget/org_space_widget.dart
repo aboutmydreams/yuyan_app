@@ -25,12 +25,13 @@ import 'package:yuyan_app/views/widget/user_widget.dart';
 class OrgSpaceLeadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var user = App.user.data;
     return GetBuilder<MyUserController>(
       builder: (c) => c.builder((state) {
         return InkWell(
           child: IconButton(
-            icon: UserAvatarWidget(avatar: user.avatarUrl),
+            icon: UserAvatarWidget(
+              avatar: state.data.avatarUrl,
+            ),
             tooltip: '切换',
             onPressed: () {
               // 切换工作台弹窗

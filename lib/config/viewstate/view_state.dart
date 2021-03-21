@@ -170,8 +170,23 @@ mixin ControllerStateMixin on GetxController {
           type: ViewErrorType.network,
         );
       case NoSuchMethodError: //调用null对象
+        var err = e as NoSuchMethodError;
+        return ViewError(
+          title: '空对象错误(NoSuchMethod)',
+          content: '开发者没有很好的处理特殊情况，\n并抛给你一个NULL错误',
+          error: err,
+          type: ViewErrorType.dart,
+        );
       case RangeError: //数组越界
       case IndexError: //同上
+        var err = e as ArgumentError;
+        return ViewError(
+          title: '数组越界',
+          content: 'SB开发者，连这个错误都处理不好\n'
+              '${err.name} => ${err.message}',
+          error: e,
+          type: ViewErrorType.dart,
+        );
       case FormatException: //String字符出现非法编码
         var err = e as FormatException;
         return ViewError(
