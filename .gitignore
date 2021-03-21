@@ -10,9 +10,13 @@
 .svn/
 .ipa
 
+
+## ignore key
 key.properties
 key.jks
 yuyan.jks
+android/key.properties
+android/yuyan.jks
 
 # IntelliJ related
 *.iml

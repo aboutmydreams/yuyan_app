@@ -85,7 +85,7 @@ class _NotusMarkdownEncoder extends Converter<Delta, String> {
       final opText = op.data is String ? op.data as String : '';
       final lf = opText.indexOf('\n');
       if (lf == -1) {
-        _handleSpan(op.data, op.attributes);
+        _handleSpan(opText, op.attributes);
       } else {
         var span = StringBuffer();
         for (var i = 0; i < opText.length; i++) {
@@ -169,9 +169,9 @@ class _NotusMarkdownEncoder extends Converter<Delta, String> {
       _writeHeadingTag(buffer, attribute as NotusAttribute<int>);
     } else if (attribute.key == NotusAttribute.block.key) {
       _writeBlockTag(buffer, attribute as NotusAttribute<String>, close: close);
-    // } else if (attribute.key == NotusAttribute.embed.key) {
-    //   _writeImageTag(buffer, attribute as NotusAttribute<Map<String, dynamic>>,
-    //       close: close);
+    } else if (attribute.key == 'image') {
+      _writeImageTag(buffer, attribute as NotusAttribute<Map<String, dynamic>>,
+          close: close);
     } else {
       throw new ArgumentError('Cannot handle $attribute');
     }

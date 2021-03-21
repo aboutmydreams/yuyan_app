@@ -8,7 +8,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: checkout code
       - uses: actions/checkout@v1
+
+      - name: set up key
+        env:
+          KEY: ${{secrets.KEY}}
+          SIGN: ${{secrets.SIGN}}
+        run: |
+          echo $KEY > android/key.properties
+          echo $SIGN | base64 -d > android/yuyan.jks
+          pwd
+
       - uses: actions/setup-java@v1
         with:
           java-version: "12.x"

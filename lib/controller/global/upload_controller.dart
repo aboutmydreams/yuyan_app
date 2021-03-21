@@ -29,6 +29,7 @@ class PostNoteController extends FetchValueController<NoteSeri> {
   @override
   Future<NoteSeri> fetch() async {
     var mk = NotusMarkdownCodec().encode(_data);
+    // NotusMarkdownCodec();
     debugPrint('markdown:\n$mk\n');
     var html = await ApiRepository.convertLake(markdown: mk);
     return ApiRepository.postNote(html: html, id: id);
