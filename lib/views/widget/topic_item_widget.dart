@@ -9,6 +9,106 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
+class TopicTileWidget extends StatelessWidget {
+  final TopicSeri topic;
+  final bool showLabel;
+
+  TopicTileWidget({
+    Key key,
+    this.topic,
+    this.showLabel = false,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Widget ans = Container(
+      padding: EdgeInsets.only(left: 16, right: 4),
+      alignment: Alignment.centerRight,
+      width: 56,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Icon(Icons.question_answer, size: 16),
+          Text(
+            "${topic.commentsCount}",
+            style: AppStyles.textStyleCC,
+          )
+        ],
+      ),
+    );
+    Widget user = Row(
+      children: [
+        UserAvatarWidget(
+          avatar: topic.user.avatarUrl,
+          height: 18,
+        ),
+        SizedBox(width: 4),
+        Container(
+          child: Text(
+            "${topic.user.name} 创建于 ${Util.timeCut(topic.createdAt)}",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppStyles.textStyleCC,
+          ),
+        ),
+      ],
+    );
+    Widget child = Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  child: Text(
+                    '${topic.title}',
+                    style: AppStyles.textStyleB,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                SizedBox(height: 3),
+                if (showLabel && !GetUtils.isNullOrBlank(topic.labels))
+                  _labels(topic.labels),
+                SizedBox(height: 3),
+                user,
+              ],
+            ),
+          ),
+          ans,
+        ],
+      ),
+    );
+    return GestureDetector(
+      onTap: () {
+        MyRoute.topic(topic.iid, topic.groupId);
+      },
+      child: child,
+    );
+  }
+
+  Widget _labels(List<LabelSeri> labels) {
+    return RichText(
+      overflow: TextOverflow.ellipsis,
+      maxLines: 2,
+      text: TextSpan(
+        children: labels.map((e) {
+          return TextSpan(
+            text: ' ${e.name} ',
+            style: TextStyle(
+              backgroundColor: SmartColor.parse(e.color),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+
 class TopicRowItemWidget2 extends StatelessWidget {
   final TopicSeri topic;
 
@@ -19,21 +119,81 @@ class TopicRowItemWidget2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget ans = Container(
+      margin: EdgeInsets.only(right: 8),
+      width: 35,
+      child: Row(
+        children: [
+          Icon(Icons.question_answer, size: 16),
+          Expanded(
+            child: Text(
+              "${topic.commentsCount}",
+              textAlign: TextAlign.right,
+            ),
+          )
+        ],
+      ),
+    );
+    Widget child = Row(
+      children: [
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                child: Text(
+                  topic.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppStyles.textStyleB,
+                ),
+              ),
+              SizedBox(height: 3),
+              if (!GetUtils.isNullOrBlank(topic.labels)) _labels(topic.labels),
+              SizedBox(height: 3),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  UserAvatarWidget(
+                    avatar: topic.user.avatarUrl,
+                    height: 20,
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    margin: EdgeInsets.only(left: 12),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(height: 2),
+                        Container(
+                          child: Text(
+                            "${topic.user.name} 创建于 ${Util.timeCut(topic.createdAt)}",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppStyles.textStyleC,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        ans,
+      ],
+    );
     return GestureDetector(
-      onTap: () {
-        // OpenPage.topic(
-        //   context,
-        //   id: data.id,
-        //   groupId: data.groupId,
-        //   iid: data.iid,
-        // );
-      },
+      onTap: () => MyRoute.topic(topic.iid, topic.groupId),
       child: Container(
-        // height: 70,
-        margin: EdgeInsets.only(left: 15, top: 10, right: 15),
-        padding: EdgeInsets.only(left: 15, top: 12, bottom: 10, right: 15),
+        margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
         decoration: BoxDecoration(
           color: AppColors.background,
+          borderRadius: BorderRadius.circular(4),
           boxShadow: [
             BoxShadow(
               color: Color.fromARGB(25, 0, 0, 0),
@@ -41,90 +201,25 @@ class TopicRowItemWidget2 extends StatelessWidget {
               blurRadius: 4,
             ),
           ],
-          borderRadius: BorderRadius.all(Radius.circular(5)),
         ),
-        child: Row(
-          children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  child: Text(
-                    topic.title.clip(15, ellipsis: true),
-                    style: AppStyles.textStyleB,
-                  ),
-                ),
-                SizedBox(height: 3),
-                if (!GetUtils.isNullOrBlank(topic.labels))
-                  RichText(
-                    text: TextSpan(
-                      children: topic.labels.map((e) {
-                        return _label(e);
-                      }).toList(),
-                    ),
-                  ),
-                SizedBox(height: 3),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    UserAvatarWidget(
-                      avatar: topic.user.avatarUrl,
-                      height: 20,
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      margin: EdgeInsets.only(left: 12),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          SizedBox(height: 2),
-                          Container(
-                            child: Text(
-                              "${topic.user.name} 创建于 ${Util.timeCut(topic.createdAt)}",
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppStyles.textStyleC,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Spacer(),
-            Container(
-              margin: EdgeInsets.only(right: 4),
-              width: 45,
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    child: Icon(
-                      Icons.question_answer,
-                      size: 19,
-                    ),
-                  ),
-                  SizedBox(width: 7),
-                  Text("${topic.commentsCount}")
-                ],
-              ),
-            )
-          ],
-        ),
+        child: child,
       ),
     );
   }
 
-  InlineSpan _label(LabelSeri label) {
-    return TextSpan(
-      text: ' ${label.name} ',
-      style: TextStyle(
-        backgroundColor: SmartColor.parse(
-          label.color,
-        ),
+  Widget _labels(List<LabelSeri> labels) {
+    return RichText(
+      overflow: TextOverflow.ellipsis,
+      maxLines: 2,
+      text: TextSpan(
+        children: labels.map((e) {
+          return TextSpan(
+            text: ' ${e.name} ',
+            style: TextStyle(
+              backgroundColor: SmartColor.parse(e.color),
+            ),
+          );
+        }).toList(),
       ),
     );
   }

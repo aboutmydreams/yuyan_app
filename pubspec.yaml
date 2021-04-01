@@ -11,6 +11,7 @@ publish_to: none
 
 dependency_overrides:
   crypto: 3.0.0
+  url_launcher: ^6.0.2
 
 dependencies:
   flutter:
@@ -30,6 +31,8 @@ dependencies:
       path: packages/zefyr
 
   notus: 1.0.0-dev.4.0
+
+  flutter_quill: 1.1.6
   #  notus:
   #    git:
   #      url: git@github.com:dreamer2q/zefyr.git
@@ -52,7 +55,7 @@ dependencies:
   ## clipboard复制代码
   clipboard: 0.1.2+8
   ## 组件显示，支持缩放
-  photo_view: 0.10.3
+  photo_view: ^0.11.1
   ## 图片缓存
   cached_network_image: ^2.0.0
   ## 图片查看，编辑
@@ -86,7 +89,7 @@ dependencies:
   bot_toast: 3.0.5
 
   # launcher
-  url_launcher: ^5.0.0
+  url_launcher: ^6.0.2
 
   # 有序列表
   romanice: 1.0.0+1
@@ -112,9 +115,9 @@ dependencies:
   # 分享
   share_extend: ^1.1.9
   # 权限
-  permission_handler: ^5.0.0+hotfix.8
+  permission_handler: ^6.1.1
   # flare动画
-  flare_flutter: ^2.0.6
+  flare_flutter: ^3.0.0
 
   # 裁剪 我的页面顶部背景
   flutter_custom_clippers: ^1.1.0

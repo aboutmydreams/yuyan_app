@@ -11,7 +11,6 @@ class MyGroupPage extends FetchRefreshListViewPage<MyGroupController> {
   Widget buildChild() {
     var data = controller.value.data;
     return ListView.builder(
-      // itemCount: groupList.length,
       itemCount: data.length,
       itemBuilder: (_, int index) {
         return AnimationConfiguration.staggeredList(

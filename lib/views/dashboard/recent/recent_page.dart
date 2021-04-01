@@ -7,7 +7,7 @@ import 'package:yuyan_app/controller/recent_controller.dart';
 import 'package:yuyan_app/model/dashboard/user_recent_seri.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/views/widget/animation_widget.dart';
+import 'package:yuyan_app/views/widget/list_helper_widget.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/drop_menu_item_widget.dart';
 

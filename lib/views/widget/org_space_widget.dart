@@ -13,7 +13,7 @@ import 'package:yuyan_app/model/document/organization_lite.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/util/util.dart';
-import 'package:yuyan_app/views/widget/animation_widget.dart';
+import 'package:yuyan_app/views/widget/list_helper_widget.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 /// 切换空间组件

@@ -41,7 +41,7 @@ class FetchRefreshListViewBuilder<T extends FetchListValueController>
               'get controller: ${T.toString()} with tag: $tag'
               'resulted in a null controller'
               'did you forget to Get.put'
-              'or, you just mess up with tag',
+              'or, you just messed up with tag',
             ),
           );
         }

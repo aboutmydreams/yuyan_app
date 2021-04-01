@@ -22,26 +22,24 @@ class AnimationListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimationLimiter(
-      child: ListView.builder(
-        physics: physics,
-        controller: controller,
-        itemCount: itemCount,
-        shrinkWrap: shrinkWrap,
-        itemBuilder: (_, i) {
-          return AnimationConfiguration.staggeredList(
-            position: i,
-            duration: const Duration(milliseconds: 375),
-            child: SlideAnimation(
-              verticalOffset: 50.0,
-              child: Util.animationTypeBuild(
-                type: animationType,
-                child: itemBuilder(context, i),
-              ),
+    return ListView.builder(
+      physics: physics,
+      controller: controller,
+      itemCount: itemCount,
+      shrinkWrap: shrinkWrap,
+      itemBuilder: (_, i) {
+        return AnimationConfiguration.staggeredList(
+          position: i,
+          duration: const Duration(milliseconds: 375),
+          child: SlideAnimation(
+            verticalOffset: 50.0,
+            child: Util.animationTypeBuild(
+              type: animationType,
+              child: itemBuilder(context, i),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

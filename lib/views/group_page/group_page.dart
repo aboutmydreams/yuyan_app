@@ -4,6 +4,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
+import 'package:yuyan_app/config/viewstate/view_page.dart';
 import 'package:yuyan_app/controller/action_controller.dart';
 import 'package:yuyan_app/controller/global/group_controller.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
@@ -20,7 +21,7 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/group_page/widget/group_event_widget.dart';
-import 'package:yuyan_app/views/widget/animation_widget.dart';
+import 'package:yuyan_app/views/widget/list_helper_widget.dart';
 import 'package:yuyan_app/views/widget/book_row_widget.dart';
 import 'package:yuyan_app/views/widget/drop_menu_item_widget.dart';
 import 'package:yuyan_app/views/widget/lake_mention_widget.dart';
@@ -156,14 +157,12 @@ class _GroupPageState extends State<GroupPage>
           ),
         ),
       ),
-      GetBuilder<GroupBookController>(
+      FetchRefreshListViewBuilder<GroupBookController>(
         tag: tag,
-        builder: (c) => c.stateBuilder(
-          onIdle: () => AnimationListWidget(
-            itemCount: c.value.length,
-            itemBuilder: (_, i) => BookRowItemWidget(
-              book: c.value[i],
-            ),
+        builder: (c) => AnimationListWidget(
+          itemCount: c.value.length,
+          itemBuilder: (_, i) => BookRowItemWidget(
+            book: c.value[i],
           ),
         ),
       ),
@@ -172,8 +171,9 @@ class _GroupPageState extends State<GroupPage>
         builder: (c) => c.stateBuilder(
           onIdle: () => AnimationListWidget(
             itemCount: c.value.length,
-            itemBuilder: (_, i) => TopicRowItemWidget2(
+            itemBuilder: (_, i) => TopicTileWidget(
               topic: c.value[i],
+              showLabel: true,
             ),
           ),
         ),

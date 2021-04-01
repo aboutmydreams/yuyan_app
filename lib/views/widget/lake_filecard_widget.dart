@@ -23,12 +23,16 @@ class LakeFileCardWidget extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: AppIcon.iconType('file'),
             ),
-            Text(
-              '${json['name']}'.clip(12, ellipsis: true),
-              style: TextStyle(
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
+            Expanded(
+              child: Text(
+                '${json['name']}'.clip(12, ellipsis: true),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
               ),
             ),
             Spacer(),

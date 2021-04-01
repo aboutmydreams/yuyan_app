@@ -6,7 +6,7 @@ import 'package:yuyan_app/model/v2/user_detail.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/widgets_small/member.dart';
 import 'package:yuyan_app/util/util.dart';
-import 'package:yuyan_app/views/widget/animation_widget.dart';
+import 'package:yuyan_app/views/widget/list_helper_widget.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class MyInfoCardWidget extends StatelessWidget {
