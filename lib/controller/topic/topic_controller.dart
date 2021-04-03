@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
@@ -29,6 +30,21 @@ class TopicCommentsController
       commentId: commentId,
       commentType: 'Topic',
     );
+  }
+}
+
+class CommentDeleteController extends FetchValueController<CommentDetailSeri> {
+  final int commentId;
+
+  CommentDeleteController(this.commentId)
+      : super(
+          initialFetch: false,
+          initialState: ViewState.idle,
+        );
+
+  @override
+  Future<CommentDetailSeri> fetch() {
+    return ApiRepository.deleteComment(commentId);
   }
 }
 

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -7,9 +5,7 @@ import 'package:yuyan_app/controller/quick_link_controller.dart';
 import 'package:yuyan_app/controller/recent_controller.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/all_doc_book_data.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
-import 'package:yuyan_app/models/widgets_small/toast.dart';
 import 'package:yuyan_app/views/dashboard/small_note/quick_view.dart';
-import 'package:yuyan_app/views/dashboard/note_editor/small_note_editor.dart';
 import 'package:yuyan_app/views/dashboard/recent/recent_page.dart';
 import 'package:yuyan_app/views/widget/org_space_widget.dart';
 import 'package:yuyan_app/views/widget/search_action_widget.dart';

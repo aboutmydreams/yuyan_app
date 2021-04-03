@@ -40,7 +40,7 @@ android {
     defaultConfig {
         applicationId "com.yuque.vyan"
         minSdkVersion 23
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         // testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

@@ -60,7 +60,7 @@ class PrintInterceptor extends InterceptorsWrapper {
       }
     }
     if (resp.isRedirect != null && resp.isRedirect) {
-      debug += '\n\tredirects-->\n${prettyJson(resp.redirects)}\n';
+      debug += '\n\tredirects-->\n${resp.redirects.map((e) => e.location).toString()}\n';
     }
     return debug;
   }

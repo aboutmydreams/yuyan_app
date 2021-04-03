@@ -1,12 +1,15 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/route_manager.dart';
+import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/controller/topic/topic_controller.dart';
 import 'package:yuyan_app/model/document/commen/comment_detail.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/topic/topic_detail_seri.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/widgets_small/show_dialog/show_confirm.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/lake_mention_widget.dart';
 import 'package:yuyan_app/views/widget/lake_render_widget.dart';
@@ -52,7 +55,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
             child: CircularProgressIndicator(),
           );
         }
-        return FlatButton(
+        return TextButton(
           onPressed: () {
             if (_textController.text.trim().isNotEmpty) {
               c.postComment(
@@ -117,7 +120,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
             Container(
               width: double.infinity,
               alignment: Alignment.centerRight,
-              child: _buildCommentButton(_commentId),
+              child: _buildCommentButton(_commentId, reply),
             ),
           ],
         ),
@@ -210,11 +213,12 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
                 if (e.parentId != null) {
                   var index = comments.value
                       .indexWhere((item) => item.id == e.parentId);
-                  parent = comments.value[index].user;
+                  parent = index == -1 ? null : comments.value[index].user;
                 }
                 return CommentDetailItemWidget(
                   data: e,
                   parent: parent,
+                  commentableId: commentId,
                   onTap: () {
                     // _replyTo = e.id;
                     var hint = '回复 ${e.user.name}: ';
@@ -233,6 +237,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
 
 class CommentDetailItemWidget extends StatelessWidget {
   final CommentDetailSeri data;
+  final int commentableId;
   final UserSeri parent;
   final VoidCallback onTap;
 
@@ -241,6 +246,7 @@ class CommentDetailItemWidget extends StatelessWidget {
     this.data,
     this.parent,
     this.onTap,
+    this.commentableId,
   }) : super(key: key);
 
   @override
@@ -251,10 +257,25 @@ class CommentDetailItemWidget extends StatelessWidget {
         highlightColor: Colors.black12,
         onTap: onTap,
         onLongPress: () {
-          // showConfirmDialog(context, content: "这条内容违规了吗",
-          //     confirmCallback: () {
-          //   fakeReport(context);
-          // });
+          if (data.userId == App.user.data.id) {
+            showConfirmDialog(
+              context,
+              content: '删除这条评论吗?',
+              confirmCallback: () {
+                Util.futureWrap<CommentDetailSeri>(
+                  ApiRepository.deleteComment(data.id),
+                  onData: (data) {
+                    Get.find<TopicCommentsController>(tag: '$commentableId')
+                        .onRefresh(force: true);
+                    Util.toast('删除成功');
+                  },
+                  onError: (err) {
+                    Util.toast('删除失败: $err');
+                  },
+                );
+              },
+            );
+          }
         },
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),

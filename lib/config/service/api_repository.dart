@@ -402,6 +402,12 @@ class ApiRepository {
     return CommentDetailSeri.fromJson(asp.data);
   }
 
+  static Future<CommentDetailSeri> deleteComment(int commentId) async {
+    var res = await api.delete("/comments/$commentId");
+    var asp = (res.data as ApiResponse);
+    return CommentDetailSeri.fromJson(asp.data);
+  }
+
   static Future<TopicDetailSeri> getTopicDetail({int iid, int groupId}) async {
     var res = await api.get('/topics/$iid', queryParameters: {
       'group_id': groupId,

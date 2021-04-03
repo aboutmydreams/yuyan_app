@@ -117,7 +117,7 @@ class MyInfoNumberWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var groupNumer = Get.find<MyGroupController>().value.data?.length ?? 0;
+    // var groupNumer = Get.find<MyGroupController>().value.data?.length ?? 0;
     return Align(
       alignment: Alignment.topCenter,
       child: Container(

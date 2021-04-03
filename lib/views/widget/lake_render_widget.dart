@@ -35,6 +35,7 @@ import 'package:yuyan_app/views/widget/vote_card_widget.dart';
 
 // ignore: implementation_imports
 import 'package:flutter_html/src/layout_element.dart';
+// ignore: implementation_imports
 import 'package:flutter_html/src/css_parser.dart' as cssutil;
 
 import 'lake_task_item_widget.dart';
@@ -250,7 +251,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
 
   _lakeCardRender(RenderContext _, Widget child) {
     var attr = _.tree.attributes;
-    var elem = _.tree.element;
+    // var elem = _.tree.element;
     // var type = attr['type']; //style type
     var name = attr['name']; //type name
     var value = attr['value']; //json value
@@ -516,7 +517,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
         );
       },
       'code': (_, child) {
-        var attr = _.tree.element;
+        // var attr = _.tree.element;
         return Container(
           padding: EdgeInsets.zero,
           margin: EdgeInsets.zero,

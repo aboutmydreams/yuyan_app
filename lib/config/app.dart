@@ -31,12 +31,13 @@ class Config {
       r'cUqsOf2mnphsHKEpsJLHWXrsu8oPwtnBxPStbD9f';
 
   static get webview => InAppWebViewGroupOptions(
-      // crossPlatform: InAppWebViewOptions(
-      //   userAgent:
-      //       'Mozilla/5.0 AppleWebKit/537.36 Chrome/88.0.4324.181 Mobile Safari/537.36 Yuyan',
-      // ),
-      // android: AndroidInAppWebViewOptions(
-      // useHybridComposition: false,
-      // ),
+        // crossPlatform: InAppWebViewOptions(
+        //   userAgent:
+        //       'Mozilla/5.0 AppleWebKit/537.36 Chrome/88.0.4324.181 Mobile Safari/537.36 Yuyan',
+        // ),
+        // android: AndroidInAppWebViewOptions(
+          // cacheMode: AndroidCacheMode.LOAD_NO_CACHE,
+          // useHybridComposition: true,
+        // ),
       );
 }

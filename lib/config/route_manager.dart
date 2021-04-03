@@ -5,7 +5,6 @@ import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/events/user_lite_seri.dart';
-import 'package:yuyan_app/models/component/edit_markdown/edit_page.dart';
 import 'package:yuyan_app/views/dashboard/dashboard.dart';
 import 'package:yuyan_app/views/dashboard/note_editor/small_note_editor.dart';
 import 'package:yuyan_app/views/dashboard/small_note/note_page.dart';
@@ -144,7 +143,6 @@ class MyRoute {
     GetPage(name: RouteName.desk, page: () => HomePage(pageKey: 1)),
     GetPage(name: RouteName.news, page: () => HomePage(pageKey: 2)),
     GetPage(name: RouteName.my, page: () => HomePage(pageKey: 3)),
-    GetPage(name: RouteName.edit, page: () => FullPageEditorScreen()),
     GetPage(
       name: RouteName.editNote,
       page: () => SmallNoteEditor(),

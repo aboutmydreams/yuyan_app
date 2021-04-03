@@ -73,6 +73,8 @@ dependencies:
   flutter_webview_plugin:
     git: https://github.com/aboutmydreams/flutter_webview_plugin.git
   flutter_inappwebview: 4.0.0+4
+#  flutter_inappwebview: 5.0.4-nullsafety.1
+
 
   ## tree
   flutter_simple_treeview: 2.0.2

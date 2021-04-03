@@ -10,7 +10,6 @@ import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/model/document/note/note.dart';
 import 'package:yuyan_app/model/document/note/note_status.dart';
 import 'package:yuyan_app/model/document/upload/upload_result_seri.dart';
-import 'package:yuyan_app/models/component/edit_markdown/convert/to_markdown.dart';
 
 class PostNoteController extends FetchValueController<NoteSeri> {
   final int id;

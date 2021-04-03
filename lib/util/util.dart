@@ -12,6 +12,20 @@ import 'package:yuyan_app/model/document/toc/toc_seri.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 
 class Util {
+  static futureWrap<T>(
+    Future future, {
+    Function(T) onData,
+    Function(dynamic) onError,
+  }) async {
+    try {
+      var data = await future;
+      onData?.call(data);
+    } catch (err) {
+      onError?.call(err);
+      debugPrint('futureWrap catch error: $err');
+    }
+  }
+
   static List<TreeNode> parseTocTree(List<TocSeri> data) {
     Map<String, TocSeri> map = {};
     data.forEach((toc) {

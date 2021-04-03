@@ -8,7 +8,6 @@ import 'package:yuyan_app/model/document/doc_lite.dart';
 import 'package:yuyan_app/model/events/user_lite_seri.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
-import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/views/widget/list_helper_widget.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
