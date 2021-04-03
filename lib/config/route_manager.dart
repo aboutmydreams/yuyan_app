@@ -7,9 +7,9 @@ import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/events/user_lite_seri.dart';
 import 'package:yuyan_app/models/component/edit_markdown/edit_page.dart';
 import 'package:yuyan_app/views/dashboard/dashboard.dart';
-import 'package:yuyan_app/views/dashboard/quick/note_editor/note_editor.dart';
-import 'package:yuyan_app/views/dashboard/quick/note_page.dart';
-import 'package:yuyan_app/views/dashboard/quick/quick_set.dart';
+import 'package:yuyan_app/views/dashboard/note_editor/small_note_editor.dart';
+import 'package:yuyan_app/views/dashboard/small_note/note_page.dart';
+import 'package:yuyan_app/views/dashboard/small_note/quick_set.dart';
 import 'package:yuyan_app/views/document_page/book_doc_page.dart';
 import 'package:yuyan_app/views/document_page/doc_detail_page.dart';
 import 'package:yuyan_app/views/entry_page/guide/guide_page.dart';
@@ -145,7 +145,10 @@ class MyRoute {
     GetPage(name: RouteName.news, page: () => HomePage(pageKey: 2)),
     GetPage(name: RouteName.my, page: () => HomePage(pageKey: 3)),
     GetPage(name: RouteName.edit, page: () => FullPageEditorScreen()),
-    GetPage(name: RouteName.editNote, page: () => NoteEditorPage()),
+    GetPage(
+      name: RouteName.editNote,
+      page: () => SmallNoteEditor(),
+    ),
     GetPage(name: RouteName.quickSet, page: () => QuickSetPage()),
     GetPage(
       name: RouteName.dashboard,
@@ -153,7 +156,7 @@ class MyRoute {
     ),
     GetPage(
       name: RouteName.note,
-      page: () => QuickNotePage(),
+      page: () => SmallNotePage(),
     ),
     GetPage(name: RouteName.mySetting, page: () => SettingPage()),
     GetPage(name: RouteName.myGroup, page: () => MyGroupPage()),

@@ -8,8 +8,8 @@ import 'package:yuyan_app/controller/recent_controller.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/all_doc_book_data.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
-import 'package:yuyan_app/views/dashboard/quick/note_editor/note_editor.dart';
-import 'package:yuyan_app/views/dashboard/quick/quick_view.dart';
+import 'package:yuyan_app/views/dashboard/small_note/quick_view.dart';
+import 'package:yuyan_app/views/dashboard/note_editor/small_note_editor.dart';
 import 'package:yuyan_app/views/dashboard/recent/recent_page.dart';
 import 'package:yuyan_app/views/widget/org_space_widget.dart';
 import 'package:yuyan_app/views/widget/search_action_widget.dart';
@@ -51,19 +51,19 @@ class _MyDashBoardPageState extends State<MyDashBoardPage> {
           SearchActionWidget(),
         ],
       ),
-      floatingActionButton: GestureDetector(
-        onLongPress: () {
-          Timer(Duration(milliseconds: 400), () {
-            myToast(context, "感谢你的期待 💕");
-          });
-        },
-        child: FloatingActionButton(
-          onPressed: () {
-            Get.to(NoteEditorPage());
-          },
-          child: Icon(Icons.edit),
-        ),
-      ),
+      // floatingActionButton: GestureDetector(
+      //   onLongPress: () {
+      //     Timer(Duration(milliseconds: 400), () {
+      //       myToast(context, "感谢你的期待 💕");
+      //     });
+      //   },
+      //   child: FloatingActionButton(
+      //     onPressed: () {
+      //       Get.to(SmallNoteEditor());
+      //     },
+      //     child: Icon(Icons.edit),
+      //   ),
+      // ),
       body: GetBuilder<RecentController>(
         builder: (c) {
           return SmartRefresher(

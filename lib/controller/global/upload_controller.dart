@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:delta_markdown/delta_markdown.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/models/quill_delta.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
@@ -6,7 +10,6 @@ import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/model/document/note/note.dart';
 import 'package:yuyan_app/model/document/note/note_status.dart';
 import 'package:yuyan_app/model/document/upload/upload_result_seri.dart';
-import 'package:quill_delta/quill_delta.dart';
 import 'package:yuyan_app/models/component/edit_markdown/convert/to_markdown.dart';
 
 class PostNoteController extends FetchValueController<NoteSeri> {
@@ -28,7 +31,9 @@ class PostNoteController extends FetchValueController<NoteSeri> {
 
   @override
   Future<NoteSeri> fetch() async {
-    var mk = NotusMarkdownCodec().encode(_data);
+    // var mk = NotusMarkdownCodec().encode(_data);
+    var str = jsonEncode(_data).toString();
+    var mk = deltaToMarkdown(str);
     // NotusMarkdownCodec();
     debugPrint('markdown:\n$mk\n');
     var html = await ApiRepository.convertLake(markdown: mk);

@@ -33,6 +33,10 @@ dependencies:
   notus: 1.0.0-dev.4.0
 
   flutter_quill: 1.1.6
+  delta_markdown:
+    git:
+      url: https://github.com/dreamer2q/delta_markdown.git
+      ref: 26d70f68fd74651644cf7b6dcfb0d834b977e0fa
   #  notus:
   #    git:
   #      url: git@github.com:dreamer2q/zefyr.git
@@ -148,7 +152,8 @@ dependencies:
   html2md: ^1.0.1
 
   # markdown 渲染器
-  flutter_markdown: ^0.5.2
+  flutter_markdown: ^0.6.1
+
 
   ## 字符串格式
   recase: 3.0.1

@@ -157,7 +157,7 @@ mixin ControllerStateMixin on GetxController {
         // }
         return ViewError(
           title: '网络错误',
-          content: Error.safeToString(err.error),
+          content: Error.safeToString(err),
           error: err,
           type: ViewErrorType.network,
         );
