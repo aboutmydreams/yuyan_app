@@ -20,18 +20,8 @@ import 'package:yuyan_app/model/document/card/card_video_seri.dart';
 import 'package:yuyan_app/model/document/lake/lake_card_seri.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/views/webview_page/webview_page.dart';
-import 'package:yuyan_app/views/widget/label_widget.dart';
-import 'package:yuyan_app/views/widget/lake_calendar_widget.dart';
-import 'package:yuyan_app/views/widget/lake_card_widget.dart';
-import 'package:yuyan_app/views/widget/lake_image_widget.dart';
-import 'package:yuyan_app/views/widget/lake_localdoc_widget.dart';
-import 'package:yuyan_app/views/widget/lake_locktext_widget.dart';
-import 'package:yuyan_app/views/widget/lake_mention_widget.dart';
-import 'package:yuyan_app/views/widget/lake_svg_widget.dart';
-import 'package:yuyan_app/views/widget/video_widget.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart' as inapp;
 import 'package:webview_flutter/webview_flutter.dart' as view;
-import 'package:yuyan_app/views/widget/vote_card_widget.dart';
 
 // ignore: implementation_imports
 import 'package:flutter_html/src/layout_element.dart';
@@ -39,12 +29,22 @@ import 'package:flutter_html/src/layout_element.dart';
 // ignore: implementation_imports
 import 'package:flutter_html/src/css_parser.dart' as cssutil;
 
+import 'code_block_widget.dart';
+import 'video_widget.dart';
+import 'label_widget.dart';
+import 'lake_bookmark_widget.dart';
+import 'lake_calendar_widget.dart';
+import 'lake_card_widget.dart';
+import 'lake_image_widget.dart';
+import 'lake_inlinelink_widget.dart';
+import 'lake_localdoc_widget.dart';
+import 'lake_locktext_widget.dart';
+import 'lake_mention_widget.dart';
+import 'lake_svg_widget.dart';
 import 'lake_task_item_widget.dart';
 import 'lake_yuquecard_widget.dart';
-import 'code_block_widget.dart';
-import 'lake_bookmark_widget.dart';
 import 'lake_filecard_widget.dart';
-import 'lake_inlinelink_widget.dart';
+import 'vote_card_widget.dart';
 
 extension ListEx<T extends num> on List<T> {
   T sum() {
@@ -356,7 +356,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
         var link = CardLinkDetailSeri.fromJson(json['detail']);
         return LakeInlineLinkWidget(link: link);
       case 'table':
-        //TODO(@dreamer2q): 表格的高度可能没有给出，如何自动适应高度?
+        //caution: 表格的排版使用了flutter_layout_grid库，它不支持嵌套
         return LakeRenderWidget(
           data: json['html'],
           shrinkWrap: true,

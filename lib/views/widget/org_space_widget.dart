@@ -101,7 +101,7 @@ class _OrgSpaceItemWidget extends StatelessWidget {
     return ListTile(
       selected: isCurrent,
       selectedTileColor: Colors.grey.withOpacity(0.2),
-      leading: userAvatar(org.logo),
+      leading: UserAvatarWidget(avatar: org.logo),
       title: Text(org.name),
       onTap: () async {
         if (!isCurrent) {

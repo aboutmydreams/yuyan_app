@@ -44,7 +44,9 @@ dependencies:
   #      path: packages/notus
 
   # 底部导航栏
-  curved_navigation_bar: ^0.3.1
+  curved_navigation_bar: ^0.4.0-nullsafety.0
+
+  extended_nested_scroll_view: 3.0.0
 
   # HTML渲染部分，主要用于渲染语雀文档
   ## 文档瞄点

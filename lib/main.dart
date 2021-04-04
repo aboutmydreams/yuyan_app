@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
         BotToastNavigatorObserver(),
       ],
       initialBinding: AppBinding(),
+      defaultTransition: Transition.cupertino,
       builder: _builder,
     );
   }

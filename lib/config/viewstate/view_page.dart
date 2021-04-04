@@ -4,9 +4,12 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
+import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart'
+    as extended;
 
 class FetchRefreshListViewBuilder<T extends FetchListValueController>
     extends StatelessWidget {
+  final bool nested;
   final String tag;
   final Widget Function(T) builder;
   final Widget onLoading;
@@ -20,6 +23,7 @@ class FetchRefreshListViewBuilder<T extends FetchListValueController>
     this.onLoading,
     this.onError,
     this.onEmpty,
+    this.nested = false,
   }) : super(key: key);
 
   @override
@@ -45,16 +49,23 @@ class FetchRefreshListViewBuilder<T extends FetchListValueController>
             ),
           );
         }
-        return c.stateBuilder(
-          onIdle: () => Scrollbar(
-            child: SmartRefresher(
-              controller: c.refreshController,
-              onRefresh: c.refreshCallback,
-              onLoading: c.loadMoreCallback,
-              enablePullUp: true,
-              child: builder(c),
-            ),
+        var child = Scrollbar(
+          child: SmartRefresher(
+            controller: c.refreshController,
+            onRefresh: c.refreshCallback,
+            onLoading: c.loadMoreCallback,
+            enablePullUp: true,
+            child: builder(c),
           ),
+        );
+        return c.stateBuilder(
+          onIdle: () {
+            if (!nested) {
+              return child;
+            }
+            return extended.NestedScrollViewInnerScrollPositionKeyWidget(
+                key, child);
+          },
           onLoading: onLoading,
           onEmpty: onEmpty,
           onError: onError,

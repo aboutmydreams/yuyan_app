@@ -74,9 +74,7 @@ mixin TokenMixin on BaseHttp {
   init() {
     super.init();
     debugPrint('init TokenMixin');
-
     setToken(token.data);
-
     token.addListener(() {
       debugPrint("!!!! change of token !!!!");
       setToken(token.data);
@@ -94,11 +92,15 @@ mixin TokenMixin on BaseHttp {
 
 mixin OrganizationMixin on BaseHttp {
   var orgProvider = App.orgSpaceProvider;
-  final baseOrgUrl = "https://www.yuque.com/api";
+  String _defaultBaseUrl;
 
   init() {
     super.init();
+    _defaultBaseUrl = options.baseUrl;
+    debugPrint('_defaultBaseUrl => $_defaultBaseUrl');
+    //初始化orgSpace
     debugPrint('init OrganizationMixin');
+    setOrgSpace(orgProvider.data?.login);
     orgProvider.addListener(() {
       debugPrint('!!!! change of organization !!!!!');
       setOrgSpace(orgProvider.data?.login);
@@ -108,9 +110,9 @@ mixin OrganizationMixin on BaseHttp {
   setOrgSpace(String space) {
     debugPrint("change namespace: $space");
     if (space == null) {
-      options.baseUrl = baseOrgUrl;
+      options.baseUrl = _defaultBaseUrl;
     } else {
-      options.baseUrl = baseOrgUrl.replaceFirst("www", space);
+      options.baseUrl = _defaultBaseUrl.replaceFirst("www", space);
     }
   }
 }

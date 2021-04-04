@@ -247,7 +247,7 @@ mixin ControllerStateMixin on GetxController {
         return onLoading ?? const ViewLoadingWidget();
       case ViewState.error:
         if (onError != null) {
-          return onError(error);
+          return onError(error) ?? ViewErrorWidget(error: error);
         }
         return ViewErrorWidget(error: error);
       default:

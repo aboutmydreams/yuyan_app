@@ -5,12 +5,13 @@ import 'package:yuyan_app/config/net/token.dart';
 import 'package:yuyan_app/model/v2/user_detail.dart';
 
 class Api2Repository {
-  static BaseApi api = BaseApi(baseUrl: "https://www.yuque.com/api/v2");
+  static String _baseUrl = "https://www.yuque.com/api/v2";
+  static BaseApi api = BaseApi(baseUrl: _baseUrl);
 
   static Future<TokenJsonSeri> getTokenByCode({
     String code,
   }) async {
-    if(api == null){
+    if (api == null) {
       throw 'API instance not initialized';
     }
     var res = await api.post(
@@ -32,9 +33,9 @@ class Api2Repository {
   }) async {
     Response res;
     if (userId == null && userLogin == null) {
-      res = await api.get("/user");
+      res = await api.get("$_baseUrl/user");
     } else {
-      res = await api.get("/users/${userId ?? userLogin}");
+      res = await api.get("$_baseUrl/users/${userId ?? userLogin}");
     }
     var asp = (res.data as ApiResponse);
     return UserDetailSeri.fromJson(asp.data);

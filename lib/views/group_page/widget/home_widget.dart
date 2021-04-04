@@ -36,12 +36,21 @@ class _HomeWidget extends StatelessWidget {
         blocks.addAll(inner.blocks);
       });
     });
-    return ListView.builder(
-      itemCount: blocks.length,
-      itemBuilder: (_, i) {
-        var block = blocks[i];
-        return _blockType(block);
-      },
+    var c = Get.find<GroupHomeController>(tag: '$groupId');
+    return Scrollbar(
+      child: SmartRefresher(
+        controller: c.refreshController,
+        onRefresh: c.refreshCallback,
+        onLoading: c.loadMoreCallback,
+        enablePullUp: true,
+        child: ListView.builder(
+          itemCount: blocks.length,
+          itemBuilder: (_, i) {
+            var block = blocks[i];
+            return _blockType(block);
+          },
+        ),
+      ),
     );
   }
 

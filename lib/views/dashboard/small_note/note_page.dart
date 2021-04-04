@@ -10,7 +10,7 @@ import 'package:yuyan_app/model/document/note/note.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/drop_menu_item_widget.dart';
-import 'package:yuyan_app/views/widget/lake_render_widget.dart';
+import 'package:yuyan_app/views/widget/lake/lake_render_widget.dart';
 
 class SmallNotePage extends StatelessWidget {
   @override

@@ -7,6 +7,7 @@ import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/events/user_lite_seri.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/util/util.dart';
+import 'package:yuyan_app/views/widget/image_widget.dart';
 
 import 'follow_button_widget.dart';
 
@@ -272,18 +273,9 @@ class UserAvatarWidget extends StatelessWidget {
             ),
           ],
         ),
-        child: ClipOval(
-          child: imgUrl.contains("assets/")
-              ? Image.asset(imgUrl)
-              : CachedNetworkImage(
-                  imageUrl: imgUrl,
-                  placeholder: (context, url) => FlareActor(
-                    "assets/flares/progress.flr",
-                    animation: "active",
-                  ),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                  fit: BoxFit.cover,
-                ),
+        child: SmartImageWidget(
+          url: imgUrl,
+          circular: true,
         ),
       ),
     );

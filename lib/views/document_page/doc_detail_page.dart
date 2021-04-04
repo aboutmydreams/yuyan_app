@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/document/doc_controller.dart';
 import 'package:yuyan_app/views/widget/drop_menu_item_widget.dart';
-import 'package:yuyan_app/views/widget/lake_render_widget.dart';
+import 'package:yuyan_app/views/widget/lake/lake_render_widget.dart';
 
 class DocDetailPage extends StatefulWidget {
   final int bookId;

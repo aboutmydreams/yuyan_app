@@ -6,8 +6,8 @@ import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/views/widget/lake/lake_image_widget.dart';
 import 'package:yuyan_app/views/widget/list_helper_widget.dart';
-import 'package:yuyan_app/views/widget/lake_image_widget.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class BookDocPage extends StatelessWidget {

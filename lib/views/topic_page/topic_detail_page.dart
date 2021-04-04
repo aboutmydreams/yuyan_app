@@ -11,8 +11,8 @@ import 'package:yuyan_app/model/topic/topic_detail_seri.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/widgets_small/show_dialog/show_confirm.dart';
 import 'package:yuyan_app/util/util.dart';
-import 'package:yuyan_app/views/widget/lake_mention_widget.dart';
-import 'package:yuyan_app/views/widget/lake_render_widget.dart';
+import 'package:yuyan_app/views/widget/lake/lake_mention_widget.dart';
+import 'package:yuyan_app/views/widget/lake/lake_render_widget.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class TopicDetailPage extends StatefulWidget {

@@ -28,7 +28,7 @@ import 'package:yuyan_app/views/my_page/setting/setting_page.dart';
 import 'package:yuyan_app/views/topic_page/topic_detail_page.dart';
 import 'package:yuyan_app/views/user_page/user_page.dart';
 import 'package:yuyan_app/views/webview_page/webview_page.dart';
-import 'package:yuyan_app/views/widget/lake_mention_widget.dart';
+import 'package:yuyan_app/views/widget/lake/lake_mention_widget.dart';
 
 class RouteName {
   static String home = '/';

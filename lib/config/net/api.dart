@@ -91,13 +91,11 @@ class BaseApi extends BaseHttp with TokenMixin, OrganizationMixin {
 
   @override
   void init() {
-    super.init();
-
+    options.baseUrl = baseUrl;
     interceptors.add(ApiInterceptor());
-
     options.headers['User-Agent'] = userAgent;
     // options.headers['Content-Type'] = "application/json";
 
-    options.baseUrl = baseUrl;
+    super.init();
   }
 }

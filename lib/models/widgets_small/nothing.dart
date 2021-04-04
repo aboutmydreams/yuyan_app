@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 
 class NothingPage extends StatelessWidget {
-  const NothingPage({Key key, this.top: 0, this.text: ""}) : super(key: key);
   final String text;
   final double top;
+
+  const NothingPage({
+    Key key,
+    this.top = 0,
+    this.text = "",
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +18,9 @@ class NothingPage extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(top: top),
+            margin: EdgeInsets.only(
+              top: top,
+            ),
             height: 240,
             child: FlareActor(
               "assets/flares/bird.flr",
@@ -35,4 +42,3 @@ class NothingPage extends StatelessWidget {
     );
   }
 }
-
