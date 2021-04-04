@@ -35,6 +35,7 @@ import 'package:yuyan_app/views/widget/vote_card_widget.dart';
 
 // ignore: implementation_imports
 import 'package:flutter_html/src/layout_element.dart';
+
 // ignore: implementation_imports
 import 'package:flutter_html/src/css_parser.dart' as cssutil;
 
@@ -267,12 +268,18 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
           );
       }
     }
-    var raw = Uri.decodeComponent(value);
-    var json = jsonDecode(raw.substring(5));
+    var decodeValue = Uri.decodeComponent(value);
+    var jsonString = decodeValue.substring(5);
+    if (jsonString.endsWith('undefined')) {
+      jsonString = '{}';
+    }
+    var json = jsonDecode(jsonString);
     // debugPrint('elem: $elem');
     attr['value'] = '!value!'; //for less print
     debugPrint('attr: $attr');
     switch (name) {
+      case 'hr':
+        return Divider();
       case 'premium':
         return YuquePremiumPurchase(json: json);
       case 'emoji':

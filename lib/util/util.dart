@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_simple_treeview/flutter_simple_treeview.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/theme_controller.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
@@ -98,6 +99,19 @@ class Util {
 
   static goUrl(String url) {
     MyRoute.webview('https://www.yuque.com' + url);
+  }
+
+  static launchURL(String url) {
+    futureWrap(
+      canLaunch(url),
+      onData: (value) {
+        if (value) {
+          launch(url);
+        } else {
+          Util.toast('cannot open: $url');
+        }
+      },
+    );
   }
 
   static handleQuickLinkNav(QuickLinkSeri link) {

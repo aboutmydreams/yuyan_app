@@ -114,7 +114,7 @@ class _OrgSpaceItemWidget extends StatelessWidget {
             _refreshController<NotificationReadController>();
             _refreshController<NotificationUnreadController>();
             _refreshController<NotificationSystemController>();
-            myToast(context, "切换成功");
+            Util.toast('切换成功');
             Get.back();
           });
         }

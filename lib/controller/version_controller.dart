@@ -9,6 +9,7 @@ import 'package:yuyan_app/model/version/app_info.dart';
 import 'package:yuyan_app/model/version/update_data.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/widgets_small/toast.dart';
+import 'package:yuyan_app/util/util.dart';
 
 class VersionController extends GetxController {
   final String checkUrl =
@@ -115,11 +116,10 @@ class VersionController extends GetxController {
 
   checkVersion(BuildContext context) {
     if (isLatest) {
-      myToast(context, "已是最新版本啦~");
+      Util.toast("已是最新版本啦~");
     } else {
       if ((Platform.isIOS)) {
-        openUrlOuter(
-            "https://apps.apple.com/cn/app/%E8%AF%AD%E7%87%95app/id1502617331");
+        Util.launchURL(Config.iOStore);
       } else {
         checkUpdateDefault();
       }

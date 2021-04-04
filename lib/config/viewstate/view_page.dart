@@ -86,10 +86,14 @@ abstract class FetchRefreshListViewPage<T extends FetchSavableController>
         appBar: AppBar(title: Text(title)),
         body: controller.builder(
           (state) => AnimationLimiter(
-            child: SmartRefresher(
-              controller: controller.refreshController,
-              onRefresh: controller.onRefreshCallback,
-              child: buildChild(),
+            child: Scrollbar(
+              child: SmartRefresher(
+                controller: controller.refreshController,
+                onRefresh: controller.onRefreshCallback,
+                enablePullUp: true,
+                onLoading: controller.onLoadMoreCallback,
+                child: buildChild(),
+              ),
             ),
           ),
           onEmpty: buildEmpty(),

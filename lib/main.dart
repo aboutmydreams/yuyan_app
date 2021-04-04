@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:scroll_to_index/util.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
@@ -25,10 +26,11 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final TransitionBuilder toastBuilder = BotToastInit();
+
   @override
   Widget build(BuildContext context) {
     print("build again!");
-    final TransitionBuilder botToastBuilder = BotToastInit();
     return GetMaterialApp(
       title: '语燕',
       initialRoute: RouteName.splash,
@@ -38,20 +40,36 @@ class MyApp extends StatelessWidget {
         BotToastNavigatorObserver(),
       ],
       initialBinding: AppBinding(),
-      builder: (context, child) {
-        return GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: () {
-            if (Get.focusScope.hasPrimaryFocus) {
-              Get.focusScope.unfocus();
-            }
-          },
-          child: botToastBuilder(
-            context,
-            child,
-          ),
-        );
+      builder: _builder,
+    );
+  }
+
+  Widget _builder(BuildContext context, Widget child) {
+    final toast = toastBuilder(context, child);
+    final keyboard = GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
+        if (Get.focusScope.hasPrimaryFocus) {
+          Get.focusScope.unfocus();
+        }
       },
+      child: toast,
+    );
+    return ScrollConfiguration(
+      behavior: _ScrollBehavior(),
+      child: keyboard,
+    );
+  }
+}
+
+class _ScrollBehavior extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(context, child, _) => child;
+
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) {
+    return BouncingScrollPhysics(
+      parent: RangeMaintainingScrollPhysics(),
     );
   }
 }

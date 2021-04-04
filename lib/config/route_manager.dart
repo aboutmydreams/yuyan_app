@@ -23,6 +23,7 @@ import 'package:yuyan_app/views/my_page/my/my_book_page.dart';
 import 'package:yuyan_app/views/my_page/my/my_group_page.dart';
 import 'package:yuyan_app/views/my_page/my/my_mark_page.dart';
 import 'package:yuyan_app/views/my_page/my/my_topic_page.dart';
+import 'package:yuyan_app/views/my_page/setting/about_page.dart';
 import 'package:yuyan_app/views/my_page/setting/setting_page.dart';
 import 'package:yuyan_app/views/topic_page/topic_detail_page.dart';
 import 'package:yuyan_app/views/user_page/user_page.dart';
@@ -197,10 +198,10 @@ class MyRoute {
       name: RouteName.myTopic,
       page: () => MyTopicPage(),
     ),
-    // GetPage(
-    //   name: RouteName.myAbout,
-    //   page: () => AboutYuyan(),
-    // ),
+    GetPage(
+      name: RouteName.myAbout,
+      page: () => AboutPage(),
+    ),
     GetPage(
       name: RouteName.mySuggest,
       page: () {

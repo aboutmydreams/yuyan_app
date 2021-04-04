@@ -28,7 +28,7 @@ class MyMarkPage extends FetchRefreshListViewPage<MyMarkController> {
   @override
   Widget buildChild() {
     var data = controller.value.data;
-    return AnimationListWidget(
+    return ListView.builder(
       itemCount: data.length,
       itemBuilder: (_, i) {
         return MyMarkItemWidget(data: data[i]);

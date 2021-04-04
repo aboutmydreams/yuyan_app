@@ -42,7 +42,7 @@ class _SettingPageState extends State<SettingPage> {
               title: '检查更新',
               icon: Icons.vertical_align_top,
               onTap: checkVersion,
-              ifBadge: version.isLatest,
+              ifBadge: !version.isLatest,
             );
           }),
           SettingTile(
