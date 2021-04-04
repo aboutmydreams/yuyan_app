@@ -45,7 +45,7 @@ class _SmallNoteEditorState extends State<SmallNoteEditor> {
                   controller: _controller,
                   onImagePickCallback: (file) async {
                     var controller = Get.find<NoteStatusController>();
-                    var res = await ApiRepository.postNoteImage(
+                    var res = await ApiRepository.postAttachFile(
                       path: file.path,
                       attachableType: 'Doclet',
                       attachableId: controller.value.mirror.docletId,

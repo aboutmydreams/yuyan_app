@@ -21,6 +21,8 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/group_page/widget/group_event_widget.dart';
+import 'package:yuyan_app/views/topic_page/topic_add_page.dart';
+import 'package:yuyan_app/views/widget/floating_action/floating_action_button_widget.dart';
 import 'package:yuyan_app/views/widget/list_helper_widget.dart';
 import 'package:yuyan_app/views/widget/book_row_widget.dart';
 import 'package:yuyan_app/views/widget/drop_menu_item_widget.dart';
@@ -146,7 +148,7 @@ class _GroupPageState extends State<GroupPage>
 
   _buildViews() {
     return [
-      GetBuilder<GroupHomeController>(
+      FetchRefreshListViewBuilder<GroupHomeController>(
         tag: tag,
         builder: (c) => c.stateBuilder(
           onEmpty: NothingPage(top: 190, text: "首页空空"),
@@ -169,11 +171,17 @@ class _GroupPageState extends State<GroupPage>
       GetBuilder<GroupTopicController>(
         tag: tag,
         builder: (c) => c.stateBuilder(
-          onIdle: () => AnimationListWidget(
-            itemCount: c.value.length,
-            itemBuilder: (_, i) => TopicTileWidget(
-              topic: c.value[i],
-              showLabel: true,
+          onIdle: () => FloatingActionWidget(
+            button: Icon(Icons.add),
+            onPressed: () => Get.to(
+              TopicAddPage(groupId: c.groupId),
+            ).then((_) => c.onRefresh()),
+            child: AnimationListWidget(
+              itemCount: c.value.length,
+              itemBuilder: (_, i) => TopicTileWidget(
+                topic: c.value[i],
+                showLabel: true,
+              ),
             ),
           ),
         ),

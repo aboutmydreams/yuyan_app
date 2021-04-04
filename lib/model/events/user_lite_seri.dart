@@ -1,3 +1,5 @@
+import 'package:yuyan_app/model/document/group.dart';
+
 class UserLiteSeri {
   int id;
   String type;
@@ -47,6 +49,10 @@ class UserLiteSeri {
     followingCount = json['following_count'];
     description = json['description'];
     serializer = json['_serializer'];
+  }
+
+  GroupSeri toGroup() {
+    return GroupSeri.fromJson(toJson());
   }
 
   Map<String, dynamic> toJson() {

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:bot_toast/bot_toast.dart';
@@ -7,12 +8,19 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yuyan_app/config/route_manager.dart';
+import 'package:yuyan_app/config/service/api_repository.dart';
+import 'package:yuyan_app/controller/global/upload_controller.dart';
 import 'package:yuyan_app/controller/theme_controller.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/model/document/toc/toc_seri.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 
 class Util {
+  static Future<String> editorImageUploadCallback(File file) async {
+    var res = await ApiRepository.postAttachFile(path: file.path);
+    return res.url;
+  }
+
   static futureWrap<T>(
     Future future, {
     Function(T) onData,

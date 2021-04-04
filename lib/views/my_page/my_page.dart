@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
@@ -161,29 +162,30 @@ class SettingListWidget extends StatelessWidget {
             title: "设置",
             imgAsset: "setting",
             namedRoute: RouteName.mySetting,
-            badge: c?.isLatest,
+            badge: !c.isLatest,
           ),
         ),
-        GestureDetector(
-          onTap: () {
-            final avatarUrl =
-                "https://cdn.nlark.com/yuque/0/2020/png/164272/1581178391840-avatar/dfd33ab4-7115-4fce-b504-faeb9d3ca24d.png";
-            Get.to(GroupPage(
-              group: GroupSeri(
-                id: 2616655,
-                name: "Redhome",
-                description: "没有内容的哦",
-                avatarUrl: avatarUrl,
+        if (kDebugMode)
+          GestureDetector(
+            onTap: () {
+              final avatarUrl =
+                  "https://cdn.nlark.com/yuque/0/2020/png/164272/1581178391840-avatar/dfd33ab4-7115-4fce-b504-faeb9d3ca24d.png";
+              Get.to(GroupPage(
+                group: GroupSeri(
+                  id: 2616655,
+                  name: "Redhome",
+                  description: "没有内容的哦",
+                  avatarUrl: avatarUrl,
+                ),
+              ));
+            },
+            child: AbsorbPointer(
+              child: SettingItemWidget(
+                title: "测试",
+                imgAsset: "about",
               ),
-            ));
-          },
-          child: AbsorbPointer(
-            child: SettingItemWidget(
-              title: "测试",
-              imgAsset: "about",
             ),
           ),
-        ),
       ],
     );
   }

@@ -59,7 +59,11 @@ class MyMarkItemWidget extends StatelessWidget {
         userName = data.title;
         avatarUrl = user.avatarUrl;
         description = user.description;
-        onTap = () => MyRoute.user(user: user, heroTag: heroTag);
+        if (data.actionOption == 'group') {
+          onTap = () => MyRoute.group(group: user.toGroup(), tag: heroTag);
+        } else {
+          onTap = () => MyRoute.user(user: user, heroTag: heroTag);
+        }
         break;
       case 'Book':
         var book = data.target.serialize<BookSeri>();

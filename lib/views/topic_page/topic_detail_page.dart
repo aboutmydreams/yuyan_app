@@ -62,11 +62,9 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
                 parentId: reply,
                 comment: _textController.text,
                 success: () {
-                  var detail =
-                      Get.find<TopicDetailController>(tag: '${widget.groupId}');
-                  var comments = Get.find<TopicCommentsController>(
-                      tag: '${detail.value.id}');
-                  comments.add(c.value);
+                  var comments =
+                      Get.find<TopicCommentsController>(tag: '$_commentId');
+                  comments.onRefresh();
                   _textController.text = '';
                   if (Get.isBottomSheetOpen) {
                     Get.back();
@@ -148,6 +146,27 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('话题详情'),
+        actions: [
+          //TODO(@dreamer2q): 添加话题控制panel
+          // IconButton(
+          //   icon: Icon(Icons.more_horiz),
+          //   onPressed: () {
+          //     showModalBottomSheet(
+          //       context: context,
+          //       builder: (_) => Container(
+          //         child: Column(
+          //           children: [
+          //             ElevatedButton(
+          //               onPressed: () {},
+          //               child: Text('取消订阅'),
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //     );
+          //   },
+          // ),
+        ],
       ),
       body: GetBuilder<TopicDetailController>(
         tag: '${widget.groupId}',
@@ -160,10 +179,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
                   child: Column(
                     children: [
                       TopicDescWidget(data: c.value),
-                      _buildCommentList(
-                        c.value.id,
-                        c.value.commentsCount,
-                      ),
+                      _buildCommentList(c.value.id),
                     ],
                   ),
                 ),
@@ -192,18 +208,23 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
     );
   }
 
-  _buildCommentList(int commentId, int count) {
+  _buildCommentList(int commentId) {
     return GetBuilder<TopicCommentsController>(
       tag: '$commentId',
       init: TopicCommentsController(commentId),
       builder: (comments) => comments.stateBuilder(
+        onEmpty: Container(
+          alignment: Alignment.center,
+          height: 150,
+          child: Text('还没有人评论，来做第一个评论的吧！'),
+        ),
         onIdle: () {
           return Column(
             children: [
               Container(
                 margin: EdgeInsets.only(left: 16, top: 20, bottom: 2),
                 child: Text(
-                  "$count 条评论",
+                  "${comments.value.length} 条评论",
                   style: AppStyles.textStyleBBB,
                 ),
               ),
@@ -362,6 +383,33 @@ class TopicDescWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var closedBadge = WidgetSpan(
+      child: Container(
+        margin: const EdgeInsets.only(left: 12, top: 4, bottom: 4),
+        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.red,
+          ),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Text(
+          '已关闭',
+          style: TextStyle(
+            color: Colors.redAccent,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
+    var lock = Row(
+      children: [
+        Icon(Icons.lock, size: 11),
+        Text('私密', style: AppStyles.textStyleCC),
+        SizedBox(width: 8),
+      ],
+    );
+
     return Container(
       padding: EdgeInsets.fromLTRB(16, 24, 16, 40),
       color: AppColors.background,
@@ -372,8 +420,17 @@ class TopicDescWidget extends StatelessWidget {
           // 文档标题
           Container(
             margin: EdgeInsets.only(bottom: 20),
-            child: Text(
-              data.title,
+            child: Text.rich(
+              TextSpan(
+                text: data.title,
+                children: [
+                  TextSpan(
+                    text: '\t\t#${data.iid}',
+                    style: AppStyles.textStyleCB,
+                  ),
+                  if (data.closedAt != null) closedBadge,
+                ],
+              ),
               style: AppStyles.textStyleA,
             ),
           ),
@@ -388,6 +445,7 @@ class TopicDescWidget extends StatelessWidget {
                 style: AppStyles.textStyleB,
               ),
               Spacer(),
+              if (data.public == 0) lock,
               Text(
                 Util.timeCut(data.updatedAt),
                 style: AppStyles.textStyleC,

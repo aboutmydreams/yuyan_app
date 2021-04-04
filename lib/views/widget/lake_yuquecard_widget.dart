@@ -38,8 +38,12 @@ class LakeYuqueCardWidget extends StatelessWidget {
         child: ListTile(
           isThreeLine: true,
           leading: AppIcon.iconType(detail.targetType, size: 40),
-          title: Text(detail.title),
-          subtitle: Text(detail.desc),
+          title: Text(detail.title, maxLines: 2),
+          subtitle: Text(
+            detail.desc,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+          ),
           onTap: () {
             //TODO(@dreamer2q): parse url, then open doc
             MyRoute.webview(detail.url);

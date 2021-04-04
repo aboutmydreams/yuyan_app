@@ -4,12 +4,14 @@ class AddTopicPage extends StatefulWidget {
   AddTopicPage({Key key, this.groupId, this.callback}) : super();
   final int groupId;
   final Function callback;
+
   _AddTopicPageState createState() =>
       _AddTopicPageState(groupId: groupId, callback: callback);
 }
 
 class _AddTopicPageState extends State<AddTopicPage> {
   _AddTopicPageState({Key key, this.groupId, this.callback});
+
   final int groupId;
   final Function callback;
 

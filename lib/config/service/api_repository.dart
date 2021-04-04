@@ -408,6 +408,26 @@ class ApiRepository {
     return CommentDetailSeri.fromJson(asp.data);
   }
 
+  static Future<TopicDetailSeri> addTopic({
+    String title,
+    String body,
+    int groupId,
+  }) async {
+    Map<String, dynamic> data = {
+      "group_id": groupId,
+      "title": title,
+      "body_asl": body,
+      "assignee_id": null,
+      "format": "lake",
+      "public": 1,
+      "milestone_id": null,
+      "uuid": null,
+    };
+    var res = await api.post('/topics', data: data);
+    var asp = (res.data as ApiResponse).data;
+    return TopicDetailSeri.fromJson(asp);
+  }
+
   static Future<TopicDetailSeri> getTopicDetail({int iid, int groupId}) async {
     var res = await api.get('/topics/$iid', queryParameters: {
       'group_id': groupId,
@@ -557,20 +577,21 @@ class ApiRepository {
     return NoteStatusSeri.fromJson(asp.raw);
   }
 
-  static Future<UploadResultSeri> postNoteImage({
-    String path,
+  static Future<UploadResultSeri> postAttachFile({
+    String path, //文件路径
     String attachableType,
-    int attachableId,
-    String type = 'image',
-    ProgressCallback progressCallback,
+    int attachableId, //讨论区=>groupId, 小记=>noteId
+    String type = 'image', //一般情况下都是image
+    // String attachUuid = '',
+    ProgressCallback progressCallback, //进度回调函数
   }) async {
-    /// attachableType: Doclet: 小记 doc: 文档
+    /// attachableType: Doclet: 小记 doc: 文档; 讨论区-> User,
     var name = path.substring(path.lastIndexOf('/') + 1);
     Map<String, dynamic> query = {
-      "attachable_type": attachableType,
-      "attachable_id": attachableId,
       "type": type,
       "ctoken": App.tokenProvider.data.cToken,
+      "attachable_id": attachableId,
+      "attachable_type": attachableType,
     };
     var image = await MultipartFile.fromFile(path, filename: name);
     FormData formData = FormData.fromMap({"file": image});

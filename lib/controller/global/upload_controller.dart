@@ -60,7 +60,7 @@ class ImageUploadController extends FetchValueController<UploadResultSeri> {
 
   @override
   Future<UploadResultSeri> fetch() {
-    return ApiRepository.postNoteImage(
+    return ApiRepository.postAttachFile(
       path: asset,
       attachableId: attachId,
       attachableType: 'Doclet',

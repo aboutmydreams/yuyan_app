@@ -283,6 +283,13 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
       case 'premium':
         return YuquePremiumPurchase(json: json);
       case 'emoji':
+        if (json is String) {
+          //TODO(@dreamer2q): 添加emoji widget用于语雀的表情包
+          return LakeImageWidget(
+            json: {'src': json},
+            others: [json],
+          );
+        }
         return LakeImageWidget(json: json, others: imgUrl);
       case 'youku':
         return EmbedWebviewPage(

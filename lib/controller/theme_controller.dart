@@ -62,6 +62,9 @@ class ThemeController extends GetxController {
         radius: Radius.circular(16),
         thumbColor: MaterialStateProperty.all(Colors.grey),
       ),
+      appBarTheme: AppBarTheme(
+        centerTitle: true,
+      ),
       primarySwatch: _primarySwatchColor,
       highlightColor: Color.fromRGBO(255, 255, 255, 0.3),
       splashColor: Colors.white12,

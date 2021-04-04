@@ -98,6 +98,14 @@ class AppStyles {
     fontSize: 11,
   );
 
+  // 各种动态内容文字样式
+  static TextStyle textStyleCB = TextStyle(
+    color: AppColors.primaryText,
+    fontFamily: "sans_bold",
+    fontWeight: FontWeight.w400,
+    fontSize: 16,
+  );
+
   // 我的页面数字样式
   static TextStyle countStyle = TextStyle(
     color: AppColors.nextText,
