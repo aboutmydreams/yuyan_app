@@ -43,7 +43,14 @@ _注：语燕没有恶意，在语雀官方 App 发布后不保证会继续维�
 
 #### 出视频了！
 
-<iframe src="//player.bilibili.com/player.html?aid=843098952&bvid=BV1k54y147mJ&cid=264937502&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+<iframe
+    width="800"
+    height="600"
+    src="https://player.bilibili.com/player.html?aid=843098952&bvid=BV1k54y147mJ&cid=264937502&page=1"
+    scrolling="no" 
+    frameborder="no"
+    allowfullscreen>
+</iframe>
 
 | ![][1] | ![][2] | ![][3] ![][6] |
 | ------ | ------ | ------------- |
