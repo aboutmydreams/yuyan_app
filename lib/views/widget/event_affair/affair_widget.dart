@@ -443,8 +443,8 @@ class _ToBookWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     if (item.subjects == null) {
       item.subjects = [item.subject];
-    } else {
-      debugPrint('test');
+    // } else {
+    //   debugPrint('test');
     }
 
     return Container(

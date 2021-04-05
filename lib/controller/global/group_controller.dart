@@ -8,10 +8,10 @@ import 'package:yuyan_app/model/document/group_user.dart';
 import 'package:yuyan_app/model/events/user_event_seri.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
 
-class GroupViewController extends FetchListValueController<UserEventSeri> {
+class GroupViewBlockController extends FetchListValueController<UserEventSeri> {
   final int blockId;
 
-  GroupViewController(this.blockId);
+  GroupViewBlockController(this.blockId);
 
   int offset = 0;
   bool hasMore = false;

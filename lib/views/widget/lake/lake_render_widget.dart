@@ -492,10 +492,11 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
               PositionedDirectional(
                 start: 0,
                 width: 24,
-                bottom: 0,
+                // bottom: 0,
                 child: Text(
                   olMark,
                   textAlign: TextAlign.start,
+                  // textAlign: TextAlign.end,
                   style: _.style.generateTextStyle().copyWith(letterSpacing: 0),
                 ),
               ),

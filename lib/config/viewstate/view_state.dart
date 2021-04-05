@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/net/api.dart';
+import 'package:yuyan_app/config/viewstate/view_controller.dart';
 
 import 'view_state_widget.dart';
 

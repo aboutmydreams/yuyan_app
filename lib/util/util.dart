@@ -9,13 +9,39 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
-import 'package:yuyan_app/controller/global/upload_controller.dart';
 import 'package:yuyan_app/controller/theme_controller.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/model/document/toc/toc_seri.dart';
 import 'package:yuyan_app/models/component/appUI.dart';
 
 class Util {
+  static List<Widget> listBuilder<T>({
+    List<T> data,
+    Widget Function(T) map,
+  }) {
+    return List.generate(
+      data.length,
+      (index) => map(data[index]),
+    ).toList();
+  }
+
+  static Future refreshController<T>({String tag}) async {
+    try {
+      var controller = Get.find<T>(tag: tag) as dynamic;
+      try {
+        await controller.onRefresh();
+        debugPrint('do refresh on ${T.runtimeType}');
+      } on NoSuchMethodError catch (e) {
+        debugPrint('do refresh: $e');
+      }
+    } on String catch (e) {
+      debugPrint('get controller: $e');
+    }
+  }
+
+  static double get pinnedHeight =>
+      Get.mediaQuery.padding.top + Get.statusBarHeight - 10;
+
   static Future<String> editorImageUploadCallback(File file) async {
     var res = await ApiRepository.postAttachFile(path: file.path);
     return res.url;
@@ -290,6 +316,28 @@ extension ListEx<T> on List<T> {
     final _random = new Random();
     var item = this[_random.nextInt(this.length)];
     return item;
+  }
+
+  static Widget _defaultDivider(int i) {
+    return const Divider(
+      height: 0.5,
+    );
+  }
+
+  List<Widget> mapWidget(
+    Widget Function(T) map, {
+    bool divide = false,
+    Widget divider = const Divider(height: 0.5),
+  }) {
+    if (!divide) {
+      return this.map(map).toList();
+    }
+    var list = <Widget>[];
+    this.forEach((item) {
+      list.add(map(item));
+      list.add(divider);
+    });
+    return list..removeLast();
   }
 }
 

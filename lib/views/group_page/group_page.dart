@@ -27,6 +27,7 @@ import 'package:yuyan_app/views/group_page/widget/group_event_widget.dart';
 import 'package:yuyan_app/views/topic_page/all_topic_page.dart';
 import 'package:yuyan_app/views/topic_page/topic_add_page.dart';
 import 'package:yuyan_app/views/topic_page/topic_item_widget.dart';
+import 'package:yuyan_app/views/widget/book_stack_widget.dart';
 import 'package:yuyan_app/views/widget/floating_action/floating_action_button_widget.dart';
 import 'package:yuyan_app/views/widget/book_row_widget.dart';
 import 'package:yuyan_app/views/widget/drop_menu_item_widget.dart';
@@ -89,13 +90,9 @@ class _GroupPageState extends State<GroupPage>
     var group = widget.group;
     return Scaffold(
       body: extended.NestedScrollView(
-        pinnedHeaderSliverHeightBuilder: () {
-          print('pinned height');
-          return 140;
-        },
+        pinnedHeaderSliverHeightBuilder: () => Util.pinnedHeight,
         innerScrollPositionKeyBuilder: () {
           var key = 'group_page_tab_${_tabController.index}';
-          print('key => $key');
           return Key(key);
         },
         headerSliverBuilder: (_, inner) => [

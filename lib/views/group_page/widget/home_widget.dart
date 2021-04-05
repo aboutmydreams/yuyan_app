@@ -57,9 +57,9 @@ class _HomeWidget extends StatelessWidget {
   Widget _build2() {
     var layout = meta['homepage']['layout'];
     List<String> blocks = [
-      ...layout['header'],
-      ...layout['content'],
-      ...layout['aside'],
+      ...(layout['header'] ?? []),
+      ...(layout['content'] ?? []),
+      ...(layout['aside'] ?? []),
     ];
 
     var tag = '$groupId';
@@ -122,7 +122,7 @@ class _HomeWidget extends StatelessWidget {
           builder: (c) => c.stateBuilder(
             onIdle: () {
               var data = c.value;
-              return _BookStackWidget(
+              return BookStackWidget(
                 stack: data,
               );
             },
@@ -148,7 +148,7 @@ class _HomeWidget extends StatelessWidget {
                     shrinkWrap: true,
                     itemBuilder: (_, i) {
                       var book = books[i];
-                      return _BookTileWrap(
+                      return BookTileWrapWidget(
                         padding: const EdgeInsets.all(10),
                         book: book,
                       );
@@ -218,18 +218,14 @@ class _HomeWidget extends StatelessWidget {
               vertical: 6,
               horizontal: 12,
             ),
-            child: ListView.separated(
-              separatorBuilder: (_, __) => Divider(height: 0.3),
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: books.length,
-              shrinkWrap: true,
-              itemBuilder: (_, i) {
-                var book = books[i];
-                return _BookTileWrap(
+            child: Column(
+              children: books.mapWidget(
+                (item) => BookTileWrapWidget(
+                  book: item,
                   padding: const EdgeInsets.all(10),
-                  book: book,
-                );
-              },
+                ),
+                divide: true,
+              ),
             ),
           ),
         );
@@ -237,36 +233,8 @@ class _HomeWidget extends StatelessWidget {
         var links = block.data.list<QuickLinkSeri>();
         return _BlockWidgetWrap(
           title: block.title,
-          child: Card(
-            margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-            elevation: 1,
-            child: Container(
-              height: 50,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: links.length,
-                itemBuilder: (_, i) {
-                  var link = links[i];
-                  return InkWell(
-                    onTap: () => Util.handleQuickLinkNav(link),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(),
-                      alignment: Alignment.center,
-                      child: Row(
-                        children: [
-                          AppIcon.iconType(link.type),
-                          Text(
-                            '${link.title}',
-                            style: AppStyles.textStyleC,
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+          child: _GroupQuickLinks(
+            links: links,
           ),
         );
       case 'custom':
@@ -274,10 +242,15 @@ class _HomeWidget extends StatelessWidget {
         return _BlockWidgetWrap(
           title: block.title,
           child: Card(
-            margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+            margin: const EdgeInsets.symmetric(
+              vertical: 6,
+              horizontal: 12,
+            ),
             elevation: 1,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
+              padding: const EdgeInsets.symmetric(
+                vertical: 4,
+              ),
               child: LakeRenderWidget(
                 data: data.bodyAsl,
               ),
@@ -299,7 +272,7 @@ class _HomeWidget extends StatelessWidget {
           ),
         );
       case 'bookStacks':
-        return _BookStackWidget(
+        return BookStackWidget(
           stack: block.data.list<BookStackSeri>(),
         );
       case 'banner':
@@ -337,6 +310,50 @@ class _HomeWidget extends StatelessWidget {
           child: Text('不支持主页类型: ${block.type}'),
         );
     }
+  }
+}
+
+class _GroupQuickLinks extends StatelessWidget {
+  final List<QuickLinkSeri> links;
+
+  const _GroupQuickLinks({
+    Key key,
+    this.links,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+      elevation: 1,
+      child: Container(
+        height: 50,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: links.length,
+          itemBuilder: (_, i) {
+            var link = links[i];
+            return InkWell(
+              onTap: () => Util.handleQuickLinkNav(link),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                decoration: BoxDecoration(),
+                alignment: Alignment.center,
+                child: Row(
+                  children: [
+                    AppIcon.iconType(link.type),
+                    Text(
+                      '${link.title}',
+                      style: AppStyles.textStyleC,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 }
 
@@ -393,263 +410,6 @@ class _BannerWidget extends StatelessWidget {
             child: child,
           );
         },
-      ),
-    );
-  }
-}
-
-class _BookStackWidget extends StatelessWidget {
-  final List<BookStackSeri> stack;
-
-  const _BookStackWidget({
-    Key key,
-    this.stack,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: stack.length,
-      physics: NeverScrollableScrollPhysics(),
-      itemBuilder: (_, i) {
-        var item = stack[i];
-        return _BlockWidgetWrap(
-          title: '${item.name}',
-          child: _buildStack(stack[i]),
-        );
-      },
-    );
-  }
-
-  Widget _buildStack(BookStackSeri item) {
-    return Column(
-      children: item.books.map((e) => _stackItem(e, item.displayType)).toList(),
-    );
-  }
-
-  List<Widget> _summaryList(List<SummarySeri> items, String type) {
-    switch (type) {
-      case 'Book':
-      case 'Sheet':
-        return items.map((e) {
-          return _docItem(e);
-        }).toList();
-      case 'Design':
-        return [
-          Row(
-            children: items.map((e) {
-              return Flexible(
-                flex: 1,
-                child: Container(
-                  child: CachedNetworkImage(imageUrl: e.image),
-                ),
-              );
-            }).toList(),
-          )
-        ];
-      default:
-        return [
-          Text('unsupport type: $type'),
-        ];
-    }
-  }
-
-  Widget _stackItem(BookSeri item, int type) {
-    Widget bottom;
-    switch (type) {
-      case 0: //基础样式，无summary
-        break;
-      case 1: //
-        bottom = Column(
-          children: _summaryList(item.summary, item.type),
-        );
-        break;
-      case 2: //
-      case 3: //
-    }
-
-    Widget child = _BookTileWrap(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 0,
-        vertical: 4,
-      ),
-      book: item,
-      bottom: bottom,
-    );
-
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 4, horizontal: 12),
-      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-      decoration: BoxDecoration(
-        color: AppColors.background,
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromARGB(25, 0, 0, 0),
-            offset: Offset(1, 2),
-            blurRadius: 2,
-          ),
-        ],
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: child,
-    );
-  }
-
-  Widget _docItem(SummarySeri item) {
-    return InkWell(
-      onTap: () {
-        // OpenPage.docWeb(
-        //   context,
-        //   login: login,
-        //   bookSlug: bookSlug,
-        //   bookId: data.bookId,
-        //   docId: data.id,
-        // );
-      },
-      child: Container(
-        padding: EdgeInsets.fromLTRB(0, 7, 0, 2),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: Text(
-                item.title ?? item.titleDraft ?? item.name ?? 'fallback',
-              ),
-            ),
-            Text(
-              Util.timeCut(item.contentUpdatedAt ?? item.createdAt),
-              style: AppStyles.textStyleCC,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _BookTileWrap extends StatelessWidget {
-  final BookSeri book;
-  final Widget top;
-  final Widget bottom;
-  final EdgeInsets padding;
-  final EdgeInsets margin;
-  final Widget divider;
-
-  const _BookTileWrap({
-    Key key,
-    this.book,
-    this.top,
-    this.bottom,
-    this.margin,
-    this.divider = const Divider(
-      height: 12,
-      thickness: 0.3,
-    ),
-    this.padding = const EdgeInsets.symmetric(
-      vertical: 4,
-      horizontal: 8,
-    ),
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    Widget tile = GestureDetector(
-      onTap: () {
-        //TODO(@dreamer2q): 打开book
-      },
-      child: _buildTile(),
-    );
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (top != null) top,
-          if (top != null) divider,
-          Container(
-            margin: margin,
-            padding: padding,
-            child: tile,
-          ),
-          if (bottom != null) divider,
-          if (bottom != null) bottom,
-        ],
-      ),
-    );
-  }
-
-  _buildTile() {
-    return Row(
-      children: [
-        Container(
-          padding: const EdgeInsets.only(right: 8),
-          child: AppIcon.iconType(book.type, size: 24),
-        ),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "${book.name}",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppStyles.textStyleB,
-              ),
-              if (!GetUtils.isNullOrBlank(book.description))
-                Text(
-                  "${book.description}",
-                  style: AppStyles.textStyleCC,
-                )
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _BlockWidgetWrap extends StatelessWidget {
-  final String title;
-  final Widget child;
-  final Border border;
-
-  const _BlockWidgetWrap({
-    Key key,
-    this.title,
-    this.child,
-    this.border = const Border(
-      top: BorderSide(
-        color: Colors.grey,
-        width: 0.24,
-      ),
-    ),
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(top: 10, bottom: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-            child: Text(
-              '$title',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppStyles.textStyleB,
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            decoration: BoxDecoration(
-              border: border,
-            ),
-            child: child,
-          ),
-        ],
       ),
     );
   }
@@ -770,15 +530,11 @@ class _TopicListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: ListView.separated(
-        shrinkWrap: true,
-        separatorBuilder: (_, __) => Divider(height: 0.3),
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: topics.length,
-        itemBuilder: (_, i) {
-          var topic = topics[i];
-          return _TopicTileWidget(topic: topic);
-        },
+      child: Column(
+        children: topics.mapWidget(
+          (item) => _TopicTileWidget(topic: item),
+          divide: true,
+        ),
       ),
     );
   }
@@ -944,6 +700,53 @@ class _MemberListWidget extends StatelessWidget {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class _BlockWidgetWrap extends StatelessWidget {
+  final String title;
+  final Widget child;
+  final Border border;
+
+  const _BlockWidgetWrap({
+    Key key,
+    this.title,
+    this.child,
+    this.border = const Border(
+      top: BorderSide(
+        color: Colors.grey,
+        width: 0.24,
+      ),
+    ),
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 10, bottom: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+            child: Text(
+              '$title',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppStyles.textStyleB,
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            decoration: BoxDecoration(
+              border: border,
+            ),
+            child: child,
+          ),
+        ],
       ),
     );
   }

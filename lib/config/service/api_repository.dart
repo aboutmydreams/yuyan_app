@@ -16,6 +16,8 @@ import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/document/group_home/book_stack.dart';
 import 'package:yuyan_app/model/document/group_home/group_home_seri.dart';
 import 'package:yuyan_app/model/document/group_user.dart';
+import 'package:yuyan_app/model/document/meta/meta.dart';
+import 'package:yuyan_app/model/document/note/doclet.dart';
 import 'package:yuyan_app/model/document/note/note.dart';
 import 'package:yuyan_app/model/document/note/note_status.dart';
 import 'package:yuyan_app/model/document/organization_lite.dart';
@@ -94,6 +96,28 @@ class ApiRepository {
     return res.data.data;
   }
 
+  static Future<DocletSeri> getUserReadme({int userId}) async {
+    var res = await api.get('/users/$userId/readme');
+    var asp = (res.data as ApiResponse);
+    return DocletSeri.fromJson(asp.data['doclet']);
+  }
+
+  static Future<ApiResponse> getUserEvents({
+    int userId,
+    int limit = 20,
+    int offset = 0,
+  }) async {
+    var res = await api.get(
+      '/users/$userId/events',
+      queryParameters: {
+        'limit': limit,
+        'offset': offset,
+      },
+    );
+    var data = (res.data as ApiResponse);
+    return data;
+  }
+
   static Future<List<UserRecentSeri>> getUserRecentList(
       {int limit = 100, int offset = 0}) async {
     var resp = await api.get(
@@ -156,6 +180,12 @@ class ApiRepository {
     var res = await api.get("/groups/$groupId/users?with_count=true");
     var data = (res.data as ApiResponse).data as List;
     return data.map((e) => GroupUserSeri.fromJson(e)).toList();
+  }
+
+  static Future<BookStackSeri> getUserBookStack({int userId}) async {
+    var res = await api.get('/users/$userId/book_stack');
+    var data = (res.data as ApiResponse).data;
+    return BookStackSeri.fromJson(data['stack']);
   }
 
   static Future<List<BookStackSeri>> getBookStack({int groupId}) async {
