@@ -43,14 +43,7 @@ _注：语燕没有恶意，在语雀官方 App 发布后不保证会继续维�
 
 #### 出视频了！
 
-https://lark-assets-prod-aliyun.oss-cn-hangzhou.aliyuncs.com/yuque/0/2021/flv/2596791/1617593096541-05ff5b5f-8baf-41ce-9cae-3362f6bea943.flv?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1617594930&Signature=g0OQFDMKfyNSyIRBbj4tzWHKxtE%3D&response-content-disposition=attachment%3Bfilename*%3DUTF-8%27%27%25E3%2580%2590%25E7%258B%25AC%25E7%25AB%258B%25E5%25BC%2580%25E5%258F%2591%25E3%2580%2591%25E8%25AF%25AD%25E7%2587%2595APP%2520-%2520%25E5%25BC%2580%25E7%25AE%25B1%25E4%25BD%2593%25E9%25AA%258C.flv
-
-<video id="video" controls="" preload="none" poster="http://media.w3.org/2010/05/sintel/poster.png">
-      <source id="mp4" 
-      src="https://lark-assets-prod-aliyun.oss-cn-hangzhou.aliyuncs.com/yuque/0/2021/flv/2596791/1617593096541-05ff5b5f-8baf-41ce-9cae-3362f6bea943.flv?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1617594930&Signature=g0OQFDMKfyNSyIRBbj4tzWHKxtE%3D&response-content-disposition=attachment%3Bfilename*%3DUTF-8%27%27%25E3%2580%2590%25E7%258B%25AC%25E7%25AB%258B%25E5%25BC%2580%25E5%258F%2591%25E3%2580%2591%25E8%25AF%25AD%25E7%2587%2595APP%2520-%2520%25E5%25BC%2580%25E7%25AE%25B1%25E4%25BD%2593%25E9%25AA%258C.flv"
-      type="video">
-      <p>Your user agent does not support the HTML5 Video element.</p>
-</video>
+![WatchVideo][10]
 
 | ![][1] | ![][2] | ![][3] ![][6] |
 | ------ | ------ | ------------- |
@@ -108,3 +101,4 @@ iOS 在路上了，这可以说是我个人遇到的困难最多，花费的时�
 [4]: https://cdn.nlark.com/yuque/0/2020/png/164272/1584518223419-1735f0d9-301b-4bf3-b200-4e810ae93b2c.png#align=left&display=inline&height=205&margin=%5Bobject%20Object%5D&name=image.png&originHeight=410&originWidth=650&size=45759&status=done&style=none&width=325
 [5]: https://cdn.nlark.com/yuque/0/2020/png/164272/1584518575107-3c3bea49-934b-4c29-8c9e-98cbf1df61d2.png#align=left&display=inline&height=33&margin=%5Bobject%20Object%5D&name=image.png&originHeight=66&originWidth=176&size=3350&status=done&style=none&width=88
 [6]: https://cdn.nlark.com/yuque/0/2020/png/164272/1584518822185-c472961d-0c99-46b6-9c5d-69cdad9ee538.png?x-oss-process=image%2Fresize%2Cw_300
+[10]: https://cdn.nlark.com/yuque/0/2021/gif/2596791/1617593812693-cea5a1ee-ad63-4695-af72-24f5b0024e40.gif
