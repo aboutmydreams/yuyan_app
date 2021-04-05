@@ -1,0 +1,51 @@
+name: dev-build-on-push
+
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v1
+
+      - name: setup key
+        env:
+          KEY: ${{secrets.KEY}}
+          SIGN: ${{secrets.SIGN}}
+        run: |
+          echo $KEY  | base64 -d > android/key.properties
+          echo $SIGN | base64 -d > android/yuyan.jks
+          pwd
+          ls android -l
+
+      - name: setup java
+        uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+
+      - name: setup flutter
+        uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"  # or: 'dev' or 'beta'
+
+      - name: fetch all dependencies
+        run: flutter pub get
+
+      - name: build release apk
+        run: flutter build apk --release --target-platform=android-arm64
+
+      - name: upload apk
+        uses: actions/upload-artifact@main
+        with:
+          name: android-app
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+      # - uses: softprops/action-gh-release@v1
+      #   if: startsWith(github.ref, 'refs/tags/')
+      #   with:
+      #     files: build/app/outputs/apk/release/app-release.apk
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

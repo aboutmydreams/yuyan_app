@@ -1,17 +1,20 @@
 import 'dart:io';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:scoped_model/scoped_model.dart';
-import 'package:yuyan_app/models/tools/analytics.dart';
-import 'package:yuyan_app/routes/top_route.dart';
-import 'package:yuyan_app/state_manage/toppest.dart';
-
-TopStateModel topModel1 = topModel;
+import 'package:get/get.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:scroll_to_index/util.dart';
+import 'package:yuyan_app/config/app.dart';
+import 'package:yuyan_app/config/route_manager.dart';
+import 'package:yuyan_app/config/storage_manager.dart';
+import 'package:yuyan_app/controller/binding/app_binding.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await topModel1.getMyColor();
-  await topModel1.getMyTheme();
+  //所有的init不能throw错误，否则App无法正常启动
+  await StorageManager.init();
+  await App.init();
   if (Platform.isAndroid) {
     /// https://www.geek-share.com/detail/2799306029.html
     /// 以下两行 设置android状态栏为透明的沉浸。写在组件渲染之后，是为了在渲染后进行set赋值，覆盖状态栏，写在渲染之前MaterialApp组件会覆盖掉这个值。
@@ -19,41 +22,55 @@ void main() async {
         SystemUiOverlayStyle(statusBarColor: Colors.transparent);
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
-  runApp(MyApp(
-    model: topModel1,
-  ));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final TopStateModel model;
-
-  const MyApp({Key key, @required this.model}) : super(key: key);
+  final TransitionBuilder toastBuilder = BotToastInit();
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModel<TopStateModel>(
-      model: model,
-      child: MyMeterialApp(),
+    print("build again!");
+    return GetMaterialApp(
+      title: '语燕',
+      initialRoute: RouteName.splash,
+      debugShowCheckedModeBanner: false,
+      getPages: MyRoute.pages,
+      navigatorObservers: <NavigatorObserver>[
+        BotToastNavigatorObserver(),
+      ],
+      initialBinding: AppBinding(),
+      defaultTransition: Transition.cupertino,
+      builder: _builder,
+    );
+  }
+
+  Widget _builder(BuildContext context, Widget child) {
+    final toast = toastBuilder(context, child);
+    final keyboard = GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
+        if (Get.focusScope.hasPrimaryFocus) {
+          Get.focusScope.unfocus();
+        }
+      },
+      child: toast,
+    );
+    return ScrollConfiguration(
+      behavior: _ScrollBehavior(),
+      child: keyboard,
     );
   }
 }
 
-class MyMeterialApp extends StatelessWidget {
+class _ScrollBehavior extends ScrollBehavior {
   @override
-  Widget build(BuildContext context) {
-    return ScopedModelDescendant<TopStateModel>(
-      builder: (context, child, model) {
-        print("build again!");
-        return MaterialApp(
-          title: '语燕',
-          initialRoute: '/first',
-          debugShowCheckedModeBanner: false, // 去除debug标志
-          routes: routeData,
-          theme: model.themeData,
-          navigatorObservers: <NavigatorObserver>[observer], //加入路由统计
-          // home: MyHomePage(),
-        );
-      },
+  Widget buildViewportChrome(context, child, _) => child;
+
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) {
+    return BouncingScrollPhysics(
+      parent: RangeMaintainingScrollPhysics(),
     );
   }
 }

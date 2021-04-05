@@ -1,30 +1,23 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:yuyan_app/controller/quick_link_controller.dart';
+import 'package:yuyan_app/controller/recent_controller.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/all_doc_book_data.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
-import 'package:yuyan_app/models/tools/analytics.dart';
-import 'package:yuyan_app/models/widgets_big/change_org/org_leading.dart';
-import 'package:yuyan_app/models/widgets_small/show_dialog/show_dialog.dart';
-import 'package:yuyan_app/models/widgets_small/toast.dart';
-import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
-import 'package:yuyan_app/state_manage/dataManage/quick_manage.dart';
-import 'package:yuyan_app/state_manage/toppest.dart';
-import 'package:yuyan_app/views/dashboard/create_doc/select_book.dart';
-import 'package:yuyan_app/views/dashboard/quick/quick_view.dart';
+import 'package:yuyan_app/views/dashboard/small_note/quick_view.dart';
 import 'package:yuyan_app/views/dashboard/recent/recent_page.dart';
-import 'package:yuyan_app/views/explore_page/search/search_bar.dart';
+import 'package:yuyan_app/views/widget/org_space_widget.dart';
+import 'package:yuyan_app/views/widget/search_action_widget.dart';
 
-class Dashboard extends StatefulWidget {
-  Dashboard({Key key}) : super(key: key);
+class MyDashBoardPage extends StatefulWidget {
+  MyDashBoardPage({Key key}) : super(key: key);
 
   @override
-  _DashboardState createState() => _DashboardState();
+  _MyDashBoardPageState createState() => _MyDashBoardPageState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _MyDashBoardPageState extends State<MyDashBoardPage> {
   AllDocBookJson allDocBookJson;
 
   @override
@@ -42,7 +35,6 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    analytics.logEvent(name: 'dashboard');
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -50,58 +42,42 @@ class _DashboardState extends State<Dashboard> {
         bottomOpacity: 5.0,
         elevation: 1,
         title: Text("书桌"),
-        leading: ScopedModel<MyInfoManage>(
-          model: topModel.myInfoManage,
-          child: OrgLeading(),
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
-            tooltip: '搜索与我有关',
-            onPressed: () {
-              showSearch(
-                context: context,
-                delegate: SearchBarDelegate(aboutMe: true),
-              );
-            },
-          )
+        leading: OrgSpaceLeadingWidget(),
+        actions: [
+          SearchActionWidget(),
         ],
       ),
-      floatingActionButton: GestureDetector(
-        onLongPress: () {
-          showWindow(context,
-              title: "选择一个知识库",
-              children: allDocBookJson == null
-                  ? null
-                  : allDocBookJson.data.isEmpty
-                      ? [Text("暂无知识库", style: AppStyles.textStyleBB)]
-                      : allDocBookJson.data
-                          .map((onebook) => SelectView(
-                                book: onebook,
-                              ))
-                          .toList());
-          Timer(Duration(milliseconds: 400), () {
-            myToast(context, "感谢你的期待 💕");
-          });
+      // floatingActionButton: GestureDetector(
+      //   onLongPress: () {
+      //     Timer(Duration(milliseconds: 400), () {
+      //       myToast(context, "感谢你的期待 💕");
+      //     });
+      //   },
+      //   child: FloatingActionButton(
+      //     onPressed: () {
+      //       Get.to(SmallNoteEditor());
+      //     },
+      //     child: Icon(Icons.edit),
+      //   ),
+      // ),
+      body: GetBuilder<RecentController>(
+        builder: (c) {
+          return SmartRefresher(
+            controller: c.refreshController,
+            onRefresh: () {
+              c.onRefreshCallback();
+              QuickLinkController.to.onRefreshCallback();
+            },
+            onLoading: c.onLoadMoreCallback,
+            enablePullUp: true,
+            child: SingleChildScrollView(
+              child: Column(children: [
+                QuickView(),
+                RecentPage(),
+              ]),
+            ),
+          );
         },
-        child: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/edit/note');
-          },
-          child: Icon(Icons.edit),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(children: [
-          ScopedModel<QuickManage>(
-            model: topModel.quickManage,
-            child: QuickView(),
-          ),
-          RecentPage(),
-        ]),
       ),
     );
   }

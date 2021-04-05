@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/component/web/open_url.dart';
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/all_doc_book_data.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
-import 'package:yuyan_app/models/tools/analytics.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 
 class SelectView extends StatelessWidget {
@@ -13,7 +11,6 @@ class SelectView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    analytics.logEvent(name: 'select_book');
     return ListTile(
       leading: userAvatar(book.user.avatarUrl, height: 30),
       title: Text(book.name),

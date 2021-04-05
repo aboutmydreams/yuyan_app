@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/models/net/requests/dio_requests.dart';
-import 'package:yuyan_app/models/tools/get_pref.dart';
+import 'package:yuyan_app/util/get_pref.dart';
 // import 'data/convert_json.dart';
 
 class DioUtil {

@@ -1,13 +1,10 @@
 import 'package:badges/badges.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
-import 'package:yuyan_app/state_manage/dataManage/attent_manage.dart';
-import 'package:yuyan_app/state_manage/dataManage/mydata_manage.dart';
-import 'package:yuyan_app/state_manage/dataManage/news_manage.dart';
-import 'package:yuyan_app/state_manage/dataManage/recent_manage.dart';
-import 'package:yuyan_app/state_manage/layout_manage/hide_bottom.dart';
-import 'package:yuyan_app/state_manage/toppest.dart';
+import 'package:flutter/rendering.dart';
+import 'package:get/get.dart';
+import 'package:yuyan_app/controller/bottom_nav_controller.dart';
+import 'package:yuyan_app/controller/theme_controller.dart';
 import 'package:yuyan_app/views/explore_page/explore_page.dart';
 import 'package:yuyan_app/views/my_page/my_page.dart';
 import 'package:yuyan_app/views/news_page/news_page.dart';
@@ -18,104 +15,95 @@ class HomePage extends StatefulWidget {
   final int pageKey;
 
   @override
-  _HomePageState createState() => _HomePageState(pageKey: pageKey);
+  _HomePageState createState() => _HomePageState(key: key, pageKey: pageKey);
 }
 
 class _HomePageState extends State<HomePage> {
-  _HomePageState({Key key, this.pageKey: 0});
-  int pageKey;
+  _HomePageState({Key key, int pageKey: 0});
+
   bool hideBottom = false;
   List<Widget> pageList = [];
   GlobalKey _bottomNavigationKey = GlobalKey();
 
   @override
   void initState() {
-    pageList
-      ..add(ScopedModel<AttentManage>(
-        model: topModel.attentManage,
-        child: ExplorePage(),
-      ))
-      ..add(ScopedModel<RecentManage>(
-        model: topModel.recentManage,
-        child: Dashboard(),
-      ))
-      ..add(ScopedModel<NewsManage>(
-        model: topModel.newsManage,
-        child: NewsPage(),
-      ))
-      ..add(ScopedModel<MyInfoManage>(
-        model: topModel.myInfoManage,
-        child: MyPage(),
-      ));
+    pageList = [
+      ExplorePage(),
+      MyDashBoardPage(),
+      NotificationPage(),
+      MyPage(),
+    ];
 
     super.initState();
   }
 
-  Color iconColor(int index) {
-    Color theColor =
-        pageKey == index ? topModel.primarySwatchColor : Colors.black87;
+  Color iconColor(bool selected) {
+    var theme = ThemeController.to;
+    Color theColor = selected ? theme.primarySwatchColor : Colors.black87;
     return theColor;
+  }
+
+  _buildBottomNav(BottomNavigatorController controller) {
+    var currIndex = controller.navIndex.value;
+    return AnimatedBuilder(
+      animation: controller.animation,
+      builder: (context, child) {
+        return Opacity(
+          opacity: controller.height / 56,
+          child: CurvedNavigationBar(
+            key: _bottomNavigationKey,
+            color: Color.fromRGBO(0, 0, 0, 0.06),
+            backgroundColor: Colors.white,
+            animationCurve: Curves.easeInQuad,
+            height: controller.height,
+            items: <Widget>[
+              Icon(
+                Icons.insert_emoticon,
+                size: 34,
+                color: iconColor(0 == currIndex),
+              ),
+              Icon(
+                Icons.wrap_text,
+                size: 34,
+                color: iconColor(1 == currIndex),
+              ),
+              Badge(
+                padding: EdgeInsets.all(0),
+                badgeColor: Colors.transparent,
+                elevation: 0,
+                badgeContent: Icon(
+                  Icons.notifications_none,
+                  size: 34,
+                  color: iconColor(2 == currIndex),
+                ),
+              ),
+              Icon(
+                Icons.perm_identity,
+                size: 34,
+                color: iconColor(3 == currIndex),
+              ),
+            ],
+            animationDuration: Duration(milliseconds: 300),
+            onTap: (index) {
+              controller.navIndex.value = index;
+            },
+          ),
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final double topPadding = MediaQuery.of(context).padding.bottom;
-    print(topPadding);
+    // final double topPadding = MediaQuery.of(context).padding.bottom;
+    // print(topPadding);
+    var controller = Get.find<BottomNavigatorController>();
     return Scaffold(
-      // drawer: QuickSetPage(),
-      bottomNavigationBar: ScopedModel<BottomManage>(
-          model: topModel.bottomManage,
-          child: ScopedModelDescendant<BottomManage>(
-              builder: (context, child, model) {
-            return Opacity(
-              opacity: model.y < 30
-                  ? model.y < 3
-                      ? 0
-                      : model.y / 30
-                  : 1,
-              child: CurvedNavigationBar(
-                key: _bottomNavigationKey,
-                color: Color.fromRGBO(0, 0, 0, 0.06),
-                backgroundColor: Colors.white,
-                animationCurve: Curves.easeInQuad,
-                height: model.y,
-                items: <Widget>[
-                  Icon(
-                    Icons.insert_emoticon,
-                    size: 34,
-                    color: iconColor(0),
-                  ),
-                  Icon(
-                    Icons.wrap_text,
-                    size: 34,
-                    color: iconColor(1),
-                  ),
-                  Badge(
-                    padding: EdgeInsets.all(0),
-                    badgeColor: Colors.transparent,
-                    elevation: 0,
-                    badgeContent: Icon(
-                      Icons.notifications_none,
-                      size: 34,
-                      color: iconColor(2),
-                    ),
-                  ),
-                  Icon(
-                    Icons.perm_identity,
-                    size: 34,
-                    color: iconColor(3),
-                  ),
-                ],
-                animationDuration: Duration(milliseconds: 300),
-                onTap: (index) {
-                  setState(() {
-                    pageKey = index;
-                  });
-                },
-              ),
-            );
-          })),
-      body: pageList[pageKey],
+      bottomNavigationBar: Obx(() => _buildBottomNav(controller)),
+      body: NotificationListener<ScrollUpdateNotification>(
+        child: Obx(() => pageList[controller.navIndex.value]),
+        onNotification: controller.onUpdateNotification,
+      ),
     );
   }
 }

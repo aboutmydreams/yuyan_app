@@ -1,0 +1,196 @@
+import 'package:flutter/material.dart';
+import 'package:yuyan_app/model/notification/notification_item.dart';
+import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
+import 'package:yuyan_app/util/time_cut.dart';
+import 'package:yuyan_app/util/util.dart';
+
+class NotificationItemWidget extends StatelessWidget {
+  // 几种通知
+  final Map<String, String> newsType = {
+    "invite_collaborator": "邀请你协作",
+    "update_doc": "更新了文档",
+    "like_doc": "打赏了稻谷",
+    "comment": "评论了话题",
+    "mention": "在评论中@了你",
+    "new_topic": "新建了讨论",
+    "new_book": "新建了知识库",
+    "topic_assign": "指派了话题",
+    "publish_doc": "发布了文章",
+    "watch_book": "关注了知识库",
+    "delete_book": "删除了知识库",
+    "public_book": "公开了知识库",
+    "private_book": "取消公开了知识库",
+    "rename_book": "重命名了知识库",
+    "follow_user": "关注了你",
+    "like_artboard": "赞赏了画板稻谷",
+    "upload_artboards": "更新了画板",
+    "apply_join_group": "申请加入团队",
+    "new_group_member": "邀请新成员加入团队",
+    "join_organization_user": "加入了组织成员",
+    "join_group_user": "加入了团队成员",
+    "joined_a_group": "将你添加到了团队",
+    "join_collaborator": "加入了协作",
+    "group_invitation": "邀请你加入团队",
+    "close_topic": "关闭了话题",
+    "reopen_topic": "重新开启了话题",
+    "user_member_will_expire": "会员即将到期",
+    "system": "系统通知",
+    "apply_collaborator": "申请文档协作",
+    "remove_from_a_group": "移出了团队"
+  };
+
+  NotificationItemWidget({
+    Key key,
+    @required this.data,
+    this.unread: true,
+  }) : super(key: key);
+
+  final NotificationItemSeri data;
+  final bool unread;
+
+  @override
+  Widget build(BuildContext context) {
+    // String lastSub = clearSub(data);
+    String tag = Util.genHeroTag();
+    return GestureDetector(
+      onTap: () {
+        // if (data.subjectType == "User") {
+        //   OpenPage.user(
+        //     context,
+        //     login: data.actor.login,
+        //     name: data.actor.name,
+        //     avatarUrl: data.actor.avatarUrl,
+        //     userId: data.actor.id,
+        //     tag: tag,
+        //   );
+        // } else if (data.subjectType == "Doc") {
+        //   OpenPage.docWeb(
+        //     context,
+        //     login: data.secondSubject.user.login,
+        //     bookSlug: data.secondSubject.slug,
+        //     bookId: data.subject.bookId,
+        //     docId: data.subject.id,
+        //   );
+        // } else if (data.subjectType == "Topic") {
+        //   OpenPage.topic(
+        //     context,
+        //     id: data.subjectId,
+        //     iid: data.subject.iid,
+        //     groupId: data.subject.groupId,
+        //   );
+        // } else if (((data.subjectType == "Comment") &&
+        //     (data.secondSubjectType == "Doc"))) {
+        //   // 如果是评论的话 Comment 看 second_subject_type 定位
+        //   // print(data.subjectType);
+        //   OpenPage.docWeb(
+        //     context,
+        //     login: data.thirdSubject.user.login,
+        //     bookSlug: data.thirdSubject.slug,
+        //     bookId: data.thirdSubjectId,
+        //     docId: data.secondSubjectId,
+        //   );
+        // } else {
+        //   var url = "https://www.yuque.com/go/notification/${data.id}";
+        //   openUrl(context, url);
+        // }
+      },
+      child: Container(
+        height: 70,
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.only(left: 16),
+        color: AppColors.background,
+        child: Row(
+          children: <Widget>[
+            GestureDetector(
+              onTap: () {
+                // var url = "https://www.yuque.com/${data.actor.login}";
+                // openUrl(context, url);
+                if (data.actor != null) {
+                  // OpenPage.user(
+                  //   context,
+                  //   login: data.actor.login,
+                  //   name: data.actor.name,
+                  //   avatarUrl: data.actor.avatarUrl,
+                  //   userId: data.actor.id,
+                  //   tag: tag,
+                  // );
+                }
+              },
+              child: Container(
+                margin: EdgeInsets.only(right: 20),
+                child: Hero(
+                  tag: tag,
+                  child: userAvatar(
+                    data.actor != null
+                        ? data.actor.avatarUrl
+                        : "https://cdn.nlark.com/yuque/0/2019/png/84147/1547032500238-d93512f4-db23-442f-b4d8-1d46304f9673.png",
+                    height: 45,
+                  ),
+                ),
+              ),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width - 81,
+                  height: 26,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "${data.actor != null ? data.actor.name : '系统消息'}",
+                        style: AppStyles.textStyleB,
+                      ),
+                      Spacer(),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          margin: EdgeInsets.only(right: 12),
+                          child: Text(
+                            "${timeCut(data.createdAt)}",
+                            style: AppStyles.textStyleCC,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width - 81,
+                  height: 24,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "${newsType[data.notifyType] ?? data.notifyType}",
+                        style: AppStyles.textStyleC,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Spacer(),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          margin: EdgeInsets.only(right: 15),
+                          child: CircleAvatar(
+                            radius: 3,
+                            backgroundColor:
+                                unread ? Colors.red : Colors.transparent,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

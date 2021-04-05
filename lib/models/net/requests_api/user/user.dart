@@ -2,9 +2,6 @@ import 'package:yuyan_app/models/net/requests/dio_requests.dart';
 import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/my_follow_book_data.dart';
 import 'package:yuyan_app/models/net/requests_api/user/data/user_info_data.dart';
-import 'package:yuyan_app/models/oauth2/random_string/random_string.dart';
-import 'package:yuyan_app/state_manage/dataManage/data/my_page/group/group_data.dart';
-import 'package:yuyan_app/state_manage/toppest.dart';
 
 import 'data/user_follow_data.dart';
 import 'data/user_profile_data.dart';
@@ -44,12 +41,12 @@ class DioUser {
   }
 
   // 团队信息
-  static getGroupData({int userId}) async {
-    var res = await DioReq.get("/users/$userId/groups?limit=1000&offset=0",
-        onlyUser: true);
-    GroupJson groupData = GroupJson.fromJson(res);
-    return groupData;
-  }
+  // static getGroupData({int userId}) async {
+  //   var res = await DioReq.get("/users/$userId/groups?limit=1000&offset=0",
+  //       onlyUser: true);
+  //   GroupJson groupData = GroupJson.fromJson(res);
+  //   return groupData;
+  // }
 
   /// [关注相关]
 
@@ -115,7 +112,7 @@ class DioUser {
 
       print(res);
       if (res.containsKey("data")) {
-        topModel.myInfoManage.update();
+        // topModel.myInfoManage.update();
         return 1;
       } else {
         return 0;
@@ -137,7 +134,7 @@ class DioUser {
       Map<String, dynamic> res =
           await DioReq.delete("/actions", data: data, onlyUser: true);
       if (res.toString() == "{}") {
-        topModel.myInfoManage.update();
+        // topModel.myInfoManage.update();
         return 1;
       } else {
         return 0;
@@ -202,24 +199,24 @@ class DioUser {
 
   /// [话题相关]
   // 添加新的话题
-  static addTopic(
-      {String title, String body, int groupId, bool onlyUser: false}) async {
-    String uuid = randomString(64);
-    Map<String, dynamic> data = {
-      "group_id": groupId,
-      "title": title,
-      "body_asl":
-          "<div class=\"lake-content-editor-core lake-engine\" data-lake-element=\"root\"><p style=\"font-size: 14px; color: rgb(38, 38, 38); line-height: 24px; letter-spacing: 0.05em; outline-style: none; overflow-wrap: break-word; margin: 0px;\">$body</p></div>",
-      "assignee_id": null,
-      "format": "lake",
-      "public": 1,
-      "milestone_id": null,
-      "uuid": uuid
-    };
-    print(data);
-    var res = await DioReq.post('/topics', data: data, onlyUser: onlyUser);
-    return res.toString().contains("id");
-  }
+  // static addTopic(
+  //     {String title, String body, int groupId, bool onlyUser: false}) async {
+  //   String uuid = randomString(64);
+  //   Map<String, dynamic> data = {
+  //     "group_id": groupId,
+  //     "title": title,
+  //     "body_asl":
+  //         "<div class=\"lake-content-editor-core lake-engine\" data-lake-element=\"root\"><p style=\"font-size: 14px; color: rgb(38, 38, 38); line-height: 24px; letter-spacing: 0.05em; outline-style: none; overflow-wrap: break-word; margin: 0px;\">$body</p></div>",
+  //     "assignee_id": null,
+  //     "format": "lake",
+  //     "public": 1,
+  //     "milestone_id": null,
+  //     "uuid": uuid
+  //   };
+  //   print(data);
+  //   var res = await DioReq.post('/topics', data: data, onlyUser: onlyUser);
+  //   return res.toString().contains("id");
+  // }
 
   /// [评论相关]
 

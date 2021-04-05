@@ -1,5 +1,6 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:yuyan_app/state_manage/toppest.dart';
+import 'package:yuyan_app/controller/theme_controller.dart';
 
 // 白天主题
 class AppColors {
@@ -15,7 +16,7 @@ class AppColors {
   // 主要文字段落灰色 纯黑的45%
   static Color primaryText = Colors.black45;
 
-  static Color primary = topModel.primarySwatchColor;
+  static Color get primary => ThemeController.to.primarySwatchColor;
 
   // 页面背景
   static Color background = Colors.white;
@@ -97,6 +98,14 @@ class AppStyles {
     fontSize: 11,
   );
 
+  // 各种动态内容文字样式
+  static TextStyle textStyleCB = TextStyle(
+    color: AppColors.primaryText,
+    fontFamily: "sans_bold",
+    fontWeight: FontWeight.w400,
+    fontSize: 16,
+  );
+
   // 我的页面数字样式
   static TextStyle countStyle = TextStyle(
     color: AppColors.nextText,
@@ -123,49 +132,90 @@ class AppStyles {
 }
 
 class AppIcon {
-  static Icon iconType(String iconName, {double size}) {
+  static Widget iconType(
+    String iconName, {
+    double size,
+    VoidCallback onTap,
+  }) {
     Map<String, Icon> iconDic = {
-      "Doc": Icon(
+      "doc": Icon(
         Icons.description,
         color: Colors.deepPurpleAccent,
         size: size,
       ),
-      "Book": Icon(
+      "book": Icon(
         Icons.book,
         color: Colors.blue,
         size: size,
       ),
-      "Sheet": Icon(
+      "sheet": Icon(
         Icons.event_note,
         color: Colors.green,
         size: size,
       ),
-      "Thread": Icon(
+      "thread": Icon(
         Icons.speaker_notes,
         color: Colors.blue,
         size: size,
       ),
-      "Group": Icon(
+      "group": Icon(
         Icons.group,
         color: Colors.grey,
         size: size,
       ),
-      "Design": Icon(
+      "design": Icon(
         Icons.collections,
         color: Colors.orangeAccent,
         size: size,
       ),
-      "Resource": Icon(
+      "resource": Icon(
         Icons.create_new_folder,
         color: Colors.deepOrange,
         size: size,
       ),
-      "Column": Icon(
+      "column": Icon(
         Icons.chrome_reader_mode,
         color: Colors.deepOrange,
         size: size,
       ),
+      //TODO add `Mind` type
+      "mind": Icon(
+        Icons.error,
+        color: Colors.red,
+        size: size,
+      ),
+      "file": Icon(
+        Icons.attach_file,
+        color: Colors.blue,
+        size: size,
+      ),
+      "fullscreen": Icon(
+        Icons.fullscreen,
+        color: Colors.blue,
+        size: size,
+      ),
+      "exit_fullscreen": Icon(
+        Icons.close_fullscreen,
+        color: Colors.blue,
+        size: size,
+      ),
     };
-    return iconDic[iconName];
+    final fallback = IconButton(
+      icon: Icon(
+        Icons.error,
+        size: size,
+      ),
+      color: Colors.red,
+      onPressed: () {
+        BotToast.showText(text: 'iconName: $iconName not mapped to an icon!');
+      },
+    );
+    var iconWidget = iconDic[iconName?.toLowerCase()];
+    if (iconWidget == null) return fallback;
+    if (onTap == null) return iconWidget;
+    return InkWell(
+      onTap: onTap,
+      child: iconWidget,
+    );
   }
 }
