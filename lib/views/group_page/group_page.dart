@@ -24,13 +24,14 @@ import 'package:yuyan_app/models/component/appUI.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/group_page/widget/group_event_widget.dart';
+import 'package:yuyan_app/views/topic_page/all_topic_page.dart';
 import 'package:yuyan_app/views/topic_page/topic_add_page.dart';
+import 'package:yuyan_app/views/topic_page/topic_item_widget.dart';
 import 'package:yuyan_app/views/widget/floating_action/floating_action_button_widget.dart';
 import 'package:yuyan_app/views/widget/book_row_widget.dart';
 import 'package:yuyan_app/views/widget/drop_menu_item_widget.dart';
 import 'package:yuyan_app/views/widget/lake/lake_mention_widget.dart';
 import 'package:yuyan_app/views/widget/lake/lake_render_widget.dart';
-import 'package:yuyan_app/views/widget/topic_item_widget.dart';
 import 'package:yuyan_app/views/widget/user_flexible_widget.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart'
@@ -131,6 +132,15 @@ class _GroupPageState extends State<GroupPage>
                     child: MenuItemWidget(
                       iconData: Icons.open_in_browser,
                       title: '打开网页版',
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: () {
+                      Get.to(() => GroupTopicAllPage(groupId: widget.group.id));
+                    },
+                    child: MenuItemWidget(
+                      iconData: Icons.topic,
+                      title: '讨论区',
                     ),
                   ),
                 ],

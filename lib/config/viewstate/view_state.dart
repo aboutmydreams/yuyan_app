@@ -224,6 +224,36 @@ mixin ControllerStateMixin on GetxController {
     _state = initState;
   }
 
+  /// [pageBuilder] is a convenient way to build whole-page instead of component widget.
+  /// [pageBuilder] will wrap its child in a [Scaffold] widget by default to ensure its child
+  /// having correct MaterialStyle, otherwise
+  /// [Text] will lose its correct style when error occurs.
+  /// [skipIdle] is used to skip unnecessary wrap for [onIdle] builder, since
+  /// it usually builds the entire page with [Scaffold] as the topmost widget.
+  Widget pageBuilder<T>({
+    Widget Function(Widget child) parent,
+    bool skipIdle = true,
+    WidgetCallback onIdle,
+    Widget onLoading,
+    Widget onEmpty,
+    Widget Function(ViewError error) onError,
+  }) {
+    if (parent == null) {
+      return Scaffold(
+        body: stateBuilder(
+          onIdle: onIdle,
+          onLoading: onLoading,
+          onEmpty: onEmpty,
+          onError: onError,
+        ),
+      );
+    }
+    if (skipIdle && (this.isIdleState || this.isRefreshState)) {
+      return onIdle();
+    }
+    return parent(onIdle());
+  }
+
   /// [stateBuilder] is a convenient way to handle different states
   /// but, [stateBuilder] is not reactive,
   /// so you need to wrap it in [GetBuilder] to make it reactive
@@ -280,3 +310,6 @@ mixin ControllerStateMixin on GetxController {
     debugPrint(debug);
   }
 }
+
+//TODO(@dreamer2q): add condition build methods
+extension WidgetEx on Widget {}

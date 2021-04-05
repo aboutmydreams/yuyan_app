@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/model/document/book.dart';
@@ -82,11 +83,18 @@ class GroupMemberController extends FetchListValueController<GroupUserSeri> {
 
 class GroupTopicController extends FetchListValueController<TopicSeri> {
   final int groupId;
+  final String topicState;
 
-  GroupTopicController(this.groupId);
+  GroupTopicController(this.groupId, [this.topicState = 'open']);
 
   @override
   Future<List<TopicSeri>> fetch() {
-    return ApiRepository.getTopicList(groupId: groupId);
+    return ApiRepository.getTopicList(groupId: groupId, state: topicState);
+  }
+
+  @override
+  Future<List<TopicSeri>> fetchMore() {
+    return ApiRepository.getTopicList(
+        groupId: groupId, state: topicState, offset: offset);
   }
 }

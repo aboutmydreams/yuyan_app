@@ -170,7 +170,7 @@ abstract class FetchListValueController<T>
     }
   }
 
-  /// 如果需要[onRefreshMore]的功能，请重新此方法
+  /// 如果需要[onRefreshMore]的功能，请重写此方法
   Future<List<T>> fetchMore() => null;
 
   /// convenient methods
@@ -183,6 +183,8 @@ abstract class FetchListValueController<T>
     _value?.remove(oldItem);
     update();
   }
+
+  int get offset => _value?.length ?? 0;
 }
 
 abstract class FetchSavableController<T extends BaseSavableJson>

@@ -10,8 +10,8 @@ import 'package:yuyan_app/model/events/user_lite_seri.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
 import 'package:yuyan_app/views/explore_page/widget/book_tile_widget.dart';
 import 'package:yuyan_app/views/explore_page/widget/doc_tile_widget.dart';
+import 'package:yuyan_app/views/topic_page/topic_item_widget.dart';
 import 'package:yuyan_app/views/widget/group_widget.dart';
-import 'package:yuyan_app/views/widget/topic_item_widget.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class SearchResultWidget extends StatefulWidget {
