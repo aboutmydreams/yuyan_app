@@ -41,7 +41,7 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           name: android-app
-          path: build/app/outputs/flutter-apk/*.apk
+          path: build/app/outputs/flutter-apk/app-release.apk
 
       # - uses: softprops/action-gh-release@v1
       #   if: startsWith(github.ref, 'refs/tags/')
