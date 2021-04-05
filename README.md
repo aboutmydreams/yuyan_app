@@ -43,14 +43,14 @@ _注：语燕没有恶意，在语雀官方 App 发布后不保证会继续维�
 
 #### 出视频了！
 
-<iframe
-    width="800"
-    height="600"
-    src="https://player.bilibili.com/player.html?aid=843098952&bvid=BV1k54y147mJ&cid=264937502&page=1"
-    scrolling="no" 
-    frameborder="no"
-    allowfullscreen>
-</iframe>
+https://lark-assets-prod-aliyun.oss-cn-hangzhou.aliyuncs.com/yuque/0/2021/flv/2596791/1617593096541-05ff5b5f-8baf-41ce-9cae-3362f6bea943.flv?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1617594930&Signature=g0OQFDMKfyNSyIRBbj4tzWHKxtE%3D&response-content-disposition=attachment%3Bfilename*%3DUTF-8%27%27%25E3%2580%2590%25E7%258B%25AC%25E7%25AB%258B%25E5%25BC%2580%25E5%258F%2591%25E3%2580%2591%25E8%25AF%25AD%25E7%2587%2595APP%2520-%2520%25E5%25BC%2580%25E7%25AE%25B1%25E4%25BD%2593%25E9%25AA%258C.flv
+
+<video id="video" controls="" preload="none" poster="http://media.w3.org/2010/05/sintel/poster.png">
+      <source id="mp4" 
+      src="https://lark-assets-prod-aliyun.oss-cn-hangzhou.aliyuncs.com/yuque/0/2021/flv/2596791/1617593096541-05ff5b5f-8baf-41ce-9cae-3362f6bea943.flv?OSSAccessKeyId=LTAI4GGhPJmQ4HWCmhDAn4F5&Expires=1617594930&Signature=g0OQFDMKfyNSyIRBbj4tzWHKxtE%3D&response-content-disposition=attachment%3Bfilename*%3DUTF-8%27%27%25E3%2580%2590%25E7%258B%25AC%25E7%25AB%258B%25E5%25BC%2580%25E5%258F%2591%25E3%2580%2591%25E8%25AF%25AD%25E7%2587%2595APP%2520-%2520%25E5%25BC%2580%25E7%25AE%25B1%25E4%25BD%2593%25E9%25AA%258C.flv"
+      type="video">
+      <p>Your user agent does not support the HTML5 Video element.</p>
+</video>
 
 | ![][1] | ![][2] | ![][3] ![][6] |
 | ------ | ------ | ------------- |
