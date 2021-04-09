@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/net/api.dart';
 import 'package:yuyan_app/config/net/token.dart';
+import 'package:yuyan_app/model/document/book.dart';
+import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/v2/user_detail.dart';
 
 class Api2Repository {
@@ -39,5 +41,20 @@ class Api2Repository {
     }
     var asp = (res.data as ApiResponse);
     return UserDetailSeri.fromJson(asp.data);
+  }
+
+  static Future<UserSeri> getGroupDetail({
+    int groupId,
+    String groupLogin,
+  }) async {
+    Response res = await api.get("$_baseUrl/groups/${groupId ?? groupLogin}");
+    var asp = (res.data as ApiResponse);
+    return UserSeri.fromJson(asp.data);
+  }
+
+  static Future<BookSeri> getBookDetail({int bookId}) async {
+    var res = await api.get('$_baseUrl/repos/$bookId');
+    var asp = (res.data as ApiResponse);
+    return BookSeri.fromJson(asp.data);
   }
 }

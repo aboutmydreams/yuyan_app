@@ -5,6 +5,7 @@ import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/events/user_lite_seri.dart';
+import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/views/dashboard/dashboard.dart';
 import 'package:yuyan_app/views/dashboard/note_editor/small_note_editor.dart';
 import 'package:yuyan_app/views/dashboard/small_note/note_page.dart';
@@ -118,6 +119,16 @@ class MyRoute {
     );
   }
 
+  static groupById(int groupId, [int index = 0]) {
+    Get.to(
+      GroupById(
+        index: index,
+        groupId: groupId,
+      ),
+      preventDuplicates: false,
+    );
+  }
+
   static group({
     @required GroupSeri group,
     String tag,
@@ -204,18 +215,10 @@ class MyRoute {
     ),
     GetPage(
       name: RouteName.mySuggest,
-      page: () {
-        final avatarUrl =
-            "https://cdn.nlark.com/yuque/0/2020/png/164272/1581178391840-avatar/dfd33ab4-7115-4fce-b504-faeb9d3ca24d.png";
-        return GroupPage(
-          group: GroupSeri(
-            id: 671004,
-            name: "语燕",
-            description: "自缘不睹榴皮字，想像祇园蔓草书",
-            avatarUrl: avatarUrl,
-          ),
-        );
-      },
+      page: () => GroupById(
+        index: 2,
+        groupId: 671004,
+      ),
     ),
   ];
 }

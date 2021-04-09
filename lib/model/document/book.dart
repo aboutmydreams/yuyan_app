@@ -37,25 +37,10 @@ class BookSeri {
   dynamic original;
   int organizationId;
 
-  BookSeri({
-    this.id,
-    this.type,
-    this.slug,
-    this.name,
-    this.userId,
-    this.description,
-    this.public,
-    this.createdAt,
-    this.updatedAt,
-    this.contentUpdatedAt,
-    this.layout,
-    this.docViewport,
-    this.docTypography,
-    this.enableAutoPublish,
-    this.user,
-    this.creator,
-    this.serializer,
-  });
+  ///v2 获取知识库详情添加
+  String v2toc;
+  String v2tocYaml;
+  String v2Namespace;
 
   BookSeri.fromJson(dynamic json) {
     id = json["id"];
@@ -98,6 +83,11 @@ class BookSeri {
     cover = json["cover"];
     original = json["original"];
     organizationId = json["organization_id"];
+
+    /// v2 添加
+    v2Namespace = json['namespace'];
+    v2toc = json['toc'];
+    v2tocYaml = json['toc_yml'];
   }
 
   Map<String, dynamic> toJson() {

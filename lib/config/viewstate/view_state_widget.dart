@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/config/app_ui.dart';
 
 class ViewErrorWidget extends StatelessWidget {
   final ViewError error;

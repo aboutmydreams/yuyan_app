@@ -110,9 +110,11 @@ class _OrgSpaceItemWidget extends StatelessWidget {
             _refreshController<AttendController>();
             _refreshController<RecentController>();
             _refreshController<QuickLinkController>();
-            _refreshController<NotificationReadController>();
-            _refreshController<NotificationUnreadController>();
-            _refreshController<NotificationSystemController>();
+            _refreshController<NotificationAllController>();
+            // TODO(@dreamer2q): 刷新全部消息
+            // _refreshController<NotificationReadController>();
+            // _refreshController<NotificationUnreadController>();
+            // _refreshController<NotificationSystemController>();
             Util.toast('切换成功');
             Get.back();
           });

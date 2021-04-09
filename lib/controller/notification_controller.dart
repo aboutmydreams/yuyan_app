@@ -1,9 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
+import 'package:yuyan_app/model/notification/notification.dart';
 import 'package:yuyan_app/model/notification/notification_item.dart';
+import 'package:yuyan_app/util/util.dart';
 
 abstract class NotificationProvider
     extends BaseSaveListJson<NotificationItemSeri> {
@@ -13,67 +15,70 @@ abstract class NotificationProvider
   }
 }
 
-class NotificationUnreadProvider extends NotificationProvider {
+class NotificationAllProvider extends NotificationProvider {
   @override
-  String get key => 'user_notification_unread';
+  String get key => 'all_notification';
 }
 
-class NotificationReadProvider extends NotificationProvider {
-  @override
-  String get key => 'user_notification_read';
-}
+class NotificationAllController
+    extends FetchSavableController<NotificationAllProvider> {
+  ///三种通知类似， unread, readed, system
 
-class NotificationSystemProvider extends NotificationProvider {
-  @override
-  String get key => 'user_notification_system';
-}
-
-abstract class NotificationController
-    extends FetchSavableController<NotificationProvider> {
-  final String notificationType;
-
-  NotificationController({
-    @required this.notificationType,
-    @required NotificationProvider provider,
-  }) : super(
-          initData: provider,
+  NotificationAllController()
+      : super(
           initialRefresh: true,
           state: ViewState.loading,
-        );
+          initData: NotificationAllProvider(),
+        ) {
+    //防止 null 错误
+    unread = _default;
+    readed = _default;
+    system = _default;
+  }
+
+  var _default = NotificationSeri(
+    normalCount: 0,
+    notifications: [],
+    listType: '',
+  );
+
+  NotificationSeri unread;
+  NotificationSeri readed;
+  NotificationSeri system;
+
+  bool get hasUnread {
+    return unread.normalCount > 0;
+  }
+
+  void readAll() async {
+    safeHandler(() async {
+      ApiRepository.putNotification();
+    });
+    var i = 0;
+    while (hasUnread) {
+      value.data[i++].readAt = DateTime.now().toIso8601String();
+      unread.normalCount--;
+      update();
+      await Future.delayed(Duration(milliseconds: 80));
+    }
+  }
+
+  @override
+  Future fetchData() async {
+    unread = await ApiRepository.getNotificationList(type: 'unread');
+    readed = await ApiRepository.getNotificationList(type: 'readed');
+    system = await ApiRepository.getNotificationList(type: 'system');
+
+    return [
+      ...unread.notifications,
+      ...readed.notifications,
+      ...system.notifications,
+    ];
+  }
 
   @override
   Future fetchMore() {
-    int offset = value.data?.length ?? 0;
-    return ApiRepository.getNotificationList(
-        type: notificationType, offset: offset);
+    //TODO(@dreamer2q): 加载更多数据, 一般情况下没有很多的数据，暂时可能不需要
+    return super.fetchMore();
   }
-
-  @override
-  Future fetchData() {
-    return ApiRepository.getNotificationList(type: notificationType);
-  }
-}
-
-class NotificationReadController extends NotificationController {
-  NotificationReadController()
-      : super(
-          notificationType: 'readed',
-          provider: NotificationReadProvider(),
-        );
-}
-
-class NotificationUnreadController extends NotificationController {
-  NotificationUnreadController()
-      : super(
-          notificationType: 'unread',
-          provider: NotificationUnreadProvider(),
-        );
-}
-
-class NotificationSystemController extends NotificationController {
-  NotificationSystemController()
-      : super(
-          notificationType: 'system',
-          provider: NotificationSystemProvider(),
-        );
 }

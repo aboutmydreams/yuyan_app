@@ -10,6 +10,7 @@ import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/document/group_home/book_stack.dart';
 import 'package:yuyan_app/model/document/group_user.dart';
 import 'package:yuyan_app/model/document/note/doclet.dart';
+import 'package:yuyan_app/model/document/organization_lite.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/events/book_event_seri.dart';
 import 'package:yuyan_app/model/events/doc_event_seri.dart';
@@ -69,6 +70,7 @@ class Serializer {
       'web.doclet': () => DocletSeri.fromJson(_data),
       'web.doc_lite': () => DocLiteSeri.fromJson(_data),
       'web.design': () => DesignSeri.fromJson(_data),
+      'web.organization': () => OrganizationLiteSeri.fromJson(_data),
       '_convert.list': <T>() =>
           (_data as List<Serializer>).map((e) => e.serialize<T>()).toList(),
     };

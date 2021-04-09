@@ -252,7 +252,12 @@ mixin ControllerStateMixin on GetxController {
     if (skipIdle && (this.isIdleState || this.isRefreshState)) {
       return onIdle();
     }
-    return parent(onIdle());
+    return parent(stateBuilder(
+      onIdle: onIdle,
+      onLoading: onLoading,
+      onEmpty: onEmpty,
+      onError: onError,
+    ));
   }
 
   /// [stateBuilder] is a convenient way to handle different states

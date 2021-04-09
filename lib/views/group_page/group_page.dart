@@ -16,12 +16,10 @@ import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/document/group_home/book_stack.dart';
 import 'package:yuyan_app/model/document/group_home/group_home_seri.dart';
-import 'package:yuyan_app/model/document/group_home/summary.dart';
 import 'package:yuyan_app/model/document/group_user.dart';
 import 'package:yuyan_app/model/document/note/doclet.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/models/widgets_small/nothing.dart';
+import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/group_page/widget/group_event_widget.dart';
 import 'package:yuyan_app/views/topic_page/all_topic_page.dart';
@@ -41,6 +39,7 @@ import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart'
 part 'widget/home_widget.dart';
 
 class GroupPage extends StatefulWidget {
+  final int initialIndex;
   final GroupSeri group;
   final String heroTag;
 
@@ -48,6 +47,7 @@ class GroupPage extends StatefulWidget {
     Key key,
     this.group,
     this.heroTag,
+    this.initialIndex = 0,
   }) : super(key: key);
 
   @override
@@ -71,6 +71,7 @@ class _GroupPageState extends State<GroupPage>
     super.initState();
 
     _tabController = TabController(
+      initialIndex: widget.initialIndex,
       length: _tabs.length,
       vsync: this,
     );

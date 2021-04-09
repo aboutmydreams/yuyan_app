@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/config/route_manager.dart';
+import 'package:yuyan_app/model/document/book.dart';
+import 'package:yuyan_app/model/document/doc.dart';
+import 'package:yuyan_app/model/document/organization_lite.dart';
+import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/notification/notification_item.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
+import 'package:yuyan_app/config/app_ui.dart';
+import 'package:yuyan_app/model/topic/topic.dart';
 import 'package:yuyan_app/util/time_cut.dart';
 import 'package:yuyan_app/util/util.dart';
+import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class NotificationItemWidget extends StatelessWidget {
   // 几种通知
@@ -43,7 +49,7 @@ class NotificationItemWidget extends StatelessWidget {
   NotificationItemWidget({
     Key key,
     @required this.data,
-    this.unread: true,
+    this.unread = false,
   }) : super(key: key);
 
   final NotificationItemSeri data;
@@ -53,33 +59,87 @@ class NotificationItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     // String lastSub = clearSub(data);
     String tag = Util.genHeroTag();
+
+    final userAvatar = GestureDetector(
+      onTap: () {
+        if (data.actor != null) {
+          MyRoute.user(
+            user: data.actor.toUserLiteSeri(),
+            heroTag: tag,
+          );
+        }
+      },
+      child: Container(
+        margin: EdgeInsets.only(right: 20),
+        child: Hero(
+          tag: tag,
+          child: UserAvatarWidget(
+            avatar: data.actor?.avatarUrl,
+            height: 45,
+          ),
+        ),
+      ),
+    );
+
+    final titleWidget = Row(
+      children: [
+        Expanded(
+          child: Text(
+            "${data.actor != null ? data.actor.name : '系统消息'}",
+            style: AppStyles.textStyleB,
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(right: 12),
+          child: Text(
+            "${timeCut(data.createdAt)}",
+            style: AppStyles.textStyleCC,
+          ),
+        )
+      ],
+    );
+    final notifySub = getNotificationSub();
+    final contentWidget = Row(
+      children: [
+        Expanded(
+          child: Text(
+            "${newsType[data.notifyType] ?? data.notifyType}"
+            "${notifySub.onlyIf(notifySub == '', elseif: () => ' [$notifySub]')}",
+            style: AppStyles.textStyleC,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(right: 15),
+          child: CircleAvatar(
+            radius: 3,
+            backgroundColor: unread ? Colors.red : Colors.transparent,
+          ),
+        )
+      ],
+    );
+
     return GestureDetector(
       onTap: () {
-        // if (data.subjectType == "User") {
-        //   OpenPage.user(
-        //     context,
-        //     login: data.actor.login,
-        //     name: data.actor.name,
-        //     avatarUrl: data.actor.avatarUrl,
-        //     userId: data.actor.id,
-        //     tag: tag,
-        //   );
-        // } else if (data.subjectType == "Doc") {
-        //   OpenPage.docWeb(
-        //     context,
-        //     login: data.secondSubject.user.login,
-        //     bookSlug: data.secondSubject.slug,
-        //     bookId: data.subject.bookId,
-        //     docId: data.subject.id,
-        //   );
-        // } else if (data.subjectType == "Topic") {
-        //   OpenPage.topic(
-        //     context,
-        //     id: data.subjectId,
-        //     iid: data.subject.iid,
-        //     groupId: data.subject.groupId,
-        //   );
-        // } else if (((data.subjectType == "Comment") &&
+        switch (data.subjectType) {
+          case 'User':
+            return MyRoute.user(
+              user: data.actor.toUserLiteSeri(),
+              heroTag: tag,
+            );
+          case 'Doc':
+            throw 'unImplement';
+          case 'Topic':
+            var topic = data.subject.serialize<TopicSeri>();
+            return MyRoute.topic(topic.iid, topic.groupId);
+          case 'Comment':
+            if (data.secondSubjectType == 'Topic') {
+              var item = data.secondSubject.serialize<TopicSeri>();
+              return MyRoute.topic(item.iid, item.groupId);
+            }
+        }
+        return Util.goUrl('/go/notification/${data.id}');
+        // if (((data.subjectType == "Comment") &&
         //     (data.secondSubjectType == "Doc"))) {
         //   // 如果是评论的话 Comment 看 second_subject_type 定位
         //   // print(data.subjectType);
@@ -90,9 +150,6 @@ class NotificationItemWidget extends StatelessWidget {
         //     bookId: data.thirdSubjectId,
         //     docId: data.secondSubjectId,
         //   );
-        // } else {
-        //   var url = "https://www.yuque.com/go/notification/${data.id}";
-        //   openUrl(context, url);
         // }
       },
       child: Container(
@@ -101,96 +158,53 @@ class NotificationItemWidget extends StatelessWidget {
         padding: EdgeInsets.only(left: 16),
         color: AppColors.background,
         child: Row(
-          children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                // var url = "https://www.yuque.com/${data.actor.login}";
-                // openUrl(context, url);
-                if (data.actor != null) {
-                  // OpenPage.user(
-                  //   context,
-                  //   login: data.actor.login,
-                  //   name: data.actor.name,
-                  //   avatarUrl: data.actor.avatarUrl,
-                  //   userId: data.actor.id,
-                  //   tag: tag,
-                  // );
-                }
-              },
-              child: Container(
-                margin: EdgeInsets.only(right: 20),
-                child: Hero(
-                  tag: tag,
-                  child: userAvatar(
-                    data.actor != null
-                        ? data.actor.avatarUrl
-                        : "https://cdn.nlark.com/yuque/0/2019/png/84147/1547032500238-d93512f4-db23-442f-b4d8-1d46304f9673.png",
-                    height: 45,
+          children: [
+            userAvatar,
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 26,
+                    child: titleWidget,
                   ),
-                ),
+                  Container(
+                    height: 24,
+                    child: contentWidget,
+                  )
+                ],
               ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width - 81,
-                  height: 26,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "${data.actor != null ? data.actor.name : '系统消息'}",
-                        style: AppStyles.textStyleB,
-                      ),
-                      Spacer(),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          margin: EdgeInsets.only(right: 12),
-                          child: Text(
-                            "${timeCut(data.createdAt)}",
-                            style: AppStyles.textStyleCC,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width - 81,
-                  height: 24,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "${newsType[data.notifyType] ?? data.notifyType}",
-                        style: AppStyles.textStyleC,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Spacer(),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          margin: EdgeInsets.only(right: 15),
-                          child: CircleAvatar(
-                            radius: 3,
-                            backgroundColor:
-                                unread ? Colors.red : Colors.transparent,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                )
-              ],
             ),
           ],
         ),
       ),
     );
+  }
+
+  String getNotificationSub() {
+    switch (data.subjectType) {
+      case 'User':
+        return data.subject.serialize<UserSeri>().name;
+      case 'Doc':
+        return data.subject.serialize<DocSeri>().title;
+      case 'Book':
+        return data.subject.serialize<BookSeri>().name;
+      case 'Topic':
+        var topic = data.subject.serialize<TopicSeri>();
+        return topic.title;
+      case 'OrganizationUser':
+        var org = data.secondSubject.serialize<OrganizationLiteSeri>();
+        return org.name;
+      case 'Comment':
+        if (data.secondSubjectType == 'Topic') {
+          var item = data.secondSubject.serialize<TopicSeri>();
+          return item.title;
+        } else if (data.secondSubjectType == 'Doc') {
+          var item = data.secondSubject.serialize<DocSeri>();
+          return item.title;
+        }
+    }
+    return '';
   }
 }

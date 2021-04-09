@@ -1,8 +1,10 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/controller/notification_controller.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/config/app_ui.dart';
+import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/news_page/view/one_news.dart';
 import 'package:yuyan_app/views/widget/notification_absorb.dart';
 import 'package:yuyan_app/views/widget/org_space_widget.dart';
@@ -14,72 +16,11 @@ class NotificationPage extends StatefulWidget {
   _NotificationPageState createState() => _NotificationPageState();
 }
 
-class _NotificationPageState extends State<NotificationPage>
-    with SingleTickerProviderStateMixin {
-  // int count;
-  // ScrollController _controller;
-  // List<Notifications> unreadList = topModel.newsManage.unreadNews.notifications;
-  // List<Notifications> readedList = topModel.newsManage.readedNews.notifications;
-
-  TabController tabController;
-
+class _NotificationPageState extends State<NotificationPage> {
   @override
   void initState() {
     super.initState();
-    // if (unreadList != null) {
-    //   count = unreadList.length;
-    // }
-
-    Get.put(NotificationReadController());
-    Get.put(NotificationUnreadController());
-    Get.put(NotificationSystemController());
-
-    tabController = TabController(
-      length: 3,
-      vsync: this,
-    );
-  }
-
-  // // 下拉刷新函数
-  // Future onfresh() async {
-  //   topModel.newsManage.update();
-  //   await Future.delayed(
-  //     const Duration(milliseconds: 1500),
-  //     () {
-  //       setState(() {
-  //         unreadList = topModel.newsManage.unreadNews.notifications;
-  //         readedList = topModel.newsManage.readedNews.notifications;
-  //         if (unreadList != null) {
-  //           myToast(context, "已更新");
-  //         } else {
-  //           myToast(context, "稍后试一试");
-  //         }
-  //       });
-  //     },
-  //   );
-  // }
-
-  Widget buildList(NotificationController controller) {
-    return controller.builder((state) {
-      var data = state.data;
-      return SmartRefresher(
-        controller: controller.refreshController,
-        onRefresh: controller.onRefreshCallback,
-        onLoading: controller.onLoadMoreCallback,
-        enablePullUp: true,
-        child: ListView.builder(
-          itemCount: data.length,
-          itemBuilder: (_, index) {
-            var item = data[index];
-            // 先展示未读消息列表，再显示最近已读消息列表
-            return NotificationItemWidget(
-              data: item,
-              unread: false,
-            );
-          },
-        ),
-      );
-    });
+    Get.put(NotificationAllController());
   }
 
   @override
@@ -89,27 +30,91 @@ class _NotificationPageState extends State<NotificationPage>
       appBar: AppBar(
         leading: OrgSpaceLeadingWidget(),
         title: Text("全部消息"),
-        bottom: TabBar(
-          controller: tabController,
-          tabs: [
-            Tab(text: '未读'),
-            Tab(text: '已读'),
-            Tab(text: '系统'),
-          ],
-        ),
       ),
       body: NotificationAbsorbWidget(
-        child: TabBarView(
-          controller: tabController,
+        child: GetBuilder<NotificationAllController>(
+          builder: (c) => c.stateBuilder(
+            onIdle: () => Column(
+              children: [
+                _buildCounts(c),
+                Expanded(
+                  child: SmartRefresher(
+                    controller: c.refreshController,
+                    onRefresh: c.onRefreshCallback,
+                    child: ListView.builder(
+                      itemCount: c.value.length,
+                      itemBuilder: (_, i) {
+                        var item = c.value[i];
+                        return NotificationItemWidget(
+                          data: item,
+                          unread: item.readAt == null,
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCounts(NotificationAllController c) {
+    return Container(
+      height: 38,
+      // 通过增加 margin 来体现出边框的效果
+      margin: const EdgeInsets.only(bottom: 1),
+      decoration: BoxDecoration(
+        color: AppColors.background,
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromARGB(128, 101, 101, 101),
+            offset: Offset(0, 0),
+            blurRadius: 1,
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 18, right: 6),
+        child: Row(
           children: [
-            GetBuilder<NotificationUnreadController>(
-              builder: buildList,
+            Text(
+              '暂无未读消息',
+              style: AppStyles.textStyleBB,
+            ).when(
+              c.hasUnread == false,
+              other: () => Badge(
+                child: Text('未读消息'),
+                elevation: 5,
+                toAnimate: false,
+                shape: BadgeShape.square,
+                badgeColor: Colors.yellow,
+                alignment: Alignment.centerLeft,
+                animationType: BadgeAnimationType.fade,
+                borderRadius: BorderRadius.circular(8),
+                position: BadgePosition.topEnd(end: -36, top: -2),
+                animationDuration: Duration(milliseconds: 50),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 6,
+                  vertical: 4,
+                ),
+                badgeContent: Text(
+                  '${c.unread.normalCount}',
+                  style: TextStyle(
+                    color: AppColors.primaryText,
+                    fontFamily: "Silom",
+                    fontWeight: FontWeight.w700,
+                    fontSize: 9,
+                  ),
+                ),
+              ),
             ),
-            GetBuilder<NotificationReadController>(
-              builder: buildList,
-            ),
-            GetBuilder<NotificationSystemController>(
-              builder: buildList,
+            Spacer(),
+            IconButton(
+              icon: Icon(Icons.done_all),
+              onPressed: c.readAll,
             ),
           ],
         ),

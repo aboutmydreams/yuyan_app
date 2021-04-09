@@ -45,7 +45,7 @@ class LoginController extends FetchValueController<TokenJsonSeri> {
     }
   }
 
-  //隐藏语雀第三方登录，IOS审核需要
+  // 隐藏语雀第三方登录， iOS 审核需要
   onStateChanged(state) {
     if (state.type == WebViewState.finishLoad) {
       final js = 'document.querySelector(".third-login").style.display="none";';

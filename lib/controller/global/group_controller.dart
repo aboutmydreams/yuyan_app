@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/config/service/api2_repository.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/group_home/book_stack.dart';
 import 'package:yuyan_app/model/document/group_home/group_home_seri.dart';
 import 'package:yuyan_app/model/document/group_user.dart';
+import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/events/user_event_seri.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
+
+class GroupInfoController extends FetchValueController<UserSeri> {
+  final int groupId;
+
+  GroupInfoController(this.groupId);
+
+  @override
+  Future<UserSeri> fetch() {
+    return Api2Repository.getGroupDetail(groupId: groupId);
+  }
+}
 
 class GroupViewBlockController extends FetchListValueController<UserEventSeri> {
   final int blockId;

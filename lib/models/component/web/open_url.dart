@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yuyan_app/models/browser_web/browser_appbar.dart';
 
-import '../appUI.dart';
+import '../../../config/app_ui.dart';
 
 openUrl(BuildContext context, String url, {title: ""}) {
   print(url);

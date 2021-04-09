@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/route_manager.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/config/app_ui.dart';
 import 'dart:async';
 
 class SplashPage extends StatefulWidget {

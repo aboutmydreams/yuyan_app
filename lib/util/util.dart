@@ -6,13 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_simple_treeview/flutter_simple_treeview.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
+import 'package:scroll_to_index/util.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/controller/theme_controller.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/model/document/toc/toc_seri.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/config/app_ui.dart';
 
 class Util {
   static List<Widget> listBuilder<T>({
@@ -47,17 +48,17 @@ class Util {
     return res.url;
   }
 
-  static futureWrap<T>(
+  static Future futureWrap<T>(
     Future future, {
     Function(T) onData,
     Function(dynamic) onError,
   }) async {
     try {
       var data = await future;
-      onData?.call(data);
+      return onData?.call(data);
     } catch (err) {
-      onError?.call(err);
       debugPrint('futureWrap catch error: $err');
+      return onError?.call(err);
     }
   }
 
@@ -318,17 +319,14 @@ extension ListEx<T> on List<T> {
     return item;
   }
 
-  static Widget _defaultDivider(int i) {
-    return const Divider(
-      height: 0.5,
-    );
-  }
-
   List<Widget> mapWidget(
     Widget Function(T) map, {
     bool divide = false,
     Widget divider = const Divider(height: 0.5),
   }) {
+    if (GetUtils.isNullOrBlank(this)) {
+      return [SizedBox.shrink()];
+    }
     if (!divide) {
       return this.map(map).toList();
     }
@@ -338,6 +336,33 @@ extension ListEx<T> on List<T> {
       list.add(divider);
     });
     return list..removeLast();
+  }
+}
+
+extension ObjectEx on Object {
+  /// [when] is a convenient method for conditional build
+  /// [other] is a [VoidCallback], in order to void unnecessary build
+  when(
+    dynamic value, {
+    VoidCallback other,
+  }) {
+    switch (value.runtimeType) {
+      case bool:
+        return onlyIf(value, elseif: other);
+      case num:
+        return onlyIf(value != 0, elseif: other);
+      case List:
+      case Map:
+        return onlyIf(
+          GetUtils.isNullOrBlank(value),
+          elseif: other,
+        );
+    }
+    return other();
+  }
+
+  onlyIf(bool condition, {VoidCallback elseif}) {
+    return condition ? this : elseif();
   }
 }
 

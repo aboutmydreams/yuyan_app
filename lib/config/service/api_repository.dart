@@ -16,7 +16,6 @@ import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/document/group_home/book_stack.dart';
 import 'package:yuyan_app/model/document/group_home/group_home_seri.dart';
 import 'package:yuyan_app/model/document/group_user.dart';
-import 'package:yuyan_app/model/document/meta/meta.dart';
 import 'package:yuyan_app/model/document/note/doclet.dart';
 import 'package:yuyan_app/model/document/note/note.dart';
 import 'package:yuyan_app/model/document/note/note_status.dart';
@@ -141,14 +140,19 @@ class ApiRepository {
     return (asp.data as List).map((e) => QuickLinkSeri.fromJson(e)).toList();
   }
 
-  static Future<List<NotificationItemSeri>> getNotificationList(
+  static Future<bool> putNotification({String ids = 'all'}) async {
+    var asp = await api.put('/notifications', data: {'ids': ids});
+    return (asp.data as ApiResponse).data['ok'];
+  }
+
+  static Future<NotificationSeri> getNotificationList(
       {String type = 'readed', int offset = 0, int limit = 100}) async {
     var resp = await api.get(
       '/notifications',
       queryParameters: {'type': type, 'offset': offset, 'limit': limit},
     );
     var asp = resp.data as ApiResponse;
-    return NotificationSeri.fromJson(asp.data).notifications;
+    return NotificationSeri.fromJson(asp.data);
   }
 
   static Future<List<OrganizationLiteSeri>> getOrganizationList(
@@ -379,27 +383,66 @@ class ApiRepository {
     return asp.data['ok'] == 1;
   }
 
-  // static Future _doActionTarget({
-  //   @required int userId,
-  //   //like, watch, follow, watch-comments, watch-topics, mark, read, reaction
-  //   @required String actionType,
-  //   //Doc, Book, Artboard, ArtboardGroup, ArtboardComment, Comment, Topic, User, Resource, DocVersion, Quan, Note
-  //   @required String targetType,
-  //   int offset,
-  //   // String method = "GET",
-  // }) async {
-  //   var res = await api.get(
-  //     '/actions/targets',
-  //     queryParameters: {
-  //       "user_id": userId,
-  //       "action_type": actionType,
-  //       "target_type": targetType,
-  //       "offset": offset,
-  //     },
-  //   );
-  //   var asp = res.data as ApiResponse;
-  //   return asp.data;
-  // }
+  static Future<ActionSeri> doLike(
+      {bool dislike = false, int target, String type = 'Doc'}) async {
+    return _doAction(
+      actionType: 'like',
+      targetId: target,
+      targetType: type,
+      del: dislike,
+    );
+  }
+
+  static Future<ApiResponse> getLikeUsers({
+    int targetId,
+    String targetType = 'Doc',
+  }) async {
+    var res = await _getAction(
+      'users',
+      actionType: 'like',
+      targetId: targetId,
+      targetType: targetType,
+    );
+    return res;
+  }
+
+  static Future<ApiResponse> _getAction(
+    String path, {
+    String actionType = 'like',
+    int targetId,
+    String targetType,
+    int limit = 20,
+    int offset = 0,
+  }) async {
+    var res = await api.get('/actions/$path', queryParameters: {
+      'action_type': actionType,
+      'target_id': targetId,
+      'target_type': targetType,
+      'offset': offset,
+      'limit': limit,
+    });
+    return res.data as ApiResponse;
+  }
+
+  static Future<ActionSeri> _doAction({
+    // like, watch, follow, watch-comments, watch-topics, mark, read, reaction
+    @required String actionType,
+    @required int targetId,
+    //Doc, Book, Artboard, ArtboardGroup, ArtboardComment, Comment, Topic, User, Resource, DocVersion, Quan, Note
+    @required String targetType,
+    bool del = false,
+  }) async {
+    var data = {
+      "action_type": actionType,
+      "target_id": targetId,
+      "target_type": targetType,
+    };
+    var res = await (del
+        ? api.delete('/actions', data: data)
+        : api.post('/actions', data: data));
+    var asp = res.data as ApiResponse;
+    return ActionSeri.fromJson(asp.data);
+  }
 
   static Future<List<ActionSeri>> getMarkList(
       {int offset = 0, int limit = 100}) async {
@@ -654,6 +697,12 @@ class ApiRepository {
   static Future<DocDetailSeri> getDocDetail({int bookId, String slug}) async {
     var res = await api.get('/docs/$slug', queryParameters: {
       'book_id': bookId,
+      // in order to obtain additional information
+      'include_contributors': true,
+      'include_hits': true,
+      'include_like': true,
+      'include_pager': true,
+      'include_suggests': true,
     });
     var asp = (res.data as ApiResponse);
     return DocDetailSeri.fromJson(asp.data);

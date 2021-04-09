@@ -5,7 +5,7 @@ import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/group_home/book_stack.dart';
 import 'package:yuyan_app/model/document/group_home/summary.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
 
 class BookStackWidget extends StatelessWidget {

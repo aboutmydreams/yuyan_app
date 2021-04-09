@@ -70,12 +70,14 @@ dependencies:
   chewie: ^1.0.0
   ## svg渲染
   flutter_svg: ^0.21.0-nullsafety.0
+  ## like动画按钮
+  like_button: 2.0.2
 
   # Webview相关
   flutter_webview_plugin:
     git: https://github.com/aboutmydreams/flutter_webview_plugin.git
   flutter_inappwebview: 4.0.0+4
-#  flutter_inappwebview: 5.0.4-nullsafety.1
+  #  flutter_inappwebview: 5.0.4-nullsafety.1
 
 
   ## tree
@@ -195,5 +197,6 @@ flutter:
     - family: sans_bold
       fonts:
         - asset: assets/fonts/sans_bold.ttf
-        # - asset: fonts/Schyler-Italic.ttf
-        #   style: italic
+#    - family: source_han
+#      fonts:
+#        - asset: assets/fonts/source_han.otf

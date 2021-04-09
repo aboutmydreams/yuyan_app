@@ -5,7 +5,7 @@ import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/topic/labels.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 

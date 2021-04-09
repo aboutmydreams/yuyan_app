@@ -8,7 +8,7 @@ import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/explore_controller.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/serializer/serializer.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
