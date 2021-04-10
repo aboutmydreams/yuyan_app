@@ -16,7 +16,7 @@ class TokenJsonSeri {
     }
 
     accessToken = json['access_token'];
-    //try load from store
+    // try load from store
     allCookie ??= json['all_cookie'];
     session ??= json['session'];
     cToken ??= json['ctoken'];
@@ -63,11 +63,11 @@ class TokenProvider extends BaseSaveJson<TokenJsonSeri> {
   }
 }
 
-//used for api
-//Header
-//  X-Auth-Token: access-token;
-//  Cookie: _yuque_session={};yuque_ctoken={};lang=zh-cn
-//  x-csrf-token: yuque_ctoken
+// used for api
+// Header
+// X-Auth-Token: access-token;
+// Cookie: _yuque_session={};yuque_ctoken={};lang=zh-cn
+// x-csrf-token: yuque_ctoken
 mixin TokenMixin on BaseHttp {
   var token = App.tokenProvider;
 
