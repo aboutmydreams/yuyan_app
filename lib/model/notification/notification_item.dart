@@ -72,7 +72,7 @@ class NotificationItemSeri {
         ? Serializer(serializer: subjectType, json: json["subject"])
         : null;
     secondSubject = json["second_subject"] != null
-        ? Serializer(serializer: secondSubjectType, json: json["secondSubject"])
+        ? Serializer(serializer: secondSubjectType, json: json["second_subject"])
         : null;
     thirdSubject = json["third_subject"] != null
         ? Serializer(serializer: thirdSubjectType, json: json['third_subject'])

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/config/app_ui.dart';
 
 class Guide3 extends StatefulWidget {
   Guide3({Key key}) : super(key: key);

@@ -3,7 +3,7 @@
 // import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 // import 'package:share_extend/share_extend.dart';
 // import 'package:sliding_up_panel/sliding_up_panel.dart';
-// import 'package:yuyan_app/models/component/appUI.dart';
+// import 'package:yuyan_app/models/component/app_ui.dart';
 // import 'package:yuyan_app/models/component/book_doc/doc_page/view/comment_panel.dart';
 // import 'package:yuyan_app/models/component/book_doc/doc_page/view/floating_collapsed.dart';
 // import 'package:yuyan_app/models/component/web/open_url.dart';

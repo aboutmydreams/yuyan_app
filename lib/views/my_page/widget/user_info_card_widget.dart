@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/model/v2/user_detail.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/models/widgets_small/member.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/list_helper_widget.dart';

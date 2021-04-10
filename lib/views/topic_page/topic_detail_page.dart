@@ -8,9 +8,10 @@ import 'package:yuyan_app/controller/topic/topic_controller.dart';
 import 'package:yuyan_app/model/document/commen/comment_detail.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/topic/topic_detail_seri.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/models/widgets_small/show_dialog/show_confirm.dart';
 import 'package:yuyan_app/util/util.dart';
+import 'package:yuyan_app/views/widget/drop_menu_item_widget.dart';
 import 'package:yuyan_app/views/widget/lake/lake_mention_widget.dart';
 import 'package:yuyan_app/views/widget/lake/lake_render_widget.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
@@ -148,6 +149,21 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
         title: Text('话题详情'),
         actions: [
           //TODO(@dreamer2q): 添加话题控制panel
+          PopupMenuButton<VoidCallback>(
+            itemBuilder: (_) => [
+              PopupMenuItem(
+                value: () {
+                  var c = Get.find<TopicDetailController>(tag: '${widget.groupId}');
+                  Util.goUrl('/${widget.groupId}/topics/${c.value.iid}');
+                },
+                child: MenuItemWidget(
+                  iconData: Icons.open_in_browser,
+                  title: '打开网页版',
+                ),
+              ),
+            ],
+            onSelected: (_) => _?.call(),
+          ),
           // IconButton(
           //   icon: Icon(Icons.more_horiz),
           //   onPressed: () {

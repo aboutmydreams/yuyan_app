@@ -253,3 +253,4 @@ class MyNoteController extends FetchSavableController<MyNoteProvider> {
     return ApiRepository.getMyNoteList();
   }
 }
+

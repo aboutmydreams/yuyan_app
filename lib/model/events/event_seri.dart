@@ -17,7 +17,7 @@ class EventSeri {
   int thirdSubjectId;
   int actorId;
   int bookId;
-  Null params;
+  Map params;
   String createdAt;
   String updatedAt;
   Serializer subject;

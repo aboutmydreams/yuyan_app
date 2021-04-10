@@ -1,6 +1,6 @@
 // import 'package:flutter/material.dart';
 // import 'package:sliding_up_panel/sliding_up_panel.dart';
-// import 'package:yuyan_app/models/component/appUI.dart';
+// import 'package:yuyan_app/models/component/app_ui.dart';
 // import 'package:yuyan_app/models/component/book_doc/doc_page/view/doc_title.dart';
 // import 'package:yuyan_app/models/component/book_doc/doc_page/view/floating_collapsed.dart';
 // import 'package:yuyan_app/models/net/requests_api/doc/data/comments_data.dart';

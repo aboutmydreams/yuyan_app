@@ -170,7 +170,7 @@ abstract class FetchListValueController<T>
     }
   }
 
-  /// 如果需要[onRefreshMore]的功能，请重新此方法
+  /// 如果需要[onRefreshMore]的功能，请重写此方法
   Future<List<T>> fetchMore() => null;
 
   /// convenient methods
@@ -183,6 +183,8 @@ abstract class FetchListValueController<T>
     _value?.remove(oldItem);
     update();
   }
+
+  int get offset => _value?.length ?? 0;
 }
 
 abstract class FetchSavableController<T extends BaseSavableJson>
@@ -204,6 +206,8 @@ abstract class FetchSavableController<T extends BaseSavableJson>
           initialFetch: false,
           initialState: state,
         );
+
+
 
   @override
   onInit() {
@@ -265,6 +269,9 @@ abstract class FetchSavableController<T extends BaseSavableJson>
   }
 
   //这个接口在此类无用
+  @Deprecated('do not override or call this method'
+      'since, this is not designed for `DATA` provider'
+      'override [fetchData] instead')
   Future<T> fetch() => null;
 
   /// 加载更多数据，适用于接口分页的情况
@@ -272,6 +279,8 @@ abstract class FetchSavableController<T extends BaseSavableJson>
   /// 这里需要自己做好[分页]的管理
   Future fetchMore() => null;
 
+  /// you should override this method instead of [fetch]
+  /// since this method is targeted for `DATA` providers
   Future fetchData();
 
   Widget builder(

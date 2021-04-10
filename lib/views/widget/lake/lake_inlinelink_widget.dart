@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/model/document/card/card_link_detail.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/config/app_ui.dart';
 
 class LakeInlineLinkWidget extends StatelessWidget {
   const LakeInlineLinkWidget({

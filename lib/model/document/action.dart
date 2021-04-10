@@ -44,6 +44,7 @@ class ActionSeri {
   });
 
   ActionSeri.fromJson(dynamic json) {
+    if (json == null) return;
     id = json["id"];
     userId = json["user_id"];
     actionType = json["action_type"];

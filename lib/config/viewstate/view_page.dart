@@ -49,17 +49,17 @@ class FetchRefreshListViewBuilder<T extends FetchListValueController>
             ),
           );
         }
-        var child = Scrollbar(
-          child: SmartRefresher(
-            controller: c.refreshController,
-            onRefresh: c.refreshCallback,
-            onLoading: c.loadMoreCallback,
-            enablePullUp: true,
-            child: builder(c),
-          ),
-        );
         return c.stateBuilder(
           onIdle: () {
+            var child = Scrollbar(
+              child: SmartRefresher(
+                controller: c.refreshController,
+                onRefresh: c.refreshCallback,
+                onLoading: c.loadMoreCallback,
+                enablePullUp: true,
+                child: builder(c),
+              ),
+            );
             if (!nested) {
               return child;
             }

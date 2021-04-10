@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/models/widgets_small/nothing.dart';
+import 'package:yuyan_app/views/topic_page/topic_item_widget.dart';
 import 'package:yuyan_app/views/widget/list_helper_widget.dart';
-import 'package:yuyan_app/views/widget/topic_item_widget.dart';
 
 class MyTopicPage extends StatelessWidget {
   Widget buildTab(String state) {

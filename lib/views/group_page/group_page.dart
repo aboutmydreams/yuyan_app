@@ -16,21 +16,21 @@ import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/document/group_home/book_stack.dart';
 import 'package:yuyan_app/model/document/group_home/group_home_seri.dart';
-import 'package:yuyan_app/model/document/group_home/summary.dart';
 import 'package:yuyan_app/model/document/group_user.dart';
 import 'package:yuyan_app/model/document/note/doclet.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
-import 'package:yuyan_app/models/widgets_small/nothing.dart';
+import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/group_page/widget/group_event_widget.dart';
+import 'package:yuyan_app/views/topic_page/all_topic_page.dart';
 import 'package:yuyan_app/views/topic_page/topic_add_page.dart';
+import 'package:yuyan_app/views/topic_page/topic_item_widget.dart';
+import 'package:yuyan_app/views/widget/book_stack_widget.dart';
 import 'package:yuyan_app/views/widget/floating_action/floating_action_button_widget.dart';
 import 'package:yuyan_app/views/widget/book_row_widget.dart';
 import 'package:yuyan_app/views/widget/drop_menu_item_widget.dart';
 import 'package:yuyan_app/views/widget/lake/lake_mention_widget.dart';
 import 'package:yuyan_app/views/widget/lake/lake_render_widget.dart';
-import 'package:yuyan_app/views/widget/topic_item_widget.dart';
 import 'package:yuyan_app/views/widget/user_flexible_widget.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart'
@@ -39,6 +39,7 @@ import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart'
 part 'widget/home_widget.dart';
 
 class GroupPage extends StatefulWidget {
+  final int initialIndex;
   final GroupSeri group;
   final String heroTag;
 
@@ -46,6 +47,7 @@ class GroupPage extends StatefulWidget {
     Key key,
     this.group,
     this.heroTag,
+    this.initialIndex = 0,
   }) : super(key: key);
 
   @override
@@ -69,6 +71,7 @@ class _GroupPageState extends State<GroupPage>
     super.initState();
 
     _tabController = TabController(
+      initialIndex: widget.initialIndex,
       length: _tabs.length,
       vsync: this,
     );
@@ -88,13 +91,9 @@ class _GroupPageState extends State<GroupPage>
     var group = widget.group;
     return Scaffold(
       body: extended.NestedScrollView(
-        pinnedHeaderSliverHeightBuilder: () {
-          print('pinned height');
-          return 140;
-        },
+        pinnedHeaderSliverHeightBuilder: () => Util.pinnedHeight,
         innerScrollPositionKeyBuilder: () {
           var key = 'group_page_tab_${_tabController.index}';
-          print('key => $key');
           return Key(key);
         },
         headerSliverBuilder: (_, inner) => [
@@ -131,6 +130,15 @@ class _GroupPageState extends State<GroupPage>
                     child: MenuItemWidget(
                       iconData: Icons.open_in_browser,
                       title: '打开网页版',
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: () {
+                      Get.to(() => GroupTopicAllPage(groupId: widget.group.id));
+                    },
+                    child: MenuItemWidget(
+                      iconData: Icons.topic,
+                      title: '讨论区',
                     ),
                   ),
                 ],

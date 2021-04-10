@@ -18,7 +18,7 @@ import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/model/document/card/card_link_detail.dart';
 import 'package:yuyan_app/model/document/card/card_video_seri.dart';
 import 'package:yuyan_app/model/document/lake/lake_card_seri.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/views/webview_page/webview_page.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart' as inapp;
 import 'package:webview_flutter/webview_flutter.dart' as view;
@@ -169,9 +169,9 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
     var spans = tree.getElementsByTagName('span');
     spans.forEach((elem) {
       var attr = elem.attributes;
-      if (elem.attributes['style'] != null) {
-        // HtmlUtil.applyInlineStyle(attr['style'], _.style);
-      }
+      // if (elem.attributes['style'] != null) {
+      //   // HtmlUtil.applyInlineStyle(attr['style'], _.style);
+      // }
       if (attr['class'] != null) {
         //handle fontsize
         var font = attr['class'].replaceFirst('lake-fontsize-', '');
@@ -193,6 +193,8 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
   final _htmlStyle = {
     '*': Style(
       padding: EdgeInsets.zero,
+      // fontFamily: 'source_han',
+      // fontSize: FontSize(16),
       margin: EdgeInsets.only(right: 2),
       letterSpacing: 1.5,
     ),
@@ -270,6 +272,8 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
     }
     var decodeValue = Uri.decodeComponent(value);
     var jsonString = decodeValue.substring(5);
+    // 可能会遇到 [jsonDecode] 解析失败的问题，这里先做一波预处理
+    // 不知道后面会不会有其它情况没有考虑到的
     if (jsonString.endsWith('undefined')) {
       jsonString = '{}';
     }
@@ -284,7 +288,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
         return YuquePremiumPurchase(json: json);
       case 'emoji':
         if (json is String) {
-          //TODO(@dreamer2q): 添加emoji widget用于语雀的表情包
+          //TODO(@dreamer2q): 添加 emoji widget 用于语雀的表情包
           return LakeImageWidget(
             json: {'src': json},
             others: [json],
@@ -292,9 +296,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
         }
         return LakeImageWidget(json: json, others: imgUrl);
       case 'youku':
-        return EmbedWebviewPage(
-          url: json['url'],
-        );
+        return EmbedWebviewPage(url: json['url']);
       case 'vote':
         return VoteCardWidget(
           docId: widget.docId,
@@ -356,7 +358,7 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
         var link = CardLinkDetailSeri.fromJson(json['detail']);
         return LakeInlineLinkWidget(link: link);
       case 'table':
-        //caution: 表格的排版使用了flutter_layout_grid库，它不支持嵌套
+        //ATTENTION: 表格的排版使用了 flutter_layout_grid 库，它不支持嵌套
         return LakeRenderWidget(
           data: json['html'],
           shrinkWrap: true,
@@ -492,10 +494,11 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
               PositionedDirectional(
                 start: 0,
                 width: 24,
-                bottom: 0,
+                // bottom: 0,
                 child: Text(
                   olMark,
                   textAlign: TextAlign.start,
+                  // textAlign: TextAlign.end,
                   style: _.style.generateTextStyle().copyWith(letterSpacing: 0),
                 ),
               ),
@@ -634,16 +637,14 @@ class _LakeRenderWidgetState extends State<LakeRenderWidget> {
       'card': _lakeCardRender,
     };
 
-    return Scrollbar(
-      child: SingleChildScrollView(
-        controller: _autoController,
-        physics: widget.shrinkWrap ? NeverScrollableScrollPhysics() : null,
-        child: Html(
-          shrinkWrap: widget.shrinkWrap,
-          data: data,
-          style: _htmlStyle,
-          customRender: _customRender,
-        ),
+    return SingleChildScrollView(
+      controller: _autoController,
+      physics: widget.shrinkWrap ? NeverScrollableScrollPhysics() : null,
+      child: Html(
+        shrinkWrap: widget.shrinkWrap,
+        data: data,
+        style: _htmlStyle,
+        customRender: _customRender,
       ),
     );
   }

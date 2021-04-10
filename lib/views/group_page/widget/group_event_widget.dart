@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/controller/global/group_controller.dart';
+import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/event_affair/user_affair_widget.dart';
 
 class GroupEventWidget extends StatefulWidget {
@@ -24,7 +25,7 @@ class _GroupEventWidgetState extends State<GroupEventWidget>
     super.initState();
     tag = '${widget.blockId}';
     Get.lazyPut(
-      () => GroupViewController(widget.blockId),
+      () => GroupViewBlockController(widget.blockId),
       tag: tag,
     );
   }
@@ -32,7 +33,7 @@ class _GroupEventWidgetState extends State<GroupEventWidget>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return GetBuilder<GroupViewController>(
+    return GetBuilder<GroupViewBlockController>(
       tag: tag,
       autoRemove: false,
       builder: (c) => c.stateBuilder(
@@ -43,14 +44,8 @@ class _GroupEventWidgetState extends State<GroupEventWidget>
           var data = c.value;
           return Column(
             children: [
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: data.length,
-                itemBuilder: (_, i) {
-                  var item = data[i];
-                  return UserAffairTileWidget(item);
-                },
+              ...data.mapWidget(
+                (item) => UserAffairTileWidget(item),
               ),
               if (c.hasMore)
                 Container(
@@ -69,5 +64,3 @@ class _GroupEventWidgetState extends State<GroupEventWidget>
   @override
   bool get wantKeepAlive => true;
 }
-
-

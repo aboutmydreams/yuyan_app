@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/model/events/user_lite_seri.dart';
-import 'package:yuyan_app/models/component/appUI.dart';
+import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class UserFlexibleWidget extends StatelessWidget {

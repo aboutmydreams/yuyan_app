@@ -2,7 +2,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:package_info/package_info.dart';
 import 'package:webview_flutter/webview_flutter.dart' as web;
 import 'package:yuyan_app/config/net/token.dart';
-import 'package:yuyan_app/config/service/api_repository.dart';
+import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/controller/global/organization_controller.dart';
 import 'package:yuyan_app/controller/global/my_controller.dart';
 
@@ -16,7 +16,7 @@ class App {
   static init() async {
     version = await PackageInfo.fromPlatform();
 
-    ApiRepository.api;
+    await StorageManager.init();
 
     // web.WebView.platform = web.SurfaceAndroidWebView();
 
