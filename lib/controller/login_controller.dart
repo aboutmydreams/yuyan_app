@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -47,6 +49,10 @@ class LoginController extends FetchValueController<TokenJsonSeri> {
 
   // 隐藏语雀第三方登录， iOS 审核需要
   onStateChanged(state) {
+    Timer(Duration(milliseconds: 100), (){
+      final js = 'document.querySelector(".third-login").style.display="none";';
+      controller.evalJavascript(js);
+    });
     if (state.type == WebViewState.finishLoad) {
       final js = 'document.querySelector(".third-login").style.display="none";';
       controller.evalJavascript(js);
@@ -67,7 +73,12 @@ class LoginController extends FetchValueController<TokenJsonSeri> {
   @override
   Future<TokenJsonSeri> fetch() async {
     var token = await Api2Repository.getTokenByCode(code: _code);
-    String cookies = await controller.getAllCookies("https://www.yuque.com/");
+    
+
+    String cookies = await controller.getAllCookies("https://www.yuque.com/dashboard");
+    debugPrint("token.toString()===========");
+    debugPrint(cookies);
+    debugPrint("token.toString()===========");
     if (cookies == null) throw '没有Cookie';
     // 判断是否有认证 Cookie
     var valid =
@@ -76,7 +87,7 @@ class LoginController extends FetchValueController<TokenJsonSeri> {
     //保存登陆凭据
     token.loadCookies(cookies);
     provider.updateData(token);
-    Future.delayed(Duration(milliseconds: 100), () {
+    Future.delayed(Duration(milliseconds: 300), () {
       Get.offAllNamed(RouteName.home);
     });
     return token;

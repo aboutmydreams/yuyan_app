@@ -5,7 +5,7 @@ class Follows {
 
   Follows.fromJson(Map<String, dynamic> json, List<int> followedList) {
     if (json['data'] != null) {
-      data = new List<FollowsData>();
+      data = <FollowsData>[];
       json['data'].forEach((v) {
         data.add(new FollowsData.fromJson(v, followedList));
       });

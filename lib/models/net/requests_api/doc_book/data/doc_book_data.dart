@@ -5,7 +5,7 @@ class DocBookJson {
 
   DocBookJson.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<TocData>();
+      data = <TocData>[];
       json['data'].forEach((v) {
         data.add(new TocData.fromJson(v));
       });

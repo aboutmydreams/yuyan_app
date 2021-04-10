@@ -5,7 +5,7 @@ class TopicJson {
 
   TopicJson.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<TopicData>();
+      data = <TopicData>[];
       json['data'].forEach((v) {
         data.add(new TopicData.fromJson(v));
       });

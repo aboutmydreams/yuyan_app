@@ -7,7 +7,7 @@ class Comments {
   Comments.fromJson(Map<String, dynamic> json) {
     meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
     if (json['data'] != null) {
-      data = new List<CommentData>();
+      data = <CommentData>[];
       json['data'].forEach((v) {
         data.add(new CommentData.fromJson(v));
       });

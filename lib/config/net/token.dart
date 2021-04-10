@@ -16,7 +16,7 @@ class TokenJsonSeri {
     }
 
     accessToken = json['access_token'];
-    //try load from store
+    // try load from store
     allCookie ??= json['all_cookie'];
     session ??= json['session'];
     cToken ??= json['ctoken'];
@@ -25,13 +25,15 @@ class TokenJsonSeri {
   loadCookies(String cookie) {
     allCookie = cookie;
 
-    List<String> cookiesList = cookie.split(";");
+    List<String> cookiesList = cookie.substring(0,cookie.length-1).split(";");
     Map<String, String> cookieData = {};
+
     for (var cookie in cookiesList) {
       var arr = cookie.split("=");
       var key = arr[0].trim(), val = arr[1].trim();
       cookieData[key] = val;
     }
+    
     debugPrint(cookieData['_yuque_session']);
     debugPrint(cookieData['_TRACERT_COOKIE__SESSION']);
     cToken = cookieData['yuque_ctoken'];
@@ -43,11 +45,11 @@ class TokenJsonSeri {
   }
 
   Map<String, dynamic> toJson() => {
-        'access_token': accessToken,
-        'session': session,
-        'ctoken': cToken,
-        'all_cookie': allCookie,
-      };
+    'access_token': accessToken,
+    'session': session,
+    'ctoken': cToken,
+    'all_cookie': allCookie,
+  };
 }
 
 class TokenProvider extends BaseSaveJson<TokenJsonSeri> {
@@ -63,11 +65,11 @@ class TokenProvider extends BaseSaveJson<TokenJsonSeri> {
   }
 }
 
-//used for api
-//Header
-//  X-Auth-Token: access-token;
-//  Cookie: _yuque_session={};yuque_ctoken={};lang=zh-cn
-//  x-csrf-token: yuque_ctoken
+// used for api
+// Header
+// X-Auth-Token: access-token;
+// Cookie: _yuque_session={};yuque_ctoken={};lang=zh-cn
+// x-csrf-token: yuque_ctoken
 mixin TokenMixin on BaseHttp {
   var token = App.tokenProvider;
 

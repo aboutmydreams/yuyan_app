@@ -5,7 +5,7 @@ class UserReposJson {
 
   UserReposJson.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<UserReposData>();
+      data = <UserReposData>[];
       json['data'].forEach((v) {
         data.add(new UserReposData.fromJson(v));
       });
