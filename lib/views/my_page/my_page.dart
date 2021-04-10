@@ -23,7 +23,6 @@ class _MyPageState extends State<MyPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller = ScrollController();
     // _controller.addListener(() {
@@ -36,7 +35,7 @@ class _MyPageState extends State<MyPage> {
 
   @override
   void dispose() {
-    //为了避免内存泄露，需要调用_controller.dispose
+    //为了避免内存泄露，需要调用 _controller.dispose
     _controller.dispose();
     super.dispose();
   }
@@ -106,11 +105,8 @@ class _MyPageState extends State<MyPage> {
                   ),
                 ),
                 Expanded(
-                  child: ListView(
-                    children: [
-                      SettingListWidget(),
-                      SizedBox(height: 300),
-                    ],
+                  child: SingleChildScrollView(
+                    child: _SettingListWidget(),
                   ),
                 ),
               ],
@@ -122,7 +118,7 @@ class _MyPageState extends State<MyPage> {
   }
 }
 
-class SettingListWidget extends StatelessWidget {
+class _SettingListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimationColumnWidget(

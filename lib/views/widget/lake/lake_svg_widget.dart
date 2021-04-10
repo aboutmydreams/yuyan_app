@@ -31,7 +31,7 @@ class LakeSvgPicture extends StatelessWidget {
           );
         }
         if (snap.hasData) {
-          var data = snap.data.data as String;
+          var data = snap.data.current as String;
           data = data.replaceAll('currentColor', 'black');
           return SvgPicture.string(
             data,

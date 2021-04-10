@@ -2,18 +2,75 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:bot_toast/bot_toast.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_simple_treeview/flutter_simple_treeview.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
-import 'package:scroll_to_index/util.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
+import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/controller/theme_controller.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/model/document/toc/toc_seri.dart';
 import 'package:yuyan_app/config/app_ui.dart';
+
+/// [futureResolver] is a convenient handler for
+/// process future result, especially when error
+/// might occur. It can also convert type
+/// from [R] to [T]
+Future<T> futureResolver<T, R>(
+  Future<R> future, {
+  T Function(R data) onData,
+  T Function(dynamic err) onError,
+}) async {
+  try {
+    var data = await future;
+    var value = onData?.call(data);
+    return Future.value(value);
+  } catch (err) {
+    debugPrint('futureWrap catch error: $err');
+    var errValue = onError?.call(err);
+    return Future.value(errValue);
+  }
+}
+
+/// [futureBuilder] wraps [FutureBuilder] and expose
+/// a more clean interface and convert error to [ViewError]
+/// when error occurs. Useful for small gossip widget
+/// without a [GetxController]
+Widget futureBuilder<T>(
+  Future<T> future, {
+  Widget Function(T data) onData,
+  Widget Function(ViewError err) onError,
+  Widget onLoading = const CupertinoActivityIndicator(),
+}) {
+  return FutureBuilder(
+    future: future,
+    builder: (_, snapshot) {
+      if (snapshot.hasError) {
+        var viewErr = ViewStateUtil.handlerError(snapshot.error);
+        if (onError == null) {
+          return IconButton(
+            icon: Icon(Icons.error),
+            onPressed: () {
+              Util.toast('错误：${viewErr.title}');
+            },
+          );
+        }
+        return onError(viewErr);
+      }
+      if (snapshot.hasData) {
+        return onData(snapshot.data);
+      }
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: onLoading,
+      );
+    },
+  );
+}
 
 class Util {
   static List<Widget> listBuilder<T>({
@@ -49,16 +106,17 @@ class Util {
   }
 
   static Future futureWrap<T>(
-    Future future, {
-    Function(T) onData,
-    Function(dynamic) onError,
+    Future<T> future, {
+    Function(T data) onData,
+    Function(dynamic err) onError,
   }) async {
     try {
       var data = await future;
-      return onData?.call(data);
+      var value = onData?.call(data);
+      return Future.value(value);
     } catch (err) {
       debugPrint('futureWrap catch error: $err');
-      return onError?.call(err);
+      return Future.value(onError?.call(err));
     }
   }
 
@@ -344,7 +402,7 @@ extension ObjectEx on Object {
   /// [other] is a [VoidCallback], in order to void unnecessary build
   when(
     dynamic value, {
-    VoidCallback other,
+    Function other,
   }) {
     switch (value.runtimeType) {
       case bool:
@@ -361,7 +419,7 @@ extension ObjectEx on Object {
     return other();
   }
 
-  onlyIf(bool condition, {VoidCallback elseif}) {
+  onlyIf(bool condition, {Function elseif}) {
     return condition ? this : elseif();
   }
 }

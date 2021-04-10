@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
@@ -50,9 +49,12 @@ class CommentDeleteController extends FetchValueController<CommentDetailSeri> {
 
 class CommentPostController extends FetchValueController<CommentDetailSeri> {
   final int commentId;
+  final String commentType;
 
-  CommentPostController(this.commentId)
-      : super(
+  CommentPostController(
+    this.commentId, {
+    this.commentType = 'Topic',
+  }) : super(
           initialFetch: false,
           initialState: ViewState.idle,
         );
@@ -79,7 +81,7 @@ class CommentPostController extends FetchValueController<CommentDetailSeri> {
   @override
   Future<CommentDetailSeri> fetch() {
     return ApiRepository.postComment(
-      commentType: 'Topic',
+      commentType: commentType,
       commentId: commentId,
       parentId: _parentId,
       comment: _comment,

@@ -43,6 +43,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.5"
+  bottom_sheet:
+    dependency: "direct main"
+    description:
+      name: bottom_sheet
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1-dev.8"
   cached_network_image:
     dependency: "direct main"
     description:
@@ -874,6 +881,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.0"
+  surf_lint_rules:
+    dependency: transitive
+    description:
+      name: surf_lint_rules
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2-dev.5"
   synchronized:
     dependency: transitive
     description:

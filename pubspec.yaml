@@ -141,6 +141,7 @@ dependencies:
 
   # 评论 下滑出的抽屉
   sliding_up_panel: ^1.0.1
+  bottom_sheet: 0.0.1-dev.8
 
   # 更新apk https://github.com/xuexiangjys/XUpdate
   flutter_xupdate: ^1.0.2

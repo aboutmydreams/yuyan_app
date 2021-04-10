@@ -36,18 +36,21 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
   int _commentId;
   var _hintText = '评论千万条，友善第一条';
 
+  String get tag => '${widget.groupId}';
+
   initState() {
     super.initState();
 
     Get.put(
       TopicDetailController(widget.commentId, widget.groupId),
-      tag: '${widget.groupId}',
+      tag: tag,
     );
   }
 
   _buildCommentButton(int commentId, [int reply]) {
     return GetBuilder<CommentPostController>(
       init: CommentPostController(commentId),
+      tag: tag,
       builder: (c) {
         if (c.isLoadingState) {
           return SizedBox(
@@ -63,8 +66,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
                 parentId: reply,
                 comment: _textController.text,
                 success: () {
-                  var comments =
-                      Get.find<TopicCommentsController>(tag: '$_commentId');
+                  var comments = Get.find<TopicCommentsController>(tag: tag);
                   comments.onRefresh();
                   _textController.text = '';
                   if (Get.isBottomSheetOpen) {
@@ -153,7 +155,8 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
             itemBuilder: (_) => [
               PopupMenuItem(
                 value: () {
-                  var c = Get.find<TopicDetailController>(tag: '${widget.groupId}');
+                  var c =
+                      Get.find<TopicDetailController>(tag: '${widget.groupId}');
                   Util.goUrl('/${widget.groupId}/topics/${c.value.iid}');
                 },
                 child: MenuItemWidget(
@@ -185,7 +188,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
         ],
       ),
       body: GetBuilder<TopicDetailController>(
-        tag: '${widget.groupId}',
+        tag: tag,
         builder: (c) => c.stateBuilder(onIdle: () {
           _commentId = c.value.id;
           return Column(
@@ -226,7 +229,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
 
   _buildCommentList(int commentId) {
     return GetBuilder<TopicCommentsController>(
-      tag: '$commentId',
+      tag: tag,
       init: TopicCommentsController(commentId),
       builder: (comments) => comments.stateBuilder(
         onEmpty: Container(
@@ -245,25 +248,38 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
                 ),
               ),
               SizedBox(height: 10),
-              ...comments.value.map((e) {
-                UserSeri parent;
-                if (e.parentId != null) {
-                  var index = comments.value
-                      .indexWhere((item) => item.id == e.parentId);
-                  parent = index == -1 ? null : comments.value[index].user;
-                }
+              ...comments.value.mapWidget((e) {
                 return CommentDetailItemWidget(
-                  data: e,
-                  parent: parent,
-                  commentableId: commentId,
+                  current: e,
+                  comments: comments.value,
                   onTap: () {
-                    // _replyTo = e.id;
                     var hint = '回复 ${e.user.name}: ';
-                    // _hintText.value = hint;
                     _openBottomSheet(e.id, hint);
                   },
+                  onLongPressed: () {
+                    if (e.userId == App.user.data.id) {
+                      showConfirmDialog(
+                        context,
+                        content: '删除这条评论吗?',
+                        confirmCallback: () {
+                          Util.futureWrap(
+                            ApiRepository.deleteComment(e.id),
+                            onData: (data) {
+                              Get.find<TopicCommentsController>(
+                                tag: tag,
+                              ).onRefresh(force: true);
+                              Util.toast('删除成功');
+                            },
+                            onError: (err) {
+                              Util.toast('删除失败: $err');
+                            },
+                          );
+                        },
+                      );
+                    }
+                  },
                 );
-              }).toList(),
+              }),
             ],
           );
         },
@@ -273,18 +289,25 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
 }
 
 class CommentDetailItemWidget extends StatelessWidget {
-  final CommentDetailSeri data;
-  final int commentableId;
-  final UserSeri parent;
+  final List<CommentDetailSeri> comments;
+  final CommentDetailSeri current;
   final VoidCallback onTap;
+  final VoidCallback onLongPressed;
 
-  const CommentDetailItemWidget({
+  CommentDetailItemWidget({
     Key key,
-    this.data,
-    this.parent,
+    @required this.current,
+    @required this.comments,
     this.onTap,
-    this.commentableId,
-  }) : super(key: key);
+    this.onLongPressed,
+  })  : parent = (current.parentId != null
+            ? comments
+                .firstWhere((item) => item.id == current.parentId, orElse: null)
+                ?.user
+            : null),
+        super(key: key);
+
+  final UserSeri parent;
 
   @override
   Widget build(BuildContext context) {
@@ -293,29 +316,12 @@ class CommentDetailItemWidget extends StatelessWidget {
       child: InkWell(
         highlightColor: Colors.black12,
         onTap: onTap,
-        onLongPress: () {
-          if (data.userId == App.user.data.id) {
-            showConfirmDialog(
-              context,
-              content: '删除这条评论吗?',
-              confirmCallback: () {
-                Util.futureWrap<CommentDetailSeri>(
-                  ApiRepository.deleteComment(data.id),
-                  onData: (data) {
-                    Get.find<TopicCommentsController>(tag: '$commentableId')
-                        .onRefresh(force: true);
-                    Util.toast('删除成功');
-                  },
-                  onError: (err) {
-                    Util.toast('删除失败: $err');
-                  },
-                );
-              },
-            );
-          }
-        },
+        onLongPress: onLongPressed,
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+          padding: const EdgeInsets.symmetric(
+            vertical: 12,
+            horizontal: 8,
+          ),
           decoration: BoxDecoration(
             border: Border.all(color: Colors.black26, width: 0.3),
           ),
@@ -329,19 +335,19 @@ class CommentDetailItemWidget extends StatelessWidget {
                     child: Hero(
                       tag: tag,
                       child: UserAvatarWidget(
-                        avatar: data.user.avatarUrl,
+                        avatar: current.user.avatarUrl,
                         height: 28,
                       ),
                     ),
                     onTap: () {
-                      MyRoute.user(user: data.user.toUserLiteSeri());
+                      MyRoute.user(user: current.user.toUserLiteSeri());
                     },
                   ),
                   SizedBox(width: 8),
-                  Text(data.user.name, style: AppStyles.textStyleB),
+                  Text(current.user.name, style: AppStyles.textStyleB),
                   Spacer(),
                   Text(
-                    Util.timeCut(data.updatedAt),
+                    Util.timeCut(current.updatedAt),
                     style: AppStyles.textStyleCC,
                   ),
                 ],
@@ -376,9 +382,13 @@ class CommentDetailItemWidget extends StatelessWidget {
                   ),
                 ),
               Padding(
-                padding: const EdgeInsets.only(left: 18, top: 8, bottom: 4),
+                padding: const EdgeInsets.only(
+                  left: 18,
+                  top: 8,
+                  bottom: 4,
+                ),
                 child: LakeRenderWidget(
-                  data: data.bodyAsl,
+                  data: current.bodyAsl,
                 ),
               )
             ],

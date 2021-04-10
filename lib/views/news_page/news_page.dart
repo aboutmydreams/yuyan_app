@@ -6,7 +6,6 @@ import 'package:yuyan_app/controller/notification_controller.dart';
 import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/news_page/view/one_news.dart';
-import 'package:yuyan_app/views/widget/notification_absorb.dart';
 import 'package:yuyan_app/views/widget/org_space_widget.dart';
 
 class NotificationPage extends StatefulWidget {
@@ -31,13 +30,13 @@ class _NotificationPageState extends State<NotificationPage> {
         leading: OrgSpaceLeadingWidget(),
         title: Text("全部消息"),
       ),
-      body: NotificationAbsorbWidget(
-        child: GetBuilder<NotificationAllController>(
-          builder: (c) => c.stateBuilder(
-            onIdle: () => Column(
-              children: [
-                _buildCounts(c),
-                Expanded(
+      body: GetBuilder<NotificationAllController>(
+        builder: (c) => c.stateBuilder(
+          onIdle: () => Column(
+            children: [
+              _buildCounts(c),
+              Expanded(
+                child: Scrollbar(
                   child: SmartRefresher(
                     controller: c.refreshController,
                     onRefresh: c.onRefreshCallback,
@@ -53,8 +52,8 @@ class _NotificationPageState extends State<NotificationPage> {
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

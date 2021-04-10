@@ -173,7 +173,13 @@ class _RecommendItemWidget extends StatelessWidget {
     }
     return GestureDetector(
       onTap: () {
-        MyRoute.docDetail(bookId: data.bookId, slug: data.slug);
+        // MyRoute.docDetail(bookId: data.bookId, slug: data.slug);
+        MyRoute.docDetailWebview(
+          bookId: data.bookId,
+          slug: data.slug,
+          login: data.book.user.login,
+          book: data.book.slug,
+        );
       },
       child: Container(
         height: 134,

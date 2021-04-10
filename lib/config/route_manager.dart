@@ -5,13 +5,13 @@ import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/events/user_lite_seri.dart';
-import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/views/dashboard/dashboard.dart';
 import 'package:yuyan_app/views/dashboard/note_editor/small_note_editor.dart';
 import 'package:yuyan_app/views/dashboard/small_note/note_page.dart';
 import 'package:yuyan_app/views/dashboard/small_note/quick_set.dart';
 import 'package:yuyan_app/views/document_page/book_doc_page.dart';
 import 'package:yuyan_app/views/document_page/doc_detail_page.dart';
+import 'package:yuyan_app/views/document_page/doc_detail_webview.dart';
 import 'package:yuyan_app/views/entry_page/guide/guide_page.dart';
 import 'package:yuyan_app/views/entry_page/login/login_page.dart';
 import 'package:yuyan_app/views/entry_page/splash/splash_page.dart';
@@ -82,6 +82,22 @@ class MyRoute {
     Get.to(
       WebviewPage(url: url),
       preventDuplicates: false,
+    );
+  }
+
+  static docDetailWebview({
+    @required int bookId,
+    @required String slug,
+    @required String login,
+    @required String book,
+  }) {
+    Get.to(
+      DocDetailWebviewPage(
+        login: login,
+        book: book,
+        bookId: bookId,
+        slug: slug,
+      ),
     );
   }
 

@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:like_button/like_button.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/controller/document/doc_controller.dart';
 import 'package:yuyan_app/util/util.dart';
-import 'package:yuyan_app/views/explore_page/widget/book_tile_widget.dart';
 import 'package:yuyan_app/views/widget/drop_menu_item_widget.dart';
-import 'package:yuyan_app/views/widget/lake/label_widget.dart';
 import 'package:yuyan_app/views/widget/lake/lake_render_widget.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
@@ -81,7 +78,7 @@ class _DocDetailPageState extends State<DocDetailPage> {
               ),
               PopupMenuItem(
                 value: () {
-                  launch(webUrl);
+                  Util.launchURL(webUrl);
                 },
                 child: MenuItemWidget(
                   iconData: Icons.open_in_new,
@@ -137,8 +134,8 @@ class _DocDetailPageState extends State<DocDetailPage> {
           size: 48,
           onTap: (liked) async {
             var res = await Util.futureWrap(
-              ApiRepository.doLike(target: targetId, dislike: liked),
-              onData: (_) => !liked,
+              ApiRepository.doLike(target: targetId, unlike: liked),
+              onData: (_) async => !liked,
               onError: (_) => false,
             );
             var docLike = Get.find<DocLikesController>(tag: tag);

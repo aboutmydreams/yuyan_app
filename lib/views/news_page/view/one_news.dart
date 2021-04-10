@@ -199,7 +199,7 @@ class NotificationItemWidget extends StatelessWidget {
       case 'Comment':
         if (data.secondSubjectType == 'Topic') {
           var item = data.secondSubject.serialize<TopicSeri>();
-          return item.title;
+          return item?.title ?? '';
         } else if (data.secondSubjectType == 'Doc') {
           var item = data.secondSubject.serialize<DocSeri>();
           return item.title;

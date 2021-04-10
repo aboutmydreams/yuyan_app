@@ -27,7 +27,6 @@ import 'package:yuyan_app/model/document/user_profile.dart';
 import 'package:yuyan_app/model/events/event_seri.dart';
 import 'package:yuyan_app/model/events/user_event_seri.dart';
 import 'package:yuyan_app/model/notification/notification.dart';
-import 'package:yuyan_app/model/notification/notification_item.dart';
 import 'package:yuyan_app/model/search/search_result_seri.dart';
 import 'package:yuyan_app/model/serializer/serializer.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
@@ -92,7 +91,7 @@ class ApiRepository {
 
   static Future<bool> deleteRecentItem(int id) async {
     var res = await api.delete('/mine/recent/$id');
-    return res.data.data;
+    return res.data.current;
   }
 
   static Future<DocletSeri> getUserReadme({int userId}) async {
@@ -357,6 +356,16 @@ class ApiRepository {
     return asp.data['actioned'] != null;
   }
 
+  static Future<bool> toggleMark({
+    @required int targetId,
+    String targetType,
+    bool marked = false,
+  }) {
+    return marked
+        ? unmark(targetId: targetId, targetType: targetType)
+        : mark(targetId: targetId, targetType: targetType);
+  }
+
   static Future<bool> mark({
     @required int targetId,
     String targetType = "Doc",
@@ -384,13 +393,26 @@ class ApiRepository {
   }
 
   static Future<ActionSeri> doLike(
-      {bool dislike = false, int target, String type = 'Doc'}) async {
+      {bool unlike = false, int target, String type = 'Doc'}) async {
     return _doAction(
       actionType: 'like',
       targetId: target,
       targetType: type,
-      del: dislike,
+      del: unlike,
     );
+  }
+
+  static Future<bool> getIfLike({
+    int targetId,
+    String targetType = 'Doc',
+  }) async {
+    var res = await _getAction(
+      '',
+      actionType: 'like',
+      targetId: targetId,
+      targetType: targetType,
+    );
+    return res.data['actioned'] != null;
   }
 
   static Future<ApiResponse> getLikeUsers({
@@ -428,7 +450,9 @@ class ApiRepository {
     // like, watch, follow, watch-comments, watch-topics, mark, read, reaction
     @required String actionType,
     @required int targetId,
-    //Doc, Book, Artboard, ArtboardGroup, ArtboardComment, Comment, Topic, User, Resource, DocVersion, Quan, Note
+    // Doc, Book, Artboard, ArtboardGroup,
+    // ArtboardComment, Comment, Topic, User,
+    // Resource, DocVersion, Quan, Note
     @required String targetType,
     bool del = false,
   }) async {
@@ -514,13 +538,23 @@ class ApiRepository {
     //comment_type => 要求是 Doc, Topic, ArtboardComment, Resource, DocVersion, Note 其中的一个
     String commentType = 'Topic',
   }) async {
+    var res = await getComments(commentId: commentId, commentType: commentType);
+    var data = (res.data as ApiResponse).data as List;
+    return data.map((e) => CommentDetailSeri.fromJson(e)).toList();
+  }
+
+  static Future<ApiResponse> getComments({
+    int commentId,
+    //comment_type => 要求是 Doc, Topic, ArtboardComment, Resource, DocVersion, Note 其中的一个
+    String commentType = 'Topic',
+  }) async {
     var res = await api.get('/comments', queryParameters: {
       'commentable_id': commentId,
       'commentable_type': commentType,
       'include_section': true,
     });
-    var data = (res.data as ApiResponse).data as List;
-    return data.map((e) => CommentDetailSeri.fromJson(e)).toList();
+    var data = (res.data as ApiResponse);
+    return data;
   }
 
   static Future<List<TopicSeri>> getTopicList({
@@ -725,7 +759,7 @@ class ApiRepository {
       'video_id': videoId,
       'ctoken': App.tokenProvider.data.cToken,
     });
-    return CardVideoResSeri.fromJson(res.data.data);
+    return CardVideoResSeri.fromJson(res.data.current);
   }
 
   //投票
@@ -782,5 +816,28 @@ class ApiRepository {
     );
     var asp = (res.data as ApiResponse);
     return SearchResultSeri.fromJson(asp.data);
+  }
+
+  static Future<bool> reportContent({
+    String reportType = '0902',
+    // 0902 => 色情淫秽
+    // 0903 => 反社会、暴力
+    // 0904 => 其它(毒品、借贷、枪支等),
+    @required String reason,
+    int targetId,
+    String targetType = 'Doc',
+    String url,
+  }) async {
+    var data = {
+      'meta': {
+        'reason': reason,
+        'referer_url': url,
+      },
+      'report_type': reportType,
+      'target_id': targetId,
+      'target_type': targetType,
+    };
+    var res = await api.post('content_reports', data: data);
+    return res.data != null ? true : false;
   }
 }
