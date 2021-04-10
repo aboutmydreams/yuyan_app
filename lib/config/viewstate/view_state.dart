@@ -9,11 +9,11 @@ import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'view_state_widget.dart';
 
 enum ViewState {
-  idle, //加载完毕，闲置状态
-  empty, //加载完毕，无数据
-  loading, //数据加载中，有可能是第一次加载，从无到有
-  refreshing, //数据刷新中，说明之前已经加载过数据，进行数据的更新
-  error, //数据加载失败，出错了，使用 [ViewStateError] 来表示错误信息
+  idle, // 加载完毕，闲置状态
+  empty, // 加载完毕，无数据
+  loading, // 数据加载中，有可能是第一次加载，从无到有
+  refreshing, // 数据刷新中，说明之前已经加载过数据，进行数据的更新
+  error, // 数据加载失败，出错了，使用 [ViewStateError] 来表示错误信息
 }
 
 enum ViewErrorType {
@@ -106,6 +106,7 @@ mixin ControllerStateMixin on GetxController {
 
     state = ViewState.error;
     onError?.call();
+    
 
     //used for debug
     _errorPrint(e, stack);
@@ -139,8 +140,8 @@ mixin ControllerStateMixin on GetxController {
         return _handlerApiError(e);
       case DioError: //请求可能识别了，例如网络超时等
         var err = (e as DioError).error;
-        //这里Dio会将错误强制包装成DioError类型
-        //因此只能通过这个来判断是否ApiError
+        //这里Dio会将错误强制包装成 DioError 类型
+        //因此只能通过这个来判断是否 ApiError
         //TODO(@dreamer2q): 测试错误处理，例如超时等。
         if ((e as DioError).type == DioErrorType.other)
           return _handlerError(err);
@@ -178,8 +179,8 @@ mixin ControllerStateMixin on GetxController {
           error: err,
           type: ViewErrorType.dart,
         );
-      case RangeError: //数组越界
-      case IndexError: //同上
+      case RangeError: // 数组越界
+      case IndexError: // 同上
         var err = e as ArgumentError;
         return ViewError(
           title: '数组越界',

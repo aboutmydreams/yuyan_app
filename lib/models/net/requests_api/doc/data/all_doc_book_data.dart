@@ -5,7 +5,7 @@ class AllDocBookJson {
 
   AllDocBookJson.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<AllDocBooks>();
+      data = <AllDocBooks>[];
       json['data'].forEach((v) {
         data.add(new AllDocBooks.fromJson(v));
       });

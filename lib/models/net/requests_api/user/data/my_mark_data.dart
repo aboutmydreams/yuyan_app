@@ -5,7 +5,7 @@ class MarkJson {
 
   MarkJson.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<MarkData>();
+      data = <MarkData>[];
       json['data'].forEach((v) {
         data.add(new MarkData.fromJson(v));
       });

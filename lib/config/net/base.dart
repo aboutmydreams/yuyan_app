@@ -5,7 +5,7 @@ import 'package:pretty_json/pretty_json.dart';
 
 abstract class BaseHttp extends DioForNative {
   BaseHttp() {
-    //log
+    // log
     interceptors.add(PrintInterceptor());
 
     options.sendTimeout = 1000 * 5;

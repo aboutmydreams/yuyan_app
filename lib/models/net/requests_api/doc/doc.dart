@@ -26,7 +26,7 @@ class DioDoc {
   static getAllDocBook({bool onlyUser}) async {
     // onlyUser: onlyUser
     var ans = await DioReq.get(
-        "/mine/books?filterByAbility=create_doc&limit=50&offset=0&type=Book&type=Column",
+        "/mine/books?filterByAbility=create_doc&limit=50&offset=0&type=Book&type=Column&type=Sheet&type=Table",
         onlyUser: onlyUser);
     return AllDocBookJson.fromJson(ans);
   }

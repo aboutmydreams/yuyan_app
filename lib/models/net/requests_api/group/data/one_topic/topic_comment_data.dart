@@ -5,7 +5,7 @@ class TopicCommentJson {
 
   TopicCommentJson.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<OneCommentData>();
+      data = <OneCommentData>[];
       json['data'].forEach((v) {
         data.add(new OneCommentData.fromJson(v));
       });
