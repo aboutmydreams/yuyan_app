@@ -102,9 +102,15 @@ class BookDocPage extends StatelessWidget {
         // } else {
         //   openUrl(context, url);
         // }
-        MyRoute.docDetail(
+        // MyRoute.docDetail(
+        //   bookId: data.bookId,
+        //   slug: data.slug,
+        // );
+        MyRoute.docDetailWebview(
           bookId: data.bookId,
           slug: data.slug,
+          login: data.book.user.login,
+          book: data.book.slug,
         );
       },
       child: Container(

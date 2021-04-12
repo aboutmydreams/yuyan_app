@@ -539,7 +539,7 @@ class ApiRepository {
     String commentType = 'Topic',
   }) async {
     var res = await getComments(commentId: commentId, commentType: commentType);
-    var data = (res.data as ApiResponse).data as List;
+    var data = res.data as List;
     return data.map((e) => CommentDetailSeri.fromJson(e)).toList();
   }
 

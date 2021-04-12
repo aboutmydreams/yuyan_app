@@ -97,8 +97,10 @@ class Util {
     }
   }
 
-  static double get pinnedHeight =>
-      Get.mediaQuery.padding.top + Get.statusBarHeight - 10;
+  static double get pinnedHeight {
+    var h = Get.mediaQuery.padding.top + 56 + 56 - 10;
+    return h;
+  }
 
   static Future<String> editorImageUploadCallback(File file) async {
     var res = await ApiRepository.postAttachFile(path: file.path);
@@ -421,6 +423,33 @@ extension ObjectEx on Object {
 
   onlyIf(bool condition, {Function elseif}) {
     return condition ? this : elseif();
+  }
+}
+
+extension WidgetEx on Widget {
+  onlyIf(
+    bool only, {
+    Widget Function() elseif,
+    bool animation = true,
+    Duration duration = const Duration(milliseconds: 225),
+  }) {
+    Widget child = (only ? this : elseif());
+    if (animation) {
+      return AnimatedSwitcher(
+        duration: duration,
+        child: child,
+        // transitionBuilder: (child, anim) {
+        //   return SlideTransition(
+        //     position: Tween<Offset>(
+        //       begin: Offset(0, -100),
+        //       end: Offset(0, 0),
+        //     ).animate(anim),
+        //     child: child,
+        //   );
+        // },
+      );
+    }
+    return child;
   }
 }
 

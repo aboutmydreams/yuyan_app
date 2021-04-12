@@ -104,6 +104,8 @@ class MyRoute {
   static docDetail({
     @required int bookId,
     @required String slug,
+    @required String login,
+    @required String book,
   }) {
     Get.to(
       DocDetailPage(

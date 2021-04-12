@@ -1,8 +1,8 @@
-import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:share_extend/share_extend.dart';
 import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/config/route_manager.dart';
@@ -35,10 +35,12 @@ class DocDetailWebviewPage extends StatefulWidget {
 }
 
 class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
+  final _param = 'view=doc_embed&from=yuyan&title=1&outline=1';
+
   String get tag => '${widget.login}/${widget.login}/${widget.slug}';
 
   String get embedUrl {
-    return docUrl + '?view=doc_embed&from=yuyan&title=1&outline=1';
+    return docUrl + '?' + _param;
   }
 
   String get docUrl {
@@ -49,6 +51,8 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
 
   var visible = false.obs;
   var title = '文档详情'.obs;
+  var showUser = true.obs;
+  var fontSize = 15.0.obs;
 
   @override
   void initState() {
@@ -133,6 +137,13 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
             title: '分享',
           ),
         ),
+        PopupMenuItem(
+          value: _changeFontSize,
+          child: MenuItemWidget(
+            iconData: Icons.format_size,
+            title: '字体大小',
+          ),
+        ),
       ],
       onSelected: (_) => _?.call(),
     );
@@ -155,11 +166,18 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
         debugPrint('title => $title');
       },
       onScrollChanged: (_, x, y) {
-        // debugPrint('scroll => ($x,$y)');
+        if (y > 300) {
+          showUser.value = false;
+        } else {
+          showUser.value = true;
+        }
       },
       onProgressChanged: (_, progress) {},
       shouldOverrideUrlLoading: (_, req) async {
         debugPrint('override request => $req');
+        if (req.url.endsWith(_param)) {
+          return ShouldOverrideUrlLoadingAction.ALLOW;
+        }
         MyRoute.webview(req.url);
         return ShouldOverrideUrlLoadingAction.CANCEL;
       },
@@ -177,39 +195,49 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
       },
     );
 
-    return Theme(
-      data: ThemeData(primaryColor: AppColors.background),
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: AppBar(
-          title: GetBuilder<DocDetailController>(
-            tag: tag,
-            builder: (c) => c.stateBuilder(
-              onLoading: Text('${title.value}'),
-              onIdle: () => _buildUserBar(c.value.user),
-              onError: (err) => Text('${err.title}'),
-            ),
-          ),
-          actions: [
-            _buildMoreAction(),
-          ],
-        ),
-        body: Column(
-          children: [
-            Expanded(
-              child: Obx(
-                () => IndexedStack(
-                  index: visible.value ? 1 : 0,
-                  children: [
-                    ViewLoadingWidget(),
-                    docBody,
-                  ],
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        // backgroundColor: AppColors.background,
+        title: GetBuilder<DocDetailController>(
+          tag: tag,
+          builder: (c) => c.stateBuilder(
+            onError: (err) => Text('${err.title}'),
+            onLoading: Text('${title.value}'),
+            onIdle: () {
+              title.value = c.value.title;
+              final elseif = Align(
+                child: Text('${title.value}'),
+                alignment: Alignment.centerLeft,
+              );
+              return Obx(
+                () => _buildUserBar(c.value.user).onlyIf(
+                  showUser.value,
+                  elseif: () => elseif,
                 ),
+              );
+            },
+          ),
+        ),
+        actions: [
+          _buildMoreAction(),
+        ],
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: Obx(
+              () => IndexedStack(
+                index: visible.value ? 1 : 0,
+                children: [
+                  ViewLoadingWidget(),
+                  docBody,
+                ],
               ),
             ),
-            _buildBottomBar(),
-          ],
-        ),
+          ),
+          _buildBottomBar(),
+        ],
       ),
     );
   }
@@ -349,15 +377,11 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
     return GestureDetector(
       onTap: () {
         //TODO(@dreamer2q): open comments modal sheet if possible
-        showFlexibleBottomSheet(
+        showBarModalBottomSheet(
           context: context,
-          maxHeight: 1,
-          minHeight: 0.8,
-          initHeight: 0.8,
-          anchors: [0.8, 1],
-          builder: (_, scrollController, offset) {
+          builder: (_) {
             return DocCommentsWidget(
-              scrollController: scrollController,
+              scrollController: ModalScrollController.of(_),
               tag: tag,
             );
           },
@@ -387,6 +411,41 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
           ),
         ],
       ),
+    );
+  }
+
+  _changeFontSize() {
+    var changer = (String query, double value) {
+      return 'document.querySelector("$query")'
+          '.style.fontSize="${value.toInt()}px"';
+    };
+
+    showMaterialModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return Container(
+          height: 200,
+          child: Obx(
+            () => Slider(
+              divisions: 36,
+              value: fontSize.value,
+              label: '${fontSize.value.toInt()}',
+              min: 12,
+              max: 48,
+              onChanged: (double value) {
+                debugPrint('value => $value');
+                fontSize.value = value;
+                _webViewController.evaluateJavascript(
+                  source: changer('.lake-engine-view', fontSize.value),
+                );
+                _webViewController.evaluateJavascript(
+                  source: changer('.CodeMirror', fontSize.value),
+                );
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/controller/bottom_nav_controller.dart';
 import 'package:yuyan_app/controller/theme_controller.dart';
@@ -24,6 +25,7 @@ class _HomePageState extends State<HomePage> {
   bool hideBottom = false;
   List<Widget> pageList = [];
   GlobalKey _bottomNavigationKey = GlobalKey();
+  DateTime _prevBackTime = DateTime.now();
 
   @override
   void initState() {
@@ -98,11 +100,22 @@ class _HomePageState extends State<HomePage> {
     // final double topPadding = MediaQuery.of(context).padding.bottom;
     // print(topPadding);
     var controller = Get.find<BottomNavigatorController>();
-    return Scaffold(
-      bottomNavigationBar: Obx(() => _buildBottomNav(controller)),
-      body: NotificationListener<ScrollUpdateNotification>(
-        child: Obx(() => pageList[controller.navIndex.value]),
-        onNotification: controller.onUpdateNotification,
+    return WillPopScope(
+      onWillPop: () async {
+        final now = DateTime.now();
+        if (now.difference(_prevBackTime) > 1.seconds) {
+          Fluttertoast.showToast(msg: '再按一次退出');
+          _prevBackTime = now;
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        bottomNavigationBar: Obx(() => _buildBottomNav(controller)),
+        body: NotificationListener<ScrollUpdateNotification>(
+          child: Obx(() => pageList[controller.navIndex.value]),
+          onNotification: controller.onUpdateNotification,
+        ),
       ),
     );
   }

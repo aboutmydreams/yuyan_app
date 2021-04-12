@@ -18,7 +18,7 @@ class MenuItemWidget extends StatelessWidget {
           Icon(
             iconData ?? Icons.error,
             size: 20,
-            // color: Theme.of(context).primaryColor,
+            color: Theme.of(context).primaryColor,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),

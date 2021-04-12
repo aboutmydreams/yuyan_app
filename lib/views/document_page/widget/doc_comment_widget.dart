@@ -6,6 +6,7 @@ import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/controller/document/doc_controller.dart';
 import 'package:yuyan_app/controller/topic/topic_controller.dart';
+import 'package:yuyan_app/model/document/commen/comment_detail.dart';
 import 'package:yuyan_app/models/widgets_small/show_dialog/show_confirm.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/topic_page/topic_detail_page.dart';
@@ -27,10 +28,48 @@ class DocCommentsWidget extends StatefulWidget {
 class _DocCommentsWidgetState extends State<DocCommentsWidget> {
   final _editController = TextEditingController();
 
+  void _onReplyTo(DocCommentsController c, CommentDetailSeri data) {
+    var postController = Get.find<CommentPostController>(tag: widget.tag);
+    Get.bottomSheet(
+      ReplyBottomSheetWidget(
+        replyTo: data.id,
+        hintText: '回复：${data.user.name}',
+        postController: postController,
+        editingController: _editController,
+      ),
+    ).then((value) {
+      c.onRefresh();
+      Future.delayed(Duration(milliseconds: 10), () {
+        Get.focusScope.unfocus();
+      });
+    });
+  }
+
+  void _onDeleteComment(DocCommentsController c, CommentDetailSeri data) {
+    if (data.userId == App.user.data.id) {
+      showConfirmDialog(
+        context,
+        content: '删除这条评论吗?',
+        confirmCallback: () {
+          Util.futureWrap(
+            ApiRepository.deleteComment(data.id),
+            onData: (data) {
+              c.onRefresh();
+              Util.toast('删除成功');
+            },
+            onError: (err) {
+              Util.toast('删除失败: $err');
+            },
+          );
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: GetBuilder<DocCommentsController>(
         tag: widget.tag,
         builder: (c) => Container(
@@ -59,54 +98,29 @@ class _DocCommentsWidgetState extends State<DocCommentsWidget> {
                 bottom: 70,
                 child: c.stateBuilder(
                   onIdle: () => Scrollbar(
-                    child: ListView.builder(
+                    child: ListView(
+                      physics: ClampingScrollPhysics(),
                       controller: widget.scrollController,
-                      itemCount: c.comments.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        var data = c.comments[index];
-                        return CommentDetailItemWidget(
+                      children: c.comments.mapWidget(
+                        (data) => CommentDetailItemWidget(
+                          key: Key('comment-${data.id}'),
                           current: data,
                           comments: c.comments,
-                          onTap: () {
-                            var postController =
-                                Get.find<CommentPostController>(
-                                    tag: widget.tag);
-                            Get.bottomSheet(
-                              ReplyBottomSheetWidget(
-                                replyTo: data.id,
-                                hintText: '回复：${data.user.name}',
-                                postController: postController,
-                                editingController: _editController,
-                              ),
-                            ).then((value) {
-                              c.onRefresh();
-                              Future.delayed(Duration(milliseconds: 10), () {
-                                Get.focusScope.unfocus();
-                              });
-                            });
-                          },
-                          onLongPressed: () {
-                            if (data.userId == App.user.data.id) {
-                              showConfirmDialog(
-                                context,
-                                content: '删除这条评论吗?',
-                                confirmCallback: () {
-                                  Util.futureWrap(
-                                    ApiRepository.deleteComment(data.id),
-                                    onData: (data) {
-                                      c.onRefresh();
-                                      Util.toast('删除成功');
-                                    },
-                                    onError: (err) {
-                                      Util.toast('删除失败: $err');
-                                    },
-                                  );
-                                },
-                              );
-                            }
-                          },
-                        );
-                      },
+                          onTap: () => _onReplyTo(c, data),
+                          onLongPressed: () => _onDeleteComment(c, data),
+                        ),
+                      ),
+                      // itemCount: c.comments.length,
+                      // itemBuilder: (BuildContext context, int index) {
+                      //   var data = c.comments[index];
+                      //   return CommentDetailItemWidget(
+                      //     key: Key('comment-$index'),
+                      //     current: data,
+                      //     comments: c.comments,
+                      //     onTap: () => _onReplyTo(c, data),
+                      //     onLongPressed: () => _onDeleteComment(c, data),
+                      //   );
+                      // },
                     ),
                   ),
                 ),
@@ -146,13 +160,12 @@ class _DocCommentsWidgetState extends State<DocCommentsWidget> {
                   horizontal: 12,
                 ),
                 child: CommentTextField(
-                  maxLines: 1,
+                  maxLines: null,
                   controller: _editController,
                 ),
               ),
             ),
             Container(
-              width: MediaQuery.of(context).size.width * 0.18,
               padding: const EdgeInsets.only(right: 12),
               child: ElevatedButton(
                 onPressed: () {

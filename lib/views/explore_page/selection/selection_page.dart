@@ -238,7 +238,13 @@ class __ExploreBannerWidgetState extends State<_ExploreBannerWidget>
     // Util.ossImg(data.cover);
     return GestureDetector(
       onTap: () {
-        MyRoute.docDetail(bookId: data.bookId, slug: data.slug);
+        // MyRoute.docDetail(bookId: data.bookId, slug: data.slug);
+        MyRoute.docDetailWebview(
+          bookId: data.bookId,
+          slug: data.slug,
+          login: data.user.login,
+          book: data.book.slug,
+        );
       },
       child: Container(
         height: 216,

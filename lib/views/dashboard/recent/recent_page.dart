@@ -70,7 +70,12 @@ class _UserRecentItemWidget extends StatelessWidget {
         switch (data.subjectType) {
           case 'Doc':
             var doc = data.target.serialize<DocSeri>();
-            MyRoute.docDetail(bookId: doc.bookId, slug: doc.slug);
+            MyRoute.docDetailWebview(
+              bookId: doc.bookId,
+              slug: doc.slug,
+              book: doc.book.slug,
+              login: doc.book.user.login,
+            );
             return;
           case 'Book':
           default:

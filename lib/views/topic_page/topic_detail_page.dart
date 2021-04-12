@@ -288,7 +288,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
   }
 }
 
-class CommentDetailItemWidget extends StatelessWidget {
+class CommentDetailItemWidget extends StatefulWidget {
   final List<CommentDetailSeri> comments;
   final CommentDetailSeri current;
   final VoidCallback onTap;
@@ -300,14 +300,25 @@ class CommentDetailItemWidget extends StatelessWidget {
     @required this.comments,
     this.onTap,
     this.onLongPressed,
-  })  : parent = (current.parentId != null
-            ? comments
-                .firstWhere((item) => item.id == current.parentId, orElse: null)
-                ?.user
-            : null),
-        super(key: key);
+  }) : super(key: key);
 
-  final UserSeri parent;
+  @override
+  _CommentDetailItemWidgetState createState() =>
+      _CommentDetailItemWidgetState();
+}
+
+class _CommentDetailItemWidgetState extends State<CommentDetailItemWidget> {
+  UserSeri parent;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.current.parentId != null) {
+      parent = widget.comments
+          .firstWhere((item) => item.id == widget.current.parentId, orElse: null)
+          ?.user;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -315,8 +326,8 @@ class CommentDetailItemWidget extends StatelessWidget {
     return Material(
       child: InkWell(
         highlightColor: Colors.black12,
-        onTap: onTap,
-        onLongPress: onLongPressed,
+        onTap: widget.onTap,
+        onLongPress: widget.onLongPressed,
         child: Container(
           padding: const EdgeInsets.symmetric(
             vertical: 12,
@@ -335,19 +346,19 @@ class CommentDetailItemWidget extends StatelessWidget {
                     child: Hero(
                       tag: tag,
                       child: UserAvatarWidget(
-                        avatar: current.user.avatarUrl,
+                        avatar: widget.current.user.avatarUrl,
                         height: 28,
                       ),
                     ),
                     onTap: () {
-                      MyRoute.user(user: current.user.toUserLiteSeri());
+                      MyRoute.user(user: widget.current.user.toUserLiteSeri());
                     },
                   ),
                   SizedBox(width: 8),
-                  Text(current.user.name, style: AppStyles.textStyleB),
+                  Text(widget.current.user.name, style: AppStyles.textStyleB),
                   Spacer(),
                   Text(
-                    Util.timeCut(current.updatedAt),
+                    Util.timeCut(widget.current.updatedAt),
                     style: AppStyles.textStyleCC,
                   ),
                 ],
@@ -388,7 +399,7 @@ class CommentDetailItemWidget extends StatelessWidget {
                   bottom: 4,
                 ),
                 child: LakeRenderWidget(
-                  data: current.bodyAsl,
+                  data: widget.current.bodyAsl,
                 ),
               )
             ],

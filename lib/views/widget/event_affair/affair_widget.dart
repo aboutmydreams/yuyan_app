@@ -10,7 +10,6 @@ import 'package:yuyan_app/util/util.dart';
 
 import '../user_widget.dart';
 
-
 /// 用户、团队等动态组件
 /// 例如，发布、更新文档，关注用户，关注知识库等
 class AffairTileWidget extends StatelessWidget {
@@ -145,9 +144,11 @@ class _ToDocWidget extends StatelessWidget {
       onTap: () {
         debugPrint('test $item');
         if (sub != null) {
-          MyRoute.docDetail(
+          MyRoute.docDetailWebview(
             bookId: sub.bookId,
             slug: sub.slug,
+            login: sub2.user.login,
+            book: sub2.slug,
           );
         } else {
           MyRoute.bookDocs(sub2.toBookSeri());
@@ -443,8 +444,8 @@ class _ToBookWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     if (item.subjects == null) {
       item.subjects = [item.subject];
-    // } else {
-    //   debugPrint('test');
+      // } else {
+      //   debugPrint('test');
     }
 
     return Container(
