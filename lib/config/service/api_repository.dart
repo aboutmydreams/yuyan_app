@@ -19,6 +19,7 @@ import 'package:yuyan_app/model/document/group_user.dart';
 import 'package:yuyan_app/model/document/note/doclet.dart';
 import 'package:yuyan_app/model/document/note/note.dart';
 import 'package:yuyan_app/model/document/note/note_status.dart';
+import 'package:yuyan_app/model/document/organization.dart';
 import 'package:yuyan_app/model/document/organization_lite.dart';
 import 'package:yuyan_app/model/document/toc/toc_seri.dart';
 import 'package:yuyan_app/model/document/upload/upload_result_seri.dart';
@@ -35,7 +36,7 @@ import 'package:yuyan_app/model/topic/topic_detail_seri.dart';
 class ApiRepository {
   static BaseApi api = BaseApi();
 
-  static int get currentUserId => App.user.data.id;
+  static int get currentUserId => App.userProvider.data.id;
 
   static Future<Tuple2<List<EventSeri>, ApiResponse>> getAttendEvents(
       [int offset = 0]) async {
@@ -154,6 +155,14 @@ class ApiRepository {
     return NotificationSeri.fromJson(asp.data);
   }
 
+  static Future<List<OrganizationSeri>> getMyOrganizationList() async {
+    var resp = await api.get('/mine/organizations');
+    var asp = resp.data as ApiResponse;
+    var list =
+        (asp.data as List).map((e) => OrganizationSeri.fromJson(e)).toList();
+    return list;
+  }
+
   static Future<List<OrganizationLiteSeri>> getOrganizationList(
       {int userId}) async {
     var resp = await api.get('/users/$userId/organizations');
@@ -165,14 +174,14 @@ class ApiRepository {
   }
 
   static Future<UserProfileSeri> getUserProfile({int userId}) async {
-    userId ??= App.user.data.id;
+    userId ??= App.userProvider.data.id;
     var res = await api.get("/users/$userId/profile");
     var asp = (res.data as ApiResponse);
     return UserProfileSeri.fromJson(asp.data);
   }
 
   static Future<List<GroupSeri>> getGroupList({int userId}) async {
-    userId ??= App.user.data.id;
+    userId ??= App.userProvider.data.id;
     var res = await api.get("/users/$userId/groups");
     var asp = (res.data as ApiResponse);
     var list = (asp.data as List).map((e) => GroupSeri.fromJson(e)).toList();
@@ -232,6 +241,24 @@ class ApiRepository {
     return Tuple2.fromList([data, asp]);
   }
 
+  static Future<List<BookSeri>> getOrgBookList({
+    int orgId,
+    int limit = 200,
+  }) async {
+    if (orgId == null) {
+      orgId = App.currentSpaceProvider.data.id;
+    }
+    var res = await api.get(
+      '/organizations/6005608/books',
+      queryParameters: {
+        'limit': limit,
+      },
+    );
+    var asp = res.data as ApiResponse;
+    var list = (asp.data as List).map((e) => BookSeri.fromJson(e)).toList();
+    return list;
+  }
+
   static Future<List<BookSeri>> getBookList({
     int userId,
     int limit = 200,
@@ -262,34 +289,48 @@ class ApiRepository {
     int userId,
     int offset = 0,
   }) async {
+    // var res = await api.get(
+    //   "/actions/targets",
+    //   queryParameters: {
+    //     "action_type": "follow",
+    //     "target_type": "User",
+    //     "user_id": userId,
+    //     "offset": offset,
+    //   },
+    // );
     var res = await api.get(
-      "/actions/targets",
+      '/users/$userId/interperson',
       queryParameters: {
-        "action_type": "follow",
-        "target_type": "User",
-        "user_id": userId,
-        "offset": offset,
+        'offset': offset,
+        'type': 'following',
       },
     );
     var asp = res.data as ApiResponse;
-    return (asp.data as List).map((e) => UserSeri.fromJson(e)).toList();
+    return (asp.data['data'] as List).map((e) => UserSeri.fromJson(e)).toList();
   }
 
   static Future<List<UserSeri>> getFollowerList({
     int userId,
     int offset = 0,
   }) async {
+    // var res = await api.get(
+    //   "/actions/users",
+    //   queryParameters: {
+    //     "action_type": "follow",
+    //     "target_type": "User",
+    //     "target_id": userId,
+    //     "offset": offset,
+    //   },
+    // );
     var res = await api.get(
-      "/actions/users",
+      '/users/$userId/interperson',
       queryParameters: {
-        "action_type": "follow",
-        "target_type": "User",
-        "target_id": userId,
-        "offset": offset,
+        'offset': offset,
+        'type': 'follower',
       },
     );
     var asp = res.data as ApiResponse;
-    return (asp.data as List).map((e) => UserSeri.fromJson(e)).toList();
+    return (asp.data['data'] as List).map((e) => UserSeri.fromJson(e)).toList();
   }
 
   static Future<bool> followUser({int userId}) async {

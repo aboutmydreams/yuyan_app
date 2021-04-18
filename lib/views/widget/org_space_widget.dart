@@ -9,6 +9,7 @@ import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/controller/notification_controller.dart';
 import 'package:yuyan_app/controller/quick_link_controller.dart';
 import 'package:yuyan_app/controller/recent_controller.dart';
+import 'package:yuyan_app/model/document/organization.dart';
 import 'package:yuyan_app/model/document/organization_lite.dart';
 import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/util/util.dart';
@@ -31,11 +32,11 @@ class OrgSpaceLeadingWidget extends StatelessWidget {
             icon: UserAvatarWidget(
               avatar: state.data.avatarUrl,
             ),
-            tooltip: '切换',
+            tooltip: '切换空间',
             onPressed: () {
               // 切换工作台弹窗
               Util.showWindow(
-                title: "切换工作台",
+                title: "切换空间",
                 child: _OrgSpaceSelectDialog(),
               );
             },
@@ -49,24 +50,22 @@ class OrgSpaceLeadingWidget extends StatelessWidget {
 class _OrgSpaceSelectDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<OrganizationController>(
-      init: OrganizationController(),
-      builder: (c) => c.builder(
-        (state) {
-          var user = App.user.data;
-          var defaultItem = OrganizationLiteSeri(
-            name: user.name,
-            logo: user.avatarUrl,
-          );
-          var data = [defaultItem, ...state.data];
+    return GetBuilder<UserSpaceController>(
+      init: UserSpaceController(),
+      builder: (c) => c.stateBuilder(
+        onLoading: Container(),
+        onIdle: () {
+          var defaultSpace = App.userProvider.defaultSpace;
+          var data = [defaultSpace, ...c.value];
           return AnimationColumnWidget(
             children: List.generate(
               data.length,
-              (index) => _OrgSpaceItemWidget(org: data[index]),
+              (index) => _OrgSpaceItemWidget(
+                org: data[index],
+              ),
             ),
           );
         },
-        onLoading: Container(),
       ),
     );
   }
@@ -78,25 +77,11 @@ class _OrgSpaceItemWidget extends StatelessWidget {
     this.org,
   }) : super(key: key);
 
-  final OrganizationLiteSeri org;
-
-  _refreshController<T>() {
-    try {
-      var controller = Get.find<T>() as dynamic;
-      try {
-        controller.onRefreshCallback();
-        debugPrint('do refresh on ${T.runtimeType}');
-      } on NoSuchMethodError catch (e) {
-        debugPrint('do refresh: $e');
-      }
-    } on String catch (e) {
-      debugPrint('get controller: $e');
-    }
-  }
+  final OrganizationSeri org;
 
   @override
   Widget build(BuildContext context) {
-    String nowOrg = App.orgSpaceProvider.data?.login;
+    String nowOrg = App.currentSpaceProvider.data?.login;
     bool isCurrent = nowOrg == org.login;
     return ListTile(
       selected: isCurrent,
@@ -105,16 +90,8 @@ class _OrgSpaceItemWidget extends StatelessWidget {
       title: Text(org.name),
       onTap: () async {
         if (!isCurrent) {
-          App.orgSpaceProvider.data = org;
+          App.currentSpaceProvider.changeSpace(org);
           Timer(Duration(milliseconds: 300), () {
-            _refreshController<AttendController>();
-            _refreshController<RecentController>();
-            _refreshController<QuickLinkController>();
-            _refreshController<NotificationAllController>();
-            // TODO(@dreamer2q): 刷新全部消息
-            // _refreshController<NotificationReadController>();
-            // _refreshController<NotificationUnreadController>();
-            // _refreshController<NotificationSystemController>();
             Util.toast('切换成功');
             Get.back();
           });

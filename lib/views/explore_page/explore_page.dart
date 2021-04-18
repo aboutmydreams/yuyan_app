@@ -1,4 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:yuyan_app/config/app.dart';
+import 'package:yuyan_app/config/app_ui.dart';
+import 'package:yuyan_app/controller/global/organization_controller.dart';
+import 'package:yuyan_app/util/util.dart';
+import 'package:yuyan_app/views/explore_page/widget/book_tile_widget.dart';
+import 'package:yuyan_app/views/widget/book_stack_widget.dart';
+import 'package:yuyan_app/views/widget/group_widget.dart';
 import 'package:yuyan_app/views/widget/org_space_widget.dart';
 import 'package:yuyan_app/views/widget/search_action_widget.dart';
 import 'attention/attention_page.dart';
@@ -13,15 +22,24 @@ class ExplorePage extends StatefulWidget {
 }
 
 class _ExplorePageState extends State<ExplorePage>
-    with AutomaticKeepAliveClientMixin {
-  bool get wantKeepAlive => true;
+    with SingleTickerProviderStateMixin {
+  TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _tabController = TabController(
+      length: 2,
+      vsync: this,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
+    return GetBuilder<CurrSpaceProvider>(
+      init: App.currentSpaceProvider,
+      builder: (c) => Scaffold(
         appBar: AppBar(
           toolbarOpacity: 1.0,
           bottomOpacity: 5.0,
@@ -31,22 +49,133 @@ class _ExplorePageState extends State<ExplorePage>
           ],
           elevation: 0.0,
           title: TabBar(
+            controller: _tabController,
             labelColor: Colors.white,
             indicatorColor: Colors.white.withOpacity(0.95),
             indicatorSize: TabBarIndicatorSize.label,
             indicatorWeight: 3.0,
-            tabs: <Widget>[
+            tabs: [
               Tab(text: "关注"),
-              Tab(text: "精选"),
+              Tab(text: "精选").onlyIf(
+                c.isDefault,
+                elseif: () => Tab(
+                  text: '空间',
+                ),
+              ),
             ],
           ),
         ),
         body: TabBarView(
+          controller: _tabController,
           children: [
             AttentionPage(),
-            SelectionPage(),
+            SelectionPage().onlyIf(
+              c.isDefault,
+              elseif: () => _SpacePubPage(),
+            ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _SpacePubPage extends StatefulWidget {
+  @override
+  __SpacePubPageState createState() => __SpacePubPageState();
+}
+
+class __SpacePubPageState extends State<_SpacePubPage> {
+  RefreshController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = RefreshController();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var orgId = App.currentSpaceProvider.data.id;
+
+    return Container(
+      child: Scrollbar(
+        child: SmartRefresher(
+          controller: _controller,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                GetBuilder<OrgBookController>(
+                  init: OrgBookController(orgId),
+                  builder: (c) => c.stateBuilder(
+                    onIdle: () => TileListWidget(
+                      title: '知识库',
+                      children: c.value.mapWidget(
+                        (item) => BookTileWidget(item: item),
+                      ),
+                    ),
+                  ),
+                ),
+                GetBuilder<OrgGroupController>(
+                  init: OrgGroupController(orgId),
+                  builder: (c) => c.stateBuilder(
+                    onIdle: () => TileListWidget(
+                      title: '团队',
+                      children: c.value.mapWidget(
+                        (item) => GroupTileWidget(group: item),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TileListWidget extends StatelessWidget {
+  final String title;
+  final List<Widget> children;
+  final bool divide;
+  final EdgeInsets padding;
+  final EdgeInsets margin;
+
+  const TileListWidget({
+    Key key,
+    this.title,
+    this.children,
+    this.divide = true,
+    this.padding = const EdgeInsets.all(4),
+    this.margin = const EdgeInsets.all(8),
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 2,
+      margin: margin,
+      clipBehavior: Clip.hardEdge,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        children: [
+          Text(title, style: AppStyles.textStyleB),
+          Divider(),
+          Padding(
+            padding: padding,
+            child: Column(
+              children: children.mapWidget(
+                (item) => item,
+                divide: divide,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

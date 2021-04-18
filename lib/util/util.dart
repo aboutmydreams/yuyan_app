@@ -380,7 +380,7 @@ extension ListEx<T> on List<T> {
   }
 
   List<Widget> mapWidget(
-    Widget Function(T) map, {
+    Widget Function(T item) map, {
     bool divide = false,
     Widget divider = const Divider(height: 0.5),
   }) {

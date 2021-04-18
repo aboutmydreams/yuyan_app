@@ -132,16 +132,19 @@ class MyInfoNumberWidget extends StatelessWidget {
             ),
             InfoNumberItemWidget(
               title: "知识库",
+              // number: Get.find<MyBookController>().value.data?.length ?? 0,
               number: info.booksCount,
               namedRoute: RouteName.myRepos,
             ),
             InfoNumberItemWidget(
               title: "关注了",
+              // number: Get.find<MyFollowingController>().value.data?.length ?? 0,
               number: info.followingCount,
               namedRoute: RouteName.myFollowing,
             ),
             InfoNumberItemWidget(
               title: "关注者",
+              // number: Get.find<MyFollowerController>().value.data?.length ?? 0,
               number: info.followersCount,
               namedRoute: RouteName.myFollower,
             ),

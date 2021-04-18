@@ -25,7 +25,8 @@ class TokenJsonSeri {
   loadCookies(String cookie) {
     allCookie = cookie;
 
-    List<String> cookiesList = cookie.substring(0,cookie.length-1).split(";");
+    List<String> cookiesList =
+        cookie.substring(0, cookie.length - 1).split(";");
     Map<String, String> cookieData = {};
 
     for (var cookie in cookiesList) {
@@ -33,7 +34,7 @@ class TokenJsonSeri {
       var key = arr[0].trim(), val = arr[1].trim();
       cookieData[key] = val;
     }
-    
+
     debugPrint(cookieData['_yuque_session']);
     debugPrint(cookieData['_TRACERT_COOKIE__SESSION']);
     cToken = cookieData['yuque_ctoken'];
@@ -45,11 +46,11 @@ class TokenJsonSeri {
   }
 
   Map<String, dynamic> toJson() => {
-    'access_token': accessToken,
-    'session': session,
-    'ctoken': cToken,
-    'all_cookie': allCookie,
-  };
+        'access_token': accessToken,
+        'session': session,
+        'ctoken': cToken,
+        'all_cookie': allCookie,
+      };
 }
 
 class TokenProvider extends BaseSaveJson<TokenJsonSeri> {
@@ -93,7 +94,7 @@ mixin TokenMixin on BaseHttp {
 }
 
 mixin OrganizationMixin on BaseHttp {
-  var orgProvider = App.orgSpaceProvider;
+  var spaceProvider = App.currentSpaceProvider;
   String _defaultBaseUrl;
 
   init() {
@@ -102,16 +103,16 @@ mixin OrganizationMixin on BaseHttp {
     debugPrint('_defaultBaseUrl => $_defaultBaseUrl');
     //初始化orgSpace
     debugPrint('init OrganizationMixin');
-    setOrgSpace(orgProvider.data?.login);
-    orgProvider.addListener(() {
+    setOrgSpace(spaceProvider.data?.login);
+    spaceProvider.addListener(() {
       debugPrint('!!!! change of organization !!!!!');
-      setOrgSpace(orgProvider.data?.login);
+      setOrgSpace(spaceProvider.data?.login);
     });
   }
 
   setOrgSpace(String space) {
     debugPrint("change namespace: $space");
-    if (space == null) {
+    if (spaceProvider.isDefault) {
       options.baseUrl = _defaultBaseUrl;
     } else {
       options.baseUrl = _defaultBaseUrl.replaceFirst("www", space);

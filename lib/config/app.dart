@@ -8,8 +8,8 @@ import 'package:yuyan_app/controller/global/my_controller.dart';
 
 class App {
   static TokenProvider tokenProvider = TokenProvider();
-  static OrgSpaceProvider orgSpaceProvider = OrgSpaceProvider();
-  static MyUserProvider user = MyUserProvider();
+  static CurrSpaceProvider currentSpaceProvider = CurrSpaceProvider();
+  static MyUserProvider userProvider = MyUserProvider();
 
   static PackageInfo version;
 

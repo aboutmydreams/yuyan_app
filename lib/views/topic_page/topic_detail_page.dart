@@ -257,7 +257,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
                     _openBottomSheet(e.id, hint);
                   },
                   onLongPressed: () {
-                    if (e.userId == App.user.data.id) {
+                    if (e.userId == App.userProvider.data.id) {
                       showConfirmDialog(
                         context,
                         content: '删除这条评论吗?',

@@ -10,11 +10,20 @@ import 'package:yuyan_app/model/document/action.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/document/note/note.dart';
+import 'package:yuyan_app/model/document/organization.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
 import 'package:yuyan_app/model/v2/user_detail.dart';
 
 class MyUserProvider extends BaseSaveJson<UserDetailSeri> {
+  OrganizationSeri get defaultSpace {
+    return OrganizationSeri(
+      name: data.name,
+      logo: data.avatarUrl,
+      login: data.login,
+    );
+  }
+
   @override
   UserDetailSeri convert(json) {
     return UserDetailSeri.fromJson(json);
@@ -28,7 +37,7 @@ class MyUserController extends FetchSavableController<MyUserProvider> {
   MyUserController()
       : super(
           initialRefresh: true,
-          initData: App.user,
+          initData: App.userProvider,
           state: ViewState.loading,
         );
 
@@ -83,7 +92,7 @@ class MyFollowingController
 
   @override
   Future fetchData() {
-    return ApiRepository.getFollowingList(userId: App.user.data.id);
+    return ApiRepository.getFollowingList(userId: App.userProvider.data.id);
   }
 }
 
@@ -107,7 +116,7 @@ class MyFollowerController extends FetchSavableController<MyFollowerProvider> {
 
   @override
   Future fetchData() {
-    return ApiRepository.getFollowerList(userId: App.user.data.id);
+    return ApiRepository.getFollowerList(userId: App.userProvider.data.id);
   }
 }
 
@@ -131,7 +140,7 @@ class MyBookController extends FetchSavableController<MyBookProvider> {
 
   @override
   Future fetchData() {
-    return ApiRepository.getBookList(userId: App.user.data.id);
+    return ApiRepository.getBookList(userId: App.userProvider.data.id);
   }
 }
 
@@ -253,4 +262,3 @@ class MyNoteController extends FetchSavableController<MyNoteProvider> {
     return ApiRepository.getMyNoteList();
   }
 }
-

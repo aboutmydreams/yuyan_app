@@ -20,6 +20,8 @@ class BookDocPage extends StatelessWidget {
   })  : bookId = book.id,
         super(key: key);
 
+  String get tag => '$bookId';
+
   @override
   Widget build(BuildContext context) {
     var title = '文档知识库';
@@ -34,11 +36,17 @@ class BookDocPage extends StatelessWidget {
           ),
         ],
       ),
-      body: _typeBuilder(type),
+      body: GetBuilder<BookDocsController>(
+        tag: tag,
+        init: BookDocsController(bookId),
+        builder: (c) => c.stateBuilder(
+          onIdle: () => _typeBuilder(type, c.value),
+        ),
+      ),
     );
   }
 
-  Widget _typeBuilder(String type) {
+  Widget _typeBuilder(String type, List<DocSeri> data) {
     switch (type) {
       case 'Book':
         // var layout = book.layout ?? 'Book';
@@ -58,20 +66,11 @@ class BookDocPage extends StatelessWidget {
         //     },
         //   ),
         // );
-        return GetBuilder<BookDocsController>(
-          tag: '$bookId',
-          init: BookDocsController(bookId),
-          builder: (c) => c.stateBuilder(
-            onIdle: () {
-              var data = c.value;
-              return AnimationListWidget(
-                itemCount: data.length,
-                itemBuilder: (_, i) {
-                  return buildDoc(data[i]);
-                },
-              );
-            },
-          ),
+        return AnimationListWidget(
+          itemCount: data.length,
+          itemBuilder: (_, i) {
+            return buildDoc(data[i]);
+          },
         );
       default:
         return Container(
@@ -109,8 +108,8 @@ class BookDocPage extends StatelessWidget {
         MyRoute.docDetailWebview(
           bookId: data.bookId,
           slug: data.slug,
-          login: data.book.user.login,
-          book: data.book.slug,
+          login: book.user.login,
+          book: book.slug,
         );
       },
       child: Container(

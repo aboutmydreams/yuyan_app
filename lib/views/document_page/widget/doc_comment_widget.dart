@@ -46,7 +46,7 @@ class _DocCommentsWidgetState extends State<DocCommentsWidget> {
   }
 
   void _onDeleteComment(DocCommentsController c, CommentDetailSeri data) {
-    if (data.userId == App.user.data.id) {
+    if (data.userId == App.userProvider.data.id) {
       showConfirmDialog(
         context,
         content: '删除这条评论吗?',

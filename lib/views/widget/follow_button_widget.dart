@@ -23,7 +23,7 @@ class FollowButtonWidget extends StatefulWidget {
 class _FollowButtonWidgetState extends State<FollowButtonWidget> {
   @override
   Widget build(BuildContext context) {
-    var isSelf = App.user.data.id == widget.user.id;
+    var isSelf = App.userProvider.data.id == widget.user.id;
     return Container(
       width: 88,
       height: 35,
