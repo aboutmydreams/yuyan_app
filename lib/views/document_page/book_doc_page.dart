@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/document/book_controller.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/config/app_ui.dart';
+import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/lake/lake_image_widget.dart';
 import 'package:yuyan_app/views/widget/list_helper_widget.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
@@ -36,83 +38,98 @@ class BookDocPage extends StatelessWidget {
           ),
         ],
       ),
-      body: GetBuilder<BookDocsController>(
-        tag: tag,
-        init: BookDocsController(bookId),
-        builder: (c) => c.stateBuilder(
-          onIdle: () => _typeBuilder(type, c.value),
-        ),
-      ),
+      body: _typeBuilder(type, book),
     );
   }
 
-  Widget _typeBuilder(String type, List<DocSeri> data) {
-    switch (type) {
-      case 'Book':
-        // var layout = book.layout ?? 'Book';
-        // return GetBuilder<BookTocController>(
-        //   tag: '$bookId',
-        //   init: BookTocController(bookId),
-        //   builder: (c) => c.stateBuilder(
-        //     onIdle: () {
-        //       var data = c.value;
-        //       var tree = Util.parseTocTree(data);
-        //       return SingleChildScrollView(
-        //         child: TreeView(
-        //           indent: 24,
-        //           nodes: tree,
-        //         ),
-        //       );
-        //     },
-        //   ),
-        // );
-        return AnimationListWidget(
-          itemCount: data.length,
-          itemBuilder: (_, i) {
-            return buildDoc(data[i]);
-          },
-        );
-      default:
-        return Container(
-          padding: const EdgeInsets.all(24),
-          child: Text(
-            'Unsupported type: $type',
-            style: AppStyles.textStyleA,
+  Widget _typeBuilder(String type, BookSeri book) {
+    if (['Sheet', 'Book'].contains(type)) {
+      GetBuilder<BookDocsController>(
+        tag: tag,
+        init: BookDocsController(bookId),
+        builder: (c) => c.stateBuilder(
+          onIdle: () => Scrollbar(
+            child: SmartRefresher(
+              enablePullUp: true,
+              controller: c.refreshController,
+              onRefresh: c.refreshCallback,
+              onLoading: c.loadMoreCallback,
+              child: Builder(
+                builder: (_) {
+                  var data = c.value;
+                  if (type == 'Sheet') {
+                    return SingleChildScrollView(
+                      child: Container(
+                        width: Get.width,
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: data.mapWidget(
+                            (item) => buildDoc(item, 'Sheet'),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                  return ListView.builder(
+                    itemCount: data.length,
+                    itemBuilder: (_, i) {
+                      return buildDoc(data[i], 'Book');
+                    },
+                  );
+                },
+              ),
+            ),
           ),
-        );
+        ),
+      );
     }
+    // artboard API
+    // /artboard_groups?book_id=656867
+    // return SingleChildScrollView(
+    //   child: Container(
+    //     width: Get.width,
+    //     alignment: Alignment.center,
+    //     padding: const EdgeInsets.symmetric(vertical: 8),
+    //     child: Wrap(
+    //       spacing: 8,
+    //       runSpacing: 8,
+    //       children: data.mapWidget(
+    //         (item) => buildDoc(item, 'Sheet'),
+    //       ),
+    //     ),
+    //   ),
+    // );
+    // case 'Book':
+    // return ListView.builder(
+    // itemCount: data.length,
+    // itemBuilder: (_, i) {
+    // return buildDoc(data[i], 'Book');
+    // },
+    // );
+    // default:
+    // return Container(
+    // padding: const EdgeInsets.all(24),
+    // child: Text(
+    // 'Unsupported type: $type',
+    // style: AppStyles
+    // .
+    // textStyleA
+    // ,
+    // )
+    // ,
+    // );
+    // }
   }
 
-  Widget buildDoc(DocSeri data) {
-    // String url =
-    //     "https://www.yuque.com/${data['login']}/${data['bookSlug']}/${data['docId'].toString()}";
-    return GestureDetector(
-      onTap: () {
-        // bool onlyUser = data["onlyUser"] ?? false;
-        // if ((data["type"] == "Doc") || (data["type"] == "doc")) {
-        // OpenPage.docWeb(
-        //   context,
-        //   login: data["login"],
-        //   bookId: data["bookId"],
-        //   docId: data["docId"],
-        //   bookSlug: data["bookSlug"],
-        //   onlyUser: onlyUser,
-        // );
-        // } else {
-        //   openUrl(context, url);
-        // }
-        // MyRoute.docDetail(
-        //   bookId: data.bookId,
-        //   slug: data.slug,
-        // );
-        MyRoute.docDetailWebview(
-          bookId: data.bookId,
-          slug: data.slug,
-          login: book.user.login,
-          book: book.slug,
-        );
-      },
-      child: Container(
+  Widget buildDoc(DocSeri data, String style) {
+    Widget child = Container(
+      child: Text('Not supported: $style'),
+    );
+    if (style == 'Book') {
+      child = Container(
         margin: EdgeInsets.only(left: 10, top: 6, bottom: 4, right: 10),
         padding: EdgeInsets.only(left: 16, top: 10, bottom: 10, right: 10),
         decoration: BoxDecoration(
@@ -143,7 +160,58 @@ class BookDocPage extends StatelessWidget {
               )
           ],
         ),
-      ),
+      );
+    } else if (style == 'Sheet') {
+      var editor = data.user;
+      child = Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(6),
+        ),
+        clipBehavior: Clip.hardEdge,
+        margin: const EdgeInsets.all(0),
+        child: Container(
+          width: 165,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                height: 90,
+                width: 90,
+                child: CachedImageWidget(
+                  url: '${data.cover}',
+                ),
+              ),
+              Row(children: [
+                Expanded(
+                  child: Text(
+                    '${data.title}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppStyles.textStyleB,
+                  ),
+                ),
+                Icon(Icons.more_vert),
+              ]),
+              Text(
+                '${editor.name} · ${Util.timeCut(data.updatedAt)}',
+                style: AppStyles.textStyleC,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return GestureDetector(
+      onTap: () {
+        MyRoute.docDetailWebview(
+          bookId: data.bookId,
+          slug: data.slug,
+          login: book.user.login,
+          book: book.slug,
+        );
+      },
+      child: child,
     );
   }
 
