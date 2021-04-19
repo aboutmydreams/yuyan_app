@@ -115,6 +115,8 @@ class _GroupPageState extends State<GroupPage>
               GetBuilder<GroupMarkController>(
                 tag: widget.heroTag ?? tag,
                 builder: (c) => c.stateBuilder(
+                  onLoading: SizedBox.shrink(),
+                  onError: (_) => SizedBox.shrink(),
                   onIdle: () => IconButton(
                     icon: c.value ? Icon(Icons.star) : Icon(Icons.star_border),
                     onPressed: c.toggle,

@@ -77,7 +77,12 @@ class MyMarkItemWidget extends StatelessWidget {
         userName = doc.user.name;
         avatarUrl = doc.user.avatarUrl;
         description = doc.description;
-        onTap = () => MyRoute.docDetail(bookId: doc.bookId, slug: doc.slug);
+        onTap = () => MyRoute.docDetail(
+              bookId: doc.bookId,
+              slug: doc.slug,
+              book: doc.book.slug,
+              login: doc.user.login,
+            );
         break;
       default:
         return Container(

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/controller/binding/app_binding.dart';
 import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/model/document/book.dart';
@@ -32,28 +34,30 @@ import 'package:yuyan_app/views/webview_page/webview_page.dart';
 import 'package:yuyan_app/views/widget/lake/lake_mention_widget.dart';
 
 class RouteName {
-  static String home = '/';
-  static String splash = '/first';
-  static String guide = '/guide';
-  static String login = '/login';
-  static String desk = '/desk';
-  static String news = '/news';
-  static String my = '/my';
-  static String edit = '/edit';
-  static String editNote = '/edit/note';
-  static String quickSet = '/quickset';
-  static String dashboard = '/dashboard';
-  static String note = '/note';
-  static String mySetting = '/my/setting';
-  static String myGroup = '/my/group';
-  static String myFollower = '/my/follower';
-  static String myFollowing = '/my/following';
-  static String myFollowBook = '/my/follow_book';
-  static String myRepos = '/my/repos';
-  static String myMark = '/my/mark';
-  static String myTopic = '/my/topic';
-  static String myAbout = '/my/about';
-  static String mySuggest = '/my/suggest';
+  static const String home = '/';
+  static const String guide = '/guide';
+  static const String splash = '/first';
+  static const String login = '/login';
+  static const String desk = '/desk';
+  static const String news = '/news';
+  static const String my = '/my';
+  static const String edit = '/edit';
+  static const String editNote = '/edit/note';
+  static const String quickSet = '/quickset';
+  static const String dashboard = '/dashboard';
+  static const String note = '/note';
+  static const String mySetting = '/my/setting';
+  static const String myGroup = '/my/group';
+  static const String myFollower = '/my/follower';
+  static const String myFollowing = '/my/following';
+  static const String myFollowBook = '/my/follow_book';
+  static const String myRepos = '/my/repos';
+  static const String myMark = '/my/mark';
+  static const String myTopic = '/my/topic';
+  static const String myAbout = '/my/about';
+  static const String mySuggest = '/my/suggest';
+
+  static const String spaceEnsure = '/space_ensure';
 }
 
 class MyRoute {
@@ -230,6 +234,7 @@ class MyRoute {
     GetPage(
       name: RouteName.myAbout,
       page: () => AboutPage(),
+      middlewares: [OrgSpaceMiddleware()],
     ),
     GetPage(
       name: RouteName.mySuggest,
@@ -237,6 +242,47 @@ class MyRoute {
         index: 2,
         groupId: 671004,
       ),
+      middlewares: [OrgSpaceMiddleware()],
+    ),
+    GetPage(
+      name: RouteName.spaceEnsure,
+      page: () => SpaceEnsurePage(),
     ),
   ];
+}
+
+class SpaceEnsurePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    debugPrint('space_ensure_page: arguments=> ${Get.arguments}');
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('INFO'),
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(22),
+        child: Center(
+          child: Text(
+            "当前所在的空间不支持此操作\n"
+            "请回到个人空间后重试",
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class OrgSpaceMiddleware extends GetMiddleware {
+  @override
+  RouteSettings redirect(String route) {
+    switch (route) {
+      case RouteName.myAbout:
+      case RouteName.mySuggest:
+        if (App.currentSpaceProvider.isDefault) {
+          return null;
+        }
+        return RouteSettings(name: RouteName.spaceEnsure);
+    }
+    return null;
+  }
 }

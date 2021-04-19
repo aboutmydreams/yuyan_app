@@ -32,14 +32,14 @@ class GroupTileWidgetFlat extends StatelessWidget {
             tag: '${group.id}',
             child: UserAvatarWidget(
               avatar: imageUrl,
-              height: 50,
+              height: 48,
             ),
           ),
           SizedBox(width: 16),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   group.name,

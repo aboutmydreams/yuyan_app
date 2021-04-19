@@ -144,7 +144,12 @@ class _DocTileNoUser extends StatelessWidget {
     }
     return GestureDetector(
       onTap: () {
-        MyRoute.docDetail(bookId: data.bookId, slug: data.slug);
+        MyRoute.docDetail(
+          bookId: data.bookId,
+          slug: data.slug,
+          book: data.book.slug,
+          login: data.user.login,
+        );
       },
       child: Container(
         decoration: BoxDecoration(

@@ -1,4 +1,5 @@
 import 'package:clipboard/clipboard.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
@@ -137,13 +138,14 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
             title: '分享',
           ),
         ),
-        PopupMenuItem(
-          value: _changeFontSize,
-          child: MenuItemWidget(
-            iconData: Icons.format_size,
-            title: '字体大小',
+        if (kDebugMode)
+          PopupMenuItem(
+            value: _changeFontSize,
+            child: MenuItemWidget(
+              iconData: Icons.format_size,
+              title: '字体大小',
+            ),
           ),
-        ),
       ],
       onSelected: (_) => _?.call(),
     );
@@ -177,6 +179,9 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
         debugPrint('override request => $req');
         if (req.url.endsWith(_param)) {
           return ShouldOverrideUrlLoadingAction.ALLOW;
+        }
+        if (req.url.startsWith('https://tracert.alipay.com/')) {
+          return ShouldOverrideUrlLoadingAction.CANCEL;
         }
         MyRoute.webview(req.url);
         return ShouldOverrideUrlLoadingAction.CANCEL;

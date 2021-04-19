@@ -43,7 +43,7 @@ class BookStackWidget extends StatelessWidget {
         break;
       case 1: //
         bottom = Column(
-          children: _summaryList(item.summary, item.type),
+          children: _summaryList(item, item.summary, item.type),
         );
         break;
       case 2: //
@@ -77,11 +77,12 @@ class BookStackWidget extends StatelessWidget {
     );
   }
 
-  List<Widget> _summaryList(List<SummarySeri> items, String type) {
+  List<Widget> _summaryList(
+      BookSeri book, List<SummarySeri> items, String type) {
     switch (type) {
       case 'Book':
       case 'Sheet':
-        return items.mapWidget((e) => _docItem(e));
+        return items.mapWidget((e) => _docItem(book, e));
       case 'Design':
         return [
           Row(
@@ -102,10 +103,15 @@ class BookStackWidget extends StatelessWidget {
     }
   }
 
-  Widget _docItem(SummarySeri item) {
+  Widget _docItem(BookSeri book, SummarySeri item) {
     return InkWell(
       onTap: () {
-        MyRoute.docDetail(bookId: item.bookId, slug: item.slug);
+        MyRoute.docDetail(
+          bookId: item.bookId,
+          slug: item.slug,
+          book: book.slug,
+          login: book.user.login,
+        );
       },
       child: Container(
         padding: EdgeInsets.fromLTRB(0, 7, 0, 2),

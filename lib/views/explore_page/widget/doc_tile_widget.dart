@@ -119,7 +119,12 @@ class DocTileWidget extends StatelessWidget {
     }
     return GestureDetector(
       onTap: () {
-        MyRoute.docDetail(bookId: data.bookId, slug: data.slug);
+        MyRoute.docDetail(
+          bookId: data.bookId,
+          slug: data.slug,
+          book: data.book.slug,
+          login: user.login,
+        );
       },
       child: Container(
         height: 134,
