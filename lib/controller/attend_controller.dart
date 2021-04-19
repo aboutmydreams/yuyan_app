@@ -16,6 +16,7 @@ class AttendDataProvider extends BaseSaveListJson<EventSeri> {
   }
 }
 
+/// 我的关注
 class AttendController extends FetchSavableController<AttendDataProvider> {
   AttendController()
       : super(

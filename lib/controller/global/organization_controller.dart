@@ -6,11 +6,9 @@ import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
-import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/document/organization.dart';
-import 'package:yuyan_app/model/document/organization_lite.dart';
 
 import '../attend_controller.dart';
 import '../notification_controller.dart';
@@ -41,6 +39,11 @@ class CurrSpaceProvider extends BaseSaveJson<OrganizationSeri> {
         debugPrint('do refresh on $T');
       } on NoSuchMethodError catch (e) {
         debugPrint('do refresh: $e');
+        try {
+          controller.refreshCallback();
+        } on NoSuchMethodError catch (e) {
+          debugPrint('do refresh: $e');
+        }
       }
     } on String catch (e) {
       debugPrint('get controller: $e');
@@ -56,6 +59,8 @@ class CurrSpaceProvider extends BaseSaveJson<OrganizationSeri> {
       _refreshController<QuickLinkController>();
       _refreshController<NotificationAllController>();
       _refreshController<MyUserController>();
+      _refreshController<OrgGroupController>();
+      _refreshController<OrgBookController>();
       // _refreshController<MyBookController>();
       // _refreshController<MyFollowBookController>();
       // _refreshController<MyFollowingController>();
@@ -77,23 +82,15 @@ class CurrSpaceProvider extends BaseSaveJson<OrganizationSeri> {
 }
 
 class OrgBookController extends FetchListValueController<BookSeri> {
-  final int orgId;
-
-  OrgBookController(this.orgId);
-
   @override
   Future<List<BookSeri>> fetch() {
-    return ApiRepository.getOrgBookList(orgId: orgId);
+    return ApiRepository.getOrgBookList();
   }
 }
 
 class OrgGroupController extends FetchListValueController<GroupSeri> {
-  final int orgId;
-
-  OrgGroupController(this.orgId);
-
   @override
   Future<List<GroupSeri>> fetch() {
-    throw UnimplementedError();
+    return ApiRepository.getOrgGroupList();
   }
 }

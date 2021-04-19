@@ -426,11 +426,13 @@ extension ObjectEx on Object {
   }
 }
 
+Widget _defaultWidget() => const SizedBox.shrink();
+
 extension WidgetEx on Widget {
   onlyIf(
     bool only, {
-    Widget Function() elseif,
     bool animation = true,
+    Widget Function() elseif = _defaultWidget,
     Duration duration = const Duration(milliseconds: 225),
   }) {
     Widget child = (only ? this : elseif());

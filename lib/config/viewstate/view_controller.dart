@@ -127,7 +127,7 @@ abstract class FetchListValueController<T>
 
   /// 加入了处理[RefreshController]的逻辑，其它流程和父类一样
   @override
-  onRefresh({bool force = false}) async {
+  Future onRefresh({bool force = false}) async {
     try {
       if (!valueAvailable) {
         setLoading();
@@ -206,8 +206,6 @@ abstract class FetchSavableController<T extends BaseSavableJson>
           initialFetch: false,
           initialState: state,
         );
-
-
 
   @override
   onInit() {

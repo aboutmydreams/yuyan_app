@@ -65,6 +65,7 @@ class DiscoverSelectionProvider extends BaseSaveListJson<DocSeri> {
   String get key => 'discover_selection';
 }
 
+/// 语雀精选
 class ExploreSelectionController
     extends FetchSavableController<DiscoverSelectionProvider> {
   ExploreSelectionController()
@@ -84,6 +85,7 @@ class ExploreSelectionController
   }
 }
 
+/// 语雀推荐
 class DiscoverRecommendProvider extends BaseSaveListJson<Serializer> {
   @override
   String get key => 'discover_recommend';

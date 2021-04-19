@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/config/app_ui.dart';
@@ -71,6 +72,61 @@ class BookTileWidget extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class BookTileWidgetFlat extends StatelessWidget {
+  final BookSeri item;
+
+  const BookTileWidgetFlat({
+    Key key,
+    this.item,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var data = item;
+    var child = Container(
+      height: 70,
+      color: AppColors.background,
+      child: Row(
+        children: [
+          SizedBox(width: 8),
+          UserAvatarWidget(
+            avatar: data.user.avatarUrl,
+            height: 48,
+          ),
+          SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  data.name.clip(10, ellipsis: true),
+                  style: AppStyles.textStyleB,
+                ),
+                SizedBox(height: 2),
+                Text(
+                  "${data.description}",
+                  style: AppStyles.textStyleC,
+                  // overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.left,
+                  // maxLines: 1,
+                ).onlyIf(!GetUtils.isNullOrBlank(data.description)),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+    return GestureDetector(
+      onTap: () {
+        var book = data;
+        MyRoute.bookDocs(book);
+      },
+      child: child,
     );
   }
 }

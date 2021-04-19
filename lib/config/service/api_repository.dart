@@ -180,6 +180,14 @@ class ApiRepository {
     return UserProfileSeri.fromJson(asp.data);
   }
 
+  static Future<List<GroupSeri>> getOrgGroupList({int orgId}) async {
+    orgId ??= App.currentSpaceProvider.data.id;
+    var res = await api.get('/organizations/$orgId/groups');
+    var asp = (res.data as ApiResponse);
+    var list = (asp.data as List).map((e) => GroupSeri.fromJson(e)).toList();
+    return list;
+  }
+
   static Future<List<GroupSeri>> getGroupList({int userId}) async {
     userId ??= App.userProvider.data.id;
     var res = await api.get("/users/$userId/groups");
@@ -249,7 +257,7 @@ class ApiRepository {
       orgId = App.currentSpaceProvider.data.id;
     }
     var res = await api.get(
-      '/organizations/6005608/books',
+      '/organizations/$orgId/books',
       queryParameters: {
         'limit': limit,
       },
@@ -263,10 +271,13 @@ class ApiRepository {
     int userId,
     int limit = 200,
   }) async {
-    var res = await api.get("/groups/$userId/books", queryParameters: {
-      'archived': 'include',
-      'limit': limit,
-    });
+    var res = await api.get(
+      "/groups/$userId/books",
+      queryParameters: {
+        'archived': 'include',
+        'limit': limit,
+      },
+    );
     var asp = res.data as ApiResponse;
     var list = (asp.data as List).map((e) => BookSeri.fromJson(e)).toList();
     return list;

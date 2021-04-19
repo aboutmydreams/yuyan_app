@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/app_ui.dart';
+import 'package:yuyan_app/controller/explore_controller.dart';
 import 'package:yuyan_app/controller/global/organization_controller.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/explore_page/widget/book_tile_widget.dart';
-import 'package:yuyan_app/views/widget/book_stack_widget.dart';
 import 'package:yuyan_app/views/widget/group_widget.dart';
 import 'package:yuyan_app/views/widget/org_space_widget.dart';
 import 'package:yuyan_app/views/widget/search_action_widget.dart';
@@ -66,12 +67,13 @@ class _ExplorePageState extends State<ExplorePage>
           ),
         ),
         body: TabBarView(
+          key: PageStorageKey('tab1_page'),
           controller: _tabController,
           children: [
             AttentionPage(),
             SelectionPage().onlyIf(
               c.isDefault,
-              elseif: () => _SpacePubPage(),
+              elseif: () => SpacePubPage(),
             ),
           ],
         ),
@@ -80,50 +82,50 @@ class _ExplorePageState extends State<ExplorePage>
   }
 }
 
-class _SpacePubPage extends StatefulWidget {
+class SpacePubPage extends StatefulWidget {
+  SpacePubPage({Key key}) : super(key: key);
+
   @override
-  __SpacePubPageState createState() => __SpacePubPageState();
+  _SpacePubPageState createState() => _SpacePubPageState();
 }
 
-class __SpacePubPageState extends State<_SpacePubPage> {
-  RefreshController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller = RefreshController();
-  }
+class _SpacePubPageState extends State<SpacePubPage> {
+  final _controller = RefreshController();
 
   @override
   Widget build(BuildContext context) {
-    var orgId = App.currentSpaceProvider.data.id;
-
     return Container(
       child: Scrollbar(
         child: SmartRefresher(
           controller: _controller,
+          onRefresh: () {
+            var ref1 = Get.find<OrgBookController>();
+            var ref2 = Get.find<OrgGroupController>();
+            Future.wait([ref1.onRefresh(), ref2.onRefresh()]).then(
+              (_) => _controller.refreshCompleted(),
+            );
+          },
           child: SingleChildScrollView(
             child: Column(
               children: [
                 GetBuilder<OrgBookController>(
-                  init: OrgBookController(orgId),
+                  // init: OrgBookController(orgId),
                   builder: (c) => c.stateBuilder(
                     onIdle: () => TileListWidget(
                       title: '知识库',
                       children: c.value.mapWidget(
-                        (item) => BookTileWidget(item: item),
+                        (item) => BookTileWidgetFlat(item: item),
                       ),
                     ),
                   ),
                 ),
                 GetBuilder<OrgGroupController>(
-                  init: OrgGroupController(orgId),
+                  // init: OrgGroupController(orgId),
                   builder: (c) => c.stateBuilder(
                     onIdle: () => TileListWidget(
                       title: '团队',
                       children: c.value.mapWidget(
-                        (item) => GroupTileWidget(group: item),
+                        (item) => GroupTileWidgetFlat(group: item),
                       ),
                     ),
                   ),
@@ -149,7 +151,7 @@ class TileListWidget extends StatelessWidget {
     this.title,
     this.children,
     this.divide = true,
-    this.padding = const EdgeInsets.all(4),
+    this.padding = const EdgeInsets.symmetric(horizontal: 4),
     this.margin = const EdgeInsets.all(8),
   }) : super(key: key);
 
@@ -163,9 +165,13 @@ class TileListWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(title, style: AppStyles.textStyleB),
-          Divider(),
+          Padding(
+            padding: const EdgeInsets.only(left: 8, top: 8, bottom: 8),
+            child: Text(title, style: AppStyles.textStyleB),
+          ),
+          Divider(height: 1),
           Padding(
             padding: padding,
             child: Column(

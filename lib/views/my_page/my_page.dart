@@ -78,6 +78,7 @@ class _MyPageState extends State<MyPage> {
     // getVersion();
 
     var theme = Theme.of(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
