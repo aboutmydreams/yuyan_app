@@ -89,11 +89,21 @@ class SpacePubPage extends StatefulWidget {
   _SpacePubPageState createState() => _SpacePubPageState();
 }
 
-class _SpacePubPageState extends State<SpacePubPage> {
+class _SpacePubPageState extends State<SpacePubPage>
+    with AutomaticKeepAliveClientMixin {
   final _controller = RefreshController();
 
   @override
+  void initState() {
+    super.initState();
+
+    Get.lazyPut(() => OrgBookController());
+    Get.lazyPut(() => OrgGroupController());
+  }
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
       child: Scrollbar(
         child: SmartRefresher(
@@ -137,6 +147,9 @@ class _SpacePubPageState extends State<SpacePubPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class TileListWidget extends StatelessWidget {

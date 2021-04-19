@@ -34,8 +34,6 @@ class HomePageBinding extends Bindings {
 
     Get.put(ExploreSelectionController());
     Get.put(ExploreRecommendController());
-    Get.put(OrgBookController());
-    Get.put(OrgGroupController());
 
     Get.lazyPut(() => MyGroupController());
     Get.lazyPut(() => MyBookController());
