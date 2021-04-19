@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/config/route_manager.dart';
+import 'package:yuyan_app/config/viewstate/view_state_widget.dart';
 import 'package:yuyan_app/controller/document/book_controller.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/doc.dart';
+import 'package:yuyan_app/model/document/doc_detail/artboard_seri.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/config/app_ui.dart';
+import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/lake/lake_image_widget.dart';
 import 'package:yuyan_app/views/widget/list_helper_widget.dart';
@@ -44,7 +47,7 @@ class BookDocPage extends StatelessWidget {
 
   Widget _typeBuilder(String type, BookSeri book) {
     if (['Sheet', 'Book'].contains(type)) {
-      GetBuilder<BookDocsController>(
+      return GetBuilder<BookDocsController>(
         tag: tag,
         init: BookDocsController(bookId),
         builder: (c) => c.stateBuilder(
@@ -54,74 +57,114 @@ class BookDocPage extends StatelessWidget {
               controller: c.refreshController,
               onRefresh: c.refreshCallback,
               onLoading: c.loadMoreCallback,
-              child: Builder(
-                builder: (_) {
-                  var data = c.value;
-                  if (type == 'Sheet') {
-                    return SingleChildScrollView(
-                      child: Container(
-                        width: Get.width,
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: Wrap(
-                          spacing: 8,
-                          runSpacing: 8,
-                          children: data.mapWidget(
-                            (item) => buildDoc(item, 'Sheet'),
-                          ),
-                        ),
-                      ),
-                    );
-                  }
-                  return ListView.builder(
-                    itemCount: data.length,
-                    itemBuilder: (_, i) {
-                      return buildDoc(data[i], 'Book');
-                    },
-                  );
-                },
-              ),
+              child: _buildDocs(c.value, type),
             ),
           ),
         ),
       );
     }
-    // artboard API
-    // /artboard_groups?book_id=656867
-    // return SingleChildScrollView(
-    //   child: Container(
-    //     width: Get.width,
-    //     alignment: Alignment.center,
-    //     padding: const EdgeInsets.symmetric(vertical: 8),
-    //     child: Wrap(
-    //       spacing: 8,
-    //       runSpacing: 8,
-    //       children: data.mapWidget(
-    //         (item) => buildDoc(item, 'Sheet'),
-    //       ),
-    //     ),
-    //   ),
-    // );
-    // case 'Book':
-    // return ListView.builder(
-    // itemCount: data.length,
-    // itemBuilder: (_, i) {
-    // return buildDoc(data[i], 'Book');
-    // },
-    // );
-    // default:
-    // return Container(
-    // padding: const EdgeInsets.all(24),
-    // child: Text(
-    // 'Unsupported type: $type',
-    // style: AppStyles
-    // .
-    // textStyleA
-    // ,
-    // )
-    // ,
-    // );
-    // }
+    if (type == 'Design') {
+      return GetBuilder<BookArtController>(
+        init: BookArtController(bookId),
+        builder: (c) => c.stateBuilder(
+          onIdle: () => Scrollbar(
+              child: SmartRefresher(
+            controller: c.refreshController,
+            enablePullUp: true,
+            onRefresh: c.refreshCallback,
+            onLoading: c.loadMoreCallback,
+            child: ListView.builder(
+              itemCount: c.value.length,
+              itemBuilder: (_, i) => buildArt(c.value[i]),
+            ),
+          )),
+        ),
+      );
+    }
+    return Container(
+      padding: const EdgeInsets.all(24),
+      child: Text(
+        'Unsupported type: $type',
+        style: AppStyles.textStyleA,
+      ),
+    );
+  }
+
+  Widget buildArt(ArtboardSeri art) {
+    var arts = art.artboards; //.take(3).toList();
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(6),
+      ),
+      clipBehavior: Clip.hardEdge,
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: arts.mapWidget(
+                  (item) => Container(
+                    height: 160,
+                    child: CachedImageWidget(
+                      url: item.image,
+                    ),
+                  ),
+                ),
+              ),
+            ).onlyIf(
+              !GetUtils.isNullOrBlank(arts),
+              elseif: () => Container(
+                alignment: Alignment.center,
+                height: 160,
+                child: Text(
+                  '没有图片',
+                ),
+              ),
+            ),
+            Divider(height: 16, thickness: 1),
+            Text(
+              '${art.name}',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppStyles.textStyleB,
+            ),
+            Text(
+              '更新于：${Util.timeCut(art.updatedAt)}',
+              style: AppStyles.textStyleC,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDocs(List<DocSeri> data, String type) {
+    if (type == 'Sheet') {
+      return SingleChildScrollView(
+        child: Container(
+          width: Get.width,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: data.mapWidget(
+              (item) => buildDoc(item, 'Sheet'),
+            ),
+          ),
+        ),
+      );
+    }
+    return ListView.builder(
+      itemCount: data.length,
+      itemBuilder: (_, i) {
+        return buildDoc(data[i], 'Book');
+      },
+    );
   }
 
   Widget buildDoc(DocSeri data, String style) {

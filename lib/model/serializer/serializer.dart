@@ -3,7 +3,7 @@ import 'package:recase/recase.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/comment.dart';
-import 'package:yuyan_app/model/document/design.dart';
+import 'package:yuyan_app/model/document/doc_detail/artboard_detail_seri.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/doc_lite.dart';
 import 'package:yuyan_app/model/document/group.dart';
@@ -69,7 +69,7 @@ class Serializer {
       'web.topic': () => TopicSeri.fromJson(_data),
       'web.doclet': () => DocletSeri.fromJson(_data),
       'web.doc_lite': () => DocLiteSeri.fromJson(_data),
-      'web.design': () => DesignSeri.fromJson(_data),
+      'web.design': () => ArtboardDetailSeri.fromJson(_data),
       'web.organization': () => OrganizationLiteSeri.fromJson(_data),
       '_convert.list': <T>() =>
           (_data as List<Serializer>).map((e) => e.serialize<T>()).toList(),

@@ -11,6 +11,7 @@ import 'package:yuyan_app/model/document/card/card_video_info_seri.dart';
 import 'package:yuyan_app/model/document/card/vote_detail.dart';
 import 'package:yuyan_app/model/document/commen/comment_detail.dart';
 import 'package:yuyan_app/model/document/doc.dart';
+import 'package:yuyan_app/model/document/doc_detail/artboard_seri.dart';
 import 'package:yuyan_app/model/document/doc_detail/doc_detail.dart';
 import 'package:yuyan_app/model/document/group.dart';
 import 'package:yuyan_app/model/document/group_home/book_stack.dart';
@@ -792,6 +793,15 @@ class ApiRepository {
     });
     var asp = (res.data as ApiResponse);
     return DocDetailSeri.fromJson(asp.data);
+  }
+
+  static Future<List<ArtboardSeri>> getBookArtboardList({int bookId}) async {
+    var res = await api.get(
+      '/artboard_groups',
+      queryParameters: {'book_id': bookId},
+    );
+    var asp = (res.data as ApiResponse).data as List;
+    return asp.map((e) => ArtboardSeri.fromJson(e)).toList();
   }
 
   static Future<List<DocSeri>> getBookDocList({int bookId}) async {

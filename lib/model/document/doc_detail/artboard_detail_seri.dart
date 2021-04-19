@@ -1,4 +1,4 @@
-class DesignSeri {
+class ArtboardDetailSeri {
   int id;
   int spaceId;
   int artboardGroupId;
@@ -23,32 +23,33 @@ class DesignSeri {
   int readStatus;
   dynamic deletedAt;
 
-  DesignSeri(
-      {this.id,
-      this.spaceId,
-      this.artboardGroupId,
-      this.bookId,
-      this.assetId,
-      this.assetVersionId,
-      this.userId,
-      this.md5,
-      this.uuid,
-      this.sort,
-      this.image,
-      this.smallImage,
-      this.labelMapUrl,
-      this.name,
-      this.width,
-      this.height,
-      this.commentsCount,
-      this.likesCount,
-      this.createdAt,
-      this.updatedAt,
-      this.contentUpdatedAt,
-      this.readStatus,
-      this.deletedAt});
+  ArtboardDetailSeri({
+    this.id,
+    this.spaceId,
+    this.artboardGroupId,
+    this.bookId,
+    this.assetId,
+    this.assetVersionId,
+    this.userId,
+    this.md5,
+    this.uuid,
+    this.sort,
+    this.image,
+    this.smallImage,
+    this.labelMapUrl,
+    this.name,
+    this.width,
+    this.height,
+    this.commentsCount,
+    this.likesCount,
+    this.createdAt,
+    this.updatedAt,
+    this.contentUpdatedAt,
+    this.readStatus,
+    this.deletedAt,
+  });
 
-  DesignSeri.fromJson(dynamic json) {
+  ArtboardDetailSeri.fromJson(dynamic json) {
     id = json["id"];
     spaceId = json["space_id"];
     artboardGroupId = json["artboard_group_id"];

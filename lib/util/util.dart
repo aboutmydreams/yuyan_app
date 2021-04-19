@@ -383,9 +383,10 @@ extension ListEx<T> on List<T> {
     Widget Function(T item) map, {
     bool divide = false,
     Widget divider = const Divider(height: 0.5),
+    Widget onEmpty = const SizedBox.shrink(),
   }) {
     if (GetUtils.isNullOrBlank(this)) {
-      return [SizedBox.shrink()];
+      return [onEmpty];
     }
     if (!divide) {
       return this.map(map).toList();
