@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/global/group_controller.dart';
 import 'package:yuyan_app/controller/global/user_controller.dart';
-import 'package:yuyan_app/model/document/group.dart';
+import 'package:yuyan_app/model/user/group/group.dart';
 import 'package:yuyan_app/views/group_page/group_page.dart';
 import 'package:yuyan_app/views/user_page/user_page.dart';
 

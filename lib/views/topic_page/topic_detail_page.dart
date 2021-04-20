@@ -6,7 +6,7 @@ import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/controller/topic/topic_controller.dart';
 import 'package:yuyan_app/model/document/commen/comment_detail.dart';
-import 'package:yuyan_app/model/document/user.dart';
+import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/model/topic/topic_detail_seri.dart';
 import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
-import 'package:yuyan_app/model/document/user.dart';
-import 'package:yuyan_app/model/events/user_lite_seri.dart';
+import 'package:yuyan_app/model/user/user.dart';
+import 'package:yuyan_app/model/user/user_lite_seri.dart';
 import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/image_widget.dart';

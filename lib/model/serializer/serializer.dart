@@ -6,17 +6,17 @@ import 'package:yuyan_app/model/document/comment.dart';
 import 'package:yuyan_app/model/document/doc_detail/artboard_detail_seri.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/doc_lite.dart';
-import 'package:yuyan_app/model/document/group.dart';
+import 'package:yuyan_app/model/user/group/group.dart';
 import 'package:yuyan_app/model/document/group_home/book_stack.dart';
-import 'package:yuyan_app/model/document/group_user.dart';
+import 'package:yuyan_app/model/user/group/group_user.dart';
 import 'package:yuyan_app/model/document/note/doclet.dart';
-import 'package:yuyan_app/model/document/organization_lite.dart';
-import 'package:yuyan_app/model/document/user.dart';
-import 'package:yuyan_app/model/events/book_event_seri.dart';
-import 'package:yuyan_app/model/events/doc_event_seri.dart';
-import 'package:yuyan_app/model/events/event_seri.dart';
-import 'package:yuyan_app/model/events/user_event_seri.dart';
-import 'package:yuyan_app/model/events/user_lite_seri.dart';
+import 'package:yuyan_app/model/user/org/organization_lite.dart';
+import 'package:yuyan_app/model/user/user.dart';
+import 'package:yuyan_app/model/user/events/book_event_seri.dart';
+import 'package:yuyan_app/model/user/events/doc_event_seri.dart';
+import 'package:yuyan_app/model/user/events/event_seri.dart';
+import 'package:yuyan_app/model/user/events/user_event_seri.dart';
+import 'package:yuyan_app/model/user/user_lite_seri.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
 
 class Serializer {

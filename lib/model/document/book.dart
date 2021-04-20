@@ -1,6 +1,6 @@
 import 'group_home/summary.dart';
 import 'meta/ability.dart';
-import 'user.dart';
+import '../user/user.dart';
 
 class BookSeri {
   int id;

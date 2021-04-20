@@ -7,8 +7,8 @@ import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/model/document/book.dart';
-import 'package:yuyan_app/model/document/group.dart';
-import 'package:yuyan_app/model/document/organization.dart';
+import 'package:yuyan_app/model/user/group/group.dart';
+import 'package:yuyan_app/model/user/org/organization.dart';
 
 import '../attend_controller.dart';
 import '../notification_controller.dart';

@@ -4,7 +4,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/config/viewstate/view_page.dart';
 import 'package:yuyan_app/controller/action_controller.dart';
 import 'package:yuyan_app/controller/global/user_controller.dart';
-import 'package:yuyan_app/model/events/user_lite_seri.dart';
+import 'package:yuyan_app/model/user/user_lite_seri.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/book_row_widget.dart';
 import 'package:yuyan_app/views/widget/book_stack_widget.dart';

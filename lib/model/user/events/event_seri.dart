@@ -1,7 +1,7 @@
 import 'package:yuyan_app/model/serializer/serializer.dart';
 
 import 'book_event_seri.dart';
-import 'user_lite_seri.dart';
+import '../user_lite_seri.dart';
 
 class EventSeri {
   int id;

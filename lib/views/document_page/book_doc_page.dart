@@ -7,7 +7,7 @@ import 'package:yuyan_app/controller/document/book_controller.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/doc_detail/artboard_seri.dart';
-import 'package:yuyan_app/model/document/user.dart';
+import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/lake/lake_image_widget.dart';

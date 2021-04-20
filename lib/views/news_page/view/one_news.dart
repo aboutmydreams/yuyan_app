@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/doc.dart';
-import 'package:yuyan_app/model/document/organization_lite.dart';
-import 'package:yuyan_app/model/document/user.dart';
+import 'package:yuyan_app/model/user/org/organization_lite.dart';
+import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/model/notification/notification_item.dart';
 import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
@@ -128,7 +128,14 @@ class NotificationItemWidget extends StatelessWidget {
               heroTag: tag,
             );
           case 'Doc':
-            throw 'unImplement';
+            var doc = data.subject.serialize<DocSeri>();
+            var book = data.secondSubject.serialize<BookSeri>();
+            return MyRoute.docDetailWebview(
+              bookId: data.secondSubjectId,
+              slug: doc.slug,
+              login: book.user.login,
+              book: book.slug,
+            );
           case 'Topic':
             var topic = data.subject.serialize<TopicSeri>();
             return MyRoute.topic(topic.iid, topic.groupId);

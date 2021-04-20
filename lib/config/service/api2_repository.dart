@@ -3,7 +3,7 @@ import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/net/api.dart';
 import 'package:yuyan_app/config/net/token.dart';
 import 'package:yuyan_app/model/document/book.dart';
-import 'package:yuyan_app/model/document/user.dart';
+import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/model/v2/user_detail.dart';
 
 class Api2Repository {

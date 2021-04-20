@@ -1,4 +1,4 @@
-import 'user.dart';
+import '../user.dart';
 import 'group.dart';
 
 class GroupUserSeri {

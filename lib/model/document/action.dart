@@ -1,5 +1,5 @@
 import 'package:yuyan_app/model/document/book.dart';
-import 'package:yuyan_app/model/document/group.dart';
+import 'package:yuyan_app/model/user/group/group.dart';
 import 'package:yuyan_app/model/serializer/serializer.dart';
 
 class ActionSeri {

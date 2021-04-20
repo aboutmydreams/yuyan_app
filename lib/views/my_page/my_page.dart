@@ -4,8 +4,8 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/global/my_controller.dart';
-import 'package:yuyan_app/controller/version_controller.dart';
-import 'package:yuyan_app/model/document/group.dart';
+import 'package:yuyan_app/controller/app/version_controller.dart';
+import 'package:yuyan_app/model/user/group/group.dart';
 import 'package:yuyan_app/views/group_page/group_page.dart';
 import 'package:yuyan_app/views/my_page/widget/user_info_card_widget.dart';
 import 'package:yuyan_app/views/widget/list_helper_widget.dart';
@@ -25,12 +25,6 @@ class _MyPageState extends State<MyPage> {
   void initState() {
     super.initState();
     _controller = ScrollController();
-    // _controller.addListener(() {
-    //   print(_controller.position.pixels);
-    //   if (_controller.position.pixels == _controller.position.maxScrollExtent) {
-    //     // getMoreData();
-    //   }
-    // });
   }
 
   @override

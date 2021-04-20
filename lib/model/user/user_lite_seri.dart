@@ -1,4 +1,4 @@
-import 'package:yuyan_app/model/document/group.dart';
+import 'package:yuyan_app/model/user/group/group.dart';
 
 class UserLiteSeri {
   int id;

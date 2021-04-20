@@ -1,5 +1,5 @@
-import 'package:yuyan_app/model/document/user.dart';
-import 'package:yuyan_app/model/events/user_lite_seri.dart';
+import 'package:yuyan_app/model/user/user.dart';
+import 'package:yuyan_app/model/user/user_lite_seri.dart';
 
 class GroupSeri {
   String workId;

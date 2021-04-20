@@ -1,5 +1,5 @@
-import 'package:yuyan_app/model/document/group.dart';
-import 'package:yuyan_app/model/document/user.dart';
+import 'package:yuyan_app/model/user/group/group.dart';
+import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/model/topic/labels.dart';
 
 import 'collab.dart';

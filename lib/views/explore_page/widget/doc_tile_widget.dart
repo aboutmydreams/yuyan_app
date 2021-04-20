@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/model/document/doc.dart';
-import 'package:yuyan_app/model/document/user.dart';
+import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';

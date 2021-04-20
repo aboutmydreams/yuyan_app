@@ -3,7 +3,7 @@ import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/model/document/commen/comment_detail.dart';
 import 'package:yuyan_app/model/document/doc_detail/doc_detail.dart';
-import 'package:yuyan_app/model/document/user.dart';
+import 'package:yuyan_app/model/user/user.dart';
 
 class DocDetailController extends FetchValueController<DocDetailSeri> {
   final int bookId;

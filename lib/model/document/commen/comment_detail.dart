@@ -1,4 +1,4 @@
-import '../user.dart';
+import '../../user/user.dart';
 
 class CommentDetailSeri {
   int id;

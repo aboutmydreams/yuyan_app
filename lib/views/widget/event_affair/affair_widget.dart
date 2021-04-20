@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
-import 'package:yuyan_app/model/events/book_event_seri.dart';
-import 'package:yuyan_app/model/events/doc_event_seri.dart';
-import 'package:yuyan_app/model/events/event_seri.dart';
-import 'package:yuyan_app/model/events/user_lite_seri.dart';
+import 'package:yuyan_app/model/user/events/book_event_seri.dart';
+import 'package:yuyan_app/model/user/events/doc_event_seri.dart';
+import 'package:yuyan_app/model/user/events/event_seri.dart';
+import 'package:yuyan_app/model/user/user_lite_seri.dart';
 import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
 

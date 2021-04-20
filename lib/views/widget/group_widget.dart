@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
 import 'package:yuyan_app/config/route_manager.dart';
-import 'package:yuyan_app/model/document/group.dart';
+import 'package:yuyan_app/model/user/group/group.dart';
 import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';

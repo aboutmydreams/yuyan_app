@@ -1,5 +1,5 @@
 import 'book.dart';
-import 'user.dart';
+import '../user/user.dart';
 
 class DocSeri {
   int id;

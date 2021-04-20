@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smart_color/smart_color.dart';
 import 'package:yuyan_app/config/route_manager.dart';
-import 'package:yuyan_app/model/document/user.dart';
+import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/model/topic/labels.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
 import 'package:yuyan_app/config/app_ui.dart';

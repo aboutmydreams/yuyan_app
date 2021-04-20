@@ -1,6 +1,6 @@
 import 'package:yuyan_app/model/document/doc.dart';
-import 'package:yuyan_app/model/document/user_profile.dart';
-import 'package:yuyan_app/model/events/user_lite_seri.dart';
+import 'package:yuyan_app/model/user/user_profile.dart';
+import 'package:yuyan_app/model/user/user_lite_seri.dart';
 
 class UserSeri {
   int id;

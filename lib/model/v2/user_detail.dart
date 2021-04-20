@@ -1,4 +1,4 @@
-import 'package:yuyan_app/model/events/user_lite_seri.dart';
+import 'package:yuyan_app/model/user/user_lite_seri.dart';
 
 class UserDetailSeri {
   int id;

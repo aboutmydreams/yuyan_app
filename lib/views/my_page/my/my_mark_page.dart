@@ -5,7 +5,7 @@ import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/model/document/action.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/doc_lite.dart';
-import 'package:yuyan_app/model/events/user_lite_seri.dart';
+import 'package:yuyan_app/model/user/user_lite_seri.dart';
 import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 import 'package:yuyan_app/views/widget/widget_page/nothing_page.dart';

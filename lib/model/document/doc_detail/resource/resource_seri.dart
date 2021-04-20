@@ -1,4 +1,4 @@
-import 'package:yuyan_app/model/document/user.dart';
+import 'package:yuyan_app/model/user/user.dart';
 
 class ResourceSeri {
   int id;

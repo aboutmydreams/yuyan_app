@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/controller/global/organization_controller.dart';
 import 'package:yuyan_app/controller/global/my_controller.dart';
-import 'package:yuyan_app/model/document/organization.dart';
+import 'package:yuyan_app/model/user/org/organization.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/list_helper_widget.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';

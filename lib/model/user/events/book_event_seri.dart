@@ -1,6 +1,6 @@
 import 'package:yuyan_app/model/document/book.dart';
 
-import 'user_lite_seri.dart';
+import '../user_lite_seri.dart';
 
 class BookEventSeri {
   int id;

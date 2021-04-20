@@ -1,6 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:yuyan_app/controller/theme_controller.dart';
+import 'package:yuyan_app/controller/app/theme_controller.dart';
 
 // 白天主题
 class AppColors {

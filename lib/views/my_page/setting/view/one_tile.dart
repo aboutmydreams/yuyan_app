@@ -1,6 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:yuyan_app/controller/theme_controller.dart';
+import 'package:yuyan_app/controller/app/theme_controller.dart';
 import 'package:yuyan_app/config/app_ui.dart';
 
 class SettingTile extends StatelessWidget {

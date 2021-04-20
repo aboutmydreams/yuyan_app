@@ -1,8 +1,8 @@
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/join_token.dart';
-import 'package:yuyan_app/model/events/user_lite_seri.dart';
+import 'package:yuyan_app/model/user/user_lite_seri.dart';
 
-import '../user.dart';
+import '../../user/user.dart';
 import 'pager.dart';
 
 class DocDetailSeri {

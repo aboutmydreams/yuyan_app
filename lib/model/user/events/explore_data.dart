@@ -1,6 +1,6 @@
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/doc.dart';
-import 'package:yuyan_app/model/document/user.dart';
+import 'package:yuyan_app/model/user/user.dart';
 
 class DiscoverRecommendJson {
   List<BookSeri> books;

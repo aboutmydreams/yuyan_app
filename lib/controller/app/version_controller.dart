@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_xupdate/flutter_xupdate.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:yuyan_app/config/app.dart';
-import 'package:yuyan_app/model/version/app_info.dart';
-import 'package:yuyan_app/model/version/update_data.dart';
+import 'package:yuyan_app/model/app/version/app_info.dart';
+import 'package:yuyan_app/model/app/version/update_data.dart';
 import 'package:yuyan_app/util/util.dart';
 
 class VersionController extends GetxController {

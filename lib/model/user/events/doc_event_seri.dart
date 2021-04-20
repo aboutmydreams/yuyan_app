@@ -1,5 +1,5 @@
 
-import 'user_lite_seri.dart';
+import '../user_lite_seri.dart';
 
 class DocEventSeri {
   int id;

@@ -12,7 +12,7 @@ import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
-import 'package:yuyan_app/controller/theme_controller.dart';
+import 'package:yuyan_app/controller/app/theme_controller.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/model/document/toc/toc_seri.dart';
 import 'package:yuyan_app/config/app_ui.dart';

@@ -1,4 +1,4 @@
-import 'user.dart';
+import '../user/user.dart';
 import 'book.dart';
 
 class DocLiteSeri {

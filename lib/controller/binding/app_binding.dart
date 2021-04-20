@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/controller/attend_controller.dart';
-import 'package:yuyan_app/controller/bottom_nav_controller.dart';
+import 'package:yuyan_app/controller/app/bottom_nav_controller.dart';
 import 'package:yuyan_app/controller/explore_controller.dart';
 import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/controller/quick_link_controller.dart';
 import 'package:yuyan_app/controller/recent_controller.dart';
-import 'package:yuyan_app/controller/theme_controller.dart';
-import 'package:yuyan_app/controller/version_controller.dart';
+import 'package:yuyan_app/controller/app/theme_controller.dart';
+import 'package:yuyan_app/controller/app/version_controller.dart';
 
 class AppBinding extends Bindings {
   @override

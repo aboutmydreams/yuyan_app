@@ -2,23 +2,24 @@ import 'package:yuyan_app/config/service/api2_repository.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/model/document/book.dart';
-import 'package:yuyan_app/model/document/group.dart';
+import 'package:yuyan_app/model/user/group/group.dart';
 import 'package:yuyan_app/model/document/group_home/book_stack.dart';
 import 'package:yuyan_app/model/document/note/doclet.dart';
 import 'package:yuyan_app/model/document/note/note.dart';
-import 'package:yuyan_app/model/document/user.dart';
-import 'package:yuyan_app/model/events/event_seri.dart';
+import 'package:yuyan_app/model/user/mine/mine_seri.dart';
+import 'package:yuyan_app/model/user/user.dart';
+import 'package:yuyan_app/model/user/events/event_seri.dart';
 import 'package:yuyan_app/model/v2/user_detail.dart';
 
-class UserInfoController extends FetchValueController<UserDetailSeri> {
+class UserInfoController extends FetchValueController<MineSeri> {
   final int userId;
   final String login;
 
   UserInfoController({this.userId, this.login});
 
   @override
-  Future<UserDetailSeri> fetch() {
-    return Api2Repository.getUserDetail(userId: userId, userLogin: login);
+  Future<MineSeri> fetch() {
+    return ApiRepository.getMineInfo();
   }
 }
 
