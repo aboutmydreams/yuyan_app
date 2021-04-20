@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -92,13 +93,14 @@ class BookDocPage extends StatelessWidget {
 
   Widget buildArt(ArtboardSeri art) {
     var arts = art.artboards; //.take(3).toList();
-    return Card(
+    var child = Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(6),
       ),
       clipBehavior: Clip.hardEdge,
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      child: Padding(
+      child: Container(
+        width: Get.width,
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -108,9 +110,14 @@ class BookDocPage extends StatelessWidget {
               child: Row(
                 children: arts.mapWidget(
                   (item) => Container(
+                    constraints: BoxConstraints(
+                      minHeight: 160,
+                      maxHeight: 160,
+                      maxWidth: 320,
+                    ),
                     height: 160,
-                    child: CachedImageWidget(
-                      url: item.image,
+                    child: CachedNetworkImage(
+                      imageUrl: item.image,
                     ),
                   ),
                 ),
@@ -133,12 +140,20 @@ class BookDocPage extends StatelessWidget {
               style: AppStyles.textStyleB,
             ),
             Text(
-              '更新于：${Util.timeCut(art.updatedAt)}',
+              '更新于：${Util.timeCut(art.updatedAt)} · ${arts.length}张图',
               style: AppStyles.textStyleC,
             ),
           ],
         ),
       ),
+    );
+    return GestureDetector(
+      onTap: () {
+        var user = book.user.login;
+        var slug = book.slug;
+        MyRoute.webview('${Util.baseUrl}/$user/$slug/artboards/${art.id}');
+      },
+      child: child,
     );
   }
 

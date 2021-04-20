@@ -8,6 +8,7 @@ import 'package:flutter_simple_treeview/flutter_simple_treeview.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
@@ -73,6 +74,11 @@ Widget futureBuilder<T>(
 }
 
 class Util {
+  static String get baseUrl {
+    var login = App.currentSpaceProvider.data.login;
+    return 'https://$login.yuque.com';
+  }
+
   static List<Widget> listBuilder<T>({
     List<T> data,
     Widget Function(T) map,
