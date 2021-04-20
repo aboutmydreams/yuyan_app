@@ -10,12 +10,13 @@ import 'package:yuyan_app/model/document/action.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/user/group/group.dart';
 import 'package:yuyan_app/model/document/note/note.dart';
+import 'package:yuyan_app/model/user/mine/mine_seri.dart';
 import 'package:yuyan_app/model/user/org/organization.dart';
 import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
 import 'package:yuyan_app/model/v2/user_detail.dart';
 
-class MyUserProvider extends BaseSaveJson<UserDetailSeri> {
+class MyUserProvider extends BaseSaveJson<MineSeri> {
   OrganizationSeri get defaultSpace {
     return OrganizationSeri(
       name: data.name,
@@ -25,8 +26,8 @@ class MyUserProvider extends BaseSaveJson<UserDetailSeri> {
   }
 
   @override
-  UserDetailSeri convert(json) {
-    return UserDetailSeri.fromJson(json);
+  MineSeri convert(json) {
+    return MineSeri.fromJson(json);
   }
 
   @override
@@ -43,7 +44,7 @@ class MyUserController extends FetchSavableController<MyUserProvider> {
 
   @override
   Future fetchData() {
-    return Api2Repository.getUserDetail();
+    return ApiRepository.getMineInfo();
   }
 }
 
@@ -69,6 +70,11 @@ class MyGroupController extends FetchSavableController<MyGroupProvider> {
   Future fetchData() {
     return ApiRepository.getGroupList();
   }
+
+  @override
+  Future fetchMore() {
+    return ApiRepository.getGroupList();
+  }
 }
 
 class MyFollowingProvider extends BaseSaveListJson<UserSeri> {
@@ -90,9 +96,19 @@ class MyFollowingController
           state: ViewState.loading,
         );
 
+  int get userId => App.userProvider.data.id;
+
   @override
   Future fetchData() {
-    return ApiRepository.getFollowingList(userId: App.userProvider.data.id);
+    return ApiRepository.getFollowingList(userId: userId);
+  }
+
+  @override
+  Future fetchMore() {
+    return ApiRepository.getFollowingList(
+      userId: userId,
+      offset: value.length,
+    );
   }
 }
 
@@ -114,9 +130,19 @@ class MyFollowerController extends FetchSavableController<MyFollowerProvider> {
           state: ViewState.loading,
         );
 
+  int get userId => App.userProvider.data.id;
+
   @override
   Future fetchData() {
-    return ApiRepository.getFollowerList(userId: App.userProvider.data.id);
+    return ApiRepository.getFollowerList(userId: userId);
+  }
+
+  @override
+  Future fetchMore() {
+    return ApiRepository.getFollowerList(
+      userId: userId,
+      offset: value.data.length,
+    );
   }
 }
 

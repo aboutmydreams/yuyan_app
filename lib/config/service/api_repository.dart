@@ -150,7 +150,7 @@ class ApiRepository {
 
   static Future<bool> putNotification({String ids = 'all'}) async {
     var asp = await api.put('/notifications', data: {'ids': ids});
-    return (asp.data as ApiResponse).data['ok'];
+    return (asp.data as ApiResponse).data['ok'] == 1;
   }
 
   static Future<NotificationSeri> getNotificationList(
@@ -196,9 +196,17 @@ class ApiRepository {
     return list;
   }
 
-  static Future<List<GroupSeri>> getGroupList({int userId}) async {
+  static Future<List<GroupSeri>> getGroupList({
+    int userId,
+    int offset = 0,
+  }) async {
     userId ??= App.userProvider.data.id;
-    var res = await api.get("/users/$userId/groups");
+    var res = await api.get(
+      "/users/$userId/groups",
+      queryParameters: {
+        'offset': offset,
+      },
+    );
     var asp = (res.data as ApiResponse);
     var list = (asp.data as List).map((e) => GroupSeri.fromJson(e)).toList();
     return list;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/viewstate/view_page.dart';
 import 'package:yuyan_app/controller/action_controller.dart';
 import 'package:yuyan_app/controller/global/user_controller.dart';
@@ -106,6 +107,8 @@ class _UserPageState extends State<UserPage>
                     onPressed: c.toggle,
                   ),
                 ),
+              ).onlyIf(
+                widget.user.login != App.userProvider.data.login,
               ),
               PopupMenuButton<VoidCallback>(
                 itemBuilder: (_) => [

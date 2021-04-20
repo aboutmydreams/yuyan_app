@@ -277,7 +277,7 @@ abstract class FetchSavableController<T extends BaseSavableJson>
   /// 这里需要自己做好[分页]的管理
   Future fetchMore() => null;
 
-  /// you should override this method instead of [fetch]
+  /// you should override this method instead of fetch
   /// since this method is targeted for `DATA` providers
   Future fetchData();
 

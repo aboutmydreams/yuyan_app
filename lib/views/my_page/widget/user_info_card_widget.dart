@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/global/my_controller.dart';
-import 'package:yuyan_app/model/v2/user_detail.dart';
+import 'package:yuyan_app/model/user/mine/mine_seri.dart';
 import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/list_helper_widget.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class MyInfoCardWidget extends StatelessWidget {
-  final UserDetailSeri info;
+  final MineSeri info;
 
   MyInfoCardWidget({
     Key key,
@@ -36,16 +36,11 @@ class MyInfoCardWidget extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            onTap: () async {
-              // OpenPage.user(
-              //   context,
-              //   login: myInfo.login,
-              //   tag: tag,
-              //   userId: myInfo.id,
-              //   description: myInfo.description,
-              //   name: myInfo.name,
-              //   avatarUrl: myInfo.avatarUrl,
-              // );
+            onTap: () {
+              MyRoute.user(
+                user: info.toUserLite(),
+                heroTag: tag,
+              );
             },
             child: AnimationRowWidget(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -77,7 +72,7 @@ class MyInfoCardWidget extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: AppStyles.textStyleA,
                             ),
-                            // UserMemberIconWidget().onlyIf(inf),
+                            UserMemberIconWidget().onlyIf(info.isPaid),
                           ],
                         ),
                       ),
@@ -106,7 +101,7 @@ class MyInfoCardWidget extends StatelessWidget {
 }
 
 class MyInfoNumberWidget extends StatelessWidget {
-  final UserDetailSeri info;
+  final MineSeri info;
 
   MyInfoNumberWidget({
     Key key,
@@ -194,99 +189,3 @@ class InfoNumberItemWidget extends StatelessWidget {
     );
   }
 }
-
-//
-// Widget userInfo(BuildContext context) {
-//   TheInfo myInfo =
-//       topModel.myInfoManage.myInfoData.data ?? TheInfo(avatarUrl: "");
-//   myInfo.description ??= "笔墨待识君";
-//
-//   double leftMargin = MediaQuery.of(context).size.width * 0.075;
-//   double descriptionWidth =
-//       MediaQuery.of(context).size.width - leftMargin * 3.6 - 95;
-//   String tag = getTag();
-//
-//   return Container(
-//     margin: EdgeInsets.only(
-//         top: 40, left: leftMargin, right: leftMargin, bottom: leftMargin),
-//     padding: EdgeInsets.only(
-//         left: leftMargin * 0.8, right: leftMargin * 0.8, top: 14, bottom: 18),
-//     decoration: BoxDecoration(
-//       color: AppColors.background,
-//       boxShadow: [
-//         BoxShadow(
-//           color: Color.fromARGB(55, 0, 0, 0),
-//           offset: Offset(1, 2),
-//           blurRadius: 4,
-//         ),
-//       ],
-//       borderRadius: BorderRadius.all(Radius.circular(20)),
-//     ),
-//     child: Column(
-//       children: [
-//         GestureDetector(
-//           onTap: () async {
-//             OpenPage.user(
-//               context,
-//               login: myInfo.login,
-//               tag: tag,
-//               userId: myInfo.id,
-//               description: myInfo.description,
-//               name: myInfo.name,
-//               avatarUrl: myInfo.avatarUrl,
-//             );
-//           },
-//           child: aniRow(
-//             crossAxisAlignment: CrossAxisAlignment.center,
-//             mainAxisAlignment: MainAxisAlignment.start,
-//             children: [
-//               SizedBox(width: 16),
-//               Hero(
-//                 tag: tag,
-//                 child: userAvatar(myInfo.avatarUrl, height: 60),
-//               ),
-//               SizedBox(width: 16),
-//               Container(
-//                 height: 84,
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   children: [
-//                     Container(
-//                       height: 33,
-//                       width: descriptionWidth,
-//                       margin: EdgeInsets.only(left: 2),
-//                       child: Row(
-//                         children: [
-//                           Text(
-//                             "${myInfo.name}",
-//                             textAlign: TextAlign.center,
-//                             style: AppStyles.textStyleA,
-//                           ),
-//                           // 会员
-//                           memberIcon(context),
-//                         ],
-//                       ),
-//                     ),
-//                     Container(
-//                       width: descriptionWidth,
-//                       margin: EdgeInsets.only(left: 3),
-//                       child: Text(
-//                         "${myInfo.description}",
-//                         textAlign: TextAlign.left,
-//                         maxLines: 2,
-//                         style: AppStyles.countTextStyle,
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//         Divider(),
-//         InfoCount(),
-//       ],
-//     ),
-//   );
-// }

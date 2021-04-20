@@ -13,7 +13,9 @@ class UserMemberIconWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        MyRoute.webview('https://www.yuque.com/settings/member');
+      },
       child: Container(
         width: 21,
         height: 23,

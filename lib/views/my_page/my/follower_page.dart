@@ -11,10 +11,13 @@ class MyFollowerPage extends FetchRefreshListViewPage<MyFollowerController> {
   @override
   Widget buildChild() {
     var data = controller.value.data;
-    return AnimationListWidget(
+    return ListView.builder(
       itemCount: data.length,
       itemBuilder: (_, i) {
-        return UserFollowTileWidget(user: data[i]);
+        return AnimationChildWidget(
+          index: i,
+          child: UserFollowTileWidget(user: data[i]),
+        );
       },
     );
   }

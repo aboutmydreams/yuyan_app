@@ -11,15 +11,15 @@ import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/model/user/events/event_seri.dart';
 import 'package:yuyan_app/model/v2/user_detail.dart';
 
-class UserInfoController extends FetchValueController<MineSeri> {
+class UserInfoController extends FetchValueController<UserDetailSeri> {
   final int userId;
   final String login;
 
   UserInfoController({this.userId, this.login});
 
   @override
-  Future<MineSeri> fetch() {
-    return ApiRepository.getMineInfo();
+  Future<UserDetailSeri> fetch() {
+    return Api2Repository.getUserDetail(userId: userId, userLogin: login);
   }
 }
 

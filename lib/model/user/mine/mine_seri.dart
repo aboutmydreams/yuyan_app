@@ -1,3 +1,5 @@
+import 'package:yuyan_app/model/user/user_lite_seri.dart';
+
 import 'statistics.dart';
 import 'account.dart';
 import 'profile.dart';
@@ -176,10 +178,12 @@ class MineSeri {
     statistics = json["statistics"] != null
         ? StatisticsSeri.fromJson(json["statistics"])
         : null;
-    account =
-        json["account"] != null ? UserAccountSeri.fromJson(json["account"]) : null;
-    profile =
-        json["profile"] != null ? UserProfileSeri.fromJson(json["profile"]) : null;
+    account = json["account"] != null
+        ? UserAccountSeri.fromJson(json["account"])
+        : null;
+    profile = json["profile"] != null
+        ? UserProfileSeri.fromJson(json["profile"])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -247,5 +251,9 @@ class MineSeri {
       map["profile"] = profile.toJson();
     }
     return map;
+  }
+
+  UserLiteSeri toUserLite() {
+    return UserLiteSeri.fromJson(this.toJson());
   }
 }
