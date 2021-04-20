@@ -44,7 +44,7 @@ class BookDocPage extends StatelessWidget {
   }
 
   Widget _typeBuilder(String type, BookSeri book) {
-    if (['Sheet', 'Book'].contains(type)) {
+    if (['Sheet', 'Book', 'Column'].contains(type)) {
       return GetBuilder<BookDocsController>(
         tag: tag,
         init: BookDocsController(bookId),

@@ -16,7 +16,10 @@ class MyFollowerPage extends FetchRefreshListViewPage<MyFollowerController> {
       itemBuilder: (_, i) {
         return AnimationChildWidget(
           index: i,
-          child: UserFollowTileWidget(user: data[i]),
+          child: UserFollowTileWidget(
+            user: data[i],
+            hideButton: false,
+          ),
         );
       },
     );
