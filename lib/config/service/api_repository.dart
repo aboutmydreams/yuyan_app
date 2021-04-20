@@ -250,6 +250,35 @@ class ApiRepository {
     return Tuple2.fromList([data, asp]);
   }
 
+  static Future<ApiResponse> getResources({
+    int bookId,
+    int parentId,
+    int offset = 0,
+  }) async {
+    var res = await api.get(
+      '/resources',
+      queryParameters: {
+        'book_id': bookId,
+        'parent_id': parentId,
+        'offset': offset,
+      },
+    );
+    return (res.data as ApiResponse);
+  }
+
+  static Future<ApiResponse> getResourceParents({
+    int resourceId,
+    int level = 3,
+  }) async {
+    var res = await api.get(
+      '/resources/$resourceId/parents',
+      queryParameters: {
+        'level': level,
+      },
+    );
+    return (res.data as ApiResponse);
+  }
+
   static Future<List<BookSeri>> getOrgBookList({
     int orgId,
     int limit = 200,

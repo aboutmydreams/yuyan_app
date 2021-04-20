@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/controller/quick_link_controller.dart';
 import 'package:yuyan_app/controller/recent_controller.dart';
-import 'package:yuyan_app/models/net/requests_api/doc/data/all_doc_book_data.dart';
-import 'package:yuyan_app/models/net/requests_api/doc/doc.dart';
 import 'package:yuyan_app/views/dashboard/small_note/quick_view.dart';
 import 'package:yuyan_app/views/dashboard/recent/recent_page.dart';
 import 'package:yuyan_app/views/widget/org_space_widget.dart';
@@ -18,20 +16,6 @@ class MyDashBoardPage extends StatefulWidget {
 }
 
 class _MyDashBoardPageState extends State<MyDashBoardPage> {
-  AllDocBookJson allDocBookJson;
-
-  @override
-  void initState() {
-    super.initState();
-    // getEditable();
-  }
-
-  getEditable() async {
-    AllDocBookJson _books = await DioDoc.getAllDocBook();
-    setState(() {
-      allDocBookJson = _books;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

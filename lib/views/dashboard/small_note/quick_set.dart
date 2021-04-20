@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:yuyan_app/controller/quick_link_controller.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/config/app_ui.dart';
-import 'package:yuyan_app/models/widgets_small/user_avatar.dart';
 import 'package:yuyan_app/util/util.dart';
+import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class QuickSetPage extends StatelessWidget {
   const QuickSetPage({Key key}) : super(key: key);
@@ -90,7 +90,10 @@ class _QuickSetItemWidget extends StatelessWidget {
           children: <Widget>[
             Container(
               margin: EdgeInsets.all(10),
-              child: userAvatar(imageUrl, height: 50),
+              child: UserAvatarWidget(
+                avatar: imageUrl,
+                height: 50,
+              ),
             ),
             Text(
               data.title,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/config/viewstate/view_page.dart';
 import 'package:yuyan_app/controller/global/my_controller.dart';
-import 'package:yuyan_app/models/widgets_small/nothing.dart';
 import 'package:yuyan_app/views/widget/list_helper_widget.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
+import 'package:yuyan_app/views/widget/widget_page/nothing_page.dart';
 
 class MyFollowerPage extends FetchRefreshListViewPage<MyFollowerController> {
   MyFollowerPage() : super(title: '关注我的');

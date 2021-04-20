@@ -1,5 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
@@ -10,6 +8,33 @@ import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/image_widget.dart';
 
 import 'follow_button_widget.dart';
+
+class UserMemberIconWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        width: 21,
+        height: 23,
+        margin: EdgeInsets.only(left: 13),
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromARGB(20, 0, 0, 0),
+              offset: Offset(0, 2),
+              blurRadius: 6,
+            ),
+          ],
+        ),
+        child: Image.asset(
+          "assets/images/my_page/member.png",
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+}
 
 class UserTileWidget extends StatelessWidget {
   final UserLiteSeri user;

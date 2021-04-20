@@ -7,7 +7,6 @@ import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/controller/document/doc_controller.dart';
 import 'package:yuyan_app/controller/topic/topic_controller.dart';
 import 'package:yuyan_app/model/document/commen/comment_detail.dart';
-import 'package:yuyan_app/models/widgets_small/show_dialog/show_confirm.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/topic_page/topic_detail_page.dart';
 
@@ -47,7 +46,7 @@ class _DocCommentsWidgetState extends State<DocCommentsWidget> {
 
   void _onDeleteComment(DocCommentsController c, CommentDetailSeri data) {
     if (data.userId == App.userProvider.data.id) {
-      showConfirmDialog(
+      Util.showConfirmDialog(
         context,
         content: '删除这条评论吗?',
         confirmCallback: () {

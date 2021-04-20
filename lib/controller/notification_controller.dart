@@ -1,11 +1,9 @@
-import 'package:get/get.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/model/notification/notification.dart';
 import 'package:yuyan_app/model/notification/notification_item.dart';
-import 'package:yuyan_app/util/util.dart';
 
 abstract class NotificationProvider
     extends BaseSaveListJson<NotificationItemSeri> {

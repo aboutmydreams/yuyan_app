@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:yuyan_app/config/service/api2_repository.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';

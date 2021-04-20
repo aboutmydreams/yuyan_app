@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:yuyan_app/controller/theme_controller.dart';
 import 'package:yuyan_app/controller/version_controller.dart';
-import 'package:yuyan_app/models/widgets_small/show_dialog/show_confirm.dart';
+import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/entry_page/login/login_page.dart';
 import 'package:yuyan_app/views/my_page/setting/view/one_tile.dart';
 
@@ -49,7 +49,7 @@ class _SettingPageState extends State<SettingPage> {
             title: '退出登录',
             icon: Icons.power_settings_new,
             onTap: () async {
-              showConfirmDialog(context, content: "确认要退出登录 ?",
+              Util.showConfirmDialog(context, content: "确认要退出登录 ?",
                   confirmCallback: () async {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 prefs.clear();

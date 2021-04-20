@@ -9,7 +9,6 @@ import 'package:yuyan_app/model/document/commen/comment_detail.dart';
 import 'package:yuyan_app/model/document/user.dart';
 import 'package:yuyan_app/model/topic/topic_detail_seri.dart';
 import 'package:yuyan_app/config/app_ui.dart';
-import 'package:yuyan_app/models/widgets_small/show_dialog/show_confirm.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/drop_menu_item_widget.dart';
 import 'package:yuyan_app/views/widget/lake/lake_mention_widget.dart';
@@ -258,7 +257,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
                   },
                   onLongPressed: () {
                     if (e.userId == App.userProvider.data.id) {
-                      showConfirmDialog(
+                      Util.showConfirmDialog(
                         context,
                         content: '删除这条评论吗?',
                         confirmCallback: () {

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/app_ui.dart';
-import 'package:yuyan_app/controller/explore_controller.dart';
 import 'package:yuyan_app/controller/global/organization_controller.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/explore_page/widget/book_tile_widget.dart';
