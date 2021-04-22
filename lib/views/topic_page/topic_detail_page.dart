@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
@@ -11,6 +12,7 @@ import 'package:yuyan_app/model/topic/topic_detail_seri.dart';
 import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/drop_menu_item_widget.dart';
+import 'package:yuyan_app/views/widget/editor/comment_widget.dart';
 import 'package:yuyan_app/views/widget/lake/lake_mention_widget.dart';
 import 'package:yuyan_app/views/widget/lake/lake_render_widget.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
@@ -46,138 +48,93 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
     );
   }
 
-  _buildCommentButton(int commentId, [int reply]) {
-    return GetBuilder<CommentPostController>(
-      init: CommentPostController(commentId),
-      tag: tag,
-      builder: (c) {
-        if (c.isLoadingState) {
-          return SizedBox(
-            width: 18,
-            height: 18,
-            child: CircularProgressIndicator(),
-          );
-        }
-        return TextButton(
-          onPressed: () {
-            if (_textController.text.trim().isNotEmpty) {
-              c.postComment(
-                parentId: reply,
-                comment: _textController.text,
-                success: () {
-                  var comments = Get.find<TopicCommentsController>(tag: tag);
-                  comments.onRefresh();
-                  _textController.text = '';
-                  if (Get.isBottomSheetOpen) {
-                    Get.back();
-                  }
-                  if (Get.focusScope.hasFocus) {
-                    Get.focusScope.unfocus();
-                  }
-                  BotToast.showText(text: '成功');
-                },
-                error: () {
-                  BotToast.showText(text: '${c.error.content}');
-                },
-              );
-            }
-          },
-          child: Text(
-            reply != null ? '回复' : '评论',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.blue,
-            ),
-          ),
-        );
-      },
-    );
-  }
+  // _buildCommentButton(int commentId, [int reply]) {
+  //   return GetBuilder<CommentPostController>(
+  //     init: CommentPostController(commentId),
+  //     tag: tag,
+  //     builder: (c) {
+  //       if (c.isLoadingState) {
+  //         return SizedBox(
+  //           width: 18,
+  //           height: 18,
+  //           child: CircularProgressIndicator(),
+  //         );
+  //       }
+  //       return TextButton(
+  //         onPressed: () {
+  //           if (_textController.text.trim().isNotEmpty) {
+  //             c.postComment(
+  //               parentId: reply,
+  //               comment: _textController.text,
+  //               success: () {
+  //                 var comments = Get.find<TopicCommentsController>(tag: tag);
+  //                 comments.onRefresh();
+  //                 _textController.text = '';
+  //                 if (Get.isBottomSheetOpen) {
+  //                   Get.back();
+  //                 }
+  //                 if (Get.focusScope.hasFocus) {
+  //                   Get.focusScope.unfocus();
+  //                 }
+  //                 BotToast.showText(text: '成功');
+  //               },
+  //               error: () {
+  //                 BotToast.showText(text: '${c.error.content}');
+  //               },
+  //             );
+  //           }
+  //         },
+  //         child: Text(
+  //           reply != null ? '回复' : '评论',
+  //           style: TextStyle(
+  //             fontSize: 16,
+  //             fontWeight: FontWeight.bold,
+  //             color: Colors.blue,
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   _openBottomSheet([int reply, String replyHint]) async {
-    // var postController = CommentPostController(commentId);
-    // var reply = data != null;
-    // showMaterialModalBottomSheet(
-    //   context: context,
-    //   backgroundColor: Colors.transparent,
-    //   builder: (_) => CommentModalSheet(
-    //     hintText: reply ? '回复：${data.user.name}' : null,
-    //     onPublish: (mark) async {
-    //       if (mark.trim().isEmpty) {
-    //         Util.toast('说点什么吗？');
-    //         return false;
-    //       }
-    //       var success = false;
-    //       await postController.safeHandler(() async {
-    //         await postController.postComment(
-    //           parentId: reply ? data.userId : null,
-    //           comment: mark,
-    //           convert: true,
-    //           success: () {
-    //             success = true;
-    //             Util.toast('🎉 成功');
-    //           },
-    //           error: () {
-    //             Util.toast('💔 失败');
-    //           },
-    //         );
-    //       });
-    //       return success;
-    //     },
-    //   ),
-    // ).then((_) {
-    //   c.onRefresh();
-    // });
-    await Get.bottomSheet(
-      Container(
-        decoration: BoxDecoration(
-          color: Get.theme.scaffoldBackgroundColor.withOpacity(0.9),
-          borderRadius: BorderRadius.vertical(top: Radius.circular(14)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(height: 8),
-            TextField(
-              maxLines: null,
-              autofocus: true,
-              controller: _textController,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.zero,
-                hintText: replyHint ?? _hintText,
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                border: InputBorder.none,
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              alignment: Alignment.centerRight,
-              child: _buildCommentButton(_commentId, reply),
-            ),
-          ],
-        ),
+    var postController = CommentPostController(_commentId);
+    showMaterialModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (_) => CommentModalSheet(
+        hintText: replyHint,
+        onPublish: (mark) async {
+          if (mark.trim().isEmpty) {
+            Util.toast('说点什么吗？');
+            return false;
+          }
+          var success = false;
+          await postController.safeHandler(() async {
+            await postController.postComment(
+              parentId: reply,
+              comment: mark,
+              convert: true,
+              success: () {
+                success = true;
+                Util.toast('🎉 成功');
+              },
+              error: () {
+                Util.toast('💔 失败');
+              },
+            );
+          });
+          return success;
+        },
       ),
-    );
-    Future.delayed(Duration(milliseconds: 10), () {
-      Get.focusScope.unfocus();
+    ).then((_) {
+      var comments = Get.find<TopicCommentsController>(tag: tag);
+      comments.onRefresh();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // var _textEditor = TextField(
-    //   controller: _textController,
-    //   maxLines: null,
-    //   decoration: InputDecoration(
-    //     contentPadding: EdgeInsets.zero,
-    //     hintText: _hintText,
-    //     floatingLabelBehavior: FloatingLabelBehavior.never,
-    //     border: InputBorder.none,
-    //   ),
-    //   onTap: _openBottomSheet,
-    // );
-
     return Scaffold(
       appBar: AppBar(
         title: Text('话题详情'),
@@ -223,46 +180,63 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
         tag: tag,
         builder: (c) => c.stateBuilder(onIdle: () {
           _commentId = c.value.id;
-          return Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      TopicDescWidget(data: c.value),
-                      _buildCommentList(c.value.id),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.only(top: 0, left: 16),
-                decoration: BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                      color: Colors.grey.withOpacity(0.5),
-                      width: 0.5,
+          return RefreshIndicator(
+            onRefresh: () async {
+              var comments = Get.find<TopicCommentsController>(tag: tag);
+              await comments.onRefresh();
+              return c.onRefresh();
+            },
+            child: Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        TopicDescWidget(data: c.value),
+                        _buildCommentList(c.value.id),
+                      ],
                     ),
                   ),
                 ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: _openBottomSheet,
-                        child: Container(
-                          child: Text(
-                            _hintText,
-                            style: AppStyles.textStyleC,
+                Container(
+                  padding: const EdgeInsets.only(top: 0, left: 16),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(
+                        color: Colors.grey.withOpacity(0.5),
+                        width: 0.5,
+                      ),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: _openBottomSheet,
+                          child: Container(
+                            child: Text(
+                              _hintText,
+                              style: AppStyles.textStyleC,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    _buildCommentButton(c.value.id),
-                  ],
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          '回复',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         }),
       ),
