@@ -1,13 +1,25 @@
+import 'dart:convert';
+import 'dart:math';
+
+import 'package:delta_markdown/delta_markdown.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:flutter_quill/widgets/controller.dart';
+import 'package:flutter_quill/widgets/editor.dart';
+import 'package:flutter_quill/widgets/toolbar.dart';
 import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/global/my_controller.dart';
 import 'package:yuyan_app/controller/app/version_controller.dart';
 import 'package:yuyan_app/model/user/group/group.dart';
+import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/group_page/group_page.dart';
 import 'package:yuyan_app/views/my_page/widget/user_info_card_widget.dart';
+import 'package:yuyan_app/views/widget/editor/comment_widget.dart';
 import 'package:yuyan_app/views/widget/list_helper_widget.dart';
 import 'package:yuyan_app/views/widget/setting_item_widget.dart';
 
@@ -159,16 +171,19 @@ class _SettingListWidget extends StatelessWidget {
         if (kDebugMode)
           GestureDetector(
             onTap: () {
-              final avatarUrl =
-                  "https://cdn.nlark.com/yuque/0/2020/png/164272/1581178391840-avatar/dfd33ab4-7115-4fce-b504-faeb9d3ca24d.png";
-              Get.to(GroupPage(
-                group: GroupSeri(
-                  id: 2616655,
-                  name: "Redhome",
-                  description: "没有内容的哦",
-                  avatarUrl: avatarUrl,
-                ),
-              ));
+              Get.to(
+                () => CommentPageTest(),
+              );
+              // final avatarUrl =
+              //     "https://cdn.nlark.com/yuque/0/2020/png/164272/1581178391840-avatar/dfd33ab4-7115-4fce-b504-faeb9d3ca24d.png";
+              // Get.to(GroupPage(
+              //   group: GroupSeri(
+              //     id: 2616655,
+              //     name: "Redhome",
+              //     description: "没有内容的哦",
+              //     avatarUrl: avatarUrl,
+              //   ),
+              // ));
             },
             child: AbsorbPointer(
               child: SettingItemWidget(
@@ -178,6 +193,36 @@ class _SettingListWidget extends StatelessWidget {
             ),
           ),
       ],
+    );
+  }
+}
+
+class CommentPageTest extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('AppBar'),
+      ),
+      resizeToAvoidBottomInset: false,
+      body: Center(
+        child: TextButton(
+          onPressed: () {
+            showMaterialModalBottomSheet(
+              context: context,
+              useRootNavigator: true,
+              backgroundColor: Colors.transparent,
+              builder: (_) => CommentModalSheet(
+                onPublish: (mark) async {
+                  debugPrint('result: $mark');
+                  return false;
+                },
+              ),
+            );
+          },
+          child: Text('Comment'),
+        ),
+      ),
     );
   }
 }

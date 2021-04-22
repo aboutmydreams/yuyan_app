@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
@@ -9,6 +10,7 @@ import 'package:yuyan_app/controller/topic/topic_controller.dart';
 import 'package:yuyan_app/model/document/commen/comment_detail.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/topic_page/topic_detail_page.dart';
+import 'package:yuyan_app/views/widget/editor/comment_widget.dart';
 
 class DocCommentsWidget extends StatefulWidget {
   final String tag;
@@ -29,18 +31,37 @@ class _DocCommentsWidgetState extends State<DocCommentsWidget> {
 
   void _onReplyTo(DocCommentsController c, CommentDetailSeri data) {
     var postController = Get.find<CommentPostController>(tag: widget.tag);
-    Get.bottomSheet(
-      ReplyBottomSheetWidget(
-        replyTo: data.id,
-        hintText: '回复：${data.user.name}',
-        postController: postController,
-        editingController: _editController,
+    var reply = data != null;
+    showMaterialModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (_) => CommentModalSheet(
+        hintText: reply ? '回复：${data.user.name}' : null,
+        onPublish: (mark) async {
+          if (mark.trim().isEmpty) {
+            Util.toast('说点什么吗？');
+            return false;
+          }
+          var success = false;
+          await postController.safeHandler(() async {
+            await postController.postComment(
+              parentId: reply ? data.userId : null,
+              comment: mark,
+              convert: true,
+              success: () {
+                success = true;
+                Util.toast('🎉 成功');
+              },
+              error: () {
+                Util.toast('💔 失败');
+              },
+            );
+          });
+          return success;
+        },
       ),
-    ).then((value) {
+    ).then((_) {
       c.onRefresh();
-      Future.delayed(Duration(milliseconds: 10), () {
-        Get.focusScope.unfocus();
-      });
     });
   }
 
@@ -71,15 +92,29 @@ class _DocCommentsWidgetState extends State<DocCommentsWidget> {
       resizeToAvoidBottomInset: true,
       body: GetBuilder<DocCommentsController>(
         tag: widget.tag,
-        builder: (c) => Container(
-          margin: EdgeInsets.only(top: 8),
-          child: Stack(
-            children: [
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                child: Container(
+        builder: (c) {
+          final commentWidget = c.stateBuilder(
+            onIdle: () => Scrollbar(
+              child: ListView(
+                physics: ClampingScrollPhysics(),
+                controller: widget.scrollController,
+                children: c.comments.mapWidget(
+                  (data) => CommentDetailItemWidget(
+                    current: data,
+                    comments: c.comments,
+                    onTap: () => _onReplyTo(c, data),
+                    onLongPressed: () => _onDeleteComment(c, data),
+                  ),
+                ),
+              ),
+            ),
+          );
+          return Container(
+            margin: EdgeInsets.only(top: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
                   padding: const EdgeInsets.only(
                     left: 16,
                     bottom: 4,
@@ -89,50 +124,22 @@ class _DocCommentsWidgetState extends State<DocCommentsWidget> {
                     style: AppStyles.textStyleBp,
                   ),
                 ),
-              ),
-              Positioned(
-                top: 32,
-                left: 0,
-                right: 0,
-                bottom: 70,
-                child: c.stateBuilder(
-                  onIdle: () => Scrollbar(
-                    child: ListView(
-                      physics: ClampingScrollPhysics(),
-                      controller: widget.scrollController,
-                      children: c.comments.mapWidget(
-                        (data) => CommentDetailItemWidget(
-                          key: Key('comment-${data.id}'),
-                          current: data,
-                          comments: c.comments,
-                          onTap: () => _onReplyTo(c, data),
-                          onLongPressed: () => _onDeleteComment(c, data),
-                        ),
-                      ),
-                      // itemCount: c.comments.length,
-                      // itemBuilder: (BuildContext context, int index) {
-                      //   var data = c.comments[index];
-                      //   return CommentDetailItemWidget(
-                      //     key: Key('comment-$index'),
-                      //     current: data,
-                      //     comments: c.comments,
-                      //     onTap: () => _onReplyTo(c, data),
-                      //     onLongPressed: () => _onDeleteComment(c, data),
-                      //   );
-                      // },
+                Expanded(
+                  child: commentWidget.onlyIf(
+                    !GetUtils.isNullOrBlank(c.comments),
+                    elseif: () => Text(
+                      '还没有人评论呢！\n'
+                      '来做第一个评论的吧',
+                      style: AppStyles.textStyleC,
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),
-              ),
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: _buildCommentEditor(c),
-              ),
-            ],
-          ),
-        ),
+                _buildCommentEditor(c),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -150,17 +157,23 @@ class _DocCommentsWidgetState extends State<DocCommentsWidget> {
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Expanded(
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 12,
-                  horizontal: 12,
-                ),
-                child: CommentTextField(
-                  maxLines: null,
-                  controller: _editController,
+              child: GestureDetector(
+                onTap: () => _onReplyTo(c, null),
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.grey.withOpacity(0.5),
+                    ),
+                  ),
+                  margin: const EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(6),
+                  child: Text(
+                    '说点什么吧...',
+                    style: AppStyles.textStyleC,
+                  ),
                 ),
               ),
             ),

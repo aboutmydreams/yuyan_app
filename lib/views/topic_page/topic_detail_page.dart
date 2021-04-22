@@ -96,6 +96,39 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
   }
 
   _openBottomSheet([int reply, String replyHint]) async {
+    // var postController = CommentPostController(commentId);
+    // var reply = data != null;
+    // showMaterialModalBottomSheet(
+    //   context: context,
+    //   backgroundColor: Colors.transparent,
+    //   builder: (_) => CommentModalSheet(
+    //     hintText: reply ? '回复：${data.user.name}' : null,
+    //     onPublish: (mark) async {
+    //       if (mark.trim().isEmpty) {
+    //         Util.toast('说点什么吗？');
+    //         return false;
+    //       }
+    //       var success = false;
+    //       await postController.safeHandler(() async {
+    //         await postController.postComment(
+    //           parentId: reply ? data.userId : null,
+    //           comment: mark,
+    //           convert: true,
+    //           success: () {
+    //             success = true;
+    //             Util.toast('🎉 成功');
+    //           },
+    //           error: () {
+    //             Util.toast('💔 失败');
+    //           },
+    //         );
+    //       });
+    //       return success;
+    //     },
+    //   ),
+    // ).then((_) {
+    //   c.onRefresh();
+    // });
     await Get.bottomSheet(
       Container(
         decoration: BoxDecoration(
@@ -133,17 +166,17 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    var _textEditor = TextField(
-      controller: _textController,
-      maxLines: null,
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.zero,
-        hintText: _hintText,
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-        border: InputBorder.none,
-      ),
-      onTap: _openBottomSheet,
-    );
+    // var _textEditor = TextField(
+    //   controller: _textController,
+    //   maxLines: null,
+    //   decoration: InputDecoration(
+    //     contentPadding: EdgeInsets.zero,
+    //     hintText: _hintText,
+    //     floatingLabelBehavior: FloatingLabelBehavior.never,
+    //     border: InputBorder.none,
+    //   ),
+    //   onTap: _openBottomSheet,
+    // );
 
     return Scaffold(
       appBar: AppBar(
@@ -203,7 +236,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(top: 8, left: 8),
+                padding: const EdgeInsets.only(top: 0, left: 16),
                 decoration: BoxDecoration(
                   border: Border(
                     top: BorderSide(
@@ -214,7 +247,17 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
                 ),
                 child: Row(
                   children: [
-                    Expanded(child: _textEditor),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: _openBottomSheet,
+                        child: Container(
+                          child: Text(
+                            _hintText,
+                            style: AppStyles.textStyleC,
+                          ),
+                        ),
+                      ),
+                    ),
                     _buildCommentButton(c.value.id),
                   ],
                 ),
@@ -238,6 +281,7 @@ class _TopicDetailPageState extends State<TopicDetailPage> {
         ),
         onIdle: () {
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
                 margin: EdgeInsets.only(left: 16, top: 20, bottom: 2),
@@ -314,7 +358,8 @@ class _CommentDetailItemWidgetState extends State<CommentDetailItemWidget> {
     super.initState();
     if (widget.current.parentId != null) {
       parent = widget.comments
-          .firstWhere((item) => item.id == widget.current.parentId, orElse: null)
+          .firstWhere((item) => item.id == widget.current.parentId,
+              orElse: () => null) // 这个 orElse 坑死我了orz
           ?.user;
     }
   }

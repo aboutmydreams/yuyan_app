@@ -426,7 +426,8 @@ extension ListEx<T> on List<T> {
       return [onEmpty];
     }
     if (!divide) {
-      return this.map(map).toList();
+      var list = this.map(map).toList();
+      return list;
     }
     var list = <Widget>[];
     this.forEach((item) {

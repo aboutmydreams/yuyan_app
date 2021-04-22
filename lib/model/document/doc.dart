@@ -1,3 +1,5 @@
+import 'package:yuyan_app/model/serializer/serializer.dart';
+
 import 'book.dart';
 import '../user/user.dart';
 
@@ -32,7 +34,7 @@ class DocSeri {
   int wordCount;
   String selectedAt;
   dynamic pinnedAt;
-  Map meta;
+  Serializer meta;
   BookSeri book;
   UserSeri user;
   dynamic lastEditor;
@@ -111,7 +113,7 @@ class DocSeri {
     wordCount = json["word_count"];
     selectedAt = json["selected_at"];
     pinnedAt = json["pinned_at"];
-    meta = json["meta"];
+    meta = Serializer.fromJson(json["meta"]);
     book = json["book"] != null ? BookSeri.fromJson(json["book"]) : null;
     user = json["user"] != null ? UserSeri.fromJson(json["user"]) : null;
     lastEditor = json["last_editor"];
@@ -152,7 +154,7 @@ class DocSeri {
     map["word_count"] = wordCount;
     map["selected_at"] = selectedAt;
     map["pinned_at"] = pinnedAt;
-    map["meta"] = meta;
+    map["meta"] = meta.raw;
     if (book != null) {
       map["book"] = book.toJson();
     }

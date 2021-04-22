@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_state_widget.dart';
 import 'package:yuyan_app/controller/global/upload_controller.dart';
+import 'package:yuyan_app/util/util.dart';
 
 class SmallNoteEditor extends StatefulWidget {
   @override
@@ -87,7 +88,7 @@ class _SmallNoteEditorState extends State<SmallNoteEditor> {
             debugPrint('发布');
             var delta = _controller.document.toDelta();
             var res = await pub.postNote(delta);
-            BotToast.showText(text: res ? '发布成功' : '发布失败');
+            Util.toast(res ? '发布成功' : '发布失败');
             if (res) Get.back();
           },
           icon: Icon(

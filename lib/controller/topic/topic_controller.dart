@@ -4,6 +4,7 @@ import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/model/document/commen/comment_detail.dart';
 import 'package:yuyan_app/model/topic/topic_detail_seri.dart';
+import 'package:yuyan_app/util/util.dart';
 
 class TopicDetailController extends FetchValueController<TopicDetailSeri> {
   final int iid;
@@ -67,15 +68,26 @@ class CommentPostController extends FetchValueController<CommentDetailSeri> {
     int parentId,
     VoidCallback success,
     VoidCallback error,
+    bool convert = false,
   }) async {
     _comment = comment;
     _parentId = parentId;
+    if (convert) {
+      _comment = await ApiRepository.convertLake(
+        markdown: comment,
+      );
+    }
     await onRefresh(force: true);
     if (isErrorState) {
       error?.call();
     } else {
       success?.call();
     }
+  }
+
+  @override
+  onError() {
+    Util.toast('出错了：${error.content}');
   }
 
   @override

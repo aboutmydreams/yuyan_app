@@ -8,6 +8,7 @@ import 'package:share_extend/share_extend.dart';
 import 'package:yuyan_app/config/app_ui.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
+import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/config/viewstate/view_state_widget.dart';
 import 'package:yuyan_app/controller/document/doc_controller.dart';
 import 'package:yuyan_app/model/user/user.dart';
@@ -305,61 +306,66 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
         onError: (err) => Text('${err.title}'),
         onIdle: () {
           Get.lazyPut(() => DocCommentsController(detail.value.id), tag: tag);
-          return GetBuilder<DocCommentsController>(
+          final commentBar = GetBuilder<DocCommentsController>(
             tag: tag,
             builder: (c) => c.stateBuilder(
               onLoading: SizedBox.shrink(),
               onEmpty: SizedBox.shrink(),
-              onError: (err) => Text('${err.title}'),
-              onIdle: () => Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.only(left: 20, right: 20),
-                decoration: BoxDecoration(
-                  color: AppColors.background,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color.fromARGB(25, 0, 0, 0),
-                      offset: Offset(1, 2),
-                      blurRadius: 4,
-                    ),
-                  ],
+              onIdle: () => __commentInfo(c),
+              onError: (err) {
+                if (err.type == ViewErrorType.api) {
+                  return __commentInfo(c);
+                }
+                return Text('${err.title}');
+              },
+            ),
+          );
+
+          return Container(
+            height: 60,
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.only(left: 20, right: 20),
+            decoration: BoxDecoration(
+              color: AppColors.background,
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromARGB(25, 0, 0, 0),
+                  offset: Offset(1, 2),
+                  blurRadius: 4,
                 ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: __commentInfo(c),
+              ],
+            ),
+            child: Row(
+              children: [
+                Expanded(child: commentBar),
+                LikeAnimButtonWidget(
+                  initValue: ApiRepository.getIfLike(
+                    targetId: detail.value.id,
+                    targetType: 'Doc',
+                  ),
+                  onTap: (value) => _handleAction(
+                    ApiRepository.doLike(
+                      target: detail.value.id,
+                      type: 'Doc',
+                      unlike: !value,
                     ),
-                    LikeAnimButtonWidget(
-                      initValue: ApiRepository.getIfLike(
-                        targetId: detail.value.id,
-                        targetType: 'Doc',
-                      ),
-                      onTap: (value) => _handleAction(
-                        ApiRepository.doLike(
-                          target: detail.value.id,
-                          type: 'Doc',
-                          unlike: !value,
-                        ),
-                      ),
-                    ),
-                    StarAnimButtonWidget(
-                      key: Key('star_anim_button'),
-                      initValue: ApiRepository.getIfMark(
-                        targetId: detail.value.id,
-                        targetType: 'Doc',
-                      ),
-                      onTap: (value) => _handleAction(
-                        ApiRepository.toggleMark(
-                          targetId: detail.value.id,
-                          targetType: 'Doc',
-                          marked: !value,
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                StarAnimButtonWidget(
+                  key: Key('star_anim_button'),
+                  initValue: ApiRepository.getIfMark(
+                    targetId: detail.value.id,
+                    targetType: 'Doc',
+                  ),
+                  onTap: (value) => _handleAction(
+                    ApiRepository.toggleMark(
+                      targetId: detail.value.id,
+                      targetType: 'Doc',
+                      marked: !value,
+                    ),
+                  ),
+                ),
+              ],
             ),
           );
         },
@@ -381,7 +387,9 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
   Widget __commentInfo(DocCommentsController c) {
     return GestureDetector(
       onTap: () {
-        //TODO(@dreamer2q): open comments modal sheet if possible
+        if (GetUtils.isNullOrBlank(c.value?.meta)) {
+          return;
+        }
         showBarModalBottomSheet(
           context: context,
           builder: (_) {
@@ -403,8 +411,8 @@ class _DocDetailWebviewPageState extends State<DocDetailWebviewPage> {
             ),
           ),
           Text(
-            "知识库不支持评论".onlyIf(
-              GetUtils.isNull(c.value.meta),
+            "评论已关闭".onlyIf(
+              GetUtils.isNull(c.value?.meta),
               elseif: () => "${c.comments.length} 人评论 说点什么呢⋯⋯",
             ),
             style: TextStyle(

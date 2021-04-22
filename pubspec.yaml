@@ -24,11 +24,11 @@ dependencies:
   font_awesome_flutter: ^8.7.0
 
   # 富文本编辑器, Bug多多
-  zefyr:
-    git:
-      url: https://github.com/dreamer2q/zefyr.git
-      ref: nullsafety
-      path: packages/zefyr
+  # zefyr:
+  #  git:
+  #    url: https://github.com/dreamer2q/zefyr.git
+  #    ref: nullsafety
+  #    path: packages/zefyr
 
   notus: 1.0.0-dev.4.0
 

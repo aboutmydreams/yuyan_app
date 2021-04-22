@@ -583,12 +583,16 @@ class ApiRepository {
     String comment,
     int parentId,
     String commentType = 'Topic',
+    bool lake = false,
   }) async {
+    if (!lake) {
+      comment = "<!doctype lake><p>$comment</p>";
+    }
     var data = {
       "commentable_type": commentType,
       "commentable_id": commentId,
       "parent_id": parentId,
-      "body_asl": "<!doctype lake><p>$comment</p>",
+      "body_asl": comment,
       "format": "lake"
     };
     var res = await api.post("/comments", data: data);
@@ -794,8 +798,8 @@ class ApiRepository {
     Map<String, dynamic> query = {
       "type": type,
       "ctoken": App.tokenProvider.data.cToken,
-      "attachable_id": attachableId,
-      "attachable_type": attachableType,
+      "attachable_id": attachableId ?? '',
+      "attachable_type": attachableType ?? '',
     };
     var image = await MultipartFile.fromFile(path, filename: name);
     FormData formData = FormData.fromMap({"file": image});
