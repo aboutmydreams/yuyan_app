@@ -1,6 +1,7 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:package_info/package_info.dart';
-import 'package:webview_flutter/webview_flutter.dart' as web;
+// import 'package:webview_flutter/webview_flutter.dart' as web;
 import 'package:yuyan_app/config/net/token.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/controller/global/organization_controller.dart';
@@ -10,6 +11,7 @@ class App {
   static TokenProvider tokenProvider = TokenProvider();
   static CurrSpaceProvider currentSpaceProvider = CurrSpaceProvider();
   static MyUserProvider userProvider = MyUserProvider();
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
 
   static PackageInfo version;
 

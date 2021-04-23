@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -30,6 +32,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("build again!");
+
+    App.analytics.logEvent(
+      name: 'dev_myapp',
+      parameters: {
+        "a": 1,
+      },
+    );
+
+    App.analytics.logAppOpen();
+
     return GetMaterialApp(
       title: '语燕',
       initialRoute: RouteName.splash,
@@ -39,6 +51,7 @@ class MyApp extends StatelessWidget {
       // darkTheme: ThemeData.dark(),
       navigatorObservers: <NavigatorObserver>[
         BotToastNavigatorObserver(),
+        FirebaseAnalyticsObserver(analytics: App.analytics),
       ],
       initialBinding: AppBinding(),
       defaultTransition: Transition.cupertino,

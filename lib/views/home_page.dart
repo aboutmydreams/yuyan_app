@@ -11,6 +11,26 @@ import 'package:yuyan_app/views/my_page/my_page.dart';
 import 'package:yuyan_app/views/news_page/news_page.dart';
 import 'dashboard/dashboard.dart';
 
+/// Creating new different type of documentation
+class CreateDocPage extends StatefulWidget {
+  @override
+  _CreateDocPageState createState() => _CreateDocPageState();
+}
+
+class _CreateDocPageState extends State<CreateDocPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("创建"),
+      ),
+      body: Container(
+        child: Text('.'),
+      ),
+    );
+  }
+}
+
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.pageKey: 0}) : super(key: key);
   final int pageKey;
@@ -32,6 +52,7 @@ class _HomePageState extends State<HomePage> {
     pageList = [
       ExplorePage(),
       MyDashBoardPage(),
+      // CreateDocPage(),
       NotificationPage(),
       MyPage(),
     ];
@@ -69,6 +90,24 @@ class _HomePageState extends State<HomePage> {
                 size: 34,
                 color: iconColor(1 == currIndex),
               ),
+              // TODO(@dreamer2q): considering add a center-docked button
+              // GestureDetector(
+              //   onTap: () {},
+              //   child: Transform.translate(
+              //     offset: Offset(0, -6),
+              //     child: Container(
+              //       width: 64,
+              //       height: 64,
+              //       decoration: BoxDecoration(
+              //         color: Colors.green,
+              //         shape: BoxShape.circle,
+              //       ),
+              //       child: Icon(
+              //         Icons.add,
+              //       ),
+              //     ),
+              //   ),
+              // ),
               Badge(
                 padding: EdgeInsets.all(0),
                 badgeColor: Colors.transparent,
@@ -100,6 +139,7 @@ class _HomePageState extends State<HomePage> {
     // final double topPadding = MediaQuery.of(context).padding.bottom;
     // print(topPadding);
     var controller = Get.find<BottomNavigatorController>();
+
     return WillPopScope(
       onWillPop: () async {
         final now = DateTime.now();
@@ -111,6 +151,14 @@ class _HomePageState extends State<HomePage> {
         return true;
       },
       child: Scaffold(
+        // floatingActionButton: Transform.translate(
+        // offset: Offset(0, 16),
+        //   child: FloatingActionButton(
+        //     onPressed: () {},
+        //     child: Icon(Icons.add),
+        //   ),
+        // ),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: Obx(() => _buildBottomNav(controller)),
         body: NotificationListener<ScrollUpdateNotification>(
           child: Obx(() => pageList[controller.navIndex.value]),
