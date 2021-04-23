@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:yuyan_app/controller/action_controller.dart';
+import 'package:yuyan_app/controller/organization/card/action_controller.dart';
 import 'package:yuyan_app/model/document/card/vote_item_seri.dart';
 import 'package:yuyan_app/util/util.dart';
 

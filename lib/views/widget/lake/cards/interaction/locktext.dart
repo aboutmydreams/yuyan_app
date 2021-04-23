@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
-import 'package:yuyan_app/controller/document/crypto_controller.dart';
+import 'package:yuyan_app/controller/organization/card/crypto_controller.dart';
 
 import '../../widget/card_wrap_widget.dart';
 

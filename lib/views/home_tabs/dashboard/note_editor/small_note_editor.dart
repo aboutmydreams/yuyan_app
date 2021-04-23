@@ -5,7 +5,7 @@ import 'package:flutter_quill/widgets/toolbar.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_state_widget.dart';
-import 'package:yuyan_app/controller/global/upload_controller.dart';
+import 'package:yuyan_app/controller/organization/doc/upload_controller.dart';
 import 'package:yuyan_app/util/util.dart';
 
 class SmallNoteEditor extends StatefulWidget {

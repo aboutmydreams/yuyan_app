@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
-import 'package:yuyan_app/controller/recent_controller.dart';
+import 'package:yuyan_app/controller/home/recent_controller.dart';
 import 'package:yuyan_app/model/dashboard/user_recent_seri.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';

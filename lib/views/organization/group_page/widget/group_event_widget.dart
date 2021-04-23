@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:yuyan_app/controller/global/group_controller.dart';
+import 'package:yuyan_app/controller/organization/group/group_controller.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/event/user_affair.dart';
 

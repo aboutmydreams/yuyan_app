@@ -11,7 +11,7 @@ import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/config/viewstate/view_state_widget.dart';
-import 'package:yuyan_app/controller/document/doc_controller.dart';
+import 'package:yuyan_app/controller/organization/doc/doc_controller.dart';
 import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/menu_item.dart';

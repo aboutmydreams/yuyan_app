@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:yuyan_app/controller/attend_controller.dart';
+import 'package:yuyan_app/controller/home/attend_controller.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
 import 'package:yuyan_app/views/component/nothing_page.dart';
 import 'package:yuyan_app/views/widget/event/affair.dart';

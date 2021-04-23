@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/config/viewstate/view_page.dart';
-import 'package:yuyan_app/controller/global/my_controller.dart';
+import 'package:yuyan_app/controller/home/personal/my_controller.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';

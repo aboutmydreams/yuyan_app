@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/route_manager.dart';
-import 'package:yuyan_app/controller/global/my_controller.dart';
+import 'package:yuyan_app/controller/home/personal/my_controller.dart';
 import 'package:yuyan_app/controller/app/version_controller.dart';
 import 'package:yuyan_app/views/widget/animation.dart';
 import 'package:yuyan_app/views/widget/editor/comment_widget.dart';

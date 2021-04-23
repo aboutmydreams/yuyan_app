@@ -2,7 +2,7 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
-import 'package:yuyan_app/controller/document/card_controller.dart';
+import 'package:yuyan_app/controller/organization/card/card_controller.dart';
 import 'package:yuyan_app/model/document/card/card_video_seri.dart';
 
 class LakeVideoPlayWidget extends StatefulWidget {

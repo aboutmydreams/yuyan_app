@@ -10,11 +10,11 @@ import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/user/group/group.dart';
 import 'package:yuyan_app/model/user/org/organization.dart';
 
-import '../attend_controller.dart';
-import '../notification_controller.dart';
-import '../quick_link_controller.dart';
-import '../recent_controller.dart';
-import 'my_controller.dart';
+import '../home/attend_controller.dart';
+import '../home/notification/notification_controller.dart';
+import '../home/quick_link_controller.dart';
+import '../home/recent_controller.dart';
+import '../home/personal/my_controller.dart';
 
 class UserSpaceController extends FetchListValueController<OrganizationSeri> {
   @override

@@ -5,8 +5,8 @@ import 'package:package_info/package_info.dart';
 // import 'package:webview_flutter/webview_flutter.dart' as web;
 import 'package:yuyan_app/config/net/token.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
-import 'package:yuyan_app/controller/global/organization_controller.dart';
-import 'package:yuyan_app/controller/global/my_controller.dart';
+import 'package:yuyan_app/controller/organization/organization_controller.dart';
+import 'package:yuyan_app/controller/home/personal/my_controller.dart';
 
 class App {
   static TokenProvider tokenProvider = TokenProvider();

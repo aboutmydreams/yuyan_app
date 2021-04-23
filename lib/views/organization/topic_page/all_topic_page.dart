@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:yuyan_app/controller/global/group_controller.dart';
+import 'package:yuyan_app/controller/organization/group/group_controller.dart';
 
 import 'topic_add_page.dart';
 import 'topic_item_widget.dart';

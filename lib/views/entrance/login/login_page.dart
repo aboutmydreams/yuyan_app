@@ -2,7 +2,7 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:yuyan_app/config/app.dart';
-import 'package:yuyan_app/controller/login_controller.dart';
+import 'package:yuyan_app/controller/home/login_controller.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);

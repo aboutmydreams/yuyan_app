@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/route_manager.dart';
-import 'package:yuyan_app/controller/document/doc_controller.dart';
+import 'package:yuyan_app/controller/organization/doc/doc_controller.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/menu_item.dart';
 import 'package:yuyan_app/views/widget/lake/lake_render.dart';

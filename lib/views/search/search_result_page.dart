@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shifting_tabbar/shifting_tabbar.dart';
 import 'package:yuyan_app/config/viewstate/view_page.dart';
-import 'package:yuyan_app/controller/global/search_controller.dart';
+import 'package:yuyan_app/controller/organization/search/search_controller.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/user/group/group.dart';

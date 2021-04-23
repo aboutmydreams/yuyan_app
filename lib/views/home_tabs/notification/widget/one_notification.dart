@@ -7,7 +7,6 @@ import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/model/notification/notification_item.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
-import 'package:yuyan_app/util/time_cut.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
@@ -92,7 +91,7 @@ class NotificationItemWidget extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(right: 12),
           child: Text(
-            "${timeCut(data.createdAt)}",
+            "${Util.timeCut(data.createdAt)}",
             style: AppStyles.textStyleCC,
           ),
         )

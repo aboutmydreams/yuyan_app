@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
-import 'package:yuyan_app/controller/global/group_controller.dart';
-import 'package:yuyan_app/controller/global/user_controller.dart';
+import 'package:yuyan_app/controller/organization/group/group_controller.dart';
+import 'package:yuyan_app/controller/organization/user/user_controller.dart';
 import 'package:yuyan_app/model/user/group/group.dart';
 import 'package:yuyan_app/views/organization/group_page/group_page.dart';
 import 'package:yuyan_app/views/organization/user_page/user_page.dart';

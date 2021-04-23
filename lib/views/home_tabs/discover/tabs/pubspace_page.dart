@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
-import 'package:yuyan_app/controller/global/organization_controller.dart';
+import 'package:yuyan_app/controller/organization/organization_controller.dart';
 import 'package:yuyan_app/util/util.dart';
 import 'package:yuyan_app/views/home_tabs/discover/widget/book_tile_widget.dart';
 import 'package:yuyan_app/views/organization/widget/group.dart';

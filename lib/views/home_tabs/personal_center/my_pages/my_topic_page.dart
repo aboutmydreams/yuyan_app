@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:yuyan_app/controller/global/my_controller.dart';
+import 'package:yuyan_app/controller/home/personal/my_controller.dart';
 import 'package:yuyan_app/views/organization/topic_page/topic_item_widget.dart';
 import 'package:yuyan_app/views/widget/animation.dart';
 import 'package:yuyan_app/views/component/nothing_page.dart';

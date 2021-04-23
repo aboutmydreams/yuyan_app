@@ -83,22 +83,22 @@ class Util {
     showDialog(
       context: context,
       builder: (context) {
-        return new AlertDialog(
-          title: new Text("提示"),
-          content: new Text(content),
+        return AlertDialog(
+          title: Text("提示"),
+          content: Text(content),
           actions: <Widget>[
-            new TextButton(
+            TextButton(
               onPressed: () {
                 confirmCallback();
                 Navigator.of(context).pop();
               },
-              child: new Text("确认"),
+              child: Text("确认"),
             ),
-            new TextButton(
+            TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: new Text("取消"),
+              child: Text("取消"),
             ),
           ],
         );
@@ -407,6 +407,10 @@ extension StringEx on String {
 
   DateTime toDateTime() {
     return DateTime.tryParse(this);
+  }
+
+  String parseAndCutTime() {
+    return Util.timeCut(this);
   }
 }
 
