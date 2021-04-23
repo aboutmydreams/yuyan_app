@@ -15,7 +15,8 @@ import 'package:yuyan_app/config/viewstate/view_state.dart';
 import 'package:yuyan_app/controller/app/theme_controller.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/model/document/toc/toc_seri.dart';
-import 'package:yuyan_app/config/app_ui.dart';
+
+import 'styles/app_ui.dart';
 
 /// [futureResolver] is a convenient handler for
 /// process future result, especially when error
@@ -86,14 +87,14 @@ class Util {
           title: new Text("提示"),
           content: new Text(content),
           actions: <Widget>[
-            new FlatButton(
+            new TextButton(
               onPressed: () {
                 confirmCallback();
                 Navigator.of(context).pop();
               },
               child: new Text("确认"),
             ),
-            new FlatButton(
+            new TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },

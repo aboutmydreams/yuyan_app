@@ -6,7 +6,6 @@ import 'package:yuyan_app/model/user/group/group.dart';
 import 'package:yuyan_app/model/document/group_home/book_stack.dart';
 import 'package:yuyan_app/model/document/note/doclet.dart';
 import 'package:yuyan_app/model/document/note/note.dart';
-import 'package:yuyan_app/model/user/mine/mine_seri.dart';
 import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/model/user/events/event_seri.dart';
 import 'package:yuyan_app/model/v2/user_detail.dart';

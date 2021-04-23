@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/model/user/user_lite_seri.dart';
-import 'package:yuyan_app/config/app_ui.dart';
+import 'package:yuyan_app/util/styles/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
-import 'package:yuyan_app/views/widget/image_widget.dart';
+import 'package:yuyan_app/views/widget/image.dart';
 
-import 'follow_button_widget.dart';
+import 'follow.dart';
 
 class UserMemberIconWidget extends StatelessWidget {
   @override

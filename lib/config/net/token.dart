@@ -107,6 +107,11 @@ mixin OrganizationMixin on BaseHttp {
     spaceProvider.addListener(() {
       debugPrint('!!!! change of organization !!!!!');
       setOrgSpace(spaceProvider.data?.login);
+
+      App.analytics.logEvent(
+        name: 'change_org_space',
+        parameters: spaceProvider.data?.toJson(),
+      );
     });
   }
 

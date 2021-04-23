@@ -88,6 +88,7 @@ class LoginController extends FetchValueController<TokenJsonSeri> {
     token.loadCookies(cookies);
     provider.updateData(token);
     Future.delayed(Duration(milliseconds: 300), () {
+      App.analytics.logLogin(loginMethod: 'webview');
       Get.offAllNamed(RouteName.home);
     });
     return token;

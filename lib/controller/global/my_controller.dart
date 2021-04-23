@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yuyan_app/config/app.dart';
-import 'package:yuyan_app/config/service/api2_repository.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
@@ -14,7 +13,6 @@ import 'package:yuyan_app/model/user/mine/mine_seri.dart';
 import 'package:yuyan_app/model/user/org/organization.dart';
 import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/model/topic/topic.dart';
-import 'package:yuyan_app/model/v2/user_detail.dart';
 
 class MyUserProvider extends BaseSaveJson<MineSeri> {
   OrganizationSeri get defaultSpace {

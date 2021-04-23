@@ -1,4 +1,0 @@
-
-getTag() {
-  return '';
-}

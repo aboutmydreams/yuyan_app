@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/net/api.dart';
 
 import 'view_state_widget.dart';
@@ -219,6 +220,15 @@ mixin ControllerStateMixin on GetxController {
 
     //used for debug
     ViewStateUtil.errorPrint(e, stack);
+
+    //log error
+    App.analytics.logEvent(
+      name: 'view_state_error',
+      parameters: {
+        ...error.toJson(),
+        'stack': stack,
+      },
+    );
   }
 
   /// 错误发生时调用，状态变成 [ViewState.error]

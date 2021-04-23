@@ -4,12 +4,11 @@ import 'package:delta_markdown/delta_markdown.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_quill/models/documents/document.dart';
 import 'package:flutter_quill/widgets/controller.dart';
 import 'package:flutter_quill/widgets/editor.dart';
 import 'package:flutter_quill/widgets/toolbar.dart';
 import 'package:get/get.dart';
-import 'package:yuyan_app/config/app_ui.dart';
+import 'package:yuyan_app/util/styles/app_ui.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/util/util.dart';
 

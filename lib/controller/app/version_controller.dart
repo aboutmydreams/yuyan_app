@@ -47,25 +47,19 @@ class VersionController extends GetxController {
   void initXUpdate() {
     if (Platform.isAndroid) {
       FlutterXUpdate.init(
-        ///是否输出日志
+        //是否输出日志
         debug: true,
-
-        ///是否使用post请求
+        //是否使用post请求
         isPost: false,
-
-        ///post请求是否是上传json
+        //post请求是否是上传json
         isPostJson: false,
-
-        ///是否开启自动模式
+        //是否开启自动模式
         isWifiOnly: false,
-
-        ///是否开启自动模式
+        //是否开启自动模式
         isAutoMode: false,
-
-        ///需要设置的公共参数
+        //需要设置的公共参数
         supportSilentInstall: false,
-
-        ///在下载过程中，如果点击了取消的话，是否弹出切换下载方式的重试提示弹窗
+        //在下载过程中，如果点击了取消的话，是否弹出切换下载方式的重试提示弹窗
         enableRetry: false,
       ).then((value) {
         updateMessage("初始化成功: $value");
@@ -113,18 +107,21 @@ class VersionController extends GetxController {
   }
 
   checkVersion(BuildContext context) {
+    //TODO(@dreamer2q): ........
+    checkUpdateDefault();
     if (isLatest) {
       Util.toast("已是最新版本啦~");
     } else {
       if ((Platform.isIOS)) {
         Util.launchURL(Config.iOStore);
-      } else {
-        checkUpdateDefault();
-      }
+      } else {}
     }
   }
 
   void checkUpdateDefault() {
-    FlutterXUpdate.checkUpdate(url: checkUrl2 + _version);
+    App.analytics.logEvent(name: 'check_update_version');
+    FlutterXUpdate.checkUpdate(
+      url: checkUrl2 + _version,
+    );
   }
 }

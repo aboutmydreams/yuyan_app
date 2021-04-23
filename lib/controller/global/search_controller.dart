@@ -1,3 +1,4 @@
+import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/storage_manager.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
@@ -69,6 +70,14 @@ class SearchController extends FetchListValueController<SearchResultSeri> {
     query = text;
     relateMe = relate;
     onRefresh(force: true);
+
+    App.analytics.logEvent(
+      name: 'search',
+      parameters: {
+        'query': text,
+        'related_me': relate,
+      },
+    );
   }
 
   Future<List<SearchResultSeri>> _fetch(bool more) async {
