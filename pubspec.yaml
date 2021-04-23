@@ -81,7 +81,8 @@ dependencies:
 
 
   ## tree
-  flutter_simple_treeview: 2.0.2
+  flutter_simple_treeview:
+    git: https://github.com/yuyanSky/flutter_simple_treeview.git
 
   ## 多返回值
   tuple: 2.0.0

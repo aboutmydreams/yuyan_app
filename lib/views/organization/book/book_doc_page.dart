@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_simple_treeview/flutter_simple_treeview.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/config/app.dart';
@@ -179,13 +178,14 @@ class BookDocPage extends StatelessWidget {
         ),
       );
     }
-    if (type == 'Book') {
+    if (book.layout == 'Book') {
       return GetBuilder<BookTocController>(
         init: BookTocController(bookId),
         builder: (c) => c.stateBuilder(
           onIdle: () {
             return SingleChildScrollView(
               child: BookTocTreeWidget(
+                book: book,
                 data: c.value,
               ),
             );

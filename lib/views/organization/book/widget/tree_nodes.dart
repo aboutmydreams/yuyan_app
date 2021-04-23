@@ -1,26 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_simple_treeview/flutter_simple_treeview.dart';
+import 'package:yuyan_app/config/route_manager.dart';
+import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/toc/toc_seri.dart';
 
 class BookTocTreeWidget extends StatelessWidget {
+  final BookSeri book;
   final List<TocSeri> data;
+  final _controller = TreeController(allNodesExpanded: false);
 
-  const BookTocTreeWidget({
+  BookTocTreeWidget({
     Key key,
+    this.book,
     this.data,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TreeView(
-      indent: 28,
-      nodes: _buildNodes(data),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: TreeView(
+        indent: 28,
+        nodes: _buildNodes(data),
+        treeController: _controller,
+      ),
     );
   }
 
   Widget _buildNode(TocSeri node) {
-    return Container(
+    final child = Container(
       child: Text('${node.title}'),
+    );
+
+    return GestureDetector(
+      onTap: () {
+        switch (node.type) {
+          case 'TITLE':
+            break;
+          case 'LINK':
+            MyRoute.webview(node.url, yuque: false);
+            return;
+          case 'DOC':
+            MyRoute.docDetailWebview(
+              bookId: book.id,
+              slug: node.url,
+              login: book.user.login,
+              book: book.slug,
+            );
+            return;
+        }
+      },
+      child: child,
     );
   }
 

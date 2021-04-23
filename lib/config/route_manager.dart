@@ -79,8 +79,11 @@ class MyRoute {
     );
   }
 
-  static webview(String url) {
-    if (!url.startsWith('http')) {
+  static webview(
+    String url, {
+    bool yuque = true,
+  }) {
+    if (!url.startsWith('http') && yuque) {
       url = 'https://www.yuque.com' + url;
     }
     Get.to(

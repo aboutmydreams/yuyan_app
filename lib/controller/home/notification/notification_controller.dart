@@ -76,7 +76,6 @@ class NotificationAllController
 
   @override
   Future fetchMore() {
-    //TODO(@dreamer2q): 加载更多数据, 一般情况下没有很多的数据，暂时可能不需要
     return super.fetchMore();
   }
 }

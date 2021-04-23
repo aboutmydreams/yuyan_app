@@ -212,7 +212,6 @@ mixin ControllerStateMixin on GetxController {
       ' do you really mean an error has occurred?',
     );
 
-    //TODO(@dreamer2q): 测试错误处理
     error = ViewStateUtil.handlerError(e);
 
     state = ViewState.error;
