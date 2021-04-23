@@ -14,14 +14,14 @@ import 'package:yuyan_app/views/widget/setting_item.dart';
 
 import 'widget/user_info_card_widget.dart';
 
-class PersonalCenter extends StatefulWidget {
-  PersonalCenter({Key key}) : super(key: key);
+class PersonalCenterTab extends StatefulWidget {
+  PersonalCenterTab({Key key}) : super(key: key);
 
   @override
-  _PersonalCenterState createState() => _PersonalCenterState();
+  _PersonalCenterTabState createState() => _PersonalCenterTabState();
 }
 
-class _PersonalCenterState extends State<PersonalCenter> {
+class _PersonalCenterTabState extends State<PersonalCenterTab> {
   ScrollController _controller;
 
   @override

@@ -9,14 +9,14 @@ import 'package:yuyan_app/views/search/search_action_widget.dart';
 import 'recent/recent_page.dart';
 import 'small_note/quick_view.dart';
 
-class MyDashBoardPage extends StatefulWidget {
-  MyDashBoardPage({Key key}) : super(key: key);
+class DashboardTab extends StatefulWidget {
+  DashboardTab({Key key}) : super(key: key);
 
   @override
-  _MyDashBoardPageState createState() => _MyDashBoardPageState();
+  _DashboardTabState createState() => _DashboardTabState();
 }
 
-class _MyDashBoardPageState extends State<MyDashBoardPage> {
+class _DashboardTabState extends State<DashboardTab> {
 
   @override
   Widget build(BuildContext context) {

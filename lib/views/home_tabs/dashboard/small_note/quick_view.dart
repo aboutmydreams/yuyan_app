@@ -5,7 +5,6 @@ import 'package:yuyan_app/controller/home/quick_link_controller.dart';
 import 'package:yuyan_app/model/dashboard/quick_link_seri.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
-import 'package:yuyan_app/views/widget/absorb.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
 class NoteButton extends StatelessWidget {
@@ -45,17 +44,15 @@ class QuickView extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: NotificationAbsorbWidget(
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        quickText("快捷入口"),
-                        NoteButton(),
-                        ...state.data.map((e) {
-                          return _QuickLinkEntryWidget(data: e);
-                        }).toList(),
-                      ],
-                    ),
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      quickText("快捷入口"),
+                      NoteButton(),
+                      ...state.data.map((e) {
+                        return _QuickLinkEntryWidget(data: e);
+                      }).toList(),
+                    ],
                   ),
                 ),
                 setEntry(context)

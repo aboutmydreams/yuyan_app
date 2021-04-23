@@ -160,46 +160,7 @@ class Util {
     }
   }
 
-  static List<TreeNode> parseTocTree(List<TocSeri> data) {
-    Map<String, TocSeri> map = {};
-    data.forEach((toc) {
-      map[toc.uuid] = toc;
-    });
 
-    Function(TreeNode, TocSeri) _parse;
-    _parse = (TreeNode parent, TocSeri child) {
-      var node = TreeNode(
-        content: Text('${child.title}'),
-        children: [],
-      ); //确保children已经初始化了
-      parent.children.add(node); //将自己添加进入父节点
-      var nc = map[child.childUuid];
-      if (nc != null) {
-        //现在这个节点充当父节点
-        //进行递归，优先处理子节点
-        _parse(node, nc);
-      }
-      //第一个兄弟节点
-      var sib = map[child.siblingUuid];
-      while (sib != null) {
-        var sibNode = TreeNode(
-          content: Text('${sib.title}'),
-          children: [],
-        );
-        parent.children.add(sibNode);
-        var nc = map[sib.childUuid];
-        if (nc != null) {
-          _parse(sibNode, nc);
-        }
-        //下一个兄弟节点
-        sib = map[sib.siblingUuid];
-      }
-    };
-
-    var root = TreeNode(children: []);
-    _parse(root, data.first);
-    return root.children;
-  }
 
   static toast(String text) {
     BotToast.showCustomText(

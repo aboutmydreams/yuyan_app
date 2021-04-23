@@ -9,7 +9,7 @@ class BottomNavigatorController extends GetxController
   var navIndex = 0.obs;
 
   AnimationController _animateController;
-  Duration _duration = Duration(milliseconds: 300);
+  final Duration _duration = Duration(milliseconds: 300);
 
   Animation get animation => CurvedAnimation(
         parent: _animateController,
@@ -20,17 +20,25 @@ class BottomNavigatorController extends GetxController
   double get height => _animateController.value;
 
   bool onUpdateNotification(ScrollUpdateNotification notification) {
+    if ([AxisDirection.left, AxisDirection.right]
+        .contains(notification.metrics.axisDirection)) {
+      return true;
+    }
     if (notification.metrics.pixels > 500) {
       if (notification.scrollDelta > 5) {
-        _animateController.reverse();
+        if (_animateController.status != AnimationStatus.reverse) {
+          _animateController.reverse();
+        }
       } else if (notification.scrollDelta < 5) {
-        _animateController.forward();
+        if (_animateController.status != AnimationStatus.forward) {
+          _animateController.forward();
+        }
       }
     }
     return false;
   }
 
-  addScrollListener(ScrollController controller) {
+  void addScrollListener(ScrollController controller) {
     var listener = () {
       switch (controller.position.userScrollDirection) {
         case ScrollDirection.forward:

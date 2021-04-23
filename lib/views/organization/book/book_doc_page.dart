@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_simple_treeview/flutter_simple_treeview.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/config/app.dart';
@@ -11,6 +12,7 @@ import 'package:yuyan_app/model/document/doc_detail/artboard_seri.dart';
 import 'package:yuyan_app/model/user/user.dart';
 import 'package:yuyan_app/util/styles/app_ui.dart';
 import 'package:yuyan_app/util/util.dart';
+import 'package:yuyan_app/views/organization/book/widget/tree_nodes.dart';
 import 'package:yuyan_app/views/widget/lake/cards/image.dart';
 import 'package:yuyan_app/views/widget/user_widget.dart';
 
@@ -174,6 +176,20 @@ class BookDocPage extends StatelessWidget {
               (item) => buildDoc(item, 'Sheet'),
             ),
           ),
+        ),
+      );
+    }
+    if (type == 'Book') {
+      return GetBuilder<BookTocController>(
+        init: BookTocController(bookId),
+        builder: (c) => c.stateBuilder(
+          onIdle: () {
+            return SingleChildScrollView(
+              child: BookTocTreeWidget(
+                data: c.value,
+              ),
+            );
+          },
         ),
       );
     }

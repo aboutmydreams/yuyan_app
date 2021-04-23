@@ -9,15 +9,15 @@ import 'tabs/attention_page.dart';
 import 'tabs/pubspace_page.dart';
 import 'tabs/selection_page.dart';
 
-class DiscoverTabview extends StatefulWidget {
+class DiscoverTab extends StatefulWidget {
   final Key key;
 
-  DiscoverTabview({this.key}) : super(key: key);
+  DiscoverTab({this.key}) : super(key: key);
 
-  _DiscoverTabviewState createState() => _DiscoverTabviewState();
+  _DiscoverTabState createState() => _DiscoverTabState();
 }
 
-class _DiscoverTabviewState extends State<DiscoverTabview>
+class _DiscoverTabState extends State<DiscoverTab>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
 

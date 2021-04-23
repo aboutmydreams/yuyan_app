@@ -9,14 +9,14 @@ import 'package:yuyan_app/views/organization/widget/org_spacet.dart';
 
 import 'widget/one_notification.dart';
 
-class NotificationPage extends StatefulWidget {
-  NotificationPage({Key key}) : super(key: key);
+class NotificationTab extends StatefulWidget {
+  NotificationTab({Key key}) : super(key: key);
 
   @override
-  _NotificationPageState createState() => _NotificationPageState();
+  _NotificationTabState createState() => _NotificationTabState();
 }
 
-class _NotificationPageState extends State<NotificationPage> {
+class _NotificationTabState extends State<NotificationTab> {
   @override
   void initState() {
     super.initState();

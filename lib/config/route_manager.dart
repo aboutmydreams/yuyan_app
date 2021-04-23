@@ -168,15 +168,15 @@ class MyRoute {
   static List<GetPage> pages = [
     GetPage(
       name: RouteName.home,
-      page: () => HomePage(),
+      page: () => Home(),
       binding: HomePageBinding(),
     ),
     GetPage(name: RouteName.splash, page: () => SplashPage()),
     GetPage(name: RouteName.guide, page: () => GuidePage()),
     GetPage(name: RouteName.login, page: () => LoginPage()),
-    GetPage(name: RouteName.desk, page: () => HomePage(pageKey: 1)),
-    GetPage(name: RouteName.news, page: () => HomePage(pageKey: 2)),
-    GetPage(name: RouteName.my, page: () => HomePage(pageKey: 3)),
+    GetPage(name: RouteName.desk, page: () => Home(pageIndex: 1)),
+    GetPage(name: RouteName.news, page: () => Home(pageIndex: 2)),
+    GetPage(name: RouteName.my, page: () => Home(pageIndex: 3)),
     GetPage(
       name: RouteName.editNote,
       page: () => SmallNoteEditor(),
@@ -184,7 +184,7 @@ class MyRoute {
     GetPage(name: RouteName.quickSet, page: () => QuickSetPage()),
     GetPage(
       name: RouteName.dashboard,
-      page: () => MyDashBoardPage(),
+      page: () => DashboardTab(),
     ),
     GetPage(
       name: RouteName.note,

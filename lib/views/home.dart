@@ -32,33 +32,33 @@ class _CreateDocPageState extends State<CreateDocPage> {
   }
 }
 
-class HomePage extends StatefulWidget {
-  HomePage({Key key, this.pageKey: 0}) : super(key: key);
-  final int pageKey;
+class Home extends StatefulWidget {
+  final int pageIndex;
+
+  Home({
+    Key key,
+    this.pageIndex = 0,
+  }) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState(key: key, pageKey: pageKey);
+  _HomeState createState() => _HomeState();
 }
 
-class _HomePageState extends State<HomePage> {
-  _HomePageState({Key key, int pageKey: 0});
-
-  bool hideBottom = false;
+class _HomeState extends State<Home> {
   List<Widget> pageList = [];
-  GlobalKey _bottomNavigationKey = GlobalKey();
   DateTime _prevBackTime = DateTime.now();
 
   @override
   void initState() {
-    pageList = [
-      DiscoverTabview(),
-      MyDashBoardPage(),
-      // CreateDocPage(),
-      NotificationPage(),
-      PersonalCenter(),
-    ];
-
     super.initState();
+
+    pageList = [
+      DiscoverTab(),
+      DashboardTab(),
+      // CreateDocPage(),
+      NotificationTab(),
+      PersonalCenterTab(),
+    ];
   }
 
   Color iconColor(bool selected) {
@@ -69,66 +69,65 @@ class _HomePageState extends State<HomePage> {
 
   _buildBottomNav(BottomNavigatorController controller) {
     var currIndex = controller.navIndex.value;
+    final items = [
+      Icon(
+        Icons.insert_emoticon,
+        size: 34,
+        color: iconColor(0 == currIndex),
+      ),
+      Icon(
+        Icons.wrap_text,
+        size: 34,
+        color: iconColor(1 == currIndex),
+      ),
+      // TODO(@dreamer2q): considering add a center-docked button
+      // GestureDetector(
+      //   onTap: () {},
+      //   child: Transform.translate(
+      //     offset: Offset(0, -6),
+      //     child: Container(
+      //       width: 64,
+      //       height: 64,
+      //       decoration: BoxDecoration(
+      //         color: Colors.green,
+      //         shape: BoxShape.circle,
+      //       ),
+      //       child: Icon(
+      //         Icons.add,
+      //       ),
+      //     ),
+      //   ),
+      // ),
+      Badge(
+        padding: EdgeInsets.all(0),
+        badgeColor: Colors.transparent,
+        elevation: 0,
+        badgeContent: Icon(
+          Icons.notifications_none,
+          size: 34,
+          color: iconColor(2 == currIndex),
+        ),
+      ),
+      Icon(
+        Icons.perm_identity,
+        size: 34,
+        color: iconColor(3 == currIndex),
+      ),
+    ];
+
     return AnimatedBuilder(
       animation: controller.animation,
       builder: (context, child) {
         return Opacity(
           opacity: controller.height / 56,
           child: CurvedNavigationBar(
-            key: _bottomNavigationKey,
+            animationDuration: Duration(milliseconds: 300),
             color: Color.fromRGBO(0, 0, 0, 0.06),
             backgroundColor: Colors.white,
             animationCurve: Curves.easeInQuad,
             height: controller.height,
-            items: <Widget>[
-              Icon(
-                Icons.insert_emoticon,
-                size: 34,
-                color: iconColor(0 == currIndex),
-              ),
-              Icon(
-                Icons.wrap_text,
-                size: 34,
-                color: iconColor(1 == currIndex),
-              ),
-              // TODO(@dreamer2q): considering add a center-docked button
-              // GestureDetector(
-              //   onTap: () {},
-              //   child: Transform.translate(
-              //     offset: Offset(0, -6),
-              //     child: Container(
-              //       width: 64,
-              //       height: 64,
-              //       decoration: BoxDecoration(
-              //         color: Colors.green,
-              //         shape: BoxShape.circle,
-              //       ),
-              //       child: Icon(
-              //         Icons.add,
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              Badge(
-                padding: EdgeInsets.all(0),
-                badgeColor: Colors.transparent,
-                elevation: 0,
-                badgeContent: Icon(
-                  Icons.notifications_none,
-                  size: 34,
-                  color: iconColor(2 == currIndex),
-                ),
-              ),
-              Icon(
-                Icons.perm_identity,
-                size: 34,
-                color: iconColor(3 == currIndex),
-              ),
-            ],
-            animationDuration: Duration(milliseconds: 300),
-            onTap: (index) {
-              controller.navIndex.value = index;
-            },
+            items: items,
+            onTap: (index) => controller.navIndex.value = index,
           ),
         );
       },
@@ -137,8 +136,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // final double topPadding = MediaQuery.of(context).padding.bottom;
-    // print(topPadding);
     var controller = Get.find<BottomNavigatorController>();
 
     return WillPopScope(
