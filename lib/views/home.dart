@@ -47,10 +47,13 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<Widget> pageList = [];
   DateTime _prevBackTime = DateTime.now();
+  RxInt tabIndex;
 
   @override
   void initState() {
     super.initState();
+
+    tabIndex = RxInt(widget.pageIndex);
 
     pageList = [
       DiscoverTab(),
@@ -68,7 +71,10 @@ class _HomeState extends State<Home> {
   }
 
   _buildBottomNav(BottomNavigatorController controller) {
-    var currIndex = controller.navIndex.value;
+    var currIndex = tabIndex.value;
+
+    debugPrint('_buildbottomNav');
+
     final items = [
       Icon(
         Icons.insert_emoticon,
@@ -127,7 +133,10 @@ class _HomeState extends State<Home> {
             animationCurve: Curves.easeInQuad,
             height: controller.height,
             items: items,
-            onTap: (index) => controller.navIndex.value = index,
+            onTap: (index) {
+              tabIndex.value = index;
+              debugPrint('tabIndex: $index');
+            },
           ),
         );
       },
@@ -159,7 +168,7 @@ class _HomeState extends State<Home> {
         // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: Obx(() => _buildBottomNav(controller)),
         body: NotificationListener<ScrollUpdateNotification>(
-          child: Obx(() => pageList[controller.navIndex.value]),
+          child: Obx(() => pageList[tabIndex.value]),
           onNotification: controller.onUpdateNotification,
         ),
       ),

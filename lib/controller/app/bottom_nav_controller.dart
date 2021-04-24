@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 class BottomNavigatorController extends GetxController
     with SingleGetTickerProviderMixin {
-  var navIndex = 0.obs;
+  // var navIndex = 0.obs;
 
   AnimationController _animateController;
   final Duration _duration = Duration(milliseconds: 300);

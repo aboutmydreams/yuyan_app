@@ -20,6 +20,7 @@ class _NotificationTabState extends State<NotificationTab> {
   @override
   void initState() {
     super.initState();
+
     Get.put(NotificationAllController());
   }
 

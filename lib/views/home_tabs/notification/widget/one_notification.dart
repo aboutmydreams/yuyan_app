@@ -45,14 +45,16 @@ class NotificationItemWidget extends StatelessWidget {
     "remove_from_a_group": "移出了团队"
   };
 
+  final NotificationItemSeri data;
+  final bool unread;
+  final VoidCallback beforeTab;
+
   NotificationItemWidget({
     Key key,
     @required this.data,
+    this.beforeTab,
     this.unread = false,
   }) : super(key: key);
-
-  final NotificationItemSeri data;
-  final bool unread;
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +63,7 @@ class NotificationItemWidget extends StatelessWidget {
 
     final userAvatar = GestureDetector(
       onTap: () {
+        beforeTab?.call();
         if (data.actor != null) {
           MyRoute.user(
             user: data.actor.toUserLiteSeri(),
@@ -120,6 +123,7 @@ class NotificationItemWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
+        beforeTab?.call();
         switch (data.subjectType) {
           case 'User':
             return MyRoute.user(
