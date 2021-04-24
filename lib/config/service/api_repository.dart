@@ -491,7 +491,7 @@ class ApiRepository {
 
   static Future<ActionSeri> doLike(
       {bool unlike = false, int target, String type = 'Doc'}) async {
-    return _doAction(
+    return doAction(
       actionType: 'like',
       targetId: target,
       targetType: type,
@@ -503,7 +503,7 @@ class ApiRepository {
     int targetId,
     String targetType = 'Doc',
   }) async {
-    var res = await _getAction(
+    var res = await getAction(
       '',
       actionType: 'like',
       targetId: targetId,
@@ -516,7 +516,7 @@ class ApiRepository {
     int targetId,
     String targetType = 'Doc',
   }) async {
-    var res = await _getAction(
+    var res = await getAction(
       'users',
       actionType: 'like',
       targetId: targetId,
@@ -525,7 +525,7 @@ class ApiRepository {
     return res;
   }
 
-  static Future<ApiResponse> _getAction(
+  static Future<ApiResponse> getAction(
     String path, {
     String actionType = 'like',
     int targetId,
@@ -543,7 +543,7 @@ class ApiRepository {
     return res.data as ApiResponse;
   }
 
-  static Future<ActionSeri> _doAction({
+  static Future<ActionSeri> doAction({
     // like, watch, follow, watch-comments, watch-topics, mark, read, reaction
     @required String actionType,
     @required int targetId,

@@ -5,6 +5,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/route_manager.dart';
 import 'package:yuyan_app/controller/organization/book/book_controller.dart';
+import 'package:yuyan_app/controller/organization/card/action_controller.dart';
 import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/document/doc.dart';
 import 'package:yuyan_app/model/document/doc_detail/artboard_seri.dart';
@@ -41,7 +42,7 @@ class BookDocPage extends StatelessWidget {
         title: Text(book?.name ?? title),
         actions: [
           IconButton(
-            icon: Icon(Icons.star_outline),
+            icon: Icon(Icons.more_vert),
             onPressed: () {},
           ),
         ],
@@ -184,9 +185,15 @@ class BookDocPage extends StatelessWidget {
         builder: (c) => c.stateBuilder(
           onIdle: () {
             return SingleChildScrollView(
-              child: BookTocTreeWidget(
-                book: book,
-                data: c.value,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  BookDocsHeader(book: book),
+                  BookTocTreeWidget(
+                    book: book,
+                    data: c.value,
+                  ),
+                ],
               ),
             );
           },
@@ -302,7 +309,7 @@ class BookDocPage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
+      children: [
         Text(
           title,
           maxLines: 1,
@@ -356,6 +363,79 @@ class BookDocPage extends StatelessWidget {
             : CachedImageWidget(
                 url: imgUrl,
               ),
+      ),
+    );
+  }
+}
+
+class BookDocsHeader extends StatelessWidget {
+  final BookSeri book;
+
+  BookDocsHeader({
+    Key key,
+    this.book,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        vertical: 8,
+        horizontal: 16,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          //Title
+          Text(
+            book.name,
+            style: AppStyles.textStyleA,
+          ),
+          //desc
+          Text(
+            book.description,
+            style: AppStyles.textStyleC,
+          ),
+          SizedBox(height: 4),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GetBuilder<BookMarkController>(
+                init: BookMarkController(book.id),
+                builder: (c) {
+                  final button = OutlinedButton.icon(
+                    onPressed: c.toggle,
+                    icon: Icon(c.value ? Icons.star : Icons.star_outline),
+                    label: Text('收藏'),
+                  );
+                  return c.stateBuilder(
+                    onLoading: button,
+                    onIdle: () => button,
+                  );
+                },
+              ),
+              SizedBox(width: 8),
+              GetBuilder<BookWatchController>(
+                init: BookWatchController(book.id),
+                builder: (c) {
+                  final favor = Text('关注');
+                  return OutlinedButton(
+                    onPressed: () {
+                      c.toggle().then((_) => c.onRefresh());
+                    },
+                    child: c.stateBuilder(
+                      onError: (_) => favor,
+                      onLoading: favor,
+                      onIdle: () => Text(
+                        '${c.value ? '已' : ''}关注 ${c.result.count}',
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

@@ -2,6 +2,25 @@ import 'package:yuyan_app/model/document/book.dart';
 import 'package:yuyan_app/model/user/group/group.dart';
 import 'package:yuyan_app/model/serializer/serializer.dart';
 
+class ActionResultSeri {
+  int count;
+  ActionSeri actioned;
+
+  ActionResultSeri.fromJson(json) {
+    count = json['count'];
+    if (json['actioned'] != null) {
+      actioned = ActionSeri.fromJson(json['actioned']);
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'count': count,
+      'actioned': actioned?.toJson(),
+    };
+  }
+}
+
 class ActionSeri {
   int id;
   int userId;

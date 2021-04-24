@@ -2,7 +2,9 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:yuyan_app/config/service/api_repository.dart';
 import 'package:yuyan_app/config/viewstate/view_controller.dart';
 import 'package:yuyan_app/config/viewstate/view_state.dart';
+import 'package:yuyan_app/model/document/action.dart';
 import 'package:yuyan_app/model/document/card/vote_detail.dart';
+import 'package:yuyan_app/util/util.dart';
 
 class FollowUserController extends FetchValueController<bool> {
   final int userId;
@@ -116,5 +118,105 @@ class VoteController extends FetchValueController<VoteDetailSeri> {
       items: items,
       deadline: deadline,
     );
+  }
+}
+
+class BookMarkController extends MarkBaseController {
+  final int targetId;
+  BookMarkController(this.targetId);
+
+  @override
+  Future<bool> fetch() {
+    return ApiRepository.getIfMark(
+      targetId: targetId,
+      targetType: 'Book',
+    );
+  }
+
+  @override
+  Future<bool> mark() {
+    return ApiRepository.mark(
+      targetId: targetId,
+      targetType: 'Book',
+    );
+  }
+
+  @override
+  Future<bool> unmark() {
+    return ApiRepository.unmark(
+      targetId: targetId,
+      targetType: 'Book',
+    );
+  }
+}
+
+abstract class MarkBaseController extends FetchValueController<bool> {
+  Future<bool> mark();
+  Future<bool> unmark();
+
+  @override
+  bool get value => super.value ?? false;
+
+  Future toggle() async {
+    try {
+      setLoading();
+      bool res = false;
+      if (this.value) {
+        res = await unmark();
+      } else {
+        res = await mark();
+      }
+      if (res) {
+        this.value = !value;
+        Util.toast(this.value ? '成功' : '取消成功');
+      } else {
+        Util.toast('失败');
+      }
+      setIdle();
+    } catch (e) {
+      Util.toast('错误: $e');
+      setIdle();
+    }
+  }
+}
+
+class BookWatchController extends MarkBaseController {
+  final int bookId;
+
+  BookWatchController(this.bookId);
+
+  ActionResultSeri result;
+
+  @override
+  Future<bool> fetch() async {
+    var res = await ApiRepository.getAction(
+      '',
+      targetId: bookId,
+      actionType: 'watch',
+      targetType: 'Book',
+    );
+    result = ActionResultSeri.fromJson(res.data);
+    return result.actioned != null;
+  }
+
+  @override
+  Future<bool> mark() async {
+    var action = await ApiRepository.doAction(
+      actionType: 'watch',
+      targetId: bookId,
+      targetType: 'Book',
+    );
+    return action != null;
+  }
+
+  @override
+  Future<bool> unmark() async {
+    var action = await ApiRepository.doAction(
+      actionType: 'watch',
+      targetId: bookId,
+      targetType: 'Book',
+      del: true,
+    );
+    return action != null;
   }
 }
