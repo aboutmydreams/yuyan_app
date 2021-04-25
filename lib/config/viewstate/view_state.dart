@@ -1,7 +1,12 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:yuyan_app/config/storage_manager.dart';
+import 'package:yuyan_app/config/app.dart';
+import 'package:yuyan_app/config/net/api.dart';
+
+import 'view_state_widget.dart';
 
 enum ViewState {
   idle, //加载完毕，闲置状态
@@ -11,20 +16,161 @@ enum ViewState {
   error, //数据加载失败，出错了，使用 [ViewStateError] 来表示错误信息
 }
 
-enum ViewStateError {
-  api,
+enum ViewErrorType {
+  //用于提示用户操作不正当或者其它，这类错误只需要给个提示即可
+  info, //操作提示错误
+
+  //显示特定提示，或者引导用户上报
+  api, //API错误，例如422,API参数错误等, 404,API不存在等
+
+  //显示特定提示，或者引导用户上报
+  dart, //一般是dart本身抛出的异常，例如null异常，或者类型不匹配产生的错误
+
+  //给出重试、刷新按钮
+  network, //Dio请求错误，一般是网络问题，例如timeout等
+
+  //这类错误需要引导进行重新登陆
+  unauthorized, //401 API认证错误
+
+  //未知错误
+  unknown, //其它任何没有考虑到的情况！
 }
 
-class ViewStatusError {
+class ViewError {
   final String title;
   final String content;
   final dynamic error;
+  final ViewErrorType type;
 
-  ViewStatusError({
-    this.title,
-    this.content,
-    this.error,
+  ViewError({
+    this.title = '未知错误',
+    this.content = '未知错误描述信息',
+    this.error = 'error',
+    this.type = ViewErrorType.unknown,
   });
+
+  @override
+  String toString() {
+    var errDebug = '''{
+    "title": $title,
+    "content":$content,
+    "error": ${Error.safeToString(error)},
+    "type": $type
+}''';
+    return errDebug;
+  }
+
+  Map toJson() {
+    return {
+      'title': title,
+      'content': content,
+      'error': '${Error.safeToString(error)}',
+      'type': type,
+    };
+  }
+}
+
+class ViewStateUtil {
+  static ViewError _handlerApiError(ApiError err) {
+    if (err.response.status == 401) {
+      return ViewError(
+        title: '未认证',
+        content: err.response.errorDescription(),
+        error: err,
+        type: ViewErrorType.unauthorized,
+      );
+    }
+    return ViewError(
+      title: 'API错误',
+      content: err.response.errorDescription(),
+      error: err,
+      type: ViewErrorType.api,
+    );
+  }
+
+  static ViewError handlerError(e) {
+    switch (e.runtimeType) {
+      case String: //人为 throw 的错误，主要用于错误提示
+        return ViewError(
+          title: e,
+          type: ViewErrorType.info,
+        );
+      case ApiError: //请求正常，返回的是 API 错误
+        return _handlerApiError(e);
+      case DioError: //请求可能失败了，例如网络超时等
+        var err = (e as DioError).error;
+        //这里 Dio 会将错误强制包装成 DioError 类型
+        //因此只能通过这个来判断是否 ApiError
+        if ((e as DioError).type == DioErrorType.other) {
+          return handlerError(err);
+        }
+        return ViewError(
+          title: '网络错误',
+          content: Error.safeToString(err),
+          error: err,
+          type: ViewErrorType.network,
+        );
+      case SocketException: //网络错误，更底层的错误
+        var err = e as SocketException;
+        return ViewError(
+          title: 'Socket错误',
+          content: err.message,
+          error: err,
+          type: ViewErrorType.network,
+        );
+      case NoSuchMethodError: //调用 null 对象
+        var err = e as NoSuchMethodError;
+        return ViewError(
+          title: '空对象错误(NoSuchMethod)',
+          content: '开发者没有很好的处理特殊情况，\n'
+              '并抛给你一个NULL错误',
+          error: err,
+          type: ViewErrorType.dart,
+        );
+      case RangeError: //数组越界
+      case IndexError: //同上
+        var err = e as ArgumentError;
+        return ViewError(
+          title: '数组越界',
+          content: 'SB开发者，连这个错误都处理不好\n'
+              '${err.name} => ${err.message}',
+          error: e,
+          type: ViewErrorType.dart,
+        );
+      case FormatException: //String字符出现非法编码
+        var err = e as FormatException;
+        return ViewError(
+          title: 'App内部错误',
+          content: Error.safeToString(err.message),
+          error: e,
+          type: ViewErrorType.dart,
+        );
+      case TypeError: //类型转换错误，通常出现在json序列化的过程中
+        return ViewError(
+          title: '类型错误',
+          content: Error.safeToString(e),
+          error: e,
+          type: ViewErrorType.dart,
+        );
+      default: //其它未处理的错误
+        return ViewError(
+          title: '未知错误',
+          content: Error.safeToString(e),
+          error: e,
+          type: ViewErrorType.unknown,
+        );
+    }
+  }
+
+  /// [errorPrint] is a private handler for debug messages
+  static void errorPrint(error, [stack]) async {
+    var debug = '👇👇👇👇👇👇👇 ERROR 👇👇👇👇👇👇👇\n$error\n';
+    if (stack != null) {
+      debug += '---===💔💔💔💔💔 STACK 💔💔💔💔💔===---\n$stack\n';
+    }
+    debug += '👆👆👆👆👆👆👆 OVER 👆👆👆👆👆👆👆👆\n';
+    debugPrint(debug);
+  }
 }
 
 mixin ControllerStateMixin on GetxController {
@@ -32,13 +178,25 @@ mixin ControllerStateMixin on GetxController {
 
   ViewState get state => _state;
 
-  ViewStatusError error;
+  ViewError error;
 
   set state(ViewState newState) {
     _state = newState;
     update();
   }
 
+  // controller 状态快捷获取
+  bool get isEmptyState => state == ViewState.empty;
+
+  bool get isErrorState => state == ViewState.error;
+
+  bool get isLoadingState => state == ViewState.loading;
+
+  bool get isRefreshState => state == ViewState.refreshing;
+
+  bool get isIdleState => state == ViewState.idle;
+
+  //状态的快捷设置方法
   setIdle() => state = ViewState.idle;
 
   setEmpty() => state = ViewState.empty;
@@ -47,118 +205,124 @@ mixin ControllerStateMixin on GetxController {
 
   setRefreshing() => state = ViewState.refreshing;
 
-  setError(ViewStatusError error) {
-    //TODO setError
+  setError(e, [stack]) {
+    assert(
+      e != null,
+      'setError called with null parameter,'
+      ' do you really mean an error has occurred?',
+    );
+
+    error = ViewStateUtil.handlerError(e);
+
+    state = ViewState.error;
+    onError?.call();
+
+    //used for debug
+    ViewStateUtil.errorPrint(e, stack);
+
+    //log error
+    App.analytics.logEvent(
+      name: 'view_state_error',
+      parameters: {
+        ...error.toJson(),
+        'stack': stack,
+      },
+    );
   }
+
+  /// 错误发生时调用，状态变成 [ViewState.error]
+  onError() {}
+
+  /// 数据加载失败时触发，一般情况就是弹出 [toast] 进行提示
+  /// 注意，这里的状态并没有变成 [ViewState.error]
+  onFetchError(error) {}
 
   @protected
   initState(ViewState initState) {
     _state = initState;
   }
-}
 
-abstract class FetchRefreshController<T extends BaseSavableJson>
-    extends GetxController with ControllerStateMixin {
-  RefreshController refreshController;
-
-  T _value;
-
-  T get value => _value;
-
-  bool get isNull => _value.data == null;
-
-  set value(T newData) {
-    _value = newData;
-    update();
-  }
-
-  FetchRefreshController({
-    bool initialRefresh = false,
-    ViewState state = ViewState.idle,
-    T initData,
-  }) : _value = initData {
-    initState(state);
-    refreshController = RefreshController(initialRefresh: initialRefresh);
-  }
-
-  onRefresh() async {
-    try {
-      if (value.isBlank) {
-        setLoading();
-      } else {
-        setRefreshing();
-      }
-      var data = await refreshData();
-      if (data != null && !GetUtils.isBlank(data)) {
-        value.data = data;
-        setIdle();
-      } else {
-        if (state == ViewState.loading) {
-          setEmpty();
-        }
-      }
-      refreshController.refreshCompleted();
-      refreshController.resetNoData();
-    } catch (e) {
-      setError(e);
-      refreshController.refreshFailed();
-    }
-  }
-
-  onLoadMore() async {
-    try {
-      if (value.isBlank) {
-        setLoading();
-      }
-      var data = await fetchMoreData();
-      if (data != null && !GetUtils.isBlank(data)) {
-        (value.data as List).addAll(data);
-        setIdle();
-        refreshController.loadComplete();
-      } else {
-        if (state == ViewState.loading) {
-          setEmpty();
-        }
-        refreshController.loadNoData();
-      }
-    } catch (e) {
-      setError(e);
-      refreshController.loadFailed();
-    }
-  }
-
-  Future fetchMoreData();
-
-  Future refreshData();
-
-  Widget builder(
-    NotifierBuilder<T> builder, {
+  /// [pageBuilder] is a convenient way to build whole-page instead of component widget.
+  /// [pageBuilder] will wrap its child in a [Scaffold] widget by default to ensure its child
+  /// having correct MaterialStyle, otherwise
+  /// [Text] will lose its correct style when error occurs.
+  /// [skipIdle] is used to skip unnecessary wrap for [onIdle] builder, since
+  /// it usually builds the entire page with [Scaffold] as the topmost widget.
+  Widget pageBuilder<T>({
+    Widget Function(Widget child) parent,
+    bool skipIdle = true,
+    WidgetCallback onIdle,
     Widget onLoading,
     Widget onEmpty,
-    Widget Function(ViewStatusError error) onError,
+    Widget Function(ViewError error) onError,
+  }) {
+    if (parent == null) {
+      return Scaffold(
+        body: stateBuilder(
+          onIdle: onIdle,
+          onLoading: onLoading,
+          onEmpty: onEmpty,
+          onError: onError,
+        ),
+      );
+    }
+    if (skipIdle && (this.isIdleState || this.isRefreshState)) {
+      return onIdle();
+    }
+    return parent(stateBuilder(
+      onIdle: onIdle,
+      onLoading: onLoading,
+      onEmpty: onEmpty,
+      onError: onError,
+    ));
+  }
+
+  /// [stateBuilder] is a convenient way to handle different states
+  /// but, [stateBuilder] is not reactive,
+  /// so you need to wrap it in [GetBuilder] to make it reactive
+  /// once [onIdle] is called, it means [value] is available
+  /// and you can use it safely
+  /// the [onLoading],[onEmpty], [onError] has its default handler or widget,
+  /// so you can focus you main task
+  Widget stateBuilder<T>({
+    WidgetCallback onIdle,
+    Widget onLoading,
+    Widget onEmpty,
+    Widget Function(ViewError error) onError,
   }) {
     switch (state) {
       case ViewState.refreshing:
       case ViewState.idle:
-        return builder(value);
+        return onIdle();
       case ViewState.empty:
-        return onEmpty ??
-            Center(
-              child: Text('empty'),
-            );
+        return onEmpty ?? const ViewEmptyWidget();
       case ViewState.loading:
-        return onLoading ??
-            Center(
-              child: RefreshProgressIndicator(),
-            );
+        return onLoading ?? const ViewLoadingWidget();
       case ViewState.error:
         if (onError != null) {
-          return onError(error);
+          return onError(error) ?? ViewErrorWidget(error: error);
         }
-        return Center(
-          child: Text('error: $error}'),
-        );
+        return ViewErrorWidget(error: error);
+      default:
+      //当状态为空的情况
     }
     return SizedBox.shrink();
   }
+
+  /// [safeHandler] is a method wrapper which helps catch errors,
+  /// useful for handling error throwable functions
+  safeHandler(Function callback, {bool initLoading = false}) async {
+    try {
+      if (initLoading) {
+        setLoading();
+      }
+      await callback?.call();
+      setIdle();
+    } catch (e) {
+      setError(e);
+    }
+  }
 }
+
+//TODO(@dreamer2q): add condition build methods
+extension WidgetEx on Widget {}

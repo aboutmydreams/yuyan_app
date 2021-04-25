@@ -5,20 +5,21 @@ import 'package:pretty_json/pretty_json.dart';
 
 abstract class BaseHttp extends DioForNative {
   BaseHttp() {
-    //log
+    // log
     interceptors.add(PrintInterceptor());
 
-    options.connectTimeout = 1000 * 10;
-    options.receiveTimeout = 1000 * 10;
+    options.sendTimeout = 1000 * 5;
+    options.connectTimeout = 1000 * 5;
+    options.receiveTimeout = 1000 * 5;
     init();
   }
 
-  void init();
+  void init() {}
 }
 
 class PrintInterceptor extends InterceptorsWrapper {
   String getRequestDebug(RequestOptions req) {
-    String debug = 'http-->${req.baseUrl}';
+    String debug = '\nhttp-->${req.baseUrl}';
     //debug
     debug += '\n\t${req.method.toUpperCase()}-->${req.path}';
     // debugPrint('  ${options.method.toUpperCase()}-->${options.path}');
@@ -32,27 +33,34 @@ class PrintInterceptor extends InterceptorsWrapper {
   }
 
   String getResponseDebug(Response resp) {
-    if (resp == null) return 'getResponseDebug()->null';
-    //debug
-    var debug = getRequestDebug(resp.request);
+    if (resp == null)
+      return 'PrintInterceptor => getResponseDebug => parameter resp is null';
+    //debug purpose
+    var debug = '\nin response to ==> ' + getRequestDebug(resp.request);
     debug += '\nresponse--> ${resp.statusCode} ${resp.statusMessage}';
-    if (resp.data is Map) {
-      var data = resp.data['data'];
-      if (data != null && data is List) {
-        var item = data.length > 1 ? [data.first] : data;
-        debug += '\n\tdata-->\n${prettyJson(item)}\n';
-      } else {
-        debug += '\n\tdata-->\n${prettyJson(resp.data)}\n';
-      }
-    } else if (resp.data is List) {
-      var data = (resp.data as List);
-      var json = data.length >= 1 ? [data.first] : data;
-      debug += '\n\tdata-->\n${prettyJson(json)}\n';
+    var respLength = '${resp.data}'.length;
+    if (respLength > 500) {
+      //如果返回的数据太长，就不输出了
+      debug += '\n\tdata--> ${'${resp.data}'.length} char\n';
     } else {
-      debug += '\n\tdata-->\n${resp.data}\n';
+      if (resp.data is Map) {
+        var data = resp.data['data'];
+        if (data != null && data is List) {
+          var item = data.length > 1 ? [data.first] : data;
+          debug += '\n\tdata-->\n${prettyJson(item)}\n';
+        } else {
+          debug += '\n\tdata-->\n${prettyJson(resp.data)}\n';
+        }
+      } else if (resp.data is List) {
+        var data = (resp.data as List);
+        var json = data.length >= 1 ? [data.first] : data;
+        debug += '\n\tdata-->\n${prettyJson(json)}\n';
+      } else {
+        debug += '\n\tdata-->\n${resp.data}\n';
+      }
     }
     if (resp.isRedirect != null && resp.isRedirect) {
-      debug += '\n\tredirects-->\n${prettyJson(resp.redirects)}\n';
+      debug += '\n\tredirects-->\n${resp.redirects.map((e) => e.location).toString()}\n';
     }
     return debug;
   }

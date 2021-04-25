@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:yuyan_app/config/app.dart';
 import 'package:yuyan_app/config/net/base.dart';
 import 'package:yuyan_app/config/net/token.dart';
 
@@ -9,7 +10,13 @@ class ApiResponse {
   String message;
   Map meta;
 
+  Map _raw;
+
+  Map get raw => _raw;
+
   ApiResponse.fromJson(Map json) {
+    if (json == null) return;
+    _raw = json;
     data = json['data'];
     status = json['status'];
     message = json['message'];
@@ -41,6 +48,18 @@ class ApiInterceptor extends InterceptorsWrapper {
     response.data = resp;
     return response;
   }
+
+  @override
+  Future onError(DioError err) async {
+    var resp = ApiResponse.fromJson(err.response?.data);
+    if (resp.isError()) {
+      return ApiError(
+        response: resp,
+        dio: err,
+      );
+    }
+    return err;
+  }
 }
 
 class ApiError implements Exception {
@@ -62,10 +81,9 @@ class ApiError implements Exception {
   }
 }
 
-class BaseApi extends BaseHttp with TokenMixin {
+class BaseApi extends BaseHttp with TokenMixin, OrganizationMixin {
   final baseUrl;
-  final userAgent =
-      "Mozilla/5.0 AppleWebKit/537.36 Chrome/88.0.4324.181 Mobile Safari/537.36 Yuyan";
+  final userAgent = Config.userAgent;
 
   BaseApi({
     this.baseUrl = "https://www.yuque.com/api",
@@ -73,13 +91,11 @@ class BaseApi extends BaseHttp with TokenMixin {
 
   @override
   void init() {
-    super.init();
-
-    interceptors.add(ApiInterceptor());
-
-    options.headers['User-Agent'] = userAgent;
-    options.headers['Content-Type'] = "application/json";
-
     options.baseUrl = baseUrl;
+    interceptors.add(ApiInterceptor());
+    options.headers['User-Agent'] = userAgent;
+    // options.headers['Content-Type'] = "application/json";
+
+    super.init();
   }
 }

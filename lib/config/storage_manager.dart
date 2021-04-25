@@ -40,15 +40,15 @@ abstract class BaseSavableJson<T> extends GetxController {
 
   set data(T newData) {
     _data = newData;
+    update();
     saveJson();
-    notifyChildrens();
   }
 
   loadJson();
 
   saveJson();
 
-  updateData(T newData) => data = newData;
+  updateData([T newData]) => data = newData ?? data;
 
   T convert(json);
 }
@@ -66,9 +66,9 @@ abstract class BaseSaveJson<T> extends BaseSavableJson<T> {
       //not loaded
       debugPrint('warn: load null data from key: $key');
     } else if (value is T) {
-      data = value;
+      _data = value;
     } else {
-      data = convert(value);
+      _data = convert(value);
     }
     var now2 = DateTime.now();
     debugPrint(
@@ -90,4 +90,31 @@ abstract class BaseSaveJson<T> extends BaseSavableJson<T> {
   }
 }
 
-abstract class BaseSaveListJson<T> extends BaseSaveJson<List<T>> {}
+abstract class BaseSaveListJson<T> extends BaseSaveJson<List<T>> {
+  int get length => data.length;
+
+  T operator [](int i) {
+    return data[i];
+  }
+
+  void removeFirst() {
+    data.removeAt(0);
+    updateData();
+  }
+
+  void removeLast() {
+    data.removeLast();
+    updateData();
+  }
+
+  void add(T item) {
+    data.add(item);
+    updateData();
+  }
+
+  bool remove(T item) {
+    var res = data.remove(item);
+    updateData();
+    return res;
+  }
+}
