@@ -7,7 +7,7 @@ mode = np.array(img)
 
 def to_png(mode):
     new_img_array = []
-    for i, row in enumerate(mode):
+    for row in mode:
         new_row = []
         for r in row:
             if sum(list(r)) < 20:
@@ -22,14 +22,12 @@ def to_png(mode):
                 new_row.append(n_r)
         new_img_array.append(new_row)
 
-    new_img_array_mode = np.array(new_img_array)
-    return new_img_array_mode
+    return np.array(new_img_array)
 
 
 def mode_to_img(mode):
     array_mode = np.array(mode).astype('uint8')
-    image = Image.fromarray(array_mode).convert('RGB')
-    return image
+    return Image.fromarray(array_mode).convert('RGB')
 
 
 new_img_array_mode = to_png(mode)
